@@ -1,0 +1,23 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#4F46E5" />
+    </linearGradient>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60A5FA" />
+      <stop offset="100%" stop-color="#3B82F6" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="10" stdDeviation="15" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  
+  <rect width="512" height="512" rx="120" fill="url(#bgGrad)" />
+  
+  <!-- Shield/Guide icon -->
+  <path d="M256 120 L150 160 C150 280 190 360 256 400 C322 360 362 280 362 160 Z" fill="#FFFFFF" filter="url(#shadow)"/>
+  
+  <!-- G letter inside the shield -->
+  <path d="M296 200 C 290 190 275 185 256 185 C 215 185 190 215 190 256 C 190 297 215 327 256 327 C 285 327 305 310 305 285 L 256 285" stroke="url(#shieldGrad)" stroke-width="28" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
