@@ -1,53 +1,53 @@
-// All hardcoded data for the Guideia platform simulation
+// All hardcoded data for the Guidia platform simulation
 
 // Real app logo URLs (Wikipedia Commons SVGs — no hotlink restrictions)
 export const APP_LOGOS = {
-  whatsapp:  'https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg',
-  facebook:  'https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg',
+  whatsapp: 'https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg',
+  facebook: 'https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg',
   messenger: 'https://upload.wikimedia.org/wikipedia/commons/b/be/Facebook_Messenger_logo_2020.svg',
-  gmail:     'https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg',
+  gmail: 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg',
   googlepay: 'https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg',
-  paypal:    'https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg',
-  booking:   'https://upload.wikimedia.org/wikipedia/commons/b/be/Booking.com_logo.svg',
-  amazon:    'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg',
-  practo:    null,
-  youtube:   'https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg',
-  chrome:    'https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg',
-  bkash:     'https://download.logo.wine/logo/BKash/BKash-Icon-Logo.wine.png',
-  nagad:     'https://download.logo.wine/logo/Nagad/Nagad-Logo.wine.png',
+  paypal: 'https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg',
+  booking: 'https://upload.wikimedia.org/wikipedia/commons/b/be/Booking.com_logo.svg',
+  amazon: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg',
+  practo: null,
+  youtube: 'https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg',
+  chrome: 'https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg',
+  bkash: 'https://download.logo.wine/logo/BKash/BKash-Icon-Logo.wine.png',
+  nagad: 'https://download.logo.wine/logo/Nagad/Nagad-Logo.wine.png',
 };
 
 
 export const USERS = {
-  elderly: { id: 'u1', name: 'Abdul Karim', phone: '017XXXXXX45', avatar: '👴', role: 'user', mode: 'scared', progress: { messaging:60, banking:30, socialMedia:20, email:10, safety:70 } },
-  beginner:{ id: 'u2', name: 'Fatema Begum', phone: '018XXXXXX72', avatar: '👵', role: 'user', mode: 'unsure', progress: { messaging:40, banking:20, socialMedia:50, email:15, safety:55 } },
-  guardian:{ id: 'u3', name: 'Karim\'s Son (Dhaka)', phone: '019XXXXXX88', avatar: '👨', role: 'guardian', status: 'online' },
+  elderly: { id: 'u1', name: 'Abdul Karim', phone: '017XXXXXX45', avatar: '', role: 'user', mode: 'scared', progress: { messaging:60, banking:30, socialMedia:20, email:10, safety:70 } },
+  beginner:{ id: 'u2', name: 'Fatema Begum', phone: '018XXXXXX72', avatar: '', role: 'user', mode: 'unsure', progress: { messaging:40, banking:20, socialMedia:50, email:15, safety:55 } },
+  guardian:{ id: 'u3', name: 'Karim\'s Son (Dhaka)', phone: '019XXXXXX88', avatar: '', role: 'guardian', status: 'online' },
 };
 
 export const FAKE_CONTACTS = [
-  { id: 'c1', name: 'Rupa (Daughter)', avatar: '👩', lastSeen: '2 min ago', phone: '018XXXXXX33' },
-  { id: 'c2', name: 'Dr. Ahmed', avatar: '👨‍⚕️', lastSeen: '1 hour ago', phone: '017XXXXXX91' },
-  { id: 'c3', name: 'Family Group', avatar: '👨‍👩‍👧‍👦', members: 5, lastSeen: 'just now' },
-  { id: 'c4', name: 'Mosque Neighbour', avatar: '🕌', lastSeen: 'yesterday', phone: '016XXXXXX02' },
+  { id: 'c1', name: 'Rupa (Daughter)', avatar: '', lastSeen: '2 min ago', phone: '018XXXXXX33' },
+  { id: 'c2', name: 'Dr. Ahmed', avatar: '', lastSeen: '1 hour ago', phone: '017XXXXXX91' },
+  { id: 'c3', name: 'Family Group', avatar: '', members: 5, lastSeen: 'just now' },
+  { id: 'c4', name: 'Mosque Neighbour', avatar: '', lastSeen: 'yesterday', phone: '016XXXXXX02' },
 ];
 
 export const FAKE_WHATSAPP_MESSAGES = {
   c1: [
     { id: 'm1', from: 'them', text: 'Abba, how are you?', time: '10:02 AM' },
-    { id: 'm2', from: 'me',   text: 'I am fine, how are you my dear?', time: '10:05 AM' },
+    { id: 'm2', from: 'me', text: 'I am fine, how are you my dear?', time: '10:05 AM' },
     { id: 'm3', from: 'them', text: 'Great! Did you eat lunch?', time: '10:06 AM' },
   ],
   c3: [
     { id: 'm1', from: 'them', text: 'Good morning everyone!', time: '8:00 AM', sender: 'Rupa' },
-    { id: 'm2', from: 'them', text: 'Today is Eid Mubarak! 🌙', time: '8:15 AM', sender: 'Dr. Ahmed' },
-    { id: 'm3', from: 'me',   text: 'Eid Mubarak to all!', time: '9:00 AM' },
+    { id: 'm2', from: 'them', text: 'Today is Eid Mubarak! ', time: '8:15 AM', sender: 'Dr. Ahmed' },
+    { id: 'm3', from: 'me', text: 'Eid Mubarak to all!', time: '9:00 AM' },
   ],
 };
 
 export const FAKE_FACEBOOK_POSTS = [
-  { id: 'p1', author: 'Rupa (Daughter)', avatar: '👩', time: '2 hours ago', text: 'Beautiful sunset from our rooftop today! 🌅 Thinking of everyone.', likes: 24, comments: 5, image: true },
-  { id: 'p2', author: 'Dr. Ahmed', avatar: '👨‍⚕️', time: 'Yesterday', text: 'Health tip: Walking 30 minutes a day keeps the heart strong. Stay healthy everyone!', likes: 41, comments: 8 },
-  { id: 'p3', author: 'Mosque Neighbour', avatar: '🕌', time: '3 days ago', text: 'Jummah Mubarak to all brothers and sisters. May Allah bless you all.', likes: 67, comments: 14 },
+  { id: 'p1', author: 'Rupa (Daughter)', avatar: '', time: '2 hours ago', text: 'Beautiful sunset from our rooftop today! Thinking of everyone.', likes: 24, comments: 5, image: true },
+  { id: 'p2', author: 'Dr. Ahmed', avatar: '', time: 'Yesterday', text: 'Health tip: Walking 30 minutes a day keeps the heart strong. Stay healthy everyone!', likes: 41, comments: 8 },
+  { id: 'p3', author: 'Mosque Neighbour', avatar: '', time: '3 days ago', text: 'Jummah Mubarak to all brothers and sisters. May Allah bless you all.', likes: 67, comments: 14 },
 ];
 
 export const FAKE_GMAIL_INBOX = [
@@ -57,44 +57,30 @@ export const FAKE_GMAIL_INBOX = [
 ];
 
 export const FAKE_TRANSACTIONS = [
-  { id: 't1', type: 'send',    to: 'Rupa (Daughter)', amount: 1000, date: 'Today, 11:00 AM',   status: 'completed', safe: true },
-  { id: 't2', type: 'receive', from: 'Family Son',    amount: 5000, date: 'Yesterday',          status: 'completed', safe: true },
-  { id: 't3', type: 'send',    to: 'Unknown Number',  amount: 2000, date: '3 days ago',          status: 'blocked',   safe: false, blockedReason: 'Guardian rejected — number not in contacts' },
-  { id: 't4', type: 'cashout', agent: 'Agora Agent',  amount: 3000, date: 'Last Week',           status: 'completed', safe: true },
-];
-
-export const GUARDIAN_ALERTS = [
-  { id: 'a1', type: 'transaction', msg: 'Transfer request: 5,000 BDT to unknown number', time: '5 min ago', status: 'pending', userId: 'u1' },
-  { id: 'a2', type: 'scam',        msg: 'Possible scam link detected in WhatsApp message', time: '1 hour ago', status: 'resolved', userId: 'u1' },
-  { id: 'a3', type: 'login',       msg: 'Successful login from Dhaka, Bangladesh', time: '2 hours ago', status: 'info', userId: 'u1' },
-];
-
-export const MEMORY_ENTRIES = [
-  { id: 'mem1', title: 'How to send a WhatsApp photo', icon: '📸', date: 'Today', category: 'messaging', starred: true, summary: 'Tap the camera icon in the chat, select a photo, and press send.' },
-  { id: 'mem2', title: 'Recognized my first scam message', icon: '🛡️', date: 'Yesterday', category: 'safety', starred: true, summary: 'Urgent banking messages asking for links are almost always scams.' },
-  { id: 'mem3', title: 'Safe mobile banking lesson', icon: '💳', date: '3 days ago', category: 'banking', starred: false, summary: 'Always double-check the recipient number before confirming any transfer.' },
-  { id: 'mem4', title: 'Video call practice with Rupa', icon: '📹', date: 'Last week', category: 'messaging', starred: false, summary: 'Open the contact, tap the video camera icon, and wait for the answer.' },
-  { id: 'mem5', title: 'How to post a Facebook photo', icon: '📱', date: 'Last week', category: 'social', starred: false, summary: 'Tap the "Photo" button on your Feed, choose a photo, write a caption, tap Post.' },
+  { id: 't1', type: 'send', to: 'Rupa (Daughter)', amount: 1000, date: 'Today, 11:00 AM', status: 'completed', safe: true },
+  { id: 't2', type: 'receive', from: 'Family Son', amount: 5000, date: 'Yesterday', status: 'completed', safe: true },
+  { id: 't3', type: 'send', to: 'Unknown Number', amount: 2000, date: '3 days ago', status: 'blocked', safe: false, blockedReason: 'Guardian rejected — number not in contacts' },
+  { id: 't4', type: 'cashout', agent: 'Agora Agent', amount: 3000, date: 'Last Week', status: 'completed', safe: true },
 ];
 
 export const TUTORIALS = {
   messaging: [
     { id: 'tut1', title: 'Send a WhatsApp Message', duration: '3 min', level: 'Beginner', completed: true,
       steps: {
-        en: ['Open the green WhatsApp app on your phone.', 'Tap the name of the person you want to chat with.', 'Tap the text box at the bottom of the screen.', 'Type your message.', 'Tap the green arrow button to send. Done! 🎉'],
-        bn: ['আপনার ফোনে সবুজ WhatsApp অ্যাপটি খুলুন।', 'যার সাথে কথা বলতে চান তার নামে চাপ দিন।', 'স্ক্রিনের নিচে টেক্সট বক্সে চাপ দিন।', 'আপনার মেসেজ লিখুন।', 'সবুজ তীর বাটনে চাপ দিন। হয়ে গেছে! 🎉'],
+        en: ['Open the green WhatsApp app on your phone.', 'Tap the name of the person you want to chat with.', 'Tap the text box at the bottom of the screen.', 'Type your message.', 'Tap the green arrow button to send. Done! '],
+        bn: ['আপনার ফোনে সবুজ WhatsApp অ্যাপটি খুলুন।', 'যার সাথে কথা বলতে চান তার নামে চাপ দিন।', 'স্ক্রিনের নিচে টেক্সট বক্সে চাপ দিন।', 'আপনার মেসেজ লিখুন।', 'সবুজ তীর বাটনে চাপ দিন। হয়ে গেছে! '],
       }
     },
     { id: 'tut2', title: 'Send a Photo on WhatsApp', duration: '4 min', level: 'Beginner', completed: true,
       steps: {
-        en: ['Open the chat with the person you want to send a photo to.', 'Look for the camera or paperclip icon near the text box.', 'Tap it and choose "Photo Library".', 'Select the photo you want to send.', 'Tap the send button. Your photo is sent safely! 📸'],
-        bn: ['যার কাছে ছবি পাঠাতে চান তার চ্যাট খুলুন।', 'টেক্সট বক্সের পাশে ক্যামেরা বা ক্লিপ আইকন দেখুন।', 'সেটিতে চাপ দিয়ে "Photo Library" বেছে নিন।', 'যে ছবি পাঠাতে চান সেটি বেছে নিন।', 'পাঠানোর বাটনে চাপ দিন। ছবি পাঠানো হয়ে গেছে! 📸'],
+        en: ['Open the chat with the person you want to send a photo to.', 'Look for the camera or paperclip icon near the text box.', 'Tap it and choose "Photo Library".', 'Select the photo you want to send.', 'Tap the send button. Your photo is sent safely! '],
+        bn: ['যার কাছে ছবি পাঠাতে চান তার চ্যাট খুলুন।', 'টেক্সট বক্সের পাশে ক্যামেরা বা ক্লিপ আইকন দেখুন।', 'সেটিতে চাপ দিয়ে "Photo Library" বেছে নিন।', 'যে ছবি পাঠাতে চান সেটি বেছে নিন।', 'পাঠানোর বাটনে চাপ দিন। ছবি পাঠানো হয়ে গেছে! '],
       }
     },
     { id: 'tut3', title: 'Make a Video Call', duration: '5 min', level: 'Intermediate', completed: false,
       steps: {
-        en: ['Open WhatsApp and find the contact you want to call.', 'Open the chat with them.', 'At the top right, look for the video camera icon.', 'Tap it. The call will start ringing.', 'When they answer, you can see each other! 🎥'],
-        bn: ['WhatsApp খুলুন এবং যাকে কল করতে চান তাকে খুঁজুন।', 'তার সাথে চ্যাট খুলুন।', 'উপরে ডানদিকে ভিডিও ক্যামেরা আইকন খুঁজুন।', 'সেটিতে চাপ দিন। কল বাজতে শুরু করবে।', 'তারা ধরলে একে অপরকে দেখতে পাবেন! 🎥'],
+        en: ['Open WhatsApp and find the contact you want to call.', 'Open the chat with them.', 'At the top right, look for the video camera icon.', 'Tap it. The call will start ringing.', 'When they answer, you can see each other! '],
+        bn: ['WhatsApp খুলুন এবং যাকে কল করতে চান তাকে খুঁজুন।', 'তার সাথে চ্যাট খুলুন।', 'উপরে ডানদিকে ভিডিও ক্যামেরা আইকন খুঁজুন।', 'সেটিতে চাপ দিন। কল বাজতে শুরু করবে।', 'তারা ধরলে একে অপরকে দেখতে পাবেন! '],
       }
     },
   ],
@@ -115,16 +101,16 @@ export const TUTORIALS = {
   shopping: [
     { id: 'tut_amz', title: 'Order Safely on Amazon', duration: '5 min', level: 'Beginner', completed: false,
       steps: {
-        en: ['Open the Amazon app.', 'Type what you want to buy in the top search bar.', 'Look at the Star icons (⭐) to check product reviews before buying. Only buy 4-star or higher.', 'Tap the "Add to Cart" button (shopping cart icon).', 'Select your delivery address and pay securely. Always check the final price.'],
-        bn: ['Amazon অ্যাপ খুলুন।', 'উপরের সার্চ বারে যা কিনতে চান তা লিখুন।', 'কেনার আগে স্টার আইকন (⭐) দেখে পণ্যের রিভিউ চেক করুন।', '"Add to Cart" বাটনে (শপিং কার্ট আইকন) চাপ দিন।', 'আপনার ডেলিভারি ঠিকানা বেছে নিন এবং নিরাপদে পে করুন। চূড়ান্ত দাম চেক করুন।'],
+        en: ['Open the Amazon app.', 'Type what you want to buy in the top search bar.', 'Look at the Star icons () to check product reviews before buying. Only buy 4-star or higher.', 'Tap the "Add to Cart" button (shopping cart icon).', 'Select your delivery address and pay securely. Always check the final price.'],
+        bn: ['Amazon অ্যাপ খুলুন।', 'উপরের সার্চ বারে যা কিনতে চান তা লিখুন।', 'কেনার আগে স্টার আইকন () দেখে পণ্যের রিভিউ চেক করুন।', '"Add to Cart" বাটনে (শপিং কার্ট আইকন) চাপ দিন।', 'আপনার ডেলিভারি ঠিকানা বেছে নিন এবং নিরাপদে পে করুন। চূড়ান্ত দাম চেক করুন।'],
       }
     }
   ],
   health: [
     { id: 'tut_prac', title: 'Book a Doctor Online', duration: '5 min', level: 'Beginner', completed: false,
       steps: {
-        en: ['Open the Practo app.', 'Tap "Find Doctors" (User icon) or "Video Consult" (Camera icon).', 'Choose the doctor\'s specialty, like "Heart" (❤️) or "Eye" (👁️).', 'Select a doctor based on their experience and fee.', 'Pick a time slot and confirm your appointment. You can talk via video from home!'],
-        bn: ['Practo অ্যাপ খুলুন।', '"Find Doctors" (মানুষের আইকন) বা "Video Consult" (ক্যামেরা আইকন) এ চাপ দিন।', 'ডাক্তারের বিভাগ বেছে নিন, যেমন "Heart" (❤️) বা "Eye" (👁️)।', 'অভিজ্ঞতা ও ফি দেখে একজন ডাক্তার বেছে নিন।', 'সময় বেছে নিন এবং অ্যাপয়েন্টমেন্ট নিশ্চিত করুন। আপনি বাসা থেকে ভিডিওতে কথা বলতে পারেন!'],
+        en: ['Open the Practo app.', 'Tap "Find Doctors" (User icon) or "Video Consult" (Camera icon).', 'Choose the doctor\'s specialty, like "Heart" () or "Eye" ().', 'Select a doctor based on their experience and fee.', 'Pick a time slot and confirm your appointment. You can talk via video from home!'],
+        bn: ['Practo অ্যাপ খুলুন।', '"Find Doctors" (মানুষের আইকন) বা "Video Consult" (ক্যামেরা আইকন) এ চাপ দিন।', 'ডাক্তারের বিভাগ বেছে নিন, যেমন "Heart" () বা "Eye" ()।', 'অভিজ্ঞতা ও ফি দেখে একজন ডাক্তার বেছে নিন।', 'সময় বেছে নিন এবং অ্যাপয়েন্টমেন্ট নিশ্চিত করুন। আপনি বাসা থেকে ভিডিওতে কথা বলতে পারেন!'],
       }
     }
   ],
@@ -146,28 +132,22 @@ export const TUTORIALS = {
   ],
 };
 
-export const NOTIFICATIONS = [
-  { id: 'n1', type: 'guardian', icon: '🛡️', title: 'Guardian Notification', msg: 'Your son approved your 1,000 BDT transfer to Rupa.', time: '5 min ago', read: false },
-  { id: 'n2', type: 'lesson',   icon: '🎓', title: 'Lesson Complete!',      msg: 'You completed "Send a WhatsApp Message". Wonderful progress!', time: '1 hour ago', read: false },
-  { id: 'n3', type: 'scam',     icon: '⚠️', title: 'Scam Alert',            msg: 'A suspicious message was detected. Tap to learn more.', time: '2 hours ago', read: true },
-  { id: 'n4', type: 'reminder', icon: '📚', title: 'Daily Lesson Ready',    msg: '"Video Calls" lesson is waiting for you. Take your time!', time: 'Yesterday', read: true },
-];
 
 export const SCAM_EXAMPLES = [
   {
-    id: 's1', severity: 'critical', type: 'Banking Scam', icon: '🏦',
+    id: 's1', severity: 'critical', type: 'Banking Scam', icon: '',
     message: '"URGENT: Your bKash account will be suspended TODAY unless you verify immediately. Click: http://bkash-verify-now.com/urgent"',
     tactics: ['Artificial urgency ("TODAY", "URGENT")', 'Fake website link (not the real bKash)', 'Fear of losing account access'],
     safetyTips: { en: ['Real bKash will never ask you to click a link via SMS.', 'bKash only communicates through their official app or 16247.', 'Delete this message and tell your family.'], bn: ['আসল bKash কখনো SMS-এ লিংক দিয়ে যোগাযোগ করে না।', 'bKash শুধু তাদের অফিসিয়াল অ্যাপ বা 16247 নম্বরে যোগাযোগ করে।', 'এই মেসেজটি মুছুন এবং পরিবারকে জানান।'] },
   },
   {
-    id: 's2', severity: 'high', type: 'OTP Scam', icon: '🔢',
+    id: 's2', severity: 'high', type: 'OTP Scam', icon: '',
     message: '"Hi, I am calling from your bank. There is suspicious activity on your account. Please tell me the OTP you just received to verify your identity."',
     tactics: ['Phone call impersonating bank', 'Asking for OTP (One-Time Password)', 'Creating panic about account security'],
     safetyTips: { en: ['No real bank will ever ask for your OTP over the phone.', 'OTP is only for YOU. Never share it.', 'Hang up immediately and call your family.'], bn: ['কোনো আসল ব্যাংক কখনো ফোনে OTP চাইবে না।', 'OTP শুধুমাত্র আপনার জন্য। কাউকে দেবেন না।', 'সঙ্গে সঙ্গে ফোন কেটে পরিবারকে ডাকুন।'] },
   },
   {
-    id: 's3', severity: 'warning', type: 'Prize Scam', icon: '🏆',
+    id: 's3', severity: 'warning', type: 'Prize Scam', icon: '',
     message: '"Congratulations! You have been selected to win 50,000 Taka! To claim your prize, send 500 Taka processing fee to this number: 017XXXXXXXX"',
     tactics: ['Unrealistic prize offer', 'Requesting upfront payment', 'Fake sense of being specially selected'],
     safetyTips: { en: ['If you never entered a contest, you cannot win a prize.', 'Legitimate prizes never require an upfront fee.', 'Block the number and inform your family.'], bn: ['আপনি যদি কোনো প্রতিযোগিতায় অংশ না নিয়ে থাকেন, তাহলে পুরস্কার জেতার প্রশ্নই আসে না।', 'আসল পুরস্কারে কখনো আগে টাকা পাঠাতে হয় না।', 'নম্বরটি ব্লক করুন এবং পরিবারকে জানান।'] },
@@ -177,64 +157,57 @@ export const SCAM_EXAMPLES = [
 export const AI_RESPONSES = {
   en: {
     greetings: ["Hello! I'm here to help you safely. Take your time.", "Welcome back! You're doing wonderfully. How can I help?"],
-    whatsapp:  "To send a message on WhatsApp:\n1. Open the green WhatsApp app.\n2. Tap the name of the person you want to chat with.\n3. Type your message in the white box at the bottom.\n4. Press the green arrow to send.\n\nYou cannot break anything. Take your time. 😊",
-    photo:     "To send a photo:\n1. Open the chat with the person.\n2. Tap the 📎 or 📷 icon next to the text box.\n3. Choose 'Gallery' or 'Photos'.\n4. Tap the photo you want to send.\n5. Press the send button.\n\nWonderful! You did it safely.",
-    facebook:  "For Facebook:\n1. Open the blue Facebook app.\n2. Tap the box that says 'What's on your mind?'\n3. Type what you want to share.\n4. Tap 'Post' button at the bottom.\n\nYou're doing great! 👍",
-    gmail:     "For Gmail emails:\n1. Open the red Gmail app.\n2. Look for the 'Compose' button (pencil icon).\n3. Type the person's email address in 'To'.\n4. Write your subject and message.\n5. Press the send button (arrow).\n\nRemember: Never click suspicious links in emails. You're safe here.",
-    bkash:     "For bKash money transfer:\n1. Open the pink bKash app.\n2. Tap 'Send Money'.\n3. Enter the recipient's number VERY carefully.\n4. Enter the amount.\n5. Enter your secret PIN (never share it!).\n6. Tap Confirm.\n\nIf unsure, always ask your guardian first. Nothing will happen without your confirmation.",
+    whatsapp: "To send a message on WhatsApp:\n1. Open the green WhatsApp app.\n2. Tap the name of the person you want to chat with.\n3. Type your message in the white box at the bottom.\n4. Press the green arrow to send.\n\nYou cannot break anything. Take your time. ",
+    photo: "To send a photo:\n1. Open the chat with the person.\n2. Tap the or icon next to the text box.\n3. Choose 'Gallery' or 'Photos'.\n4. Tap the photo you want to send.\n5. Press the send button.\n\nWonderful! You did it safely.",
+    facebook: "For Facebook:\n1. Open the blue Facebook app.\n2. Tap the box that says 'What's on your mind?'\n3. Type what you want to share.\n4. Tap 'Post' button at the bottom.\n\nYou're doing great! ",
+    gmail: "For Gmail emails:\n1. Open the red Gmail app.\n2. Look for the 'Compose' button (pencil icon).\n3. Type the person's email address in 'To'.\n4. Write your subject and message.\n5. Press the send button (arrow).\n\nRemember: Never click suspicious links in emails. You're safe here.",
+    bkash: "For bKash money transfer:\n1. Open the pink bKash app.\n2. Tap 'Send Money'.\n3. Enter the recipient's number VERY carefully.\n4. Enter the amount.\n5. Enter your secret PIN (never share it!).\n6. Tap Confirm.\n\nIf unsure, always ask your guardian first. Nothing will happen without your confirmation.",
     googlepay: "On Google Pay, remember: You ONLY need to enter your UPI PIN when you are SENDING money. If someone asks you to enter your PIN to 'receive' money, they are trying to steal from you. Stop and call your family.",
-    paypal:    "To send money through PayPal:\n1. Open the PayPal app.\n2. Tap 'Send' at the bottom.\n3. Enter the receiver's email address or name.\n4. Enter the amount to send.\n5. Select 'Sending to a friend' for personal transfers.\n6. Tap 'Send'.\n\nAlways double-check the email address before sending!",
-    amazon:    "When shopping on Amazon, always check the star ratings. A product with many 4 or 5-star reviews is generally safe. If a price seems 'too good to be true' (like a 50,000 taka phone for 5,000), it is likely a fake seller.",
-    booking:   "On Booking.com, you can search for hotels by entering your destination. Always read the guest reviews before booking to ensure the place is clean and safe.",
-    practo:    "With Practo, you can talk to a real doctor from home! Tap 'Video Consult', choose what kind of doctor you need, and pick a time. It's very safe and easy.",
+    paypal: "To send money through PayPal:\n1. Open the PayPal app.\n2. Tap 'Send' at the bottom.\n3. Enter the receiver's email address or name.\n4. Enter the amount to send.\n5. Select 'Sending to a friend' for personal transfers.\n6. Tap 'Send'.\n\nAlways double-check the email address before sending!",
+    amazon: "When shopping on Amazon, always check the star ratings. A product with many 4 or 5-star reviews is generally safe. If a price seems 'too good to be true' (like a 50,000 taka phone for 5,000), it is likely a fake seller.",
+    booking: "On Booking.com, you can search for hotels by entering your destination. Always read the guest reviews before booking to ensure the place is clean and safe.",
+    practo: "With Practo, you can talk to a real doctor from home! Tap 'Video Consult', choose what kind of doctor you need, and pick a time. It's very safe and easy.",
     whatsapp_save: "To save a contact in WhatsApp:\n1. Open WhatsApp.\n2. Tap the 'New Chat' icon at the bottom right.\n3. Tap 'New Contact'.\n4. Enter the person's name and phone number.\n5. Tap 'Save' at the top right.\n\nThe new contact will now appear in your WhatsApp list.",
-    scam:      "That sounds like a scam. Here is how to stay safe:\n• Real banks never ask for your PIN or OTP via phone or SMS.\n• Urgent messages designed to scare you are almost always fake.\n• Never click links from unknown senders.\n• When in doubt — stop, don't do anything, and call your family.\n\nYou did the right thing by asking! You're being very smart. 🛡️",
-    otp:       "IMPORTANT — Never share your OTP with anyone!\n\nAn OTP (One-Time Password) is a secret code sent only to you. If anyone calls asking for it — even if they say they are from your bank — it is a SCAM.\n\nHang up immediately. You are safe. ✅",
-    fallback:  "I'm here to help you. You can ask me about:\n• Sending messages on WhatsApp\n• Using Facebook\n• Reading Gmail emails\n• bKash or mobile banking\n• How to recognize scams\n\nTake your time. What would you like to know? 😊",
+    scam: "That sounds like a scam. Here is how to stay safe:\n• Real banks never ask for your PIN or OTP via phone or SMS.\n• Urgent messages designed to scare you are almost always fake.\n• Never click links from unknown senders.\n• When in doubt — stop, don't do anything, and call your family.\n\nYou did the right thing by asking! You're being very smart. ",
+    otp: "IMPORTANT — Never share your OTP with anyone!\n\nAn OTP (One-Time Password) is a secret code sent only to you. If anyone calls asking for it — even if they say they are from your bank — it is a SCAM.\n\nHang up immediately. You are safe. ",
+    fallback: "I'm here to help you. You can ask me about:\n• Sending messages on WhatsApp\n• Using Facebook\n• Reading Gmail emails\n• bKash or mobile banking\n• How to recognize scams\n\nTake your time. What would you like to know? ",
   },
   bn: {
     greetings: ["হ্যালো! আমি আপনাকে নিরাপদে সাহায্য করতে এখানে আছি। ধীরে সুস্থে করুন।", "আবার স্বাগতম! আপনি দারুণ করছেন। আমি কীভাবে সাহায্য করতে পারি?"],
-    whatsapp:  "WhatsApp-এ মেসেজ পাঠাতে:\n১. সবুজ WhatsApp অ্যাপ খুলুন।\n২. যার সাথে কথা বলতে চান তার নামে চাপ দিন।\n৩. নিচের সাদা বক্সে আপনার মেসেজ লিখুন।\n৪. সবুজ তীর বাটনে চাপ দিন।\n\nকিছুই নষ্ট হবে না। ধীরে সুস্থে করুন। 😊",
-    photo:     "ছবি পাঠাতে:\n১. যার কাছে পাঠাবেন তার চ্যাট খুলুন।\n২. টেক্সট বক্সের পাশের 📎 বা 📷 আইকনে চাপ দিন।\n৩. 'গ্যালারি' বা 'ছবি' বেছে নিন।\n৪. যে ছবি পাঠাবেন সেটিতে চাপ দিন।\n৫. পাঠানোর বাটনে চাপ দিন।\n\nচমৎকার! নিরাপদে হয়ে গেছে।",
-    facebook:  "Facebook-এ পোস্ট করতে:\n১. নীল Facebook অ্যাপ খুলুন।\n২. 'What's on your mind?' লেখা বক্সে চাপ দিন।\n৩. আপনি কী শেয়ার করতে চান তা লিখুন।\n৪. নিচের 'Post' বাটনে চাপ দিন।\n\nআপনি দারুণ করছেন! 👍",
-    gmail:     "Gmail ইমেইলে:\n১. লাল Gmail অ্যাপ খুলুন।\n২. 'Compose' বাটন (পেন্সিল আইকন) খুঁজুন।\n৩. 'To' তে ব্যক্তির ইমেইল ঠিকানা লিখুন।\n৪. বিষয় ও বার্তা লিখুন।\n৫. সেন্ড বাটনে চাপ দিন।\n\nমনে রাখবেন: ইমেইলে সন্দেহজনক লিংকে কখনো চাপ দেবেন না।",
-    bkash:     "bKash-এ টাকা পাঠাতে:\n১. গোলাপি bKash অ্যাপ খুলুন।\n২. 'Send Money' তে চাপ দিন।\n৩. প্রাপকের নম্বর খুব সাবধানে লিখুন।\n৪. পরিমাণ লিখুন।\n৫. আপনার গোপন পিন দিন (কাউকে দেবেন না!)।\n৬. Confirm এ চাপ দিন।\n\nসন্দেহ হলে আগে গার্ডিয়ানকে জিজ্ঞেস করুন।",
+    whatsapp: "WhatsApp-এ মেসেজ পাঠাতে:\n১. সবুজ WhatsApp অ্যাপ খুলুন।\n২. যার সাথে কথা বলতে চান তার নামে চাপ দিন।\n৩. নিচের সাদা বক্সে আপনার মেসেজ লিখুন।\n৪. সবুজ তীর বাটনে চাপ দিন।\n\nকিছুই নষ্ট হবে না। ধীরে সুস্থে করুন। ",
+    photo: "ছবি পাঠাতে:\n১. যার কাছে পাঠাবেন তার চ্যাট খুলুন।\n২. টেক্সট বক্সের পাশের বা আইকনে চাপ দিন।\n৩. 'গ্যালারি' বা 'ছবি' বেছে নিন।\n৪. যে ছবি পাঠাবেন সেটিতে চাপ দিন।\n৫. পাঠানোর বাটনে চাপ দিন।\n\nচমৎকার! নিরাপদে হয়ে গেছে।",
+    facebook: "Facebook-এ পোস্ট করতে:\n১. নীল Facebook অ্যাপ খুলুন।\n২. 'What's on your mind?' লেখা বক্সে চাপ দিন।\n৩. আপনি কী শেয়ার করতে চান তা লিখুন।\n৪. নিচের 'Post' বাটনে চাপ দিন।\n\nআপনি দারুণ করছেন! ",
+    gmail: "Gmail ইমেইলে:\n১. লাল Gmail অ্যাপ খুলুন।\n২. 'Compose' বাটন (পেন্সিল আইকন) খুঁজুন।\n৩. 'To' তে ব্যক্তির ইমেইল ঠিকানা লিখুন।\n৪. বিষয় ও বার্তা লিখুন।\n৫. সেন্ড বাটনে চাপ দিন।\n\nমনে রাখবেন: ইমেইলে সন্দেহজনক লিংকে কখনো চাপ দেবেন না।",
+    bkash: "bKash-এ টাকা পাঠাতে:\n১. গোলাপি bKash অ্যাপ খুলুন।\n২. 'Send Money' তে চাপ দিন।\n৩. প্রাপকের নম্বর খুব সাবধানে লিখুন।\n৪. পরিমাণ লিখুন।\n৫. আপনার গোপন পিন দিন (কাউকে দেবেন না!)।\n৬. Confirm এ চাপ দিন।\n\nসন্দেহ হলে আগে গার্ডিয়ানকে জিজ্ঞেস করুন।",
     googlepay: "Google Pay-তে মনে রাখবেন: শুধু টাকা পাঠানোর সময়ই আপনার UPI পিন দিতে হয়। যদি কেউ 'টাকা পাওয়ার জন্য' আপনাকে পিন দিতে বলে, তবে সে আপনাকে ঠকাচ্ছে। সাথে সাথে পরিবারকে জানান।",
-    paypal:    "PayPal দিয়ে টাকা পাঠাতে:\n১. PayPal অ্যাপ খুলুন।\n২. নিচে 'Send' বাটনে চাপ দিন।\n৩. প্রাপকের ইমেইল ঠিকানা বা নাম লিখুন।\n৪. পরিমাণ লিখুন।\n৫. ব্যক্তিগত লেনদেনের জন্য 'Sending to a friend' বেছে নিন।\n৬. 'Send' এ চাপ দিন。\n\nপাঠানোর আগে সবসময় ইমেইল ঠিকানা যাচাই করবেন!",
-    amazon:    "Amazon-এ কেনাকাটা করার সময় সবসময় স্টার রেটিং (⭐) চেক করবেন। ৪ বা ৫ স্টার থাকা জিনিসগুলো সাধারণত ভালো হয়। অবিশ্বাস্য কম দাম দেখলে সতর্ক হোন।",
-    booking:   "Booking.com-এ আপনি শহর লিখে হোটেল খুঁজতে পারেন। বুক করার আগে অন্য অতিথিদের রিভিউ পড়ে নিন, যাতে জায়গাটি নিরাপদ হয়।",
-    practo:    "Practo দিয়ে আপনি বাসা থেকেই আসল ডাক্তারের সাথে কথা বলতে পারেন! 'Video Consult' এ চাপ দিন এবং ডাক্তার বেছে নিন। এটি খুবই নিরাপদ।",
+    paypal: "PayPal দিয়ে টাকা পাঠাতে:\n১. PayPal অ্যাপ খুলুন।\n২. নিচে 'Send' বাটনে চাপ দিন।\n৩. প্রাপকের ইমেইল ঠিকানা বা নাম লিখুন।\n৪. পরিমাণ লিখুন।\n৫. ব্যক্তিগত লেনদেনের জন্য 'Sending to a friend' বেছে নিন।\n৬. 'Send' এ চাপ দিন。\n\nপাঠানোর আগে সবসময় ইমেইল ঠিকানা যাচাই করবেন!",
+    amazon: "Amazon-এ কেনাকাটা করার সময় সবসময় স্টার রেটিং () চেক করবেন। ৪ বা ৫ স্টার থাকা জিনিসগুলো সাধারণত ভালো হয়। অবিশ্বাস্য কম দাম দেখলে সতর্ক হোন।",
+    booking: "Booking.com-এ আপনি শহর লিখে হোটেল খুঁজতে পারেন। বুক করার আগে অন্য অতিথিদের রিভিউ পড়ে নিন, যাতে জায়গাটি নিরাপদ হয়।",
+    practo: "Practo দিয়ে আপনি বাসা থেকেই আসল ডাক্তারের সাথে কথা বলতে পারেন! 'Video Consult' এ চাপ দিন এবং ডাক্তার বেছে নিন। এটি খুবই নিরাপদ।",
     whatsapp_save: "WhatsApp এ কন্টাক্ট সেভ করতে:\n১. WhatsApp খুলুন।\n২. নিচে ডানদিকে 'New Chat' আইকনে চাপ দিন।\n৩. 'New Contact' এ চাপ দিন।\n৪. ব্যক্তির নাম এবং ফোন নম্বর লিখুন।\n৫. উপরে ডানদিকে 'Save' বাটনে চাপ দিন。\n\nনতুন কন্টাক্ট এখন আপনার WhatsApp তালিকায় দেখা যাবে।",
-    scam:      "এটি একটি প্রতারণার মতো লাগছে। নিরাপদ থাকতে:\n• আসল ব্যাংক কখনো ফোন বা SMS-এ পিন বা OTP চায় না।\n• আপনাকে ভয় দেখানো জরুরি মেসেজ প্রায় সবসময় ভুয়া।\n• অজানা প্রেরকের লিংকে কখনো চাপ দেবেন না।\n• সন্দেহ হলে — থামুন, কিছু করবেন বায়, পরিবারকে ডাকুন।\n\nজিজ্ঞেস করে আপনি সঠিক কাজ করেছেন! আপনি খুব বুদ্ধিমান। 🛡️",
-    otp:       "গুরুত্বপূর্ণ — কাউকে আপনার OTP দেবেন না!\n\nOTP (ওয়ান-টাইম পাসওয়ার্ড) শুধুমাত্র আপনার জন্য পাঠানো একটি গোপন কোড। যদি কেউ ফোন করে এটি চায় — এমনকি যদি বলে ব্যাংক থেকে বলছেন — এটি একটি প্রতারণা।\n\nসঙ্গে সঙ্গে ফোন রাখুন। আপনি নিরাপদ। ✅",
-    fallback:  "আমি সাহায্য করতে এখানে আছি। আপনি জিজ্ঞেস করতে পারেন:\n• WhatsApp বা Facebook\n• bKash, Google Pay বা PayPal\n• Amazon, Booking বা Practo\n• প্রতারণা চেনার উপায়\n\nধীরে সুস্থে করুন। আপনি কী জানতে চান?",
+    scam: "এটি একটি প্রতারণার মতো লাগছে। নিরাপদ থাকতে:\n• আসল ব্যাংক কখনো ফোন বা SMS-এ পিন বা OTP চায় না।\n• আপনাকে ভয় দেখানো জরুরি মেসেজ প্রায় সবসময় ভুয়া।\n• অজানা প্রেরকের লিংকে কখনো চাপ দেবেন না।\n• সন্দেহ হলে — থামুন, কিছু করবেন বায়, পরিবারকে ডাকুন।\n\nজিজ্ঞেস করে আপনি সঠিক কাজ করেছেন! আপনি খুব বুদ্ধিমান। ",
+    otp: "গুরুত্বপূর্ণ — কাউকে আপনার OTP দেবেন না!\n\nOTP (ওয়ান-টাইম পাসওয়ার্ড) শুধুমাত্র আপনার জন্য পাঠানো একটি গোপন কোড। যদি কেউ ফোন করে এটি চায় — এমনকি যদি বলে ব্যাংক থেকে বলছেন — এটি একটি প্রতারণা।\n\nসঙ্গে সঙ্গে ফোন রাখুন। আপনি নিরাপদ। ",
+    fallback: "আমি সাহায্য করতে এখানে আছি। আপনি জিজ্ঞেস করতে পারেন:\n• WhatsApp বা Facebook\n• bKash, Google Pay বা PayPal\n• Amazon, Booking বা Practo\n• প্রতারণা চেনার উপায়\n\nধীরে সুস্থে করুন। আপনি কী জানতে চান?",
   },
   hi: {
     greetings: ["नमस्ते! मैं यहाँ आपकी सुरक्षित मदद के लिए हूँ। अपना समय लें।", "वापसी पर स्वागत! आप बहुत अच्छा कर रहे हैं। मैं कैसे मदद करूँ?"],
-    whatsapp:  "WhatsApp पर संदेश भेजने के लिए:\n१. हरा WhatsApp ऐप खोलें।\n२. जिसे संदेश भेजना है उसके नाम पर टैप करें।\n३. नीचे सफेद बॉक्स में संदेश लिखें।\n४. हरे तीर बटन पर टैप करें।\n\nकुछ भी खराब नहीं होगा। अपना समय लें।",
-    photo:     "फ़ोटो भेजने के लिए:\n१. उस व्यक्ति की चैट खोलें।\n२. टेक्स्ट बॉक्स के पास क्लिप या कैमरा आइकन टैप करें।\n३. 'गैलरी' चुनें।\n४. जो फ़ोटो भेजनी है उसे टैप करें।\n५. भेजें बटन दबाएं।",
-    facebook:  "Facebook पर पोस्ट करने के लिए:\n१. नीला Facebook ऐप खोलें।\n२. 'What's on your mind?' बॉक्स पर टैप करें।\n३. जो लिखना है वो लिखें।\n४. नीचे 'Post' बटन दबाएं।\n\nआप बहुत अच्छा कर रहे हैं!",
-    gmail:     "Gmail के लिए:\n१. लाल Gmail ऐप खोलें।\n२. 'Compose' बटन (पेंसिल आइकन) ढूंढें।\n३. 'To' में ईमेल पता लिखें।\n४. विषय और संदेश लिखें।\n५. भेजें (तीर) बटन दबाएं।\n\nयाद रखें: संदिग्ध लिंक पर कभी टैप न करें।",
-    bkash:     "bKash से पैसे भेजने के लिए:\n१. गुलाबी bKash ऐप खोलें।\n२. 'Send Money' पर टैप करें।\n३. प्राप्तकर्ता का नंबर बहुत ध्यान से डालें।\n४. राशि डालें।\n५. अपना गुप्त PIN डालें (किसी को न बताएं!)।\n६. Confirm दबाएं।\n\nसंदेह हो तो पहले परिवार से पूछें।",
+    whatsapp: "WhatsApp पर संदेश भेजने के लिए:\n१. हरा WhatsApp ऐप खोलें।\n२. जिसे संदेश भेजना है उसके नाम पर टैप करें।\n३. नीचे सफेद बॉक्स में संदेश लिखें।\n४. हरे तीर बटन पर टैप करें।\n\nकुछ भी खराब नहीं होगा। अपना समय लें।",
+    photo: "फ़ोटो भेजने के लिए:\n१. उस व्यक्ति की चैट खोलें।\n२. टेक्स्ट बॉक्स के पास क्लिप या कैमरा आइकन टैप करें।\n३. 'गैलरी' चुनें।\n४. जो फ़ोटो भेजनी है उसे टैप करें।\n५. भेजें बटन दबाएं।",
+    facebook: "Facebook पर पोस्ट करने के लिए:\n१. नीला Facebook ऐप खोलें।\n२. 'What's on your mind?' बॉक्स पर टैप करें।\n३. जो लिखना है वो लिखें।\n४. नीचे 'Post' बटन दबाएं।\n\nआप बहुत अच्छा कर रहे हैं!",
+    gmail: "Gmail के लिए:\n१. लाल Gmail ऐप खोलें।\n२. 'Compose' बटन (पेंसिल आइकन) ढूंढें।\n३. 'To' में ईमेल पता लिखें।\n४. विषय और संदेश लिखें।\n५. भेजें (तीर) बटन दबाएं।\n\nयाद रखें: संदिग्ध लिंक पर कभी टैप न करें।",
+    bkash: "bKash से पैसे भेजने के लिए:\n१. गुलाबी bKash ऐप खोलें।\n२. 'Send Money' पर टैप करें।\n३. प्राप्तकर्ता का नंबर बहुत ध्यान से डालें।\n४. राशि डालें।\n५. अपना गुप्त PIN डालें (किसी को न बताएं!)।\n६. Confirm दबाएं।\n\nसंदेह हो तो पहले परिवार से पूछें।",
     googlepay: "Google Pay पर याद रखें: आप केवल पैसे भेजते समय अपना UPI PIN डालें। अगर कोई 'पैसे पाने के लिए' PIN मांगे — वह धोखाधड़ी है। तुरंत फ़ोन काटें और परिवार को बताएं।",
-    paypal:    "PayPal के माध्यम से पैसे भेजने के लिए:\n१. PayPal ऐप खोलें।\n२. नीचे 'Send' पर टैप करें।\n३. प्राप्तकर्ता का ईमेल पता या नाम दर्ज करें।\n४. भेजने के लिए राशि दर्ज करें।\n५. व्यक्तिगत स्थानांतरण के लिए 'Sending to a friend' चुनें।\n६. 'Send' पर टैप करें।\n\nभेजने से पहले हमेशा ईमेल पते की दोबारा जांच करें!",
-    amazon:    "Amazon पर खरीदारी करते समय हमेशा स्टार रेटिंग देखें। 4 या 5 स्टार वाले उत्पाद आमतौर पर अच्छे होते हैं। बहुत कम कीमत देखें तो सतर्क रहें।",
-    booking:   "Booking.com पर शहर का नाम डालकर होटल खोजें। बुक करने से पहले अतिथि समीक्षाएं पढ़ें।",
-    practo:    "Practo से घर बैठे डॉक्टर से बात करें! 'Video Consult' पर टैप करें, डॉक्टर चुनें और समय बुक करें। यह बिल्कुल सुरक्षित है।",
+    paypal: "PayPal के माध्यम से पैसे भेजने के लिए:\n१. PayPal ऐप खोलें।\n२. नीचे 'Send' पर टैप करें।\n३. प्राप्तकर्ता का ईमेल पता या नाम दर्ज करें।\n४. भेजने के लिए राशि दर्ज करें।\n५. व्यक्तिगत स्थानांतरण के लिए 'Sending to a friend' चुनें।\n६. 'Send' पर टैप करें।\n\nभेजने से पहले हमेशा ईमेल पते की दोबारा जांच करें!",
+    amazon: "Amazon पर खरीदारी करते समय हमेशा स्टार रेटिंग देखें। 4 या 5 स्टार वाले उत्पाद आमतौर पर अच्छे होते हैं। बहुत कम कीमत देखें तो सतर्क रहें।",
+    booking: "Booking.com पर शहर का नाम डालकर होटल खोजें। बुक करने से पहले अतिथि समीक्षाएं पढ़ें।",
+    practo: "Practo से घर बैठे डॉक्टर से बात करें! 'Video Consult' पर टैप करें, डॉक्टर चुनें और समय बुक करें। यह बिल्कुल सुरक्षित है।",
     whatsapp_save: "WhatsApp में संपर्क सहेजने के लिए:\n१. WhatsApp खोलें।\n२. नीचे दाईं ओर 'New Chat' आइकन पर टैप करें।\n३. 'New Contact' पर टैप करें।\n४. व्यक्ति का नाम और फ़ोन नंबर दर्ज करें।\n५. ऊपर दाईं ओर 'Save' पर टैप करें।\n\nनया संपर्क अब आपकी WhatsApp सूची में दिखाई देगा।",
-    scam:      "यह धोखाधड़ी जैसा लगता है। सुरक्षित रहने के लिए:\n• असली बैंक कभी फ़ोन या SMS पर PIN या OTP नहीं मांगता।\n• घबराहट पैदा करने वाले संदेश लगभग हमेशा नकली होते हैं।\n• अज्ञात लिंक पर कभी टैप न करें।\n• संदेह हो — रुकें, कुछ न करें, परिवार को बुलाएं।\n\nपूछकर आपने बिल्कुल सही किया!",
-    otp:       "महत्वपूर्ण — अपना OTP किसी को न बताएं!\n\nOTP केवल आपके लिए भेजा गया गुप्त कोड है। कोई भी इसे मांगे — चाहे बैंक से कहे — यह धोखाधड़ी है।\n\nतुरंत फ़ोन काटें। आप सुरक्षित हैं।",
-    fallback:  "मैं यहाँ मदद के लिए हूँ। आप पूछ सकते हैं:\n• WhatsApp या Facebook\n• bKash, Google Pay\n• Amazon, Booking\n• धोखाधड़ी पहचानने के तरीके\n\nअपना समय लें। आप क्या जानना चाहते हैं?",
+    scam: "यह धोखाधड़ी जैसा लगता है। सुरक्षित रहने के लिए:\n• असली बैंक कभी फ़ोन या SMS पर PIN या OTP नहीं मांगता।\n• घबराहट पैदा करने वाले संदेश लगभग हमेशा नकली होते हैं।\n• अज्ञात लिंक पर कभी टैप न करें।\n• संदेह हो — रुकें, कुछ न करें, परिवार को बुलाएं।\n\nपूछकर आपने बिल्कुल सही किया!",
+    otp: "महत्वपूर्ण — अपना OTP किसी को न बताएं!\n\nOTP केवल आपके लिए भेजा गया गुप्त कोड है। कोई भी इसे मांगे — चाहे बैंक से कहे — यह धोखाधड़ी है।\n\nतुरंत फ़ोन काटें। आप सुरक्षित हैं।",
+    fallback: "मैं यहाँ मदद के लिए हूँ। आप पूछ सकते हैं:\n• WhatsApp या Facebook\n• bKash, Google Pay\n• Amazon, Booking\n• धोखाधड़ी पहचानने के तरीके\n\nअपना समय लें। आप क्या जानना चाहते हैं?",
   }
 };
 
-export const PROGRESS_CATEGORIES = [
-  { id: 'messaging',   label: { en: 'Messaging',    bn: 'মেসেজিং' },       icon: '💬', color: '#5b9bd5' },
-  { id: 'banking',     label: { en: 'Banking',       bn: 'ব্যাংকিং' },       icon: '💳', color: '#e2136e' },
-  { id: 'socialMedia', label: { en: 'Social Media',  bn: 'সোশ্যাল মিডিয়া' }, icon: '📱', color: '#1877f2' },
-  { id: 'email',       label: { en: 'Email',         bn: 'ইমেইল' },          icon: '📧', color: '#ea4335' },
-  { id: 'safety',      label: { en: 'Online Safety', bn: 'অনলাইন নিরাপত্তা' }, icon: '🛡️', color: '#5aab78' },
-];
 
 export const getAIResponse = (query, lang) => {
   const q = query.toLowerCase();

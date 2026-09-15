@@ -10,7 +10,7 @@ const AVATAR_COLORS = { 'Brac Bank':'#1A73E8', 'Rupa Ahmed':'#D93025', 'LOTTERY 
 
 export default function GmailSim({ onClose }) {
   const { t, speak } = useApp();
-  const [open, setOpen]   = useState(null);
+  const [open, setOpen] = useState(null);
   const [navTab, setNavTab] = useState('primary');
   const [starred, setStarred] = useState({});
 
@@ -29,7 +29,7 @@ export default function GmailSim({ onClose }) {
           <div style={{ background:'#FCE8E6', border:'1px solid #F28B82', borderRadius:8, padding:'12px 16px', marginBottom:16, display:'flex', gap:10 }}>
             <AlertTriangle size={20} color={GM_RED} style={{ flexShrink:0, marginTop:2 }}/>
             <div>
-              <p style={{ fontWeight:800, color:GM_RED, marginBottom:4, fontSize:15 }}>⚠️ {t('Suspicious email detected!','সন্দেহজনক ইমেইল শনাক্ত!')}</p>
+              <p style={{ fontWeight:800, color:GM_RED, marginBottom:4, fontSize:15 }}> {t('Suspicious email detected!','সন্দেহজনক ইমেইল শনাক্ত!')}</p>
               <p style={{ fontSize:14, color:'#c62828' }}>{t('This looks like a scam. Do NOT click any links or share personal info.','এটি প্রতারণামূলক মনে হচ্ছে। কোনো লিংকে ক্লিক করবেন না।')}</p>
             </div>
           </div>
@@ -46,7 +46,7 @@ export default function GmailSim({ onClose }) {
         <p style={{ fontSize:16, lineHeight:1.8, color:'#202124' }}>{open.body}</p>
         {!open.safe && (
           <div style={{ background:'#FFF8E1', border:'1px solid #FDD835', borderRadius:8, padding:'12px 16px', marginTop:20 }}>
-            <p style={{ fontWeight:700, color:'#E65100', marginBottom:4 }}>🛡️ {t('Guideia Safety Tip','Guideia নিরাপত্তা টিপ')}</p>
+            <p style={{ fontWeight:700, color:'#E65100', marginBottom:4 }}> {t('Guidia Safety Tip','Guidia নিরাপত্তা টিপ')}</p>
             <p style={{ fontSize:14, color:'#BF360C' }}>{t('Real prizes never ask for money upfront. This is a scam. Delete this email.','আসল পুরস্কারে কখনো আগে টাকা পাঠাতে হয় না। এটি প্রতারণা। এই ইমেইল মুছুন।')}</p>
           </div>
         )}
@@ -91,7 +91,7 @@ export default function GmailSim({ onClose }) {
 
       {/* Tip */}
       <div style={{ background:'#E8F0FE', padding:'8px 16px', fontSize:13, color:'#1967D2', fontWeight:600, flexShrink:0 }}>
-        💡 {t('Can you find the scam email? It has a ⚠️ icon!','প্রতারণামূলক ইমেইলটি খুঁজুন! এতে ⚠️ আইকন আছে।')}
+         {t('Can you find the scam email? It has a icon!','প্রতারণামূলক ইমেইলটি খুঁজুন! এতে আইকন আছে।')}
       </div>
 
       {/* Email List */}
@@ -100,7 +100,7 @@ export default function GmailSim({ onClose }) {
           <button key={e.id} onClick={() => { setOpen(e); speak(e.safe ? t('Opening safe email.','নিরাপদ ইমেইল খোলা হচ্ছে।') : t('Warning! Suspicious email.','সতর্কতা! সন্দেহজনক ইমেইল।')); }}
             style={{ display:'flex', alignItems:'center', gap:12, width:'100%', padding:'12px 16px', background:e.read?'#fff':'#E8F0FE', borderBottom:'1px solid #E8EAED', cursor:'pointer', border:'none', borderBottom:'1px solid #E8EAED', textAlign:'left' }}>
             <div style={{ width:42, height:42, borderRadius:'50%', background:e.safe?AVATAR_COLORS[e.from]||'#1A73E8':'#E37400', display:'flex', alignItems:'center', justifyContent:'center', color:'#fff', fontWeight:800, fontSize:17, flexShrink:0 }}>
-              {e.safe ? (AVATARS[e.from]||e.from[0]) : '⚠️'}
+              {e.safe ? (AVATARS[e.from]||e.from[0]) : ''}
             </div>
             <div style={{ flex:1, overflow:'hidden' }}>
               <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline' }}>

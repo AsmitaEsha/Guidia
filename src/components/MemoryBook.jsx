@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useApp } from '../context/AppStateContext';
 import { PlayCircle, Star, BookMarked, MessageSquare, ShieldCheck, CreditCard, BookOpen, Smartphone } from 'lucide-react';
+import GuidiaLoadingState from './ui/GuidiaLoadingState';
 
 const CAT_COLORS = { messaging:'var(--blue)', safety:'var(--sage)', banking:'#e2136e', learning:'var(--teal)', social:'var(--blue)' };
 
@@ -19,12 +20,16 @@ const CAT_LABELS = {
 };
 
 export default function MemoryBook() {
-  const { memoryEntries, speak, t, language } = useApp();
+  const { memoryEntries, memoryLoading, speak, t, language } = useApp();
   const [filter, setFilter] = useState('all');
 
   const labels = CAT_LABELS[language] || CAT_LABELS.en;
   const categories = ['all','messaging','safety','banking','learning'];
   const filtered = filter === 'all' ? memoryEntries : memoryEntries.filter(m => m.category === filter);
+
+  if (memoryLoading) {
+    return <GuidiaLoadingState/>;
+  }
 
   return (
     <div className="page-scroll">

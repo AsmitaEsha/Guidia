@@ -1,17 +1,18 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useApp } from '../context/AppStateContext';
-import { Upload, Camera, Loader, ShieldAlert, Check, AlertTriangle, Sparkles } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { Upload, Camera, Check, AlertTriangle, Sparkles } from 'lucide-react';
 import AppLogo from './AppLogo';
 
-import WhatsAppSim  from './sims/WhatsAppSim';
-import FacebookSim  from './sims/FacebookSim';
-import GmailSim     from './sims/GmailSim';
-import BkashSim     from './sims/BkashSim';
-import GPaySim      from './sims/GPaySim';
-import PayPalSim    from './sims/PayPalSim';
-import BookingSim   from './sims/BookingSim';
-import PractoSim    from './sims/PractoSim';
-import AmazonSim    from './sims/AmazonSim';
+import WhatsAppSim from './sims/WhatsAppSim';
+import FacebookSim from './sims/FacebookSim';
+import GmailSim from './sims/GmailSim';
+import BkashSim from './sims/BkashSim';
+import GPaySim from './sims/GPaySim';
+import PayPalSim from './sims/PayPalSim';
+import BookingSim from './sims/BookingSim';
+import PractoSim from './sims/PractoSim';
+import AmazonSim from './sims/AmazonSim';
 
 // Hardcoded analysis results mapped by app keyword
 const ANALYSES = {
@@ -22,12 +23,12 @@ const ANALYSES = {
       { label: 'Chats Tab', type: 'navigation', safe: true, desc: 'Shows all your recent text conversations.' },
       { label: 'Status/Updates Tab', type: 'navigation', safe: true, desc: 'View temporary photos and videos shared by your friends.' },
       { label: 'Calls Tab', type: 'navigation', safe: true, desc: 'View your voice and video call history.' },
-      { label: 'Search Icon (🔍)', type: 'input', safe: true, desc: 'Type a name or word to find a specific message or person.' },
-      { label: 'Camera Icon (📷)', type: 'action', safe: true, desc: 'Take a new photo or video to send immediately.' },
+      { label: 'Search Icon ()', type: 'input', safe: true, desc: 'Type a name or word to find a specific message or person.' },
+      { label: 'Camera Icon ()', type: 'action', safe: true, desc: 'Take a new photo or video to send immediately.' },
       { label: 'Menu Icon (⋮)', type: 'navigation', safe: true, desc: 'Access settings, linked devices, and broadcast lists.' },
-      { label: 'New Chat Button (💬)', type: 'action', safe: true, desc: 'Start a conversation with a new contact from your phonebook.' },
-      { label: 'Attachment Icon (📎)', type: 'action', safe: true, desc: 'Inside a chat, tap this to send documents, gallery photos, or location.' },
-      { label: 'Microphone (🎤)', type: 'action', safe: true, desc: 'Hold this button to record and send a voice message.' },
+      { label: 'New Chat Button ()', type: 'action', safe: true, desc: 'Start a conversation with a new contact from your phonebook.' },
+      { label: 'Attachment Icon ()', type: 'action', safe: true, desc: 'Inside a chat, tap this to send documents, gallery photos, or location.' },
+      { label: 'Microphone ()', type: 'action', safe: true, desc: 'Hold this button to record and send a voice message.' },
     ],
     summary: 'This looks like the normal WhatsApp home screen. Everything looks safe here. No suspicious elements detected.',
     summaryBn: 'এটি স্বাভাবিক WhatsApp হোম স্ক্রিন। এখানে সব নিরাপদ। কোনো সন্দেহজনক উপাদান পাওয়া যায়নি।',
@@ -81,7 +82,7 @@ const ANALYSES = {
       { label: 'Wallet Tab', type: 'navigation', safe: true, desc: 'Manage your linked bank accounts and credit/debit cards.' },
       { label: 'Activity Tab', type: 'info', safe: true, desc: 'Review past payments, refunds, and incoming transfers.' },
       { label: 'Crypto', type: 'action', safe: true, desc: 'Buy, sell, and hold cryptocurrency (optional feature).' },
-      { label: 'Settings (⚙️)', type: 'navigation', safe: true, desc: 'Change your password, address, and security questions.' },
+      { label: 'Settings ()', type: 'navigation', safe: true, desc: 'Change your password, address, and security questions.' },
     ],
     summary: 'This is the genuine PayPal dashboard. Your account seems secure. Make sure you are on paypal.com.',
     summaryBn: 'এটি আসল পেপ্যাল ড্যাশবোর্ড। আপনার অ্যাকাউন্ট নিরাপদ মনে হচ্ছে। নিশ্চিত করুন আপনি paypal.com-এ আছেন।',
@@ -119,13 +120,13 @@ const ANALYSES = {
     confidence: 98,
     safe: true,
     elements: [
-      { label: 'Search Bar (🔍)', type: 'input', safe: true, desc: 'Type the exact name of the product you want to buy.' },
-      { label: 'Cart Icon (🛒)', type: 'navigation', safe: true, desc: 'Shows all items you have temporarily saved to purchase later. Tap to proceed to payment.' },
+      { label: 'Search Bar ()', type: 'input', safe: true, desc: 'Type the exact name of the product you want to buy.' },
+      { label: 'Cart Icon ()', type: 'navigation', safe: true, desc: 'Shows all items you have temporarily saved to purchase later. Tap to proceed to payment.' },
       { label: 'Add to Cart', type: 'action', safe: true, desc: 'Puts the item in your shopping basket without buying it immediately.' },
       { label: 'Buy Now', type: 'action', safe: true, desc: 'Skips the cart and takes you straight to the checkout/payment screen.' },
-      { label: 'Star Ratings (⭐)', type: 'info', safe: true, desc: 'Shows quality out of 5. Always buy products with at least 4 stars and many reviews.' },
+      { label: 'Star Ratings ()', type: 'info', safe: true, desc: 'Shows quality out of 5. Always buy products with at least 4 stars and many reviews.' },
       { label: 'Your Orders', type: 'navigation', safe: true, desc: 'Track your current shipments or process returns and refunds.' },
-      { label: 'Menu (☰)', type: 'navigation', safe: true, desc: 'Access settings, customer service, and full department lists.' },
+      { label: 'Menu ()', type: 'navigation', safe: true, desc: 'Access settings, customer service, and full department lists.' },
     ],
     summary: 'This is the Amazon shopping app. It looks authentic. Be cautious of extremely low prices from unknown sellers.',
     summaryBn: 'এটি আমাজন শপিং অ্যাপ। এটি আসল মনে হচ্ছে। অচেনা বিক্রেতার খুব কম দামের জিনিস থেকে সাবধান থাকুন।',
@@ -143,14 +144,14 @@ const ANALYSES = {
 };
 
 const DEMO_SHOTS = [
-  { id:'wa',   label:'WhatsApp Home', app:'whatsapp', key:'whatsapp', emoji:'💬' },
-  { id:'bk',   label:'bKash Scam',    app:'bkash',    key:'bkash',   emoji:'⚠️' },
-  { id:'gm',   label:'Gmail Scam',    app:'gmail',    key:'gmail',   emoji:'📧' },
-  { id:'gpay', label:'Google Pay',    app:'googlepay',key:'googlepay', emoji:'💳' },
-  { id:'pp',   label:'PayPal',        app:'paypal',   key:'paypal',   emoji:'🌐' },
-  { id:'book', label:'Booking.com',   app:'booking',  key:'booking',  emoji:'🏨' },
-  { id:'prac', label:'Practo Health', app:'practo',   key:'practo',   emoji:'👨‍⚕️' },
-  { id:'amz',  label:'Amazon',        app:'amazon',   key:'amazon',   emoji:'🛒' },
+  { id:'wa', label:'WhatsApp Home', app:'whatsapp', key:'whatsapp', emoji:'' },
+  { id:'bk', label:'bKash Scam', app:'bkash', key:'bkash', emoji:'' },
+  { id:'gm', label:'Gmail Scam', app:'gmail', key:'gmail', emoji:'' },
+  { id:'gpay', label:'Google Pay', app:'googlepay',key:'googlepay', emoji:'' },
+  { id:'pp', label:'PayPal', app:'paypal', key:'paypal', emoji:'' },
+  { id:'book', label:'Booking.com', app:'booking', key:'booking', emoji:'' },
+  { id:'prac', label:'Practo Health', app:'practo', key:'practo', emoji:'' },
+  { id:'amz', label:'Amazon', app:'amazon', key:'amazon', emoji:'' },
 ];
 
 const LOADING_MSGS_EN = [
@@ -169,13 +170,42 @@ const LOADING_MSGS_BN = [
 ];
 
 export default function ScreenshotAnalyzer() {
-  const { t, language, speak, addMemory, showToast, mode } = useApp();
+  const { t, language, speak, addMemory, showToast } = useApp();
+  const { authedFetchForm, ApiError } = useAuth();
   const [phase, setPhase] = useState('idle'); // idle|loading|result
   const [analysis, setAnalysis] = useState(null);
   const [loadMsg, setLoadMsg] = useState('');
   const [loadPct, setLoadPct] = useState(0);
   const [selectedDemo, setSelectedDemo] = useState(null);
   const fileRef = useRef(null);
+
+  // Real upload → real AI vision analysis. Unlike the demo buttons below
+  // (canned example content, clearly labeled), this actually looks at the
+  // image the user picked.
+  const runRealAnalysis = async (file) => {
+    if (!file) return;
+    const msgs = language === 'bn' ? LOADING_MSGS_BN : LOADING_MSGS_EN;
+    setPhase('loading');
+    setSelectedDemo(null);
+    setLoadPct(10);
+    setLoadMsg(msgs[0]);
+
+    const formData = new FormData();
+    formData.append('screenshot', file);
+    formData.append('language', language);
+
+    try {
+      const { analysis: result } = await authedFetchForm('/screenshots/analyze', formData);
+      setLoadPct(100);
+      setAnalysis({ ...result, summaryBn: result.summary });
+      setPhase('result');
+      speak(result.summary);
+      addMemory({ title: t('Screenshot analyzed', 'স্ক্রিনশট বিশ্লেষণ করা হয়েছে'), category: 'safety', starred: !result.safe, summary: result.summary.slice(0, 100) });
+    } catch (err) {
+      setPhase('idle');
+      showToast(err instanceof ApiError ? err.message : t('Could not analyze that screenshot. Please try again.', 'স্ক্রিনশটটি বিশ্লেষণ করা যায়নি। আবার চেষ্টা করুন।'), 'danger');
+    }
+  };
 
   const runAnalysis = (key, demoShot = null) => {
     const msgs = language === 'bn' ? LOADING_MSGS_BN : LOADING_MSGS_EN;
@@ -199,14 +229,14 @@ export default function ScreenshotAnalyzer() {
       setPhase('result');
       const summary = language === 'bn' ? result.summaryBn : result.summary;
       speak(summary);
-      addMemory({ title: t('Screenshot analyzed','স্ক্রিনশট বিশ্লেষণ করা হয়েছে'), icon:'📸', category:'safety', starred:false, summary: summary.slice(0,80) });
+      addMemory({ title: t('Screenshot analyzed','স্ক্রিনশট বিশ্লেষণ করা হয়েছে'), category:'safety', starred:false, summary: summary.slice(0,80) });
     }, 5500);
   };
 
   const reset = () => { setPhase('idle'); setAnalysis(null); setSelectedDemo(null); setLoadPct(0); };
 
   const typeColor = { danger:'var(--danger)', warn:'var(--warn)', info:'var(--blue)', navigation:'var(--teal)', action:'var(--sage)', input:'var(--text-2)' };
-  const typeBg    = { danger:'var(--danger-light)', warn:'var(--warn-light)', info:'var(--blue-light)', navigation:'var(--teal-light)', action:'var(--sage-light)', input:'var(--surface-2)' };
+  const typeBg = { danger:'var(--danger-light)', warn:'var(--warn-light)', info:'var(--blue-light)', navigation:'var(--teal-light)', action:'var(--sage-light)', input:'var(--surface-2)' };
 
   return (
     <div>
@@ -221,7 +251,7 @@ export default function ScreenshotAnalyzer() {
           {/* Upload Zone */}
           <div className="anim-up" style={{ border:'3px dashed var(--blue)', borderRadius:'var(--r-lg)', padding:40, textAlign:'center', background:'var(--blue-light)', marginBottom:28, cursor:'pointer' }}
             onClick={() => fileRef.current?.click()}>
-            <input ref={fileRef} type="file" accept="image/*" style={{ display:'none' }} onChange={() => runAnalysis('default')} />
+            <input ref={fileRef} type="file" accept="image/png,image/jpeg,image/webp" style={{ display:'none' }} onChange={(e) => runRealAnalysis(e.target.files?.[0])} />
             <Upload size={48} color="var(--blue)" style={{ margin:'0 auto 16px' }}/>
             <p style={{ fontWeight:800, fontSize:22, marginBottom:8 }}>{t('Upload a Screenshot','স্ক্রিনশট আপলোড করুন')}</p>
             <p className="t-sub">{t('Tap here to choose a photo from your device','এখানে চাপ দিয়ে আপনার ডিভাইস থেকে ছবি বেছে নিন')}</p>
@@ -231,7 +261,7 @@ export default function ScreenshotAnalyzer() {
           </div>
 
           {/* Demo screenshots */}
-          <p style={{ fontWeight:800, fontSize:18, marginBottom:14, color:'var(--text-2)' }}>{t('Or try a demo screenshot:','অথবা একটি ডেমো স্ক্রিনশট চেষ্টা করুন:')}</p>
+          <p style={{ fontWeight:800, fontSize:18, marginBottom:14, color:'var(--text-2)' }}>{t('Or explore these examples (pre-written, for learning):','অথবা এই উদাহরণগুলো দেখুন (পূর্বলিখিত, শেখার জন্য):')}</p>
           <div className="grid-2" style={{ gap:14 }}>
             {DEMO_SHOTS.map((d,i) => (
               <button key={d.id} className={`card card-btn flex items-center gap-14 anim-up d${i+1}`}
@@ -269,12 +299,12 @@ export default function ScreenshotAnalyzer() {
           {/* Result header */}
           <div className="card" style={{ background: analysis.safe ? 'var(--success-light)' : 'var(--danger-light)', border:`2px solid ${analysis.safe?'var(--success)':'var(--danger)'}`, padding:24, marginBottom:20 }}>
             <div className="flex items-center gap-16" style={{ marginBottom:12 }}>
-              <div style={{ fontSize:40 }}>{analysis.safe ? '✅' : '🚨'}</div>
+              <div style={{ fontSize:40 }}>{analysis.safe ? '' : ''}</div>
               <div>
                 <p style={{ fontWeight:800, fontSize:22, color: analysis.safe?'var(--success)':'var(--danger)' }}>
                   {analysis.safe ? t('Looks Safe','নিরাপদ মনে হচ্ছে') : t('RISK DETECTED','ঝুঁকি শনাক্ত হয়েছে')}
                 </p>
-                <p className="t-sub">{t(`AI Confidence: ${analysis.confidence}%`,`এআই নিশ্চয়তা: ${analysis.confidence}%`)}</p>
+                {analysis.confidence != null && <p className="t-sub">{t(`AI Confidence: ${analysis.confidence}%`,`এআই নিশ্চয়তা: ${analysis.confidence}%`)}</p>}
               </div>
             </div>
             <p style={{ fontSize:18, lineHeight:1.6 }}>{language==='bn' ? analysis.summaryBn : analysis.summary}</p>
@@ -301,8 +331,9 @@ export default function ScreenshotAnalyzer() {
           )}
 
           {/* Elements */}
+          {analysis.elements.length > 0 && (
           <div className="card" style={{ marginBottom:20 }}>
-            <p style={{ fontWeight:800, fontSize:18, marginBottom:14 }}>🔍 {t('Elements Found','পাওয়া উপাদানসমূহ')}</p>
+            <p style={{ fontWeight:800, fontSize:18, marginBottom:14 }}> {t('Elements Found','পাওয়া উপাদানসমূহ')}</p>
             <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
               {analysis.elements.map((el,i) => (
                 <div key={i} style={{ display:'flex', alignItems:'flex-start', gap:12, padding:'12px 14px', background:typeBg[el.type]||'var(--surface-2)', borderRadius:'var(--r-sm)', borderLeft:`4px solid ${typeColor[el.type]||'var(--text-3)'}` }}>
@@ -314,15 +345,16 @@ export default function ScreenshotAnalyzer() {
                     <p className="t-sub" style={{ fontSize:14, marginTop:2 }}>{el.desc}</p>
                   </div>
                   {!el.safe && <AlertTriangle size={18} color="var(--danger)" style={{ flexShrink:0, marginLeft:'auto' }}/>}
-                  {el.safe  && <Check        size={18} color="var(--success)" style={{ flexShrink:0, marginLeft:'auto' }}/>}
+                  {el.safe && <Check size={18} color="var(--success)" style={{ flexShrink:0, marginLeft:'auto' }}/>}
                 </div>
               ))}
             </div>
           </div>
+          )}
 
           <div style={{ display:'flex', gap:12, flexWrap:'wrap' }}>
             <button className="btn btn-primary" onClick={() => speak(language==='bn'?analysis.summaryBn:analysis.summary)}>
-              🔊 {t('Read Analysis Aloud','বিশ্লেষণ জোরে পড়ুন')}
+               {t('Read Analysis Aloud','বিশ্লেষণ জোরে পড়ুন')}
             </button>
             <button className="btn btn-ghost" onClick={reset}>
               {t('← Analyze Another','← আরেকটি বিশ্লেষণ করুন')}

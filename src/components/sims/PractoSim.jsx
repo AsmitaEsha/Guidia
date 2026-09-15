@@ -69,10 +69,10 @@ export default function PractoSim({ onClose }) {
         <p style={{ fontWeight:700, fontSize:18, marginBottom:16, color:'#333' }}>{t('Consult top doctors by specialty','বিশেষজ্ঞ ডাক্তার দেখান')}</p>
         <div style={{ display:'flex', gap:12, overflowX:'auto', paddingBottom:8 }}>
            {[
-             { name: t('Fever','জ্বর'), icon: '🤒' },
-             { name: t('Heart','হার্ট'), icon: '❤️' },
-             { name: t('Diabetes','ডায়াবেটিস'), icon: '🩸' },
-             { name: t('Eye','চোখ'), icon: '👁️' },
+             { name: t('Fever','জ্বর'), icon: '' },
+             { name: t('Heart','হার্ট'), icon: '' },
+             { name: t('Diabetes','ডায়াবেটিস'), icon: '' },
+             { name: t('Eye','চোখ'), icon: '' },
            ].map((item, i) => (
              <button key={i} onClick={() => showToast(t('Practice mode','অনুশীলন'))} style={{ minWidth:100, background:'#fff', border:'1px solid #e0e0e0', borderRadius:8, padding:'16px', display:'flex', flexDirection:'column', alignItems:'center', gap:12, cursor:'pointer' }}>
                <div style={{ fontSize:32 }}>{item.icon}</div>

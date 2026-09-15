@@ -3,17 +3,17 @@ import { useApp } from '../../context/AppStateContext';
 import { ArrowLeft, Phone, Video, Search, MoreVertical, Send, Smile, Paperclip, Camera, Mic } from 'lucide-react';
 import { FAKE_CONTACTS, FAKE_WHATSAPP_MESSAGES } from '../../data/hardcoded';
 
-const WA_GREEN      = '#25D366';
-const WA_DARK       = '#075E54';
-const WA_LIGHT_BG   = '#ECE5DD';
-const WA_SENT       = '#DCF8C6';
+const WA_GREEN = '#25D366';
+const WA_DARK = '#075E54';
+const WA_LIGHT_BG = '#ECE5DD';
+const WA_SENT = '#DCF8C6';
 
 export default function WhatsAppSim({ onClose }) {
   const { t, speak } = useApp();
-  const [chat, setChat]   = useState(null);
-  const [msgs, setMsgs]   = useState([]);
+  const [chat, setChat] = useState(null);
+  const [msgs, setMsgs] = useState([]);
   const [input, setInput] = useState('');
-  const [tab, setTab]     = useState('chats');
+  const [tab, setTab] = useState('chats');
 
   const openChat = (c) => {
     setChat(c);
@@ -29,7 +29,7 @@ export default function WhatsAppSim({ onClose }) {
     setMsgs(p => [...p, m]);
     setInput('');
     speak(t('Message sent!','মেসেজ পাঠানো হয়েছে!'));
-    setTimeout(() => setMsgs(p => [...p, { id:`r${Date.now()}`, from:'them', text:t('👍 Thanks!','👍 ধন্যবাদ!'), time:'Now' }]), 1600);
+    setTimeout(() => setMsgs(p => [...p, { id:`r${Date.now()}`, from:'them', text:t(' Thanks!',' ধন্যবাদ!'), time:'Now' }]), 1600);
   };
 
   /* ── Chat View ── */
@@ -49,7 +49,7 @@ export default function WhatsAppSim({ onClose }) {
       </div>
       {/* Practice Banner */}
       <div style={{ background:'#FFF9C4', padding:'6px 14px', textAlign:'center', fontSize:12, color:'#7a6600', fontWeight:600, flexShrink:0 }}>
-        🔒 {t('Practice mode — messages are not real','অনুশীলন মোড — বার্তাগুলি আসল নয়')}
+         {t('Practice mode — messages are not real','অনুশীলন মোড — বার্তাগুলি আসল নয়')}
       </div>
       {/* Messages */}
       <div style={{ flex:1, overflowY:'auto', padding:'12px 10px', display:'flex', flexDirection:'column', gap:4 }}>
@@ -60,7 +60,7 @@ export default function WhatsAppSim({ onClose }) {
               <p style={{ fontSize:16, lineHeight:1.45 }}>{m.text}</p>
               <div style={{ display:'flex', alignItems:'center', justifyContent:'flex-end', gap:4, marginTop:2 }}>
                 <span style={{ fontSize:11, color:'#8e8e8e' }}>{m.time}</span>
-                {m.from==='me' && <span style={{ fontSize:14, color:'#4FC3F7' }}>✓✓</span>}
+                {m.from==='me' && <span style={{ fontSize:14, color:'#4FC3F7' }}></span>}
               </div>
             </div>
           </div>
@@ -110,7 +110,7 @@ export default function WhatsAppSim({ onClose }) {
 
       {/* Tip */}
       <div style={{ background:'#E8F5E9', padding:'8px 14px', fontSize:13, color:'#2E7D32', fontWeight:600, flexShrink:0 }}>
-        💡 {t('Tap any contact to practice sending a message.','যেকোনো পরিচিতিতে চাপ দিয়ে মেসেজ পাঠানো অনুশীলন করুন।')}
+         {t('Tap any contact to practice sending a message.','যেকোনো পরিচিতিতে চাপ দিয়ে মেসেজ পাঠানো অনুশীলন করুন।')}
       </div>
 
       {/* Search bar */}
