@@ -1,0 +1,226 @@
+// Guidia database schema.
+// SQLite for development; the datasource URL can be swapped to Postgres in
+// production without changing any model below.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  SENIOR
+  GUARDIAN
+  ADMIN
+}
+
+enum CognitiveState {
+  CALM
+  UNSURE
+  SCARED
+}
+
+enum RiskContentType {
+  URL
+  SMS
+  MESSAGE
+}
+
+enum RiskSeverity {
+  SAFE
+  WARNING
+  HIGH_RISK
+  CRITICAL
+}
+
+enum InterceptionResolution {
+  PROCEED
+  EDIT
+  HELP
+}
+
+enum GuardianStatus {
+  PENDING
+  ACTIVE
+  REVOKED
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  FLAGGED
+}
+
+enum MemoryCategory {
+  MESSAGING
+  SAFETY
+  BANKING
+  LEARNING
+  SOCIAL
+}
+
+model User {
+  id                String   @id @default(cuid())
+  fullName          String
+  email             String   @unique
+  passwordHash      String
+  role              UserRole @default(SENIOR)
+  preferredLanguage String   @default("en")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  preference        UserPreference?
+  sessions          Session[]
+  riskAssessments   RiskAssessment[]
+  safetyInterceptions SafetyInterception[]
+  guardianRelationshipsAsSenior   GuardianRelationship[] @relation("SeniorGuardians")
+  guardianRelationshipsAsGuardian GuardianRelationship[] @relation("GuardianOfSeniors")
+  memoryEntries     MemoryBookEntry[]
+  passwordResetTokens PasswordResetToken[]
+
+  @@map("users")
+}
+
+// A single-use, time-limited password reset token — same "store the raw
+// token, not a hash" pattern already used for refresh sessions below,
+// since both are short-lived, high-entropy, single-use secrets rather
+// than long-term credentials.
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@map("password_reset_tokens")
+}
+
+// One row per user holding onboarding + Cognitive Load Governor state.
+// Kept separate from User so auth data and adaptive-experience data evolve independently.
+model UserPreference {
+  id              String         @id @default(cuid())
+  userId          String         @unique
+  user            User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cognitiveState  CognitiveState @default(CALM)
+  fontSize        Int            @default(17)
+  darkMode        Boolean        @default(false)
+  reducedMotion   Boolean        @default(false)
+  voiceEnabled    Boolean        @default(true)
+  onboardingDone  Boolean        @default(false)
+  updatedAt       DateTime       @updatedAt
+
+  @@map("user_preferences")
+}
+
+// Refresh-token sessions, so logout / expiry are real server-side events
+// rather than client-only state.
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  refreshToken String   @unique
+  userAgent    String?
+  createdAt    DateTime @default(now())
+  expiresAt    DateTime
+  revokedAt    DateTime?
+
+  @@map("sessions")
+}
+
+// One row per scam/risk check a user submits. `signals` is a JSON-encoded
+// array of the deterministic rule matches that produced the floor severity
+// (see backend/src/safety/rules.js) — kept alongside the final severity so
+// a user's safety history can show *why*, not just the verdict.
+model RiskAssessment {
+  id             String          @id @default(cuid())
+  userId         String
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  contentType    RiskContentType
+  contentExcerpt String
+  severity       RiskSeverity
+  signals        String
+  explanation    String
+  createdAt      DateTime        @default(now())
+
+  @@map("risk_assessments")
+}
+
+// A logged moment where the Psychological Safety Net (GuidiaSafetyPanel on
+// the frontend) interrupted a sensitive action — a financial transfer,
+// permission grant, etc. `summary` is JSON-encoded {what, who, amountOrData,
+// consequence}, the same four questions shown to the user before they choose
+// Proceed / Edit / Request Help.
+model SafetyInterception {
+  id         String                 @id @default(cuid())
+  userId     String
+  user       User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  actionType String
+  summary    String
+  resolution InterceptionResolution
+  createdAt  DateTime               @default(now())
+
+  @@map("safety_interceptions")
+}
+
+// A senior user's connection to a trusted guardian. Starts PENDING when the
+// senior invites a guardian by email (no account required to exist yet);
+// becomes ACTIVE only once that guardian explicitly accepts — guardian
+// access always requires the guardian's own consent, per the product rule
+// that this relationship can never be silently established.
+model GuardianRelationship {
+  id                String         @id @default(cuid())
+  seniorUserId      String
+  senior            User           @relation("SeniorGuardians", fields: [seniorUserId], references: [id], onDelete: Cascade)
+  guardianUserId    String?
+  guardian          User?          @relation("GuardianOfSeniors", fields: [guardianUserId], references: [id], onDelete: SetNull)
+  guardianEmail     String
+  approvalThreshold Int            @default(0)
+  status            GuardianStatus @default(PENDING)
+  createdAt         DateTime       @default(now())
+  respondedAt       DateTime?
+
+  approvals         GuardianApproval[]
+
+  @@map("guardian_relationships")
+}
+
+// A single sensitive action a senior submitted for guardian sign-off —
+// created when a Safe Practice sim's "Send for Guardian Approval" step
+// fires. `summary` mirrors the same what/who/amount shape used by
+// GuidiaSafetyPanel/SafetyInterception, so a guardian sees the identical
+// breakdown the senior saw.
+model GuardianApproval {
+  id             String               @id @default(cuid())
+  relationshipId String
+  relationship   GuardianRelationship @relation(fields: [relationshipId], references: [id], onDelete: Cascade)
+  actionType     String
+  summary        String
+  status         ApprovalStatus       @default(PENDING)
+  createdAt      DateTime             @default(now())
+  resolvedAt     DateTime?
+
+  @@map("guardian_approvals")
+}
+
+// A saved learning moment — created automatically when the user completes a
+// lesson, has a safety check worth remembering, or saves a screenshot
+// explanation, rather than being seeded/static content. Lets a user revisit
+// what they learned without repeating an entire tutorial (README: Memory Book).
+model MemoryBookEntry {
+  id        String         @id @default(cuid())
+  userId    String
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  category  MemoryCategory
+  summary   String
+  starred   Boolean        @default(false)
+  createdAt DateTime       @default(now())
+
+  @@map("memory_book_entries")
+}

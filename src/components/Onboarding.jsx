@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppStateContext';
 import { Globe, Smile, HelpCircle, Heart, ArrowRight, ChevronRight } from 'lucide-react';
+import GuidiaLogo from './GuidiaLogo';
 
 const LANGUAGES = [
   { id:'en', label:'English',  sub:'Continue in English',       flag:'EN' },
@@ -24,14 +26,15 @@ const MODES = [
 ];
 
 export default function Onboarding() {
-  const { setMode, setLanguage, completeOnboarding, language, t } = useApp();
+  const { setMode, setLanguage, language, t, persistPreferences } = useApp();
+  const navigate = useNavigate();
   const [step, setStep] = useState('language');
 
   return (
     <div>
       <div style={{ textAlign:'center', marginBottom:36 }}>
-        <img src="/logo.svg" alt="Guideia" style={{ width:64, height:64, borderRadius:16, margin:'0 auto 20px', boxShadow:'var(--sh-md)' }} className="anim-logo"/>
-        <h1 style={{ fontWeight:900, fontSize:26, letterSpacing:'-0.02em' }}>Welcome to Guideia</h1>
+        <GuidiaLogo size={64} style={{ margin:'0 auto 20px', boxShadow:'var(--sh-md)' }} />
+        <h1 style={{ fontWeight:900, fontSize:26, letterSpacing:'-0.02em' }}>Welcome to Guidia</h1>
         <p style={{ color:'var(--text-2)', marginTop:6, fontSize:15 }}>Your trusted digital companion</p>
       </div>
 
@@ -82,7 +85,11 @@ export default function Onboarding() {
               const ldata = language === 'bn' ? m.bn : language === 'hi' ? m.hi : m.en;
               return (
                 <button key={m.id}
-                  onClick={() => { setMode(m.id); completeOnboarding(); }}
+                  onClick={() => {
+                    setMode(m.id);
+                    persistPreferences({ preferredLanguage: language, cognitiveState: m.id.toUpperCase(), onboardingDone: true });
+                    navigate('/app/home', { replace: true });
+                  }}
                   style={{ display:'flex', alignItems:'center', gap:16, padding:'18px 20px', background:'var(--surface)', border:`2px solid var(--border)`, borderRadius:'var(--r-sm)', cursor:'pointer', textAlign:'left', borderLeft:`4px solid ${m.border}`, transition:'all var(--tr)' }}
                   onMouseEnter={e => { e.currentTarget.style.background='var(--surface-2)'; }}
                   onMouseLeave={e => { e.currentTarget.style.background='var(--surface)'; }}>

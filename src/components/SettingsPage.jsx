@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppStateContext';
+import { useAuth } from '../context/AuthContext';
+import GuidiaVoiceControls from './GuidiaVoiceControls';
 import { Settings, Globe, Volume2, ZoomIn, Moon, Bell, Shield, ChevronRight, LogOut, User } from 'lucide-react';
 
 function Toggle({ on, onToggle }) {
@@ -11,10 +14,18 @@ function Toggle({ on, onToggle }) {
 }
 
 export default function SettingsPage() {
-  const { language, setLanguage, mode, user, speak, t, setScreen,
+  const { language, setLanguage, mode, user, speak, t, setActiveTab,
           fontSize, setFontSize, darkMode, setDarkMode,
-          voiceEnabled, setVoiceEnabled, reducedMotion, setReducedMotion } = useApp();
+          voiceEnabled, setVoiceEnabled, reducedMotion, setReducedMotion,
+          persistPreferences } = useApp();
+  const { logout, user: authUser } = useAuth();
+  const navigate = useNavigate();
   const [notifications, setNotifications] = useState(true);
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login', { replace: true });
+  };
 
   const Section = ({ title, children, style={} }) => (
     <div style={{ marginBottom:24, ...style }}>
@@ -40,7 +51,7 @@ export default function SettingsPage() {
     <div>
       <div className="section-header">
         <h1 className="t-title anim-up">{t('Settings & Accessibility','সেটিংস ও অ্যাক্সেসিবিলিটি')}</h1>
-        <p className="t-sub anim-up d1" style={{ marginTop:8 }}>{t('Customize your Guideia experience.','আপনার Guideia অভিজ্ঞতা কাস্টমাইজ করুন।')}</p>
+        <p className="t-sub anim-up d1" style={{ marginTop:8 }}>{t('Customize your Guidia experience.','আপনার Guidia অভিজ্ঞতা কাস্টমাইজ করুন।')}</p>
         <div className="section-divider"/>
       </div>
 
@@ -52,7 +63,7 @@ export default function SettingsPage() {
           </div>
           <div style={{ flex:1 }}>
             <p style={{ fontWeight:800, fontSize:22 }}>{user?.name || t('User','ব্যবহারকারী','उपयोगकर्ता')}</p>
-            <p className="t-sub">{user?.phone || '+880 17XX XXXX XX'}</p>
+            <p className="t-sub">{user?.email || ''}</p>
             <div className="flex items-center gap-8" style={{ marginTop:6 }}>
               <span className="badge badge-blue">{mode === 'scared' ? t('Nervous Mode','ভীত মোড','घबराया हुआ') : mode === 'unsure' ? t('Unsure Mode','অনিশ্চিত মোড','अनिश्चित') : t('Calm Mode','শান্ত মোড','शांत')}</span>
               <span className="badge badge-sage">{t('Guardian Connected','গার্ডিয়ান সংযুক্ত','गार्जियन जुड़ा हुआ')}</span>
@@ -67,9 +78,9 @@ export default function SettingsPage() {
             sub={language==='bn'?'বাংলা':language==='hi'?'हिन्दी':'English'} divider={false}
             right={
               <div className="segment" style={{ padding:3 }}>
-                <button className={`seg-btn ${language==='en'?'active':''}`} onClick={() => { setLanguage('en'); speak('Switched to English'); }}>EN</button>
-                <button className={`seg-btn ${language==='bn'?'active':''}`} onClick={() => { setLanguage('bn'); speak('বাংলায় পরিবর্তন হয়েছে'); }}>বাং</button>
-                <button className={`seg-btn ${language==='hi'?'active':''}`} onClick={() => { setLanguage('hi'); speak('हिन्दी में बदल गया'); }}>हि</button>
+                <button className={`seg-btn ${language==='en'?'active':''}`} onClick={() => { setLanguage('en'); persistPreferences({ preferredLanguage:'en' }); speak('Switched to English'); }}>EN</button>
+                <button className={`seg-btn ${language==='bn'?'active':''}`} onClick={() => { setLanguage('bn'); persistPreferences({ preferredLanguage:'bn' }); speak('বাংলায় পরিবর্তন হয়েছে'); }}>বাং</button>
+                <button className={`seg-btn ${language==='hi'?'active':''}`} onClick={() => { setLanguage('hi'); persistPreferences({ preferredLanguage:'hi' }); speak('हिन्दी में बदल गया'); }}>हि</button>
               </div>
             }
           />
@@ -78,18 +89,27 @@ export default function SettingsPage() {
         {/* Accessibility */}
         <Section title={t('Accessibility','অ্যাক্সেসিবিলিটি')}>
           <Row icon={<Volume2 size={18}/>} label={t('Voice Narration','ভয়েস বর্ণনা')} sub={t('Read content aloud','বিষয়বস্তু জোরে পড়ুন')}
-            right={<Toggle on={voiceEnabled} onToggle={() => setVoiceEnabled(v => !v)} />} />
+            right={<Toggle on={voiceEnabled} onToggle={() => { const next=!voiceEnabled; setVoiceEnabled(next); persistPreferences({ voiceEnabled: next }); }} />} />
+          {voiceEnabled && (
+            <div style={{ padding:'14px 20px', borderBottom:'1px solid var(--border)' }}>
+              <button className="btn btn-sm btn-primary" style={{ marginBottom:10 }}
+                onClick={() => speak(t('This is Guidia speaking. You can pause, stop, replay, or change my speed below.', 'এটি Guidia বলছে। আপনি নিচে বিরতি, থামানো, পুনরায় শোনা বা গতি পরিবর্তন করতে পারেন।'))}>
+                {t('Try Voice', 'ভয়েস চেষ্টা করুন')}
+              </button>
+              <GuidiaVoiceControls/>
+            </div>
+          )}
           <Row icon={<ZoomIn size={18}/>} label={t('Text Size','টেক্সট আকার')} sub={`${fontSize}px — ${fontSize<=16?t('Small','ছোট'):fontSize>=22?t('Large','বড়'):t('Medium','মাঝারি')}`}
             right={
               <div className="flex items-center gap-10">
-                <button className="btn btn-sm btn-ghost" style={{ padding:'8px 14px' }} onClick={() => setFontSize(f => Math.max(14,f-2))}>A−</button>
-                <button className="btn btn-sm btn-primary" style={{ padding:'8px 14px' }} onClick={() => setFontSize(f => Math.min(26,f+2))}>A+</button>
+                <button className="btn btn-sm btn-ghost" style={{ padding:'8px 14px' }} onClick={() => { const next=Math.max(14,fontSize-2); setFontSize(next); persistPreferences({ fontSize: next }); }}>A−</button>
+                <button className="btn btn-sm btn-primary" style={{ padding:'8px 14px' }} onClick={() => { const next=Math.min(26,fontSize+2); setFontSize(next); persistPreferences({ fontSize: next }); }}>A+</button>
               </div>
             } />
           <Row icon={<Moon size={18}/>} label={t('Dark / High Contrast','ডার্ক / হাই কন্ট্রাস্ট')} sub={t('Easier on the eyes','চোখে আরামদায়ক')}
-            right={<Toggle on={darkMode} onToggle={() => setDarkMode(d=>!d)} />} />
+            right={<Toggle on={darkMode} onToggle={() => { const next=!darkMode; setDarkMode(next); persistPreferences({ darkMode: next }); }} />} />
           <Row icon={<Settings size={18}/>} label={t('Reduced Motion','কম অ্যানিমেশন')} sub={t('Fewer animations','কম অ্যানিমেশন')} divider={false}
-            right={<Toggle on={reducedMotion} onToggle={() => setReducedMotion(r=>!r)} />} />
+            right={<Toggle on={reducedMotion} onToggle={() => { const next=!reducedMotion; setReducedMotion(next); persistPreferences({ reducedMotion: next }); }} />} />
         </Section>
 
         {/* Notifications */}
@@ -100,13 +120,22 @@ export default function SettingsPage() {
 
         {/* Guardian */}
         <Section title={t('Family Guardian','পারিবারিক গার্ডিয়ান')}>
-          <Row icon={<Shield size={18}/>} label={t('Guardian: Son (Dhaka)','গার্ডিয়ান: পুত্র (ঢাকা)','गार्जियन: बेटा (ढाका)')} sub={t('Online — approves transactions','অনলাইন — লেনদেন অনুমোদন করেন','ऑनलाइन — लेनदेन अनुमोदन')}
+          <Row icon={<Shield size={18}/>} label={t('Manage Guardians & Approvals','গার্ডিয়ান ও অনুমোদন পরিচালনা')} sub={t('Invite a guardian and review approval requests','গার্ডিয়ান আমন্ত্রণ করুন ও অনুরোধ পর্যালোচনা করুন')}
+            onClick={() => setActiveTab('guardian')}
             right={<ChevronRight size={18} color="var(--text-3)"/>} divider={false} />
         </Section>
 
+        {authUser?.role === 'ADMIN' && (
+          <Section title={t('Administration','প্রশাসন')}>
+            <Row icon={<Shield size={18}/>} label={t('Admin Panel','অ্যাডমিন প্যানেল')} sub={t('Users, analytics, and safety overview','ব্যবহারকারী, বিশ্লেষণ ও নিরাপত্তা সংক্ষিপ্ত বিবরণ')}
+              onClick={() => navigate('/admin')}
+              right={<ChevronRight size={18} color="var(--text-3)"/>} divider={false} />
+          </Section>
+        )}
+
         {/* Sign Out */}
         </div>
-        <button className="btn btn-ghost btn-full" style={{ color:'var(--danger)', border:'1px solid var(--danger-light)', marginTop:8 }} onClick={() => setScreen('auth')}>
+        <button className="btn btn-ghost btn-full" style={{ color:'var(--danger)', border:'1px solid var(--danger-light)', marginTop:8 }} onClick={handleLogout}>
           <LogOut size={20}/> {t('Sign Out','সাইন আউট')}
         </button>
       </div>

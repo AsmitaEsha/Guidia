@@ -1,8 +1,8 @@
-import React from 'react';
 import { useApp } from '../context/AppStateContext';
-import { Home, BookOpen, MessageCircle, ShieldCheck, BookMarked, Bell, Settings, Users, Camera, TrendingUp, Shield, AlertTriangle, User2 } from 'lucide-react';
+import GuidiaLogo from './GuidiaLogo';
+import { Home, BookOpen, MessageCircle, ShieldCheck, BookMarked, Settings, Users, Camera, TrendingUp, Shield, AlertTriangle, User2 } from 'lucide-react';
 
-const MAIN_NAV = (t, unreadCount) => [
+const MAIN_NAV = (t) => [
   { id: 'home',       icon: <Home size={22} />,        label: t('Home', 'হোম', 'होम') },
   { id: 'learn',      icon: <BookOpen size={22} />,    label: t('Learn', 'শিখুন', 'सीखें') },
   { id: 'practice',  icon: <Users size={22} />,        label: t('Practice', 'চর্চা', 'अभ्यास') },
@@ -11,9 +11,10 @@ const MAIN_NAV = (t, unreadCount) => [
   { id: 'screenshot',icon: <Camera size={22} />,       label: t('UI Guide', 'UI গাইড', 'UI गाइड') },
 ];
 
-const ACCOUNT_NAV = (t, unreadCount) => [
+const ACCOUNT_NAV = (t) => [
   { id: 'progress',      icon: <TrendingUp size={22} />,   label: t('My Progress', 'অগ্রগতি', 'प्रगति') },
   { id: 'memory',        icon: <BookMarked size={22} />,   label: t('Memory', 'স্মৃতি', 'स्मृति') },
+  { id: 'guardian',      icon: <Shield size={22} />,       label: t('Guardian', 'গার্ডিয়ান', 'गार्जियन') },
   { id: 'emergency',     icon: <AlertTriangle size={22} />,label: t('Emergency', 'জরুরি', 'आपातकाल') },
   { id: 'settings',     icon: <Settings size={22} />,     label: t('Settings', 'সেটিংস', 'सेटिंग') },
 ];
@@ -35,9 +36,9 @@ export function Sidebar() {
   return (
     <aside className="sidebar">
       <div className="sidebar-logo">
-        <img src="/logo.svg" alt="Guideia" style={{ width: 44, height: 44, borderRadius: 12 }} />
+        <GuidiaLogo size={44} />
         <div>
-          <p style={{ fontWeight: 800, fontSize: 20, lineHeight: 1 }}>Guideia</p>
+          <p style={{ fontWeight: 800, fontSize: 20, lineHeight: 1 }}>Guidia</p>
           <p style={{ fontSize: 13, color: 'var(--text-3)', marginTop: 2 }}>{t('Safe Digital Guide', 'নিরাপদ ডিজিটাল গাইড')}</p>
         </div>
       </div>
@@ -80,8 +81,8 @@ export function TopBar() {
   return (
     <header className="topbar">
       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        <img src="/logo.svg" alt="Guideia" style={{ width: 38, height: 38, borderRadius: 10 }} />
-        <span style={{ fontWeight: 800, fontSize: 20 }}>Guideia</span>
+        <GuidiaLogo size={38} />
+        <span style={{ fontWeight: 800, fontSize: 20 }}>Guidia</span>
       </div>
       <nav style={{ display: 'flex', gap: 2, overflowX: 'auto' }}>
         {items.map(item => (

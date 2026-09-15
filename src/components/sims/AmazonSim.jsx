@@ -46,7 +46,7 @@ export default function AmazonSim({ onClose }) {
           {['Electronics', 'Fashion', 'Home', 'Groceries', 'Mobiles'].map((cat, i) => (
             <button key={i} onClick={() => showToast(t('Practice mode','অনুশীলন'))} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:6, background:'none', border:'none', cursor:'pointer', minWidth:60 }}>
               <div style={{ width:48, height:48, borderRadius:'50%', background:'#f2f2f2', display:'flex', alignItems:'center', justifyContent:'center', fontSize:20 }}>
-                 {i===0?'💻':i===1?'👗':i===2?'🏠':i===3?'🍎':'📱'}
+                 {i===0?'':i===1?'':i===2?'':i===3?'':''}
               </div>
               <span style={{ fontSize:12, color:'#333' }}>{t(cat, cat)}</span>
             </button>
@@ -57,7 +57,7 @@ export default function AmazonSim({ onClose }) {
         <div style={{ background:'#fff', padding:'16px', marginBottom:8 }}>
           <p style={{ fontSize:20, fontWeight:400, color:'#0f1111', marginBottom:16 }}>{t('Deal of the Day','আজকের ডিল')}</p>
           <div style={{ position:'relative' }}>
-             <div style={{ width:'100%', height:200, background:'#e7f3ff', borderRadius:4, display:'flex', alignItems:'center', justifyContent:'center', fontSize:80 }}>📱</div>
+             <div style={{ width:'100%', height:200, background:'#e7f3ff', borderRadius:4, display:'flex', alignItems:'center', justifyContent:'center', fontSize:80 }}></div>
              <div style={{ background:'#cc0c39', color:'#fff', padding:'6px 10px', borderRadius:2, position:'absolute', bottom:10, left:10, fontSize:13, fontWeight:700 }}>{t('Up to 40% off','৪০% পর্যন্ত ছাড়')}</div>
           </div>
           <p style={{ marginTop:12, fontSize:15, color:'#0f1111' }}>{t('Smartphones & Accessories','স্মার্টফোন এবং অ্যাকসেসরিজ')}</p>
@@ -68,8 +68,8 @@ export default function AmazonSim({ onClose }) {
           <p style={{ fontSize:20, fontWeight:400, color:'#0f1111', marginBottom:16 }}>{t('Recommended for you','আপনার জন্য প্রস্তাবিত')}</p>
           <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
             {[
-              { name:'Samsung Galaxy M34', price:'$250', rating:4.2, reviews:8420, img:'📱' },
-              { name:'Digital Blood Pressure Monitor', price:'$45', rating:4.5, reviews:3210, img:'⚕️' },
+              { name:'Samsung Galaxy M34', price:'$250', rating:4.2, reviews:8420, img:'' },
+              { name:'Digital Blood Pressure Monitor', price:'$45', rating:4.5, reviews:3210, img:'' },
             ].map((prod, i) => (
               <div key={i} style={{ display:'flex', gap:16 }}>
                  <div style={{ width:100, height:100, background:'#f2f2f2', borderRadius:4, display:'flex', alignItems:'center', justifyContent:'center', fontSize:40 }}>{prod.img}</div>

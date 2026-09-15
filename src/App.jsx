@@ -1,7 +1,15 @@
-import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
 import { AppProvider, useApp } from './context/AppStateContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import Landing from './pages/Landing';
+import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
+import ForgotPassword from './pages/auth/ForgotPassword';
+import ResetPassword from './pages/auth/ResetPassword';
+import AdminDashboard from './pages/AdminDashboard';
+import GuidiaLogo from './components/GuidiaLogo';
 import { Sidebar, TopBar, BottomNav } from './components/Navigation';
-import SplashScreen        from './components/SplashScreen';
 import Onboarding          from './components/Onboarding';
 import Home                from './components/Home';
 import Learn               from './components/Learn';
@@ -11,7 +19,6 @@ import Safety              from './components/Safety';
 import MemoryBook          from './components/MemoryBook';
 import SettingsPage        from './components/SettingsPage';
 import Notifications       from './components/Notifications';
-import ScreenshotAnalyzer  from './components/ScreenshotAnalyzer';
 import UIExplainer         from './components/UIExplainer';
 import GuardianDashboard   from './components/GuardianDashboard';
 import ProgressDashboard   from './components/ProgressDashboard';
@@ -46,6 +53,7 @@ const PAGES = {
   emergency:    { component:<EmergencyHelp/>,      fullH:false },
   settings:     { component:<SettingsPage/>,       fullH:false },
   notifications:{ component:<Notifications/>,      fullH:false },
+  guardian:     { component:<GuardianDashboard/>,  fullH:false },
 };
 
 const MODE_STYLES = {
@@ -54,38 +62,38 @@ const MODE_STYLES = {
   scared: { fontSize:'20px', '--anim-speed':'2s', '--spacing-ratio':1.5 },
 };
 
-function AppLayout() {
-  const { screen, activeTab, mode } = useApp();
+// ── Language + Emotional mode, reached once after registration ─────────
+function OnboardingPage() {
+  const { mode } = useApp();
   const modeStyle = MODE_STYLES[mode] || MODE_STYLES.calm;
-
-  // ── Splash ────────────────────────────────────────────────────────
-  if (screen === 'splash') return (
-    <div style={{ minHeight:'100vh', background:'linear-gradient(160deg,#4a8ec2,#6ba8a0)', display:'flex', flexDirection:'column' }}>
+  return (
+    <div data-theme="light" style={{ minHeight:'100vh', background:'linear-gradient(160deg,#eef4f9,#e8f4f0)', display:'flex', flexDirection:'column', color:'var(--text-1)', ...modeStyle }} data-mode={mode}>
       <Toast/>
-      <SplashScreen/>
-    </div>
-  );
-
-  // ── Language + Emotional mode (no phone/OTP) ───────────────────────
-  if (screen === 'onboard') return (
-    <div style={{ minHeight:'100vh', background:'linear-gradient(160deg,#eef4f9,#e8f4f0)', display:'flex', flexDirection:'column', ...modeStyle }} data-mode={mode}>
-      <Toast/>
-      <div style={{ display:'flex', alignItems:'center', gap:12, padding:'24px 36px' }}>
-        <img src="/logo.svg" alt="Guideia" style={{ width:42, height:42, borderRadius:10 }}/>
-        <span style={{ fontWeight:800, fontSize:22 }}>Guideia</span>
+      <div className="flex items-center gap-12 anim-up" style={{ padding:'24px 36px' }}>
+        <GuidiaLogo size={42}/>
+        <span style={{ fontWeight:800, fontSize:22 }}>Guidia</span>
       </div>
       <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', padding:'16px 16px 48px' }}>
-        <div className="auth-card" style={{ maxWidth:520 }}>
+        <div className="auth-card anim-up d1" style={{ maxWidth:520 }}>
           <Onboarding/>
         </div>
       </div>
     </div>
   );
+}
 
-  // ── Main app ──────────────────────────────────────────────────────
+// ── Main authenticated application shell ────────────────────────────────
+function AppShell() {
+  const { activeTab, mode, onboardingDone, darkMode } = useApp();
+  const modeStyle = MODE_STYLES[mode] || MODE_STYLES.calm;
   const page = PAGES[activeTab] || PAGES.home;
+
+  if (!onboardingDone) {
+    return <Navigate to="/onboarding" replace />;
+  }
+
   return (
-    <div className="app-layout" data-mode={mode} style={modeStyle}>
+    <div className="app-layout" data-mode={mode} data-theme={darkMode ? 'light' : 'dark'} style={{ color:'var(--text-1)', ...modeStyle }}>
       <Toast/>
       <Sidebar/>
       <div className="main-content">
@@ -101,8 +109,23 @@ function AppLayout() {
 
 export default function App() {
   return (
-    <AppProvider>
-      <AppLayout/>
-    </AppProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <AppProvider>
+          <Routes>
+            <Route path="/" element={<Landing/>} />
+            <Route path="/login" element={<Login/>} />
+            <Route path="/register" element={<Register/>} />
+            <Route path="/forgot-password" element={<ForgotPassword/>} />
+            <Route path="/reset-password" element={<ResetPassword/>} />
+            <Route path="/onboarding" element={<ProtectedRoute><OnboardingPage/></ProtectedRoute>} />
+            <Route path="/app" element={<Navigate to="/app/home" replace/>} />
+            <Route path="/app/:tab" element={<ProtectedRoute><AppShell/></ProtectedRoute>} />
+            <Route path="/admin" element={<ProtectedRoute role="ADMIN"><AdminDashboard/></ProtectedRoute>} />
+            <Route path="*" element={<Navigate to="/" replace/>} />
+          </Routes>
+        </AppProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }

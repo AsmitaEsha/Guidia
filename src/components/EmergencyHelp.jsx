@@ -3,14 +3,14 @@ import { useApp } from '../context/AppStateContext';
 import { Phone, MessageCircle, Shield, AlertTriangle, HeartHandshake } from 'lucide-react';
 
 const EMERGENCY_CONTACTS = [
-  { name:'Son (Dhaka)',    relation:'Guardian', phone:'019XXXXXX88', avatar:'👨', available:true  },
-  { name:'Rupa (Daughter)', relation:'Family', phone:'018XXXXXX33', avatar:'👩', available:true  },
-  { name:'Dr. Ahmed',     relation:'Doctor',   phone:'017XXXXXX91', avatar:'👨‍⚕️', available:false },
+  { name:'Son (Dhaka)', relation:'Guardian', phone:'019XXXXXX88', avatar:'', available:true },
+  { name:'Rupa (Daughter)', relation:'Family', phone:'018XXXXXX33', avatar:'', available:true },
+  { name:'Dr. Ahmed', relation:'Doctor', phone:'017XXXXXX91', avatar:'', available:false },
 ];
 
 export default function EmergencyHelp() {
   const { t, speak, showToast, setActiveTab } = useApp();
-  const [calling, setCalling]   = useState(null);
+  const [calling, setCalling] = useState(null);
   const [sosActive, setSosActive] = useState(false);
 
   const handleCall = (contact) => {
@@ -27,7 +27,7 @@ export default function EmergencyHelp() {
     speak(t('SOS activated! Notifying all your guardians immediately.', 'SOS সক্রিয়! আপনার সব গার্ডিয়ানকে এখনই জানানো হচ্ছে।'));
     setTimeout(() => {
       setSosActive(false);
-      showToast(t('✅ All guardians notified! Help is on the way.', '✅ সব গার্ডিয়ানকে জানানো হয়েছে! সাহায্য আসছে।'), 'success');
+      showToast(t(' All guardians notified! Help is on the way.', ' সব গার্ডিয়ানকে জানানো হয়েছে! সাহায্য আসছে।'), 'success');
     }, 3000);
   };
 
@@ -64,7 +64,7 @@ export default function EmergencyHelp() {
 
       {/* Emergency Contacts */}
       <div className="card anim-up d2" style={{ marginBottom:24 }}>
-        <h2 className="t-head" style={{ marginBottom:16 }}>📞 {t('Emergency Contacts','জরুরি যোগাযোগ')}</h2>
+        <h2 className="t-head" style={{ marginBottom:16 }}> {t('Emergency Contacts','জরুরি যোগাযোগ')}</h2>
         <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
           {EMERGENCY_CONTACTS.map((c, i) => (
             <div key={i} style={{ display:'flex', alignItems:'center', gap:16, padding:'16px 18px', background:'var(--surface-2)', borderRadius:'var(--r-sm)' }}>

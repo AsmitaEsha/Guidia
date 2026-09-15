@@ -7,18 +7,18 @@ const FB_BLUE = '#1877F2';
 
 export default function FacebookSim({ onClose }) {
   const { t, speak } = useApp();
-  const [liked, setLiked]     = useState({});
+  const [liked, setLiked] = useState({});
   const [activeNav, setActiveNav] = useState('home');
   const [friendReqs] = useState([
-    { id:'f1', name:'Kamal Hossain',  mutual:'3 mutual friends',  avatar:'👨' },
-    { id:'f2', name:'Nasreen Akter',  mutual:'7 mutual friends',  avatar:'👩' },
+    { id:'f1', name:'Kamal Hossain', mutual:'3 mutual friends', avatar:'' },
+    { id:'f2', name:'Nasreen Akter', mutual:'7 mutual friends', avatar:'' },
   ]);
 
   const stories = [
-    { name:t('Your Story','আপনার স্টোরি'), avatar:'➕', bg:'#e4e6eb' },
-    { name:'Rupa',   avatar:'👩', bg:'#ffcccc' },
-    { name:'Dr. Ahmed', avatar:'👨‍⚕️', bg:'#ccffdd' },
-    { name:'Mosque', avatar:'🕌', bg:'#cce0ff' },
+    { name:t('Your Story','আপনার স্টোরি'), avatar:'', bg:'#e4e6eb' },
+    { name:'Rupa', avatar:'', bg:'#ffcccc' },
+    { name:'Dr. Ahmed', avatar:'', bg:'#ccffdd' },
+    { name:'Mosque', avatar:'', bg:'#cce0ff' },
   ];
 
   return (
@@ -64,7 +64,7 @@ export default function FacebookSim({ onClose }) {
       <div style={{ flex:1, overflowY:'auto' }}>
         {/* Practice tip */}
         <div style={{ background:'#E7F3FF', padding:'8px 14px', fontSize:13, color:FB_BLUE, fontWeight:600 }}>
-          💡 {t('Tap 👍 to like posts. Practice social media safely.','👍 চাপ দিয়ে পোস্ট লাইক করুন।')}
+           {t('Tap to like posts. Practice social media safely.',' চাপ দিয়ে পোস্ট লাইক করুন।')}
         </div>
 
         {/* Stories */}
@@ -85,15 +85,15 @@ export default function FacebookSim({ onClose }) {
         {/* Post Composer */}
         <div style={{ background:'#fff', padding:'12px 14px', marginBottom:8, borderBottom:'1px solid #CDD0D4', borderTop:'1px solid #CDD0D4' }}>
           <div style={{ display:'flex', gap:10, alignItems:'center', marginBottom:10 }}>
-            <div style={{ width:40, height:40, borderRadius:'50%', background:'#5a8f7a', display:'flex', alignItems:'center', justifyContent:'center', fontSize:20 }}>👴</div>
+            <div style={{ width:40, height:40, borderRadius:'50%', background:'#5a8f7a', display:'flex', alignItems:'center', justifyContent:'center', fontSize:20 }}></div>
             <div style={{ flex:1, background:'#F0F2F5', borderRadius:20, padding:'10px 16px', fontSize:15, color:'#65676B', cursor:'text' }}>
               {t("What's on your mind?","কী ভাবছেন?")}
             </div>
           </div>
           <div style={{ display:'flex', borderTop:'1px solid #CDD0D4', paddingTop:8, gap:0 }}>
-            <button style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'6px 0', border:'none', background:'none', fontSize:13, fontWeight:600, color:'#65676B', cursor:'pointer' }}>📹 {t('Video','ভিডিও')}</button>
-            <button style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'6px 0', border:'none', background:'none', fontSize:13, fontWeight:600, color:'#65676B', cursor:'pointer' }}>📷 {t('Photo','ছবি')}</button>
-            <button style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'6px 0', border:'none', background:'none', fontSize:13, fontWeight:600, color:'#65676B', cursor:'pointer' }}>😊 {t('Feeling','অনুভূতি')}</button>
+            <button style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'6px 0', border:'none', background:'none', fontSize:13, fontWeight:600, color:'#65676B', cursor:'pointer' }}> {t('Video','ভিডিও')}</button>
+            <button style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'6px 0', border:'none', background:'none', fontSize:13, fontWeight:600, color:'#65676B', cursor:'pointer' }}> {t('Photo','ছবি')}</button>
+            <button style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'6px 0', border:'none', background:'none', fontSize:13, fontWeight:600, color:'#65676B', cursor:'pointer' }}> {t('Feeling','অনুভূতি')}</button>
           </div>
         </div>
 
@@ -107,7 +107,7 @@ export default function FacebookSim({ onClose }) {
                 <p style={{ fontWeight:700, fontSize:15 }}>{p.author}</p>
                 <div style={{ display:'flex', alignItems:'center', gap:4 }}>
                   <p style={{ fontSize:12, color:'#65676B' }}>{p.time}</p>
-                  <span style={{ color:'#65676B', fontSize:12 }}>· 🌐</span>
+                  <span style={{ color:'#65676B', fontSize:12 }}>· </span>
                 </div>
               </div>
               <span style={{ fontSize:20, color:'#65676B' }}>···</span>
@@ -115,12 +115,12 @@ export default function FacebookSim({ onClose }) {
             {/* Post Text */}
             <p style={{ padding:'0 14px 12px', fontSize:16, lineHeight:1.5 }}>{p.text}</p>
             {/* Post Image */}
-            {p.image && <div style={{ background:'linear-gradient(135deg,#ffd89b,#19547b)', height:200, display:'flex', alignItems:'center', justifyContent:'center', fontSize:60 }}>🌅</div>}
+            {p.image && <div style={{ background:'linear-gradient(135deg,#ffd89b,#19547b)', height:200, display:'flex', alignItems:'center', justifyContent:'center', fontSize:60 }}></div>}
             {/* Reaction counts */}
             <div style={{ padding:'8px 14px', display:'flex', justifyContent:'space-between', borderBottom:'1px solid #E4E6EB' }}>
               <div style={{ display:'flex', alignItems:'center', gap:4 }}>
                 <div style={{ display:'flex', marginRight:4 }}>
-                  {['👍','❤️','😂'].map((e,j) => <span key={j} style={{ width:20, height:20, borderRadius:'50%', background:'#fff', display:'flex', alignItems:'center', justifyContent:'center', fontSize:12, marginLeft:j>0?-4:0, border:'1px solid #fff', zIndex:3-j }}>{e}</span>)}
+                  {['','',''].map((e,j) => <span key={j} style={{ width:20, height:20, borderRadius:'50%', background:'#fff', display:'flex', alignItems:'center', justifyContent:'center', fontSize:12, marginLeft:j>0?-4:0, border:'1px solid #fff', zIndex:3-j }}>{e}</span>)}
                 </div>
                 <span style={{ fontSize:14, color:'#65676B' }}>{liked[p.id]?p.likes+1:p.likes}</span>
               </div>

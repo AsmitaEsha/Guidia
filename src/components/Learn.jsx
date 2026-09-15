@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useApp } from '../context/AppStateContext';
 import { ArrowLeft, PlayCircle, ChevronRight, BookOpen, Check, Info } from 'lucide-react';
 import AppLogo from './AppLogo';
-import { TUTORIALS, PROGRESS_CATEGORIES } from '../data/hardcoded';
+import { TUTORIALS } from '../data/hardcoded';
 import { BUTTON_GUIDES } from '../data/buttonGuides';
 
 // ── Color intensity helpers ──────────────────────────────────
 const INTENSITY_MAP = {
-  safe:   { bg:'#dcfce7', border:'#16a34a', text:'#15803d', label:{en:'SAFE',bn:'নিরাপদ',hi:'सुरक्षित'},   dot:'#16a34a' },
-  action: { bg:'#dbeafe', border:'#2563eb', text:'#1d4ed8', label:{en:'ACTION',bn:'অ্যাকশন',hi:'कार्रवाई'},  dot:'#2563eb' },
-  danger: { bg:'#fee2e2', border:'#dc2626', text:'#b91c1c', label:{en:'DANGER',bn:'বিপদ',hi:'खतरा'},  dot:'#dc2626' },
-  warn:   { bg:'#ffedd5', border:'#ea580c', text:'#c2410c', label:{en:'CAUTION',bn:'সতর্কতা',hi:'सावधानी'}, dot:'#ea580c' },
-  info:   { bg:'#f3e8ff', border:'#7c3aed', text:'#6d28d9', label:{en:'INFO',bn:'তথ্য',hi:'जानकारी'},    dot:'#7c3aed' },
+  safe: { bg:'#dcfce7', border:'#16a34a', text:'#15803d', label:{en:'SAFE',bn:'নিরাপদ',hi:'सुरक्षित'}, dot:'#16a34a' },
+  action: { bg:'#dbeafe', border:'#2563eb', text:'#1d4ed8', label:{en:'ACTION',bn:'অ্যাকশন',hi:'कार्रवाई'}, dot:'#2563eb' },
+  danger: { bg:'#fee2e2', border:'#dc2626', text:'#b91c1c', label:{en:'DANGER',bn:'বিপদ',hi:'खतरा'}, dot:'#dc2626' },
+  warn: { bg:'#ffedd5', border:'#ea580c', text:'#c2410c', label:{en:'CAUTION',bn:'সতর্কতা',hi:'सावधानी'}, dot:'#ea580c' },
+  info: { bg:'#f3e8ff', border:'#7c3aed', text:'#6d28d9', label:{en:'INFO',bn:'তথ্য',hi:'जानकारी'}, dot:'#7c3aed' },
 };
 
 // App name → AppLogo key
@@ -118,17 +118,16 @@ function ButtonGuideViewer({ guide, onClose }) {
 
 // ── Tutorial Player ──────────────────────────────────────────
 function TutorialPlayer({ tut, onClose, onComplete }) {
-  const { language, speak, t, addMemory, updateProgress } = useApp();
+  const { language, speak, t, addMemory } = useApp();
   const [step, setStep] = useState(0);
   const steps = tut.steps[language] || tut.steps.en;
   const done = step >= steps.length;
 
-  const STEP_ICONS = ['📱','👆','⌨️','📤','🔍','✅','📷','💳','🏪','📋'];
+  const STEP_ICONS = ['','','⌨','','','','','','',''];
 
   const handleNext = () => { if (done) return; speak(steps[step]); setStep(s => s+1); };
   const handleComplete = () => {
-    addMemory({ title: tut.title, icon:'📚', category:'learning', starred:false, summary: steps[steps.length-1] });
-    updateProgress('messaging', 8);
+    addMemory({ title: tut.title, category:'learning', starred:false, summary: steps[steps.length-1] });
     onComplete();
   };
 
@@ -167,7 +166,7 @@ function TutorialPlayer({ tut, onClose, onComplete }) {
           </>
         ) : (
           <div className="card text-center anim-scale" style={{ padding:40 }}>
-            <div style={{ fontSize:64, marginBottom:16 }}>🎉</div>
+            <div style={{ fontSize:64, marginBottom:16 }}></div>
             <h2 className="t-title" style={{ color:'var(--success)', marginBottom:12 }}>{t('Wonderful!','চমৎকার!')}</h2>
             <p className="t-body">{t('You completed this lesson safely!','আপনি এই পাঠটি নিরাপদে সম্পন্ন করেছেন!')}</p>
           </div>
@@ -192,29 +191,29 @@ function TutorialPlayer({ tut, onClose, onComplete }) {
 // ── APP KEY MAP for Button Guides ────────────────────────────
 const APP_GUIDE_MAP = {
   messaging: ['whatsapp', 'facebook', 'gmail'],
-  banking:   ['bkash', 'nagad', 'googlepay', 'paypal'],
-  shopping:  ['amazon'],
-  health:    ['practo'],
-  travel:    ['booking'],
+  banking: ['bkash', 'nagad', 'googlepay', 'paypal'],
+  shopping: ['amazon'],
+  health: ['practo'],
+  travel: ['booking'],
 };
 
 // ── Main Learn Component ────────────────────────────────────
 export default function Learn() {
-  const { t, speak, language } = useApp();
-  const [activeTut, setActiveTut]     = useState(null);
+  const { t, speak } = useApp();
+  const [activeTut, setActiveTut] = useState(null);
   const [activeGuide, setActiveGuide] = useState(null);
-  const [completed, setCompleted]     = useState(['tut1','tut2','tut5']);
+  const [completed, setCompleted] = useState(['tut1','tut2','tut5']);
 
-  if (activeTut)   return <TutorialPlayer tut={activeTut} onClose={() => setActiveTut(null)} onComplete={() => { setCompleted(p=>[...p,activeTut.id]); setActiveTut(null); }} />;
+  if (activeTut) return <TutorialPlayer tut={activeTut} onClose={() => setActiveTut(null)} onComplete={() => { setCompleted(p=>[...p,activeTut.id]); setActiveTut(null); }} />;
   if (activeGuide) return <ButtonGuideViewer guide={activeGuide} onClose={() => setActiveGuide(null)} />;
 
   const groups = [
-    { label: t('📱 Messaging','📱 মেসেজিং'),                  key:'messaging', color:'#25D366', app:'whatsapp' },
-    { label: t('💳 Banking','💳 ব্যাংকিং'),                    key:'banking',   color:'#E2136E', app:'bkash'   },
-    { label: t('🛒 Shopping','🛒 শপিং'),                      key:'shopping',  color:'#f3a847', app:'amazon'  },
-    { label: t('👨‍⚕️ Health','👨‍⚕️ স্বাস্থ্য'),                        key:'health',    color:'#14BEF0', app:'practo'  },
-    { label: t('🏨 Travel','🏨 ভ্রমণ'),                        key:'travel',    color:'#003580', app:'booking' },
-    { label: t('🛡️ Online Safety','🛡️ অনলাইন নিরাপত্তা'), key:'safety',   color:'var(--success)', app:null },
+    { label: t(' Messaging',' মেসেজিং'), key:'messaging', color:'#25D366', app:'whatsapp' },
+    { label: t(' Banking',' ব্যাংকিং'), key:'banking', color:'#E2136E', app:'bkash' },
+    { label: t(' Shopping',' শপিং'), key:'shopping', color:'#f3a847', app:'amazon' },
+    { label: t(' Health',' স্বাস্থ্য'), key:'health', color:'#14BEF0', app:'practo' },
+    { label: t(' Travel',' ভ্রমণ'), key:'travel', color:'#003580', app:'booking' },
+    { label: t(' Online Safety',' অনলাইন নিরাপত্তা'), key:'safety', color:'var(--success)', app:null },
   ];
 
   return (
@@ -275,7 +274,7 @@ export default function Learn() {
                       <p style={{ fontWeight:700, fontSize:17 }}>{tut.title}</p>
                       <div className="flex items-center gap-8" style={{ marginTop:4 }}>
                         <span className="badge" style={{ background:done?'var(--success-light)':'var(--blue-light)', color:done?'var(--success)':'var(--blue-dark)' }}>
-                          {done ? t('✓ Completed','✓ সম্পন্ন') : tut.level}
+                          {done ? t(' Completed',' সম্পন্ন') : tut.level}
                         </span>
                         <span className="t-tiny">⏱ {tut.duration}</span>
                       </div>

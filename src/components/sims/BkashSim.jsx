@@ -1,32 +1,33 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useApp } from '../../context/AppStateContext';
-import { ArrowLeft, Check, ShieldCheck, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, ShieldCheck, Send, Smartphone, Store, ArrowUpCircle, Banknote, UserCircle, ArrowDownCircle } from 'lucide-react';
+import GuidiaSafetyPanel from '../GuidiaSafetyPanel';
 
 const BK = '#E2136E';
 const BK_LIGHT = '#FFF0F7';
 
 const MENU_ITEMS = [
-  { icon:'💸', labelEn:'Send Money',      labelBn:'টাকা পাঠান',    step:'send'    },
-  { icon:'📱', labelEn:'Mobile Recharge', labelBn:'মোবাইল রিচার্জ', step:'recharge'},
-  { icon:'🏪', labelEn:'Payment',         labelBn:'পেমেন্ট',        step:'pay'     },
-  { icon:'⬆️', labelEn:'Add Money',       labelBn:'টাকা যোগ করুন', step:'add'     },
-  { icon:'🏦', labelEn:'Cash Out',        labelBn:'ক্যাশ আউট',     step:'cashout' },
-  { icon:'📊', labelEn:'My bKash',        labelBn:'আমার bKash',     step:'profile' },
+  { icon:<Send size={24}/>, labelEn:'Send Money', labelBn:'টাকা পাঠান', step:'send' },
+  { icon:<Smartphone size={24}/>, labelEn:'Mobile Recharge', labelBn:'মোবাইল রিচার্জ', step:'recharge'},
+  { icon:<Store size={24}/>, labelEn:'Payment', labelBn:'পেমেন্ট', step:'pay' },
+  { icon:<ArrowUpCircle size={24}/>, labelEn:'Add Money', labelBn:'টাকা যোগ করুন', step:'add' },
+  { icon:<Banknote size={24}/>, labelEn:'Cash Out', labelBn:'ক্যাশ আউট', step:'cashout' },
+  { icon:<UserCircle size={24}/>, labelEn:'My bKash', labelBn:'আমার bKash', step:'profile' },
 ];
 
 const SAVED_CONTACTS = [
-  { id:'c1', name:'Rupa (Daughter)', phone:'018XXXXXX33', avatar:'👩' },
-  { id:'c2', name:'Karim (Son)',     phone:'019XXXXXX88', avatar:'👨' },
-  { id:'c3', name:'Dr. Ahmed',      phone:'017XXXXXX91', avatar:'👨‍⚕️' },
+  { id:'c1', name:'Rupa (Daughter)', phone:'018XXXXXX33', avatar:'' },
+  { id:'c2', name:'Karim (Son)', phone:'019XXXXXX88', avatar:'' },
+  { id:'c3', name:'Dr. Ahmed', phone:'017XXXXXX91', avatar:'' },
 ];
 
 export default function BkashSim({ onClose }) {
   const { t, speak, showToast } = useApp();
-  const [step, setStep]       = useState('home');
+  const [step, setStep] = useState('home');
   const [recipient, setRecipient] = useState('');
-  const [amount, setAmount]   = useState('');
-  const [pin, setPin]         = useState(['','','','','']);
+  const [amount, setAmount] = useState('');
   const [guardianWait, setGuardianWait] = useState(false);
+  const [showSafetyPanel, setShowSafetyPanel] = useState(false);
 
   const back = () => {
     if (step !== 'home') setStep('home');
@@ -36,13 +37,26 @@ export default function BkashSim({ onClose }) {
   const handleSend = () => {
     if (!recipient || !amount) return;
     setStep('confirm');
-    speak(t('Please review the details carefully before confirming.','নিশ্চিত করার আগে বিবরণ মনোযোগ দিয়ে দেখুন।'));
+    setShowSafetyPanel(true);
   };
 
   const handleGuardianApprove = () => {
+    setShowSafetyPanel(false);
     setGuardianWait(true);
     speak(t('Notifying guardian for approval…','গার্ডিয়ানকে অনুমোদনের জন্য জানানো হচ্ছে…'));
     setTimeout(() => { setGuardianWait(false); setStep('done'); speak(t('Guardian approved! Transfer successful.','গার্ডিয়ান অনুমোদন দিয়েছেন! স্থানান্তর সফল।')); }, 3000);
+  };
+
+  const handleEditFromSafetyPanel = () => {
+    setShowSafetyPanel(false);
+    setStep('send');
+  };
+
+  const handleHelpFromSafetyPanel = () => {
+    setShowSafetyPanel(false);
+    setStep('send');
+    speak(t("It's okay to ask for help. Consider asking Guidia's AI Assistant or a trusted family member before sending.", 'সাহায্য চাওয়া ঠিক আছে। পাঠানোর আগে Guidia সহকারী বা বিশ্বস্ত পরিবারকে জিজ্ঞাসা করুন।'));
+    showToast(t('No problem — take your time. Ask the AI Assistant if you need help.', 'কোনো সমস্যা নেই — সময় নিন। প্রয়োজনে AI সহকারীকে জিজ্ঞাসা করুন।'), 'info');
   };
 
   /* ─ Done Screen ─ */
@@ -57,7 +71,7 @@ export default function BkashSim({ onClose }) {
           <ShieldCheck size={56} color="var(--success)"/>
         </div>
         <div>
-          <p style={{ fontWeight:900, fontSize:26, color:'var(--success)' }}>✅ {t('Transfer Complete!','স্থানান্তর সম্পন্ন!')}</p>
+          <p style={{ fontWeight:900, fontSize:26, color:'var(--success)' }}> {t('Transfer Complete!','স্থানান্তর সম্পন্ন!')}</p>
           <p style={{ marginTop:8, color:'#5F6368', fontSize:16 }}>৳ {amount} → {recipient}</p>
           <p style={{ marginTop:4, color:'var(--success)', fontWeight:600 }}>{t('Approved by Guardian','গার্ডিয়ান অনুমোদিত')}</p>
         </div>
@@ -71,55 +85,49 @@ export default function BkashSim({ onClose }) {
   /* ─ Guardian Wait ─ */
   if (guardianWait) return (
     <div style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', height:'100%', gap:24, padding:32, textAlign:'center', background:BK_LIGHT }}>
-      <div style={{ fontSize:72 }} className="anim-pulse">📱</div>
+      <div className="icon-wrap iw-xl ic-blue anim-pulse" style={{ margin: '0 auto' }}><ShieldCheck size={36}/></div>
       <p style={{ fontWeight:800, fontSize:22 }}>{t('Waiting for Guardian…','গার্ডিয়ানের জন্য অপেক্ষা…')}</p>
       <p style={{ color:'#5F6368', fontSize:16 }}>{t('Your guardian is reviewing this transfer on their phone.','আপনার গার্ডিয়ান তাদের ফোনে এই লেনদেন দেখছেন।')}</p>
       <div className="spinner" style={{ width:40, height:40, borderWidth:4 }}/>
     </div>
   );
 
-  /* ─ Confirm Screen ─ */
+  /* ─ Confirm Screen — the Psychological Safety Net (GuidiaSafetyPanel)
+     handles the actual review/decision; this screen is just the backdrop. ─ */
   if (step === 'confirm') return (
     <div style={{ display:'flex', flexDirection:'column', height:'100%', background:'#fff' }}>
       <div style={{ background:BK, padding:'16px 20px', display:'flex', alignItems:'center', gap:12, color:'#fff', flexShrink:0 }}>
-        <button onClick={()=>setStep('send')} style={{ color:'#fff' }}><ArrowLeft size={22}/></button>
+        <button onClick={handleEditFromSafetyPanel} style={{ color:'#fff' }}><ArrowLeft size={22}/></button>
         <p style={{ fontWeight:800, fontSize:18 }}>{t('Confirm Transfer','স্থানান্তর নিশ্চিত করুন')}</p>
       </div>
-      <div style={{ flex:1, padding:20, display:'flex', flexDirection:'column', gap:16 }}>
-        <div style={{ background:'#FFF8E1', border:'1px solid #FDD835', borderRadius:10, padding:16 }}>
-          <div style={{ display:'flex', gap:10, alignItems:'flex-start' }}>
-            <AlertTriangle size={20} color="#E65100" style={{ flexShrink:0, marginTop:2 }}/>
-            <div>
-              <p style={{ fontWeight:800, color:'#E65100', marginBottom:4 }}>{t('Safety Check','নিরাপত্তা যাচাই')}</p>
-              <p style={{ fontSize:14, color:'#BF360C' }}>{t('Are you sending to someone you trust? Scammers pretend to be banks.','আপনি কি বিশ্বস্ত কাউকে পাঠাচ্ছেন? প্রতারকরা ব্যাংক সেজে ধোঁকা দেয়।')}</p>
-            </div>
-          </div>
-        </div>
+      <div style={{ flex:1, padding:20 }}>
         <div style={{ background:'#F8F9FA', borderRadius:10, padding:20, border:'1px solid #E8EAED' }}>
           <div style={{ display:'flex', justifyContent:'space-between', paddingBottom:12, borderBottom:'1px solid #E8EAED', marginBottom:12 }}>
             <p style={{ color:'#5F6368', fontSize:15 }}>{t('Recipient','প্রাপক')}</p>
             <p style={{ fontWeight:700, fontSize:15 }}>{recipient}</p>
           </div>
-          <div style={{ display:'flex', justifyContent:'space-between', paddingBottom:12, borderBottom:'1px solid #E8EAED', marginBottom:12 }}>
+          <div style={{ display:'flex', justifyContent:'space-between' }}>
             <p style={{ color:'#5F6368', fontSize:15 }}>{t('Amount','পরিমাণ')}</p>
             <p style={{ fontWeight:800, fontSize:20, color:BK }}>৳ {amount}</p>
           </div>
-          <div style={{ display:'flex', justifyContent:'space-between' }}>
-            <p style={{ color:'#5F6368', fontSize:15 }}>{t('Charge','চার্জ')}</p>
-            <p style={{ fontWeight:600, fontSize:15, color:'var(--success)' }}>৳ 0.00</p>
-          </div>
         </div>
-        <div style={{ background:BK_LIGHT, borderRadius:10, padding:16, border:`1px solid ${BK}55` }}>
-          <p style={{ fontWeight:700, color:BK, marginBottom:8, fontSize:15 }}>👨 {t('Request Guardian Approval','গার্ডিয়ানের অনুমোদন নিন')}</p>
-          <p style={{ fontSize:13, color:'#5F6368', marginBottom:12 }}>{t('Your guardian will receive a notification and approve from their phone.','আপনার গার্ডিয়ান বিজ্ঞপ্তি পাবেন এবং তাদের ফোন থেকে অনুমোদন দেবেন।')}</p>
-          <button onClick={handleGuardianApprove} style={{ width:'100%', background:BK, color:'#fff', padding:'14px', borderRadius:8, fontWeight:800, fontSize:16, border:'none', cursor:'pointer' }}>
-            📲 {t('Send for Guardian Approval','গার্ডিয়ানের অনুমোদনের জন্য পাঠান')}
-          </button>
-        </div>
-        <button onClick={()=>setStep('send')} style={{ width:'100%', background:'none', border:`1px solid ${BK}`, color:BK, padding:'12px', borderRadius:8, fontWeight:700, fontSize:15, cursor:'pointer' }}>
-          ✏️ {t('Edit Details','তথ্য পরিবর্তন করুন')}
-        </button>
       </div>
+
+      <GuidiaSafetyPanel
+        open={showSafetyPanel}
+        actionType="bkash_send_money"
+        title={t('Review before you send', 'পাঠানোর আগে যাচাই করুন')}
+        what={t('Send money via bKash', 'bKash এর মাধ্যমে টাকা পাঠানো')}
+        who={recipient}
+        amountOrData={`৳ ${amount}`}
+        consequence={t(
+          'Once your guardian approves, the money leaves your account and cannot be undone.',
+          'আপনার গার্ডিয়ান অনুমোদন দিলে টাকা আপনার অ্যাকাউন্ট থেকে চলে যাবে এবং তা ফেরত আনা যাবে না।'
+        )}
+        onProceed={handleGuardianApprove}
+        onEdit={handleEditFromSafetyPanel}
+        onRequestHelp={handleHelpFromSafetyPanel}
+      />
     </div>
   );
 
@@ -132,7 +140,7 @@ export default function BkashSim({ onClose }) {
       </div>
       <div style={{ flex:1, overflow:'auto', padding:20, display:'flex', flexDirection:'column', gap:18 }}>
         <div style={{ background:'#FFF3E0', borderRadius:10, padding:14, border:'1px solid #FFB74D' }}>
-          <p style={{ fontSize:14, fontWeight:700, color:'#E65100' }}>⚠️ {t('Always double-check the number before sending money!','টাকা পাঠানোর আগে সবসময় নম্বর দুইবার যাচাই করুন!')}</p>
+          <p style={{ fontSize:14, fontWeight:700, color:'#E65100' }}> {t('Always double-check the number before sending money!','টাকা পাঠানোর আগে সবসময় নম্বর দুইবার যাচাই করুন!')}</p>
         </div>
         {/* Saved contacts */}
         <div>
@@ -186,13 +194,13 @@ export default function BkashSim({ onClose }) {
         {/* Account number bar */}
         <div style={{ background:'rgba(0,0,0,0.15)', padding:'8px 18px', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
           <p style={{ fontSize:13, opacity:0.9 }}>01XXXXXXXX ({t('Practice Account','অনুশীলন অ্যাকাউন্ট')})</p>
-          <span style={{ fontSize:12, background:'rgba(255,255,255,0.2)', padding:'3px 10px', borderRadius:12 }}>{t('Verified ✓','যাচাইকৃত ✓')}</span>
+          <span style={{ fontSize:12, background:'rgba(255,255,255,0.2)', padding:'3px 10px', borderRadius:12 }}>{t('Verified ','যাচাইকৃত ')}</span>
         </div>
       </div>
 
       {/* Practice tip */}
       <div style={{ background:'#FCE4EC', padding:'8px 14px', fontSize:13, color:'#880E4F', fontWeight:600, flexShrink:0 }}>
-        💡 {t('Practice mode — no real money will move.','অনুশীলন মোড — আসল টাকা যাবে না।')}
+         {t('Practice mode — no real money will move.','অনুশীলন মোড — আসল টাকা যাবে না।')}
       </div>
 
       {/* Menu Grid */}
@@ -214,9 +222,9 @@ export default function BkashSim({ onClose }) {
             <p style={{ fontSize:13, color:BK, fontWeight:600 }}>{t('See All','সব দেখুন')}</p>
           </div>
           {[
-            { icon:'💸', label:t('Send Money to Rupa','রুপাকে টাকা পাঠানো'), amount:'-৳ 1,000', date:t('Yesterday','গতকাল'), color:'var(--danger)' },
-            { icon:'⬆️', label:t('Add Money from Bank','ব্যাংক থেকে টাকা যোগ'), amount:'+৳ 5,000', date:'2 days ago', color:'var(--success)' },
-            { icon:'📱', label:t('Mobile Recharge','মোবাইল রিচার্জ'), amount:'-৳ 100', date:'3 days ago', color:'var(--danger)' },
+            { icon:<Send size={20}/>, label:t('Send Money to Rupa','রুপাকে টাকা পাঠানো'), amount:'-৳ 1,000', date:t('Yesterday','গতকাল'), color:'var(--danger)' },
+            { icon:<ArrowDownCircle size={20}/>, label:t('Add Money from Bank','ব্যাংক থেকে টাকা যোগ'), amount:'+৳ 5,000', date:'2 days ago', color:'var(--success)' },
+            { icon:<Smartphone size={20}/>, label:t('Mobile Recharge','মোবাইল রিচার্জ'), amount:'-৳ 100', date:'3 days ago', color:'var(--danger)' },
           ].map((tx,i) => (
             <div key={i} style={{ display:'flex', alignItems:'center', gap:14, padding:'14px 16px', borderBottom:i<2?'1px solid #F0F0F0':'none' }}>
               <div style={{ width:44, height:44, borderRadius:12, background:`${BK}18`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:22, flexShrink:0 }}>{tx.icon}</div>

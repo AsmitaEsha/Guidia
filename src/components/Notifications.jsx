@@ -1,6 +1,5 @@
-import React from 'react';
 import { useApp } from '../context/AppStateContext';
-import { Bell, Check, Shield, BookOpen, AlertTriangle, Info } from 'lucide-react';
+import { Bell, Shield, BookOpen, AlertTriangle, Info } from 'lucide-react';
 
 const TYPE_ICONS = { guardian:<Shield size={20}/>, lesson:<BookOpen size={20}/>, scam:<AlertTriangle size={20}/>, reminder:<Info size={20}/> };
 const TYPE_COLORS = { guardian:'var(--blue)', lesson:'var(--success)', scam:'var(--danger)', reminder:'var(--teal)' };
@@ -21,6 +20,11 @@ export default function Notifications() {
       </div>
 
       <div style={{ padding:'8px 24px 40px', display:'flex', flexDirection:'column', gap:10 }}>
+        {notifications.length === 0 && (
+          <div className="card text-center" style={{ padding:40 }}>
+            <p className="t-body">{t('No notifications yet. They will appear here as you use Guidia.','এখনো কোনো নোটিফিকেশন নেই। Guidia ব্যবহারের সাথে সাথে এখানে দেখাবে।')}</p>
+          </div>
+        )}
         {notifications.map((n, i) => {
           const col = TYPE_COLORS[n.type] || 'var(--blue)';
           return (

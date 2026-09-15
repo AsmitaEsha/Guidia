@@ -1,8 +1,40 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap');
 
 
+/* Guidia design tokens — dark navy + indigo, matching the product's
+   reference visual design. Dark is the default/primary theme; a lighter
+   palette is available via the Dark Mode toggle in Settings, which now
+   flips *away* from this default instead of into a dark mode. */
 :root {
-  --blue:#2563eb; --blue-light:#eff6ff; --blue-dark:#1d4ed8;
+  --blue:#6366f1; --blue-light:rgba(99,102,241,0.16); --blue-dark:#818cf8;
+  --purple:#8b5cf6; --purple-light:rgba(139,92,246,0.16);
+  --teal:#22d3ee; --teal-light:rgba(34,211,238,0.14);
+  --sage:#34d399; --sage-light:rgba(52,211,153,0.14);
+  --peach:#fbbf24; --peach-light:rgba(251,191,36,0.14);
+  --warm-white:#0a0f1e; --surface:#131a2e; --surface-2:#1c2440;
+  --text-1:#f8f9fd; --text-2:#c7cce3; --text-3:#8991b8;
+  --warn:#fbbf24; --warn-light:rgba(251,191,36,0.14);
+  --danger:#f87171; --danger-light:rgba(248,113,113,0.14);
+  --success:#34d399; --success-light:rgba(52,211,153,0.16);
+  --border:rgba(255,255,255,0.08);
+  --sh-xs:0 1px 3px rgba(0,0,0,0.3),0 1px 2px rgba(0,0,0,0.24);
+  --sh-sm:0 4px 6px rgba(0,0,0,0.28),0 2px 4px rgba(0,0,0,0.22);
+  --sh-md:0 10px 15px rgba(0,0,0,0.32),0 4px 6px rgba(0,0,0,0.22);
+  --sh-lg:0 20px 25px rgba(0,0,0,0.38),0 8px 10px rgba(0,0,0,0.24);
+  --r-sm:10px; --r-md:14px; --r-lg:20px; --r-xl:28px;
+  --tr:0.2s cubic-bezier(0.4,0,0.2,1);
+  --sidebar-w:272px;
+  --gradient-brand: linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);
+}
+[data-mode="scared"]{--tr:0.55s cubic-bezier(0.4,0,0.2,1);}
+[data-mode="calm"]  {--tr:0.18s cubic-bezier(0.4,0,0.2,1);}
+
+/* Light theme — an explicit opt-out of the default dark palette above via
+   the Dark Mode toggle in Settings (the toggle now reads as "Light Mode"
+   there is inverted logic-wise but keeps the same persisted preference). */
+[data-theme="light"]{
+  --blue:#4f46e5; --blue-light:#eef2ff; --blue-dark:#4338ca;
+  --purple:#7c3aed; --purple-light:#f3e8ff;
   --teal:#0891b2; --teal-light:#ecfeff;
   --sage:#059669; --sage-light:#ecfdf5;
   --peach:#d97706; --peach-light:#fffbeb;
@@ -16,12 +48,83 @@
   --sh-sm:0 4px 6px rgba(0,0,0,0.05),0 2px 4px rgba(0,0,0,0.04);
   --sh-md:0 10px 15px rgba(0,0,0,0.06),0 4px 6px rgba(0,0,0,0.04);
   --sh-lg:0 20px 25px rgba(0,0,0,0.08),0 8px 10px rgba(0,0,0,0.04);
-  --r-sm:10px; --r-md:14px; --r-lg:20px; --r-xl:28px;
-  --tr:0.2s cubic-bezier(0.4,0,0.2,1);
-  --sidebar-w:272px;
 }
-[data-mode="scared"]{--tr:0.55s cubic-bezier(0.4,0,0.2,1);}
-[data-mode="calm"]  {--tr:0.18s cubic-bezier(0.4,0,0.2,1);}
+[data-theme="light"] body{background:var(--warm-white);color:var(--text-1);}
+
+/* ============================================
+   LANDING PAGE — a deliberately distinct, restrained token set from the
+   dashboard's indigo/purple identity. Muted teal-blue, deep charcoal text,
+   warm off-white — self-scoped on .landing-page so it never fights with
+   the dashboard's dark theme, and sets its own `color` explicitly (the
+   dashboard's earlier theme-inheritance bug taught that lesson).
+   ============================================ */
+.landing-page{
+  --bg:#faf9f6; --surface:#ffffff; --surface-secondary:#f2f0ea;
+  --primary:#1f6f78; --primary-hover:#17565d; --primary-light:#e6f0ef;
+  --text-primary:#1a2027; --text-secondary:#5b6472;
+  --border:rgba(26,32,39,0.1);
+  --success:#3f8f5f; --success-light:#eaf5ee;
+  --warning:#a8720f; --warning-light:#fbf3e3;
+  --danger:#b3423a; --danger-light:#fbebe9;
+  --focus:#1f6f78; --disabled:#b7bcc4;
+  --lp-sh-sm:0 1px 3px rgba(26,32,39,0.06),0 1px 2px rgba(26,32,39,0.04);
+  --lp-sh-md:0 8px 24px rgba(26,32,39,0.08);
+  background:var(--bg); color:var(--text-primary);
+  font-family:'Inter',system-ui,sans-serif;
+}
+.lp-container{ max-width:1180px; margin:0 auto; padding-left:24px; padding-right:24px; }
+.lp-section{ padding:88px 0; }
+@media(max-width:767px){ .lp-section{ padding:56px 0; } }
+.lp-eyebrow{ font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--primary); margin-bottom:14px; }
+.lp-h2{ font-size:34px; font-weight:800; line-height:1.25; letter-spacing:-0.01em; color:var(--text-primary); }
+.lp-sub{ font-size:17px; color:var(--text-secondary); line-height:1.65; }
+@media(max-width:767px){ .lp-h2{ font-size:26px; } }
+.lp-card{ background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--lp-sh-sm); transition:box-shadow 0.25s ease, transform 0.25s ease; }
+.lp-card:hover{ box-shadow:var(--lp-sh-md); transform:translateY(-2px); }
+.lp-btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:14px 26px; border-radius:10px; font-weight:700; font-size:16px; cursor:pointer; border:none; transition:all 0.2s ease; }
+.lp-btn-primary{ background:var(--primary); color:#fff; }
+.lp-btn-primary:hover{ background:var(--primary-hover); }
+.lp-btn-secondary{ background:transparent; color:var(--text-primary); border:1.5px solid var(--border); }
+.lp-btn-secondary:hover{ border-color:var(--primary); color:var(--primary); }
+.landing-page button:focus-visible,
+.landing-page a:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; border-radius:4px; }
+
+/* Reveal-on-scroll — respects prefers-reduced-motion and the in-app
+   Reduced Motion setting; IntersectionObserver toggles .is-visible. */
+.lp-reveal{ opacity:0; transform:translateY(16px); transition:opacity 0.6s ease, transform 0.6s ease; }
+.lp-reveal.is-visible{ opacity:1; transform:translateY(0); }
+@media (prefers-reduced-motion: reduce){ .lp-reveal{ opacity:1; transform:none; transition:none; } }
+[data-reduced-motion="true"] .lp-reveal{ opacity:1; transform:none; transition:none; }
+
+.lp-auth-mobile-logo{ display:none; }
+@media(max-width:900px){
+  .lp-auth-panel{ display:none !important; }
+  .lp-auth-mobile-logo{ display:flex !important; }
+}
+
+.lp-navlink{ position:relative; }
+.lp-navlink:hover{ color:var(--text-primary) !important; }
+.lp-mobile-menu-btn{ cursor:pointer; }
+@media(max-width:900px){
+  .lp-desktop-nav{ display:none !important; }
+  .lp-mobile-menu-btn{ display:flex !important; }
+}
+
+.lp-split-left{ border-radius:16px 0 0 16px; }
+.lp-split-right{ border-radius:0 16px 16px 0; }
+@media(max-width:600px){
+  .lp-split-left{ border-radius:16px 16px 0 0; }
+  .lp-split-right{ border-radius:0 0 16px 16px; }
+}
+
+.lp-journey{ display:grid; grid-template-columns:repeat(4,1fr); gap:32px; }
+.lp-journey-step{ position:relative; padding-right:24px; }
+.lp-journey-connector{ position:absolute; top:9px; right:-16px; width:32px; height:1px; background:var(--border); }
+@media(max-width:900px){
+  .lp-journey{ grid-template-columns:1fr; gap:0; }
+  .lp-journey-step{ padding:0 0 28px 24px; border-left:2px solid var(--border); margin-left:6px; padding-right:0; }
+  .lp-journey-connector{ display:none; }
+}
 
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -30,11 +133,26 @@ body{
   font-family:'Inter',system-ui,sans-serif;
   background:var(--warm-white);
   color:var(--text-1);
-  font-size:17px;
+  font-size:var(--user-font-size,17px);
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   min-height:100%;
+}
+
+/* Reduced Motion setting (Settings → Accessibility) — previously tracked
+   in state but never applied. Forces animations/transitions effectively
+   off site-wide, and also honors the OS-level preference regardless of
+   the in-app toggle. */
+[data-reduced-motion="true"] *,
+[data-reduced-motion="true"] *::before,
+[data-reduced-motion="true"] *::after{
+  animation-duration:0.001s !important;
+  animation-delay:0s !important;
+  transition-duration:0.001s !important;
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{ animation-duration:0.001s !important; transition-duration:0.001s !important; }
 }
 #root{min-height:100vh;display:flex;flex-direction:column;}
 button{font-family:inherit;cursor:pointer;border:none;background:none;outline:none;}
@@ -69,6 +187,7 @@ input,textarea{font-family:inherit;}
   display: flex;
   min-height: 100vh;
   background: var(--warm-white);
+  color: var(--text-1);
 }
 
 /* Sidebar (desktop) */
@@ -123,7 +242,7 @@ input,textarea{font-family:inherit;}
   letter-spacing: -0.01em;
 }
 .sidebar-item:hover { background: var(--surface-2); color: var(--text-1); }
-.sidebar-item.active { background: var(--blue-light); color: var(--blue); font-weight: 700; }
+.sidebar-item.active { background: var(--gradient-brand); color: #fff; font-weight: 700; box-shadow: 0 4px 12px rgba(99,102,241,0.35); }
 .sidebar-item .si-badge {
   margin-left: auto;
   background: var(--danger);
@@ -190,7 +309,7 @@ input,textarea{font-family:inherit;}
   cursor: pointer;
   min-width: 58px;
 }
-.nav-item.active{color:var(--blue);background:var(--blue-light);}
+.nav-item.active{color:#fff;background:var(--gradient-brand);}
 
 /* Page content area */
 .page-content {
@@ -240,10 +359,11 @@ input,textarea{font-family:inherit;}
    ============================================ */
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
 
-@media (max-width: 900px) { .grid-3 { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 600px) { .grid-2, .grid-3, .grid-auto { grid-template-columns: 1fr; } }
+@media (max-width: 900px) { .grid-3 { grid-template-columns: 1fr 1fr; } .grid-4 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .grid-2, .grid-3, .grid-4, .grid-auto { grid-template-columns: 1fr; } }
 
 /* ============================================
    TYPOGRAPHY
@@ -441,38 +561,14 @@ input,textarea{font-family:inherit;}
 .error-state .error-icon{width:80px;height:80px;border-radius:50%;background:var(--warn-light);display:flex;align-items:center;justify-content:center;font-size:36px;}
 
 /* ============================================
-   EXTRA BUTTON VARIANTS
+   EXTRA BUTTON VARIANTS (hover states)
    ============================================ */
-.btn-success{background:var(--success);color:#fff;}
 .btn-success:hover{background:#3d9966;transform:translateY(-1px);}
-.btn-danger{background:var(--danger);color:#fff;}
 .btn-danger:hover{background:#b02020;transform:translateY(-1px);}
-.btn-warn{background:var(--warn);color:#fff;}
 .btn-warn:hover{background:#c07000;transform:translateY(-1px);}
-.btn-teal{background:var(--teal);color:#fff;}
 .btn-teal:hover{background:#4e8a84;transform:translateY(-1px);}
 
-/* ============================================
-   SUCCESS LIGHT
-   ============================================ */
-:root{--success-light:#eafaf1;}
-[data-mode=scared] :root{--success-light:#d4f8e4;}
-
-/* ============================================
-   OTP BOXES
-   ============================================ */
-.otp-wrap{display:flex;gap:10px;justify-content:center;}
-.otp-box{width:52px;height:60px;border:2px solid var(--border);border-radius:var(--r-sm);font-size:28px;font-weight:800;text-align:center;outline:none;transition:border-color var(--tr);}
-.otp-box:focus{border-color:var(--blue);}
-
-/* ============================================
-   RESPONSIVE GRID HELPERS
-   ============================================ */
-.flex-col{display:flex;flex-direction:column;}
 .flex-1{flex:1;}
-.w-full{width:100%;}
-.text-center{text-align:center;}
-.justify-center{justify-content:center;}
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

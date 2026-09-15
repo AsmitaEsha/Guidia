@@ -48,9 +48,9 @@ export default function BookingSim({ onClose }) {
         
         <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
           {[
-            { name:'Grand Palace Hotel', rating:8.9, reviews:420, price:'$120', img:'🏨' },
-            { name:'Ocean View Resort', rating:9.2, reviews:850, price:'$250', img:'🏖️' },
-            { name:'City Center Inn', rating:7.5, reviews:120, price:'$60', img:'🏢' },
+            { name:'Grand Palace Hotel', rating:8.9, reviews:420, price:'$120', img:'' },
+            { name:'Ocean View Resort', rating:9.2, reviews:850, price:'$250', img:'' },
+            { name:'City Center Inn', rating:7.5, reviews:120, price:'$60', img:'' },
           ].map((hotel, i) => (
             <div key={i} style={{ background:'#fff', borderRadius:8, overflow:'hidden', display:'flex', border:'1px solid #e7e7e7' }}>
               <div style={{ width:120, background:'#eef2f5', display:'flex', alignItems:'center', justifyContent:'center', fontSize:48, flexShrink:0 }}>

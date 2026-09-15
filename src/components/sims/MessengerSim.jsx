@@ -4,22 +4,22 @@ import { ArrowLeft, Phone, Video, Info, Send, Smile, Image, Mic, ThumbsUp } from
 
 export default function MessengerSim({ onClose }) {
   const { t, speak } = useApp();
-  const [chat, setChat]   = useState(null);
-  const [msgs, setMsgs]   = useState([]);
+  const [chat, setChat] = useState(null);
+  const [msgs, setMsgs] = useState([]);
   const [input, setInput] = useState('');
   const [calling, setCalling] = useState(false);
 
   const CONTACTS = [
-    { id:'c1', name:t('Rupa (Daughter)','রুপা (মেয়ে)'), avatar:'👩', color:'#0084FF', active:true,  preview:t('Tap to chat!','চ্যাট শুরু করুন!') },
-    { id:'c2', name:t('Karim Jr (Son)','করিম জুনিয়র (ছেলে)'), avatar:'👨', color:'#44BCD8', active:false, preview:t('Seen yesterday','গতকাল দেখেছে') },
-    { id:'c3', name:t('Mosque Group','মসজিদ গ্রুপ'), avatar:'🕌', color:'#9B59B6', active:false, preview:t('Meeting at 5pm','বিকেল ৫টায় বৈঠক') },
+    { id:'c1', name:t('Rupa (Daughter)','রুপা (মেয়ে)'), avatar:'', color:'#0084FF', active:true, preview:t('Tap to chat!','চ্যাট শুরু করুন!') },
+    { id:'c2', name:t('Karim Jr (Son)','করিম জুনিয়র (ছেলে)'), avatar:'', color:'#44BCD8', active:false, preview:t('Seen yesterday','গতকাল দেখেছে') },
+    { id:'c3', name:t('Mosque Group','মসজিদ গ্রুপ'), avatar:'', color:'#9B59B6', active:false, preview:t('Meeting at 5pm','বিকেল ৫টায় বৈঠক') },
   ];
 
   const openChat = (c) => {
     setChat(c);
     setMsgs([
-      { id:'m0', from:'them', text:t('Hello Abba! How are you feeling today? 😊','হ্যালো আব্বা! আজ কেমন আছেন? 😊'), time:'10:00 AM' },
-      { id:'m1', from:'me',   text:t('I am doing well, alhamdulillah! 🤲','ভালো আছি, আলহামদুলিল্লাহ! 🤲'), time:'10:02 AM' },
+      { id:'m0', from:'them', text:t('Hello Abba! How are you feeling today? ','হ্যালো আব্বা! আজ কেমন আছেন? '), time:'10:00 AM' },
+      { id:'m1', from:'me', text:t('I am doing well, alhamdulillah! ','ভালো আছি, আলহামদুলিল্লাহ! '), time:'10:02 AM' },
     ]);
     speak(t(`Chat with ${c.name} opened.`,`${c.name} এর সাথে চ্যাট খোলা হয়েছে।`));
   };
@@ -29,7 +29,7 @@ export default function MessengerSim({ onClose }) {
     setMsgs(p=>[...p,{id:`u${Date.now()}`,from:'me',text:input,time:'Now'}]);
     setInput('');
     speak(t('Message sent on Messenger!','Messenger-এ মেসেজ পাঠানো হয়েছে!'));
-    setTimeout(()=>setMsgs(p=>[...p,{id:`r${Date.now()}`,from:'them',text:t('❤️ Seen!','❤️ দেখেছি!'),time:'Now'}]),1800);
+    setTimeout(()=>setMsgs(p=>[...p,{id:`r${Date.now()}`,from:'them',text:t(' Seen!',' দেখেছি!'),time:'Now'}]),1800);
   };
 
   const startCall = () => {
@@ -37,7 +37,7 @@ export default function MessengerSim({ onClose }) {
     speak(t('Starting video call…','ভিডিও কল শুরু হচ্ছে…'));
     setTimeout(()=>{
       setCalling(false);
-      setMsgs(p=>[...p,{id:`c${Date.now()}`,from:'system',text:t('📹 Video call · 2m 14s','📹 ভিডিও কল · ২ মিনিট ১৪ সেকেন্ড'),time:'Now'}]);
+      setMsgs(p=>[...p,{id:`c${Date.now()}`,from:'system',text:t(' Video call · 2m 14s',' ভিডিও কল · ২ মিনিট ১৪ সেকেন্ড'),time:'Now'}]);
       speak(t('Call ended. Great job!','কল শেষ হয়েছে!'));
     },3500);
   };
@@ -45,7 +45,7 @@ export default function MessengerSim({ onClose }) {
   /* ─ Calling Screen ─ */
   if (calling) return (
     <div style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', height:'100%', background:'#1C1C1C', color:'#fff', gap:24, padding:32 }}>
-      <div style={{ fontSize:80 }} className="anim-pulse">{chat?.avatar||'👩'}</div>
+      <div style={{ fontSize:80 }} className="anim-pulse">{chat?.avatar||''}</div>
       <p style={{ fontWeight:800, fontSize:24 }}>{chat?.name}</p>
       <p style={{ color:'rgba(255,255,255,0.7)', fontSize:16 }}>{t('Calling…','কল হচ্ছে…')}</p>
       <div className="spinner" style={{ borderTopColor:'#0084FF', borderColor:'rgba(255,255,255,0.2)', width:40, height:40, borderWidth:4 }}/>
@@ -75,7 +75,7 @@ export default function MessengerSim({ onClose }) {
       </div>
       {/* Practice tip */}
       <div style={{ background:'#E8F4FE', padding:'6px 14px', fontSize:12, color:'#0057AD', fontWeight:600, flexShrink:0 }}>
-        🔒 {t('Practice mode — safe simulation','অনুশীলন মোড — নিরাপদ সিমুলেশন')}
+         {t('Practice mode — safe simulation','অনুশীলন মোড — নিরাপদ সিমুলেশন')}
       </div>
       {/* Messages */}
       <div style={{ flex:1, overflowY:'auto', padding:'12px 14px', display:'flex', flexDirection:'column', gap:8 }}>
@@ -104,7 +104,7 @@ export default function MessengerSim({ onClose }) {
           ? <button onClick={send} style={{ padding:10, borderRadius:'50%', background:'#0084FF', border:'none', cursor:'pointer', display:'flex' }}><Send size={18} color="#fff"/></button>
           : <>
               <button style={{ padding:8, borderRadius:'50%', background:'#F0F2F5', border:'none', cursor:'pointer' }}><Mic size={20} color="#0084FF"/></button>
-              <button onClick={()=>{setMsgs(p=>[...p,{id:`l${Date.now()}`,from:'me',text:'👍',time:'Now'}]);speak(t('Thumbs up sent!','থাম্বস আপ পাঠানো হয়েছে!'));}} style={{ padding:8, borderRadius:'50%', background:'#F0F2F5', border:'none', cursor:'pointer' }}><ThumbsUp size={20} color="#0084FF"/></button>
+              <button onClick={()=>{setMsgs(p=>[...p,{id:`l${Date.now()}`,from:'me',text:'',time:'Now'}]);speak(t('Thumbs up sent!','থাম্বস আপ পাঠানো হয়েছে!'));}} style={{ padding:8, borderRadius:'50%', background:'#F0F2F5', border:'none', cursor:'pointer' }}><ThumbsUp size={20} color="#0084FF"/></button>
             </>
         }
       </div>
@@ -132,7 +132,7 @@ export default function MessengerSim({ onClose }) {
 
       {/* Tip */}
       <div style={{ background:'#EEF3FF', padding:'8px 16px', fontSize:13, color:'#0057AD', fontWeight:600, flexShrink:0 }}>
-        💡 {t('Tap a contact to practice chatting or video calling.','পরিচিতিতে চাপ দিয়ে চ্যাট বা ভিডিও কল অনুশীলন করুন।')}
+         {t('Tap a contact to practice chatting or video calling.','পরিচিতিতে চাপ দিয়ে চ্যাট বা ভিডিও কল অনুশীলন করুন।')}
       </div>
 
       {/* Active Now */}
