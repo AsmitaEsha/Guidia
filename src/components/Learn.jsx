@@ -4,6 +4,7 @@ import { ArrowLeft, PlayCircle, ChevronRight, BookOpen, Check, Info } from 'luci
 import AppLogo from './AppLogo';
 import { TUTORIALS } from '../data/hardcoded';
 import { BUTTON_GUIDES } from '../data/buttonGuides';
+import VoiceGuide from './VoiceGuide';
 
 // ── Color intensity helpers ──────────────────────────────────
 const INTENSITY_MAP = {
@@ -118,14 +119,14 @@ function ButtonGuideViewer({ guide, onClose }) {
 
 // ── Tutorial Player ──────────────────────────────────────────
 function TutorialPlayer({ tut, onClose, onComplete }) {
-  const { language, speak, t, addMemory } = useApp();
+  const { language, t, addMemory, voiceAutoPlay, voiceControls } = useApp();
   const [step, setStep] = useState(0);
   const steps = tut.steps[language] || tut.steps.en;
   const done = step >= steps.length;
 
   const STEP_ICONS = ['','','⌨','','','','','','',''];
 
-  const handleNext = () => { if (done) return; speak(steps[step]); setStep(s => s+1); };
+  const handleNext = () => { if (done) return; voiceControls.stop(); setStep(s => s+1); };
   const handleComplete = () => {
     addMemory({ title: tut.title, category:'learning', starred:false, summary: steps[steps.length-1] });
     onComplete();
@@ -154,6 +155,12 @@ function TutorialPlayer({ tut, onClose, onComplete }) {
               <p style={{ fontWeight:700, fontSize:20, marginBottom:12 }}>
                 {t('Step','ধাপ')} {step+1}: {steps[step]}
               </p>
+              <VoiceGuide
+                text={steps[step]}
+                title={t('Voice Guidance', 'ভয়েস গাইডেন্স')}
+                autoPlay={voiceAutoPlay}
+                priority="lesson"
+              />
             </div>
             <div className="flex-col gap-12">
               {steps.slice(0, step).map((s,i) => (
@@ -176,7 +183,7 @@ function TutorialPlayer({ tut, onClose, onComplete }) {
       <div style={{ padding:'16px 24px 28px', background:'var(--surface)', borderTop:'1px solid var(--border)', flexShrink:0 }}>
         {!done ? (
           <button className="btn btn-primary btn-full btn-lg" onClick={handleNext}>
-            <PlayCircle size={22}/> {t('Read this step aloud & Continue','এই ধাপটি পড়ুন ও চালিয়ে যান')}
+            <PlayCircle size={22}/> {t('Continue','চালিয়ে যান')}
           </button>
         ) : (
           <button className="btn btn-success btn-full btn-lg" onClick={handleComplete}>

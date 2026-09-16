@@ -112,6 +112,8 @@ model UserPreference {
   darkMode        Boolean        @default(false)
   reducedMotion   Boolean        @default(false)
   voiceEnabled    Boolean        @default(true)
+  voiceSpeed      Float          @default(1.0)
+  voiceAutoPlay   Boolean        @default(false)
   onboardingDone  Boolean        @default(false)
   updatedAt       DateTime       @updatedAt
 

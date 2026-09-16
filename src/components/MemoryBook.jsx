@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useApp } from '../context/AppStateContext';
-import { PlayCircle, Star, BookMarked, MessageSquare, ShieldCheck, CreditCard, BookOpen, Smartphone } from 'lucide-react';
+import { Star, BookMarked, MessageSquare, ShieldCheck, CreditCard, BookOpen, Smartphone } from 'lucide-react';
 import GuidiaLoadingState from './ui/GuidiaLoadingState';
+import VoiceGuide from './VoiceGuide';
 
 const CAT_COLORS = { messaging:'var(--blue)', safety:'var(--sage)', banking:'#e2136e', learning:'var(--teal)', social:'var(--blue)' };
 
@@ -20,7 +21,7 @@ const CAT_LABELS = {
 };
 
 export default function MemoryBook() {
-  const { memoryEntries, memoryLoading, speak, t, language } = useApp();
+  const { memoryEntries, memoryLoading, t, language } = useApp();
   const [filter, setFilter] = useState('all');
 
   const labels = CAT_LABELS[language] || CAT_LABELS.en;
@@ -82,9 +83,7 @@ export default function MemoryBook() {
                 </div>
               </div>
               <div style={{ marginTop:12, display:'flex', gap:10 }}>
-                <button className="btn btn-sm btn-ghost flex items-center gap-6" onClick={() => speak(`${entry.title}. ${entry.summary}`)}>
-                  <PlayCircle size={16}/> {t('Replay','পুনরায় শুনুন','दोबारा सुनें')}
-                </button>
+                <VoiceGuide text={`${entry.title}. ${entry.summary}`} title={t('Replay by Voice','ভয়েসে আবার শুনুন','आवाज़ में दोबारा सुनें')} priority="memory" />
                 {entry.starred && (
                   <span className="badge badge-sage"><Star size={12}/> {t('Starred','তারাচিহ্নিত','स्टार किया')}</span>
                 )}

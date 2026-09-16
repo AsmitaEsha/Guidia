@@ -15,5 +15,6 @@ const voiceLimiter = rateLimit({
 
 router.use(requireAuth);
 router.get('/speak', voiceLimiter, voiceController.speak);
+router.post('/speak', voiceLimiter, voiceController.speak);
 
 export default router;

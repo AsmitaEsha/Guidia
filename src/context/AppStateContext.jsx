@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { FAKE_TRANSACTIONS } from '../data/hardcoded';
 import { useAuth } from './AuthContext';
 import { apiFetchBlob } from '../services/apiClient';
+import { recommendedVoiceRate, voiceChunks } from '../utils/voiceGuidance';
 
 // NOTE: notifications/transactions below are still demo data seeded in
 // memory — see GUIDIA_IMPLEMENTATION_PLAN.md Phase 15 for the plan to back
@@ -46,20 +47,6 @@ function getAudioEl() {
   return _audioEl;
 }
 
-function splitChunks(text) {
-  const MAX = 180;
-  const chunks = [];
-  let rem = text;
-  while (rem.length > 0) {
-    if (rem.length <= MAX) { chunks.push(rem); break; }
-    let idx = rem.lastIndexOf(' ', MAX);
-    if (idx < 0) idx = MAX;
-    chunks.push(rem.slice(0, idx));
-    rem = rem.slice(idx).trimStart();
-  }
-  return chunks;
-}
-
 // Module-scope playback state — only one utterance should ever play at a
 // time regardless of which component triggered it.
 let _chunks = [];
@@ -67,46 +54,91 @@ let _chunkIndex = -1;
 let _lastLang = 'en';
 let _rate = 1;
 let _blobUrl = null;
+let _cancelToken = 0;
+let _lastText = '';
+let _onComplete = null;
+let _setVoiceStatus = () => {};
 
 function revokeBlobUrl() {
   if (_blobUrl) { URL.revokeObjectURL(_blobUrl); _blobUrl = null; }
 }
 
-async function playChunk(apiFetchBlob, accessToken) {
+function emitVoiceStatus(next) {
+  _setVoiceStatus((prev) => ({ ...prev, ...next }));
+}
+
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function playChunk(apiFetchBlob, accessToken, token = _cancelToken, pauseMs = 250) {
   if (_chunkIndex >= _chunks.length) return;
   try {
-    const blob = await apiFetchBlob(`/voice/speak?text=${encodeURIComponent(_chunks[_chunkIndex])}&lang=${_lastLang}`, { accessToken });
+    if (token !== _cancelToken) return;
+    emitVoiceStatus({ status: 'loading', error: '' });
+    const blob = await apiFetchBlob(`/voice/speak?text=${encodeURIComponent(_chunks[_chunkIndex])}&lang=${_lastLang}&speed=${_rate}`, { accessToken });
+    if (token !== _cancelToken) return;
     revokeBlobUrl();
     _blobUrl = URL.createObjectURL(blob);
     const el = getAudioEl();
     el.src = _blobUrl;
     el.playbackRate = _rate;
-    el.onended = () => { _chunkIndex += 1; playChunk(apiFetchBlob, accessToken); };
+    el.onended = async () => {
+      if (token !== _cancelToken) return;
+      _chunkIndex += 1;
+      if (_chunkIndex >= _chunks.length) {
+        emitVoiceStatus({ status: 'idle' });
+        _onComplete?.();
+        return;
+      }
+      await delay(pauseMs);
+      playChunk(apiFetchBlob, accessToken, token, pauseMs);
+    };
     await el.play();
+    emitVoiceStatus({ status: 'playing', error: '' });
   } catch (err) {
     console.warn('Voice playback error:', err);
+    if (token === _cancelToken) {
+      emitVoiceStatus({ status: 'error', error: "Voice guidance isn't available right now." });
+    }
   }
 }
 
 // speak/pause/resume/stop/replay/setRate — the minimum voice control set
 // the product spec calls for. `speak` starts a fresh utterance; the others
 // operate on whatever is currently loaded.
-function speak(text, language, apiFetchBlob, accessToken) {
+function speak(text, language, apiFetchBlob, accessToken, { rate = 1, mode = 'calm', pauseMs = 250, onComplete } = {}) {
   if (!text || !apiFetchBlob) return;
-  _chunks = splitChunks(text);
+  stopVoice();
+  _cancelToken += 1;
+  const token = _cancelToken;
+  _lastText = text;
+  _onComplete = onComplete || null;
+  _chunks = voiceChunks(text, mode);
   _chunkIndex = 0;
   _lastLang = language === 'bn' ? 'bn' : language === 'hi' ? 'hi' : 'en';
-  getAudioEl().pause();
-  playChunk(apiFetchBlob, accessToken);
+  _rate = rate;
+  emitVoiceStatus({ status: 'loading', currentText: text, error: '' });
+  playChunk(apiFetchBlob, accessToken, token, pauseMs);
 }
 
-function pauseVoice() { _audioEl?.pause(); }
-function resumeVoice() { _audioEl?.play().catch(() => {}); }
-function stopVoice() { if (_audioEl) { _audioEl.pause(); _audioEl.currentTime = 0; } _chunkIndex = _chunks.length; }
-function replayVoice(apiFetchBlob, accessToken) {
+function pauseVoice() { _audioEl?.pause(); emitVoiceStatus({ status: 'paused' }); }
+function resumeVoice() { _audioEl?.play().then(() => emitVoiceStatus({ status: 'playing' })).catch(() => {}); }
+function stopVoice() {
+  _cancelToken += 1;
+  if (_audioEl) { _audioEl.pause(); _audioEl.currentTime = 0; _audioEl.onended = null; }
+  _chunkIndex = _chunks.length;
+  revokeBlobUrl();
+  emitVoiceStatus({ status: 'idle', currentText: '', error: '' });
+}
+function replayVoice(apiFetchBlob, accessToken, mode = 'calm', pauseMs = 250) {
   if (_chunks.length === 0) return;
+  _cancelToken += 1;
+  const token = _cancelToken;
+  _chunks = voiceChunks(_lastText, mode);
   _chunkIndex = 0;
-  playChunk(apiFetchBlob, accessToken);
+  emitVoiceStatus({ status: 'loading', currentText: _lastText, error: '' });
+  playChunk(apiFetchBlob, accessToken, token, pauseMs);
 }
 function setVoiceRate(rate) { _rate = rate; if (_audioEl) _audioEl.playbackRate = rate; }
 
@@ -133,9 +165,12 @@ export function AppProvider({ children }) {
   const [memoryEntries, setMemoryEntries]   = useState([]);
   const [memoryLoading, setMemoryLoading] = useState(true);
   const [toast, setToast]         = useState(null);
-  const [fontSize, setFontSize]   = useState(17);
+  const [fontSize, setFontSize]   = useState(20);
   const [darkMode, setDarkMode]   = useState(false);
   const [voiceEnabled, setVoiceEnabled]   = useState(true);
+  const [voiceSpeed, setVoiceSpeed] = useState(1);
+  const [voiceAutoPlay, setVoiceAutoPlay] = useState(false);
+  const [voiceStatus, setVoiceStatus] = useState({ status: 'idle', currentText: '', error: '' });
   const [reducedMotion, setReducedMotion] = useState(false);
 
   // Seed local Cognitive Load Governor / accessibility state from the
@@ -147,11 +182,18 @@ export function AppProvider({ children }) {
     const p = authUser.preference;
     setMode(p.cognitiveState.toLowerCase());
     setLanguage(authUser.preferredLanguage);
-    setFontSize(p.fontSize);
+    setFontSize(Math.max(p.fontSize || 20, 20));
     setDarkMode(p.darkMode);
     setVoiceEnabled(p.voiceEnabled);
+    setVoiceSpeed(p.voiceSpeed || recommendedVoiceRate(p.cognitiveState?.toLowerCase() || 'calm'));
+    setVoiceAutoPlay(Boolean(p.voiceAutoPlay));
     setReducedMotion(p.reducedMotion);
   }, [authUser]);
+
+  useEffect(() => {
+    _setVoiceStatus = setVoiceStatus;
+    return () => { stopVoice(); _setVoiceStatus = () => {}; };
+  }, []);
 
   // Reduced motion is applied globally (it's a document-wide accessibility
   // setting). Theme is intentionally *not* set globally here — the public
@@ -182,6 +224,9 @@ export function AppProvider({ children }) {
   // AppProvider wraps public routes too (Landing/Login/Register), so this
   // must skip fetching entirely — not just skip rendering — when signed out.
   const authUserId = authUser?.id;
+  useEffect(() => {
+    stopVoice();
+  }, [location.pathname, authUserId]);
   useEffect(() => {
     let cancelled = false;
     const request = authUserId ? authedFetch('/memory') : Promise.resolve({ entries: [] });
@@ -224,18 +269,24 @@ export function AppProvider({ children }) {
     setTimeout(() => setToast(null), 3500);
   }, []);
 
-  const speakFn = useCallback((text) => {
+  const speakFn = useCallback((text, opts = {}) => {
     if (!voiceEnabled || !authUser) return;
-    speak(text, language, apiFetchBlob, accessToken);
-  }, [voiceEnabled, language, authUser, accessToken]);
+    const pauseMs = mode === 'scared' ? 700 : mode === 'unsure' ? 450 : 250;
+    const rate = opts.rate || voiceSpeed || recommendedVoiceRate(mode);
+    speak(text, language, apiFetchBlob, accessToken, { rate, mode, pauseMs, onComplete: opts.onComplete });
+  }, [voiceEnabled, language, authUser, accessToken, voiceSpeed, mode]);
 
   const voiceControls = useMemo(() => ({
     pause: pauseVoice,
     resume: resumeVoice,
     stop: stopVoice,
-    replay: () => replayVoice(apiFetchBlob, accessToken),
-    setRate: setVoiceRate,
-  }), [accessToken]);
+    replay: () => replayVoice(apiFetchBlob, accessToken, mode, mode === 'scared' ? 700 : mode === 'unsure' ? 450 : 250),
+    setRate: (rate) => {
+      setVoiceRate(rate);
+      setVoiceSpeed(rate);
+      persistPreferences({ voiceSpeed: rate });
+    },
+  }), [accessToken, mode, persistPreferences]);
 
   const addMemory = useCallback(async ({ title, category, summary, starred }) => {
     if (!authUser) return;
@@ -275,6 +326,9 @@ export function AppProvider({ children }) {
       fontSize, setFontSize,
       darkMode, setDarkMode,
       voiceEnabled, setVoiceEnabled,
+      voiceSpeed, setVoiceSpeed,
+      voiceAutoPlay, setVoiceAutoPlay,
+      voiceStatus,
       reducedMotion, setReducedMotion,
       speak: speakFn, voiceControls, t,
     }}>

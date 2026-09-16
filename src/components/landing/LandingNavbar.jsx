@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, Search, X } from 'lucide-react';
 import GuidiaLogo from '../GuidiaLogo';
 import { NAV_LINKS } from '../../data/landingContent';
 
@@ -8,11 +8,14 @@ export default function LandingNavbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header style={{ position: 'sticky', top: 0, zIndex: 50, background: 'rgba(250,249,246,0.9)', backdropFilter: 'blur(8px)', borderBottom: '1px solid var(--border)' }}>
-      <div className="lp-container flex items-center justify-between" style={{ height: 72 }}>
-        <Link to="/" className="flex items-center gap-10" style={{ color: 'var(--text-primary)' }}>
-          <GuidiaLogo size={34} />
-          <span style={{ fontWeight: 800, fontSize: 18 }}>Guidia</span>
+    <header className="lp-navbar">
+      <div className="lp-container flex items-center justify-between" style={{ height: 82 }}>
+        <Link to="/" className="lp-brand" style={{ color: 'var(--text-primary)' }}>
+          <GuidiaLogo size={44} />
+          <span>
+            <strong>Guidia</strong>
+            <small>Learn. Practice. Stay Safe.</small>
+          </span>
         </Link>
 
         <nav className="flex items-center gap-32" style={{ display: 'flex' }} aria-label="Primary">
@@ -26,6 +29,9 @@ export default function LandingNavbar() {
         </nav>
 
         <div className="lp-desktop-nav flex items-center gap-12">
+          <button className="lp-search-btn" aria-label="Search">
+            <Search size={24} />
+          </button>
           <Link to="/login" className="lp-btn lp-btn-secondary" style={{ padding: '10px 20px', fontSize: 15 }}>Sign In</Link>
           <Link to="/register" className="lp-btn lp-btn-primary" style={{ padding: '10px 20px', fontSize: 15 }}>Get Started</Link>
         </div>

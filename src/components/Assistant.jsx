@@ -3,6 +3,7 @@ import { useApp } from '../context/AppStateContext';
 import { useAuth } from '../context/AuthContext';
 import { Send, Mic, Camera, PlayCircle } from 'lucide-react';
 import GuidiaLogo from './GuidiaLogo';
+import VoiceGuide from './VoiceGuide';
 
 // The bKash guided-transaction flow below is example/demo content that
 // demonstrates the Psychological Safety Net pattern (Phase 11) with a
@@ -153,7 +154,7 @@ export default function Assistant() {
                 <PlayCircle size={19}/>
               </button>
             )}
-            <div>
+            <div style={{ maxWidth: 'min(720px, 100%)' }}>
               <div className={msg.from==='ai'?'bubble-ai':'bubble-user'} style={msg.isScam ? { borderLeft:'4px solid var(--danger)', background:'var(--danger-light)', color:'var(--text-1)' } : {}}>
                 {msg.isImage && (
                   <div style={{ width: 140, height: 180, background: 'var(--blue-light)', borderRadius: 'var(--r-sm)', marginBottom: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--blue)' }}>
@@ -178,6 +179,11 @@ export default function Assistant() {
                     <button className="btn btn-primary btn-full btn-sm" style={{ marginTop:16 }} onClick={() => speak(language === 'bn' ? 'এগিয়ে যাচ্ছি' : 'Proceeding with action')}>
                       {language === 'bn' ? 'এগিয়ে যান' : 'Proceed Safely'}
                     </button>
+                  </div>
+                )}
+                {msg.from === 'ai' && msg.text && (
+                  <div style={{ marginTop:12 }}>
+                    <VoiceGuide text={msg.text} title={t('Read Answer', 'উত্তর শুনুন', 'उत्तर सुनें')} priority="assistant" />
                   </div>
                 )}
               </div>

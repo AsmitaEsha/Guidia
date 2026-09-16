@@ -7,11 +7,24 @@ const LANG_MAP = { en: 'en', bn: 'bn', hi: 'hi' };
 const speakSchema = z.object({
   text: z.string().trim().min(1).max(2000),
   lang: z.enum(['en', 'bn', 'hi']).optional(),
+  speed: z.coerce.number().min(0.75).max(1.25).optional(),
+  cognitiveState: z.enum(['CALM', 'UNSURE', 'SCARED']).optional(),
 });
+
+function cleanTextForSpeech(text) {
+  return text
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/https?:\/\/\S+/gi, ' link ')
+    .replace(/[`*_#~|[\]{}]/g, ' ')
+    .replace(/[•→⇒]/g, '. ')
+    .replace(/\s*>\s*/g, '. Then choose ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
 
 function splitChunks(text) {
   const chunks = [];
-  let rem = text;
+  let rem = cleanTextForSpeech(text);
   while (rem.length > 0) {
     if (rem.length <= MAX_CHUNK) { chunks.push(rem); break; }
     let idx = rem.lastIndexOf(' ', MAX_CHUNK);
@@ -30,7 +43,12 @@ function splitChunks(text) {
 export const voiceController = {
   async speak(req, res, next) {
     try {
-      const result = speakSchema.safeParse({ text: req.query.text, lang: req.query.lang });
+      const result = speakSchema.safeParse({
+        text: req.method === 'POST' ? req.body?.text : req.query.text,
+        lang: req.method === 'POST' ? req.body?.language || req.body?.lang : req.query.lang,
+        speed: req.method === 'POST' ? req.body?.speed : req.query.speed,
+        cognitiveState: req.method === 'POST' ? req.body?.cognitiveState : req.query.cognitiveState,
+      });
       if (!result.success) {
         throw new ApiError(400, result.error.issues[0]?.message || 'Invalid request.', 'VALIDATION_ERROR');
       }

@@ -1,41 +1,47 @@
-import { useState } from 'react';
-import { Play, Pause, Square, RotateCcw } from 'lucide-react';
+import { Pause, Play, RotateCcw, Square } from 'lucide-react';
 import { useApp } from '../context/AppStateContext';
 
-const RATES = [0.75, 1, 1.25, 1.5];
+const RATES = [
+  { label: 'Slow', bn: 'ধীর', value: 0.8 },
+  { label: 'Normal', bn: 'স্বাভাবিক', value: 1 },
+  { label: 'Faster', bn: 'দ্রুত', value: 1.15 },
+];
 
-// Minimal, reusable playback control set for voice guidance (README: Voice
-// Explanation — play/pause/resume/stop/replay/speed). Operates on whatever
-// utterance is currently loaded via AppStateContext's speak()/voiceControls.
 export default function GuidiaVoiceControls() {
-  const { t, voiceControls } = useApp();
-  const [paused, setPaused] = useState(false);
-  const [rate, setRate] = useState(1);
+  const { t, voiceControls, voiceSpeed, voiceStatus } = useApp();
+  const paused = voiceStatus.status === 'paused';
 
   const togglePause = () => {
-    if (paused) { voiceControls.resume(); setPaused(false); }
-    else { voiceControls.pause(); setPaused(true); }
-  };
-
-  const handleRate = (r) => {
-    setRate(r);
-    voiceControls.setRate(r);
+    if (paused) {
+      voiceControls.resume();
+    } else {
+      voiceControls.pause();
+    }
   };
 
   return (
-    <div className="flex items-center gap-10" style={{ flexWrap: 'wrap' }}>
-      <button className="btn btn-sm btn-ghost" onClick={togglePause} title={paused ? t('Resume', 'আবার চালান') : t('Pause', 'বিরতি')}>
-        {paused ? <Play size={16}/> : <Pause size={16}/>}
-      </button>
-      <button className="btn btn-sm btn-ghost" onClick={() => { voiceControls.stop(); setPaused(false); }} title={t('Stop', 'থামুন')}>
-        <Square size={16}/>
-      </button>
-      <button className="btn btn-sm btn-ghost" onClick={() => { voiceControls.replay(); setPaused(false); }} title={t('Replay', 'পুনরায় শুনুন')}>
-        <RotateCcw size={16}/>
-      </button>
-      <div className="segment" style={{ padding: 3 }}>
-        {RATES.map(r => (
-          <button key={r} className={`seg-btn ${rate === r ? 'active' : ''}`} onClick={() => handleRate(r)}>{r}x</button>
+    <div className="flex-col gap-12">
+      <div className="flex items-center gap-10" style={{ flexWrap: 'wrap' }}>
+        <button className="btn btn-outline voice-btn" onClick={togglePause}>
+          {paused ? <Play size={20}/> : <Pause size={20}/>}
+          {paused ? t('Continue', 'চালিয়ে যান') : t('Pause', 'বিরতি')}
+        </button>
+        <button className="btn btn-outline voice-btn" onClick={voiceControls.stop}>
+          <Square size={20}/> {t('Stop', 'থামুন')}
+        </button>
+        <button className="btn btn-outline voice-btn" onClick={voiceControls.replay}>
+          <RotateCcw size={20}/> {t('Replay', 'পুনরায় শুনুন')}
+        </button>
+      </div>
+      <div className="segment" style={{ padding: 3, width: 'fit-content' }} aria-label={t('Voice speed', 'ভয়েস গতি')}>
+        {RATES.map((rate) => (
+          <button
+            key={rate.value}
+            className={`seg-btn ${Math.abs(voiceSpeed - rate.value) < 0.01 ? 'active' : ''}`}
+            onClick={() => voiceControls.setRate(rate.value)}
+          >
+            {t(rate.label, rate.bn)}
+          </button>
         ))}
       </div>
     </div>

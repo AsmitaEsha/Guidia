@@ -23,6 +23,7 @@ import UIExplainer         from './components/UIExplainer';
 import GuardianDashboard   from './components/GuardianDashboard';
 import ProgressDashboard   from './components/ProgressDashboard';
 import EmergencyHelp       from './components/EmergencyHelp';
+import FloatingVoiceHelp   from './components/FloatingVoiceHelp';
 import { CheckCircle, AlertTriangle, Info } from 'lucide-react';
 
 function Toast() {
@@ -93,9 +94,10 @@ function AppShell() {
   }
 
   return (
-    <div className="app-layout" data-mode={mode} data-theme={darkMode ? 'light' : 'dark'} style={{ color:'var(--text-1)', ...modeStyle }}>
+    <div className="app-layout" data-mode={mode} data-theme={darkMode ? 'dark' : 'guidia-app'} style={{ color:'var(--text-1)', ...modeStyle }}>
       <Toast/>
       <Sidebar/>
+      <FloatingVoiceHelp/>
       <div className="main-content">
         <TopBar/>
         <div className={`page-content${page.fullH ? ' full-h' : ''}`}>

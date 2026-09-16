@@ -29,6 +29,27 @@ export default function Onboarding() {
   const { setMode, setLanguage, language, t, persistPreferences } = useApp();
   const navigate = useNavigate();
   const [step, setStep] = useState('language');
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
+
+  const finishOnboarding = async (modeId) => {
+    if (saving) return;
+    setSaving(true);
+    setError('');
+    setMode(modeId);
+    try {
+      await persistPreferences({
+        preferredLanguage: language,
+        cognitiveState: modeId.toUpperCase(),
+        onboardingDone: true,
+      });
+      navigate('/app/home', { replace: true });
+    } catch (err) {
+      setError(err.message || t('We could not save your setup. Please try again.', 'আপনার সেটআপ সংরক্ষণ করা যায়নি। আবার চেষ্টা করুন।'));
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <div>
@@ -85,11 +106,8 @@ export default function Onboarding() {
               const ldata = language === 'bn' ? m.bn : language === 'hi' ? m.hi : m.en;
               return (
                 <button key={m.id}
-                  onClick={() => {
-                    setMode(m.id);
-                    persistPreferences({ preferredLanguage: language, cognitiveState: m.id.toUpperCase(), onboardingDone: true });
-                    navigate('/app/home', { replace: true });
-                  }}
+                  onClick={() => finishOnboarding(m.id)}
+                  disabled={saving}
                   style={{ display:'flex', alignItems:'center', gap:16, padding:'18px 20px', background:'var(--surface)', border:`2px solid var(--border)`, borderRadius:'var(--r-sm)', cursor:'pointer', textAlign:'left', borderLeft:`4px solid ${m.border}`, transition:'all var(--tr)' }}
                   onMouseEnter={e => { e.currentTarget.style.background='var(--surface-2)'; }}
                   onMouseLeave={e => { e.currentTarget.style.background='var(--surface)'; }}>
@@ -105,6 +123,8 @@ export default function Onboarding() {
               );
             })}
           </div>
+          {saving && <p className="t-sub" style={{ marginTop:14 }}>{t('Saving your setup...', 'আপনার সেটআপ সংরক্ষণ হচ্ছে...', 'आपका सेटअप सहेजा जा रहा है...')}</p>}
+          {error && <p role="alert" style={{ marginTop:14, color:'var(--danger)', fontWeight:700 }}>{error}</p>}
         </div>
       )}
     </div>

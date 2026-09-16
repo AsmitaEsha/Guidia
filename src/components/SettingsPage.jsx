@@ -16,7 +16,8 @@ function Toggle({ on, onToggle }) {
 export default function SettingsPage() {
   const { language, setLanguage, mode, user, speak, t, setActiveTab,
           fontSize, setFontSize, darkMode, setDarkMode,
-          voiceEnabled, setVoiceEnabled, reducedMotion, setReducedMotion,
+          voiceEnabled, setVoiceEnabled, voiceSpeed, setVoiceSpeed, voiceAutoPlay, setVoiceAutoPlay,
+          reducedMotion, setReducedMotion,
           persistPreferences } = useApp();
   const { logout, user: authUser } = useAuth();
   const navigate = useNavigate();
@@ -98,6 +99,27 @@ export default function SettingsPage() {
               </button>
               <GuidiaVoiceControls/>
             </div>
+          )}
+          {voiceEnabled && (
+            <Row icon={<Volume2 size={18}/>} label={t('Reading Speed','পড়ার গতি')} sub={voiceSpeed < 0.9 ? t('Slow','ধীর') : voiceSpeed > 1.05 ? t('Faster','দ্রুত') : t('Normal','স্বাভাবিক')}
+              right={
+                <div className="segment" style={{ padding:3 }}>
+                  {[
+                    { label:t('Slow','ধীর'), value:0.8 },
+                    { label:t('Normal','স্বাভাবিক'), value:1 },
+                    { label:t('Faster','দ্রুত'), value:1.15 },
+                  ].map((opt) => (
+                    <button key={opt.value} className={`seg-btn ${Math.abs(voiceSpeed - opt.value) < 0.01 ? 'active' : ''}`}
+                      onClick={() => { setVoiceSpeed(opt.value); persistPreferences({ voiceSpeed: opt.value }); }}>
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              } />
+          )}
+          {voiceEnabled && (
+            <Row icon={<Volume2 size={18}/>} label={t('Auto-read lesson steps','পাঠের ধাপ নিজে নিজে পড়ুন')} sub={t('Off by default. You stay in control.','ডিফল্টে বন্ধ। নিয়ন্ত্রণ আপনার হাতে।')}
+              right={<Toggle on={voiceAutoPlay} onToggle={() => { const next=!voiceAutoPlay; setVoiceAutoPlay(next); persistPreferences({ voiceAutoPlay: next }); }} />} />
           )}
           <Row icon={<ZoomIn size={18}/>} label={t('Text Size','টেক্সট আকার')} sub={`${fontSize}px — ${fontSize<=16?t('Small','ছোট'):fontSize>=22?t('Large','বড়'):t('Medium','মাঝারি')}`}
             right={

@@ -19,6 +19,11 @@ import adminRoutes from './routes/adminRoutes.js';
 
 export function createApp() {
   const app = express();
+  const allowedOrigins = new Set([
+    env.corsOrigin,
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+  ].filter(Boolean));
 
   // This is a pure JSON/binary API (no HTML served), so the HTML-oriented
   // parts of helmet's defaults (CSP, COOP) are switched off; the resource
@@ -28,7 +33,16 @@ export function createApp() {
     contentSecurityPolicy: false,
     crossOriginResourcePolicy: { policy: 'cross-origin' },
   }));
-  app.use(cors({ origin: env.corsOrigin, credentials: true }));
+  app.use(cors({
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.has(origin)) {
+        callback(null, true);
+        return;
+      }
+      callback(new Error(`Origin ${origin} is not allowed by CORS`));
+    },
+    credentials: true,
+  }));
   app.use(express.json({ limit: '1mb' }));
   app.use(cookieParser());
   if (env.nodeEnv !== 'test') {

@@ -9,6 +9,8 @@ const preferencesSchema = z.object({
   darkMode: z.boolean().optional(),
   reducedMotion: z.boolean().optional(),
   voiceEnabled: z.boolean().optional(),
+  voiceSpeed: z.number().min(0.75).max(1.25).optional(),
+  voiceAutoPlay: z.boolean().optional(),
   onboardingDone: z.boolean().optional(),
 }).strict();
 

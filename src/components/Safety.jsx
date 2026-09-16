@@ -3,6 +3,7 @@ import { useApp } from '../context/AppStateContext';
 import { useAuth } from '../context/AuthContext';
 import { Shield, AlertTriangle, ChevronRight, ArrowLeft, Check, Search, X } from 'lucide-react';
 import { SCAM_EXAMPLES } from '../data/hardcoded';
+import VoiceGuide from './VoiceGuide';
 
 const SEV_COLORS = { warning:'var(--warn)', high:'#f07050', critical:'var(--danger)' };
 const SEV_BG = { warning:'var(--warn-light)', high:'#fde8e0', critical:'var(--danger-light)' };
@@ -49,6 +50,15 @@ function ScamChecker() {
   };
 
   const sev = result ? LIVE_SEV[result.severity] : null;
+  const resultVoiceText = result
+    ? [
+        `${sev.label}.`,
+        result.aiContext,
+        result.whatLooksSuspicious.length ? `What looks suspicious. ${result.whatLooksSuspicious.join('. ')}.` : '',
+        result.whatToDo.length ? `What to do. ${result.whatToDo.join('. ')}.` : '',
+        result.whatToAvoid.length ? `What to avoid. ${result.whatToAvoid.join('. ')}.` : '',
+      ].filter(Boolean).join(' ')
+    : '';
 
   return (
     <div className="card anim-up" style={{ padding:20 }}>
@@ -102,6 +112,11 @@ function ScamChecker() {
             <p style={{ fontWeight:700, marginBottom:6, color:'var(--danger)' }}>{t('What to avoid','কী এড়াবেন')}</p>
             {result.whatToAvoid.map((r,i) => <p key={i} className="t-sub" style={{ marginBottom:4 }}> {r}</p>)}
           </div>
+          <VoiceGuide
+            text={resultVoiceText}
+            title={t('Listen to Safety Guidance', 'নিরাপত্তা গাইডেন্স শুনুন')}
+            priority="safety"
+          />
         </div>
       )}
     </div>
