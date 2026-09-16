@@ -920,6 +920,171 @@ input,textarea{font-family:inherit;}
 }
 
 /* ============================================
+   BKASH SIMULATOR
+   ============================================ */
+.bkash-phone{
+  --bkash:#e2136e;
+  --bkash-dark:#bd0f5a;
+  height:100%;
+  min-height:640px;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  background:#f5f5f5;
+  color:#202124;
+  font-family:'Inter',system-ui,sans-serif;
+}
+.bkash-header{
+  min-height:76px;
+  padding:18px 22px;
+  display:grid;
+  grid-template-columns:52px 1fr 52px;
+  align-items:center;
+  gap:10px;
+  background:var(--bkash);
+  color:#fff;
+  flex-shrink:0;
+}
+.bkash-header strong{font-size:22px;font-weight:900;text-align:center;}
+.bkash-header-btn,.bkash-header-right{width:48px;height:48px;border-radius:999px;color:#fff;display:flex;align-items:center;justify-content:center;}
+.bkash-header-btn:hover{background:rgba(255,255,255,0.12);}
+.bkash-home-header{
+  flex-shrink:0;
+  color:#fff;
+  background:linear-gradient(135deg,#e2136e,#d50963);
+  padding:16px 18px 24px;
+  border-bottom-left-radius:22px;
+  border-bottom-right-radius:22px;
+  box-shadow:0 10px 26px rgba(226,19,110,0.24);
+}
+.bkash-home-top{display:flex;align-items:center;justify-content:space-between;gap:14px;}
+.bkash-back-btn{width:46px;height:46px;border-radius:999px;color:#fff;display:flex;align-items:center;justify-content:center;}
+.bkash-profile{display:flex;align-items:center;gap:12px;flex:1;min-width:0;}
+.bkash-profile-pic{width:56px;height:56px;border-radius:18px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.bkash-profile strong{display:block;font-size:20px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.bkash-profile button{margin-top:4px;background:#fff;color:var(--bkash);font-size:16px;font-weight:900;border-radius:999px;padding:8px 16px;}
+.bkash-practice-strip{
+  margin:12px 16px 0;
+  padding:12px 16px;
+  border-radius:14px;
+  background:#fff0f7;
+  color:#8a0e45;
+  font-size:17px;
+  font-weight:900;
+  border:1px solid rgba(226,19,110,0.16);
+  flex-shrink:0;
+}
+.bkash-screen-body{flex:1;overflow:auto;padding:18px 16px 96px;display:flex;flex-direction:column;gap:16px;}
+.bkash-home-body{padding-top:14px;}
+.bkash-menu-card,.bkash-card,.bkash-offers-card,.bkash-transactions-card,.bkash-review-card{
+  background:#fff;
+  border:1px solid #eeeeee;
+  border-radius:4px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+.bkash-menu-card{padding:18px 14px 10px;}
+.bkash-menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 8px;}
+.bkash-menu-item{min-height:110px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;color:#333;border-radius:14px;}
+.bkash-menu-item:hover{background:#fafafa;}
+.bkash-menu-item strong{font-size:17px;font-weight:800;line-height:1.2;}
+.bkash-menu-icon{width:58px;height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;background:#fff0f7;color:var(--bkash);}
+.bkash-menu-icon.green{background:#e8f7ef;color:#0b8c50;}
+.bkash-menu-icon.blue{background:#edf5ff;color:#1775d1;}
+.bkash-menu-icon.orange{background:#fff2e8;color:#d66b21;}
+.bkash-menu-icon.purple{background:#f4edff;color:#7a35c2;}
+.bkash-menu-icon.gray{background:#f4f4f4;color:#666;}
+.bkash-menu-icon.brown{background:#fff0e8;color:#9f582e;}
+.bkash-menu-icon.teal{background:#e9fbf8;color:#06877b;}
+.bkash-close-menu{display:block;margin:6px auto 0;color:var(--bkash);font-size:16px;font-weight:900;padding:8px 14px;}
+.bkash-card{padding:18px;}
+.bkash-section-title,.bkash-card-heading strong{font-size:18px;font-weight:900;color:#333;}
+.bkash-card-heading{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid #f0f0f0;}
+.bkash-card-heading button{font-size:16px;font-weight:900;color:var(--bkash);}
+.bkash-offers-row{display:flex;gap:12px;overflow-x:auto;padding:16px 18px 18px;}
+.bkash-offer{min-width:148px;min-height:96px;border-radius:12px;padding:14px;font-size:18px;line-height:1.25;font-weight:900;color:#fff;box-shadow:0 5px 14px rgba(0,0,0,0.08);}
+.bkash-offer span{display:block;font-size:14px;margin-top:8px;opacity:0.9;}
+.bkash-offer.pink{background:linear-gradient(135deg,#e2136e,#ff5ba5);}
+.bkash-offer.yellow{background:linear-gradient(135deg,#f4b400,#f7d052);color:#5b3b00;}
+.bkash-offer.teal{background:linear-gradient(135deg,#00a995,#6fe3d4);}
+.bkash-transaction{display:grid;grid-template-columns:48px 1fr auto;align-items:center;gap:14px;padding:16px 18px;border-top:1px solid #f3f3f3;}
+.bkash-transaction:first-of-type{border-top:none;}
+.bkash-transaction-icon{width:48px;height:48px;border-radius:999px;background:#f1f1f1;color:#777;display:flex;align-items:center;justify-content:center;}
+.bkash-transaction strong{font-size:18px;font-weight:900;}
+.bkash-transaction p{font-size:16px;color:#777;margin-top:2px;}
+.bkash-transaction span{font-size:17px;font-weight:900;white-space:nowrap;}
+.bkash-transaction span.out{color:#d30f61;}
+.bkash-transaction span.in{color:#008a39;}
+.bkash-bottom-nav{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  min-height:78px;
+  display:grid;
+  grid-template-columns:1fr 1fr 82px 1fr;
+  align-items:center;
+  background:#fff;
+  border-top:1px solid #eeeeee;
+  box-shadow:0 -8px 24px rgba(0,0,0,0.08);
+  z-index:4;
+}
+.bkash-phone{position:relative;}
+.bkash-bottom-nav button{height:78px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#9a9a9a;font-size:14px;font-weight:800;}
+.bkash-bottom-nav button.active{color:var(--bkash);}
+.bkash-scan{width:72px !important;height:72px !important;border-radius:999px !important;background:#fff !important;color:var(--bkash) !important;box-shadow:0 0 0 10px rgba(226,19,110,0.08),0 6px 18px rgba(0,0,0,0.12);transform:translateY(-18px);}
+.bkash-info-strip{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;background:#fff8e1;color:#8a5b00;border:1px solid #ffdfa3;font-size:18px;font-weight:900;}
+.bkash-label{display:block;font-size:18px;font-weight:900;color:#333;margin-bottom:10px;}
+.bkash-input{width:100%;min-height:58px;padding:14px 16px;border:1.5px solid #dddddd;border-radius:4px;background:#fff;font-size:21px;font-weight:700;color:#222;outline:none;}
+.bkash-input:focus{border-color:var(--bkash);box-shadow:0 0 0 4px rgba(226,19,110,0.1);}
+.bkash-contact-list{display:flex;gap:12px;overflow-x:auto;margin-top:12px;padding-bottom:2px;}
+.bkash-contact{min-width:128px;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;border-radius:14px;border:2px solid #eeeeee;background:#fafafa;color:#555;}
+.bkash-contact.selected{border-color:var(--bkash);background:#fff0f7;color:var(--bkash);}
+.bkash-contact strong{font-size:18px;font-weight:900;}
+.bkash-contact span{font-size:15px;font-weight:700;}
+.bkash-money-input{min-height:112px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;border:1.5px solid #eeeeee;border-radius:4px;padding:18px 20px;color:var(--bkash);}
+.bkash-money-input span{font-size:36px;font-weight:900;color:#aaa;}
+.bkash-money-input input{width:100%;border:0;outline:0;background:transparent;color:#333;font-size:42px;font-weight:900;}
+.bkash-primary-action{min-height:60px;border-radius:999px;background:var(--bkash);color:#fff;display:flex;align-items:center;justify-content:center;gap:10px;font-size:21px;font-weight:900;padding:16px 28px;box-shadow:0 8px 18px rgba(226,19,110,0.24);}
+.bkash-primary-action:hover{background:var(--bkash-dark);}
+.bkash-primary-action:disabled{background:#cfcfcf;color:#777;box-shadow:none;cursor:not-allowed;}
+.bkash-review-card{padding:0;overflow:hidden;}
+.bkash-review-card>.bkash-section-title{padding:18px 20px;border-bottom:1px solid #f0f0f0;}
+.bkash-person-row{display:flex;align-items:center;gap:14px;padding:18px 20px;border-bottom:1px solid #f0f0f0;}
+.bkash-avatar{width:58px;height:58px;border-radius:999px;background:#eeeeee;color:#888;display:flex;align-items:center;justify-content:center;}
+.bkash-person-row strong{font-size:19px;font-weight:900;}
+.bkash-person-row p{font-size:17px;color:#555;margin-top:2px;}
+.bkash-amount-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-bottom:1px solid #f0f0f0;}
+.bkash-amount-grid div{padding:18px 14px;border-right:1px solid #f0f0f0;}
+.bkash-amount-grid div:last-child{border-right:none;}
+.bkash-amount-grid span{display:block;font-size:15px;font-weight:800;color:#555;margin-bottom:8px;}
+.bkash-amount-grid strong{font-size:18px;font-weight:900;color:#111;}
+.bkash-pin-row{min-height:70px;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;padding:0 18px;color:var(--bkash);font-size:24px;font-weight:900;}
+.bkash-success{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:32px;background:#fff;}
+.bkash-success-icon{width:124px;height:124px;border-radius:999px;background:#eaf7ef;color:#008a39;display:flex;align-items:center;justify-content:center;margin-bottom:8px;}
+.bkash-success h2{font-size:30px;font-weight:900;color:#008a39;}
+.bkash-success p{font-size:19px;color:#555;}
+.bkash-success strong{font-size:34px;font-weight:900;color:var(--bkash);}
+.bkash-success span{font-size:18px;font-weight:900;color:#008a39;margin-bottom:18px;}
+.bkash-wait-screen{align-items:center;justify-content:center;padding:24px;background:#fff0f7;}
+.bkash-wait-card{width:min(420px,100%);padding:34px 28px;border-radius:24px;background:#fff;text-align:center;display:flex;flex-direction:column;align-items:center;gap:16px;color:var(--bkash);box-shadow:var(--sh-md);}
+.bkash-wait-card h2{font-size:28px;font-weight:900;color:#222;}
+.bkash-wait-card p{font-size:19px;color:#555;}
+
+@media(max-width:620px){
+  .bkash-phone{min-height:calc(100vh - 92px);}
+  .bkash-menu-grid{gap:10px 4px;}
+  .bkash-menu-item{min-height:102px;}
+  .bkash-menu-icon{width:52px;height:52px;}
+  .bkash-menu-item strong{font-size:15px;}
+  .bkash-home-header{padding-left:14px;padding-right:14px;}
+  .bkash-profile strong{font-size:18px;}
+  .bkash-profile button{font-size:14px;padding:7px 12px;}
+  .bkash-amount-grid{grid-template-columns:1fr;}
+  .bkash-amount-grid div{border-right:none;border-bottom:1px solid #f0f0f0;}
+  .bkash-amount-grid div:last-child{border-bottom:none;}
+}
+
+/* ============================================
    SEVERITY
    ============================================ */
 .sev-warn    {border-left:5px solid var(--warn);}

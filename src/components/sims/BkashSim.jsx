@@ -1,30 +1,75 @@
 import { useState } from 'react';
+import {
+  ArrowLeft,
+  ArrowRight,
+  Banknote,
+  Bell,
+  CheckCircle2,
+  Clock,
+  CreditCard,
+  Gift,
+  Home,
+  Landmark,
+  Lock,
+  ReceiptText,
+  Send,
+  ShieldCheck,
+  Smartphone,
+  Store,
+  UserCircle,
+  Users,
+  WalletCards,
+} from 'lucide-react';
 import { useApp } from '../../context/AppStateContext';
-import { ArrowLeft, ShieldCheck, Send, Smartphone, Store, ArrowUpCircle, Banknote, UserCircle, ArrowDownCircle } from 'lucide-react';
 import GuidiaSafetyPanel from '../GuidiaSafetyPanel';
 
-const BK = '#E2136E';
-const BK_LIGHT = '#FFF0F7';
+const BKASH = '#e2136e';
 
 const MENU_ITEMS = [
-  { icon:<Send size={24}/>, labelEn:'Send Money', labelBn:'টাকা পাঠান', step:'send' },
-  { icon:<Smartphone size={24}/>, labelEn:'Mobile Recharge', labelBn:'মোবাইল রিচার্জ', step:'recharge'},
-  { icon:<Store size={24}/>, labelEn:'Payment', labelBn:'পেমেন্ট', step:'pay' },
-  { icon:<ArrowUpCircle size={24}/>, labelEn:'Add Money', labelBn:'টাকা যোগ করুন', step:'add' },
-  { icon:<Banknote size={24}/>, labelEn:'Cash Out', labelBn:'ক্যাশ আউট', step:'cashout' },
-  { icon:<UserCircle size={24}/>, labelEn:'My bKash', labelBn:'আমার bKash', step:'profile' },
+  { icon: <Send size={30}/>, label: 'Send Money', step: 'send', tone: 'pink' },
+  { icon: <Smartphone size={30}/>, label: 'Mobile Recharge', step: 'recharge', tone: 'green' },
+  { icon: <Banknote size={30}/>, label: 'Cash Out', step: 'cashout', tone: 'blue' },
+  { icon: <Store size={30}/>, label: 'Make Payment', step: 'pay', tone: 'orange' },
+  { icon: <WalletCards size={30}/>, label: 'Add Money', step: 'add', tone: 'purple' },
+  { icon: <ReceiptText size={30}/>, label: 'Pay Bill', step: 'bill', tone: 'gray' },
+  { icon: <Gift size={30}/>, label: 'Savings', step: 'savings', tone: 'pink' },
+  { icon: <Landmark size={30}/>, label: 'Loan', step: 'loan', tone: 'brown' },
+  { icon: <Users size={30}/>, label: 'Split Bill', step: 'split', tone: 'teal' },
 ];
 
 const SAVED_CONTACTS = [
-  { id:'c1', name:'Rupa (Daughter)', phone:'018XXXXXX33', avatar:'' },
-  { id:'c2', name:'Karim (Son)', phone:'019XXXXXX88', avatar:'' },
-  { id:'c3', name:'Dr. Ahmed', phone:'017XXXXXX91', avatar:'' },
+  { id: 'c1', name: 'Rupa', detail: 'Daughter', phone: '01844553333' },
+  { id: 'c2', name: 'Karim', detail: 'Son', phone: '01944888888' },
+  { id: 'c3', name: 'Dr. Ahmed', detail: 'Doctor', phone: '01722999991' },
 ];
+
+const TRANSACTIONS = [
+  { label: 'Send Money', detail: 'Rupa', amount: '- Tk 1,000.00', type: 'out' },
+  { label: 'Received Money', detail: 'Karim', amount: '+ Tk 800.00', type: 'in' },
+  { label: 'Mobile Recharge', detail: '01722*****91', amount: '- Tk 100.00', type: 'out' },
+];
+
+function BkashHeader({ title = 'bKash', onBack, right }) {
+  return (
+    <div className="bkash-header">
+      <button className="bkash-header-btn" onClick={onBack} aria-label="Go back">
+        <ArrowLeft size={28}/>
+      </button>
+      <strong>{title}</strong>
+      <div className="bkash-header-right">{right || <Bell size={26}/>}</div>
+    </div>
+  );
+}
+
+function PhoneFrame({ children, className = '' }) {
+  return <div className={`bkash-phone ${className}`}>{children}</div>;
+}
 
 export default function BkashSim({ onClose }) {
   const { t, speak, showToast } = useApp();
   const [step, setStep] = useState('home');
   const [recipient, setRecipient] = useState('');
+  const [recipientName, setRecipientName] = useState('');
   const [amount, setAmount] = useState('');
   const [guardianWait, setGuardianWait] = useState(false);
   const [showSafetyPanel, setShowSafetyPanel] = useState(false);
@@ -32,6 +77,11 @@ export default function BkashSim({ onClose }) {
   const back = () => {
     if (step !== 'home') setStep('home');
     else onClose();
+  };
+
+  const chooseContact = (contact) => {
+    setRecipient(contact.phone);
+    setRecipientName(`${contact.name} (${contact.detail})`);
   };
 
   const handleSend = () => {
@@ -43,8 +93,12 @@ export default function BkashSim({ onClose }) {
   const handleGuardianApprove = () => {
     setShowSafetyPanel(false);
     setGuardianWait(true);
-    speak(t('Notifying guardian for approval…','গার্ডিয়ানকে অনুমোদনের জন্য জানানো হচ্ছে…'));
-    setTimeout(() => { setGuardianWait(false); setStep('done'); speak(t('Guardian approved! Transfer successful.','গার্ডিয়ান অনুমোদন দিয়েছেন! স্থানান্তর সফল।')); }, 3000);
+    speak(t('Notifying guardian for approval...', 'গার্ডিয়ানকে অনুমোদনের জন্য জানানো হচ্ছে...'));
+    setTimeout(() => {
+      setGuardianWait(false);
+      setStep('done');
+      speak(t('Guardian approved. Transfer successful.', 'গার্ডিয়ান অনুমোদন দিয়েছেন। টাকা পাঠানো সফল হয়েছে।'));
+    }, 3000);
   };
 
   const handleEditFromSafetyPanel = () => {
@@ -55,188 +109,239 @@ export default function BkashSim({ onClose }) {
   const handleHelpFromSafetyPanel = () => {
     setShowSafetyPanel(false);
     setStep('send');
-    speak(t("It's okay to ask for help. Consider asking Guidia's AI Assistant or a trusted family member before sending.", 'সাহায্য চাওয়া ঠিক আছে। পাঠানোর আগে Guidia সহকারী বা বিশ্বস্ত পরিবারকে জিজ্ঞাসা করুন।'));
-    showToast(t('No problem — take your time. Ask the AI Assistant if you need help.', 'কোনো সমস্যা নেই — সময় নিন। প্রয়োজনে AI সহকারীকে জিজ্ঞাসা করুন।'), 'info');
+    speak(t(
+      "It's okay to ask for help. Consider asking Guidia's AI Assistant or a trusted family member before sending.",
+      'সাহায্য চাওয়া ঠিক আছে। পাঠানোর আগে Guidia সহকারী বা বিশ্বস্ত পরিবারকে জিজ্ঞাসা করুন।'
+    ));
+    showToast(t('No problem. Take your time before sending.', 'কোনো সমস্যা নেই। পাঠানোর আগে সময় নিন।'), 'info');
   };
 
-  /* ─ Done Screen ─ */
-  if (step === 'done') return (
-    <div style={{ display:'flex', flexDirection:'column', height:'100%', background:BK_LIGHT }}>
-      <div style={{ background:BK, padding:'16px 20px', display:'flex', alignItems:'center', gap:12, color:'#fff', flexShrink:0 }}>
-        <button onClick={()=>setStep('home')} style={{ color:'#fff' }}><ArrowLeft size={22}/></button>
-        <p style={{ fontWeight:800, fontSize:18 }}>bKash</p>
-      </div>
-      <div style={{ flex:1, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:20, padding:32, textAlign:'center' }} className="anim-scale">
-        <div style={{ width:100, height:100, borderRadius:'50%', background:'var(--success-light)', display:'flex', alignItems:'center', justifyContent:'center' }}>
-          <ShieldCheck size={56} color="var(--success)"/>
+  if (guardianWait) {
+    return (
+      <PhoneFrame className="bkash-wait-screen">
+        <div className="bkash-wait-card">
+          <ShieldCheck size={64}/>
+          <h2>{t('Waiting for Guardian', 'গার্ডিয়ানের জন্য অপেক্ষা')}</h2>
+          <p>{t('Your guardian is reviewing this transfer.', 'আপনার গার্ডিয়ান এই লেনদেনটি দেখছেন।')}</p>
+          <div className="spinner" style={{ width: 44, height: 44, borderWidth: 4 }}/>
         </div>
-        <div>
-          <p style={{ fontWeight:900, fontSize:26, color:'var(--success)' }}> {t('Transfer Complete!','স্থানান্তর সম্পন্ন!')}</p>
-          <p style={{ marginTop:8, color:'#5F6368', fontSize:16 }}>৳ {amount} → {recipient}</p>
-          <p style={{ marginTop:4, color:'var(--success)', fontWeight:600 }}>{t('Approved by Guardian','গার্ডিয়ান অনুমোদিত')}</p>
-        </div>
-        <button onClick={()=>setStep('home')} style={{ background:BK, color:'#fff', padding:'14px 36px', borderRadius:8, fontWeight:800, fontSize:16, border:'none', cursor:'pointer' }}>
-          {t('Back to Home','হোমে ফিরুন')}
-        </button>
-      </div>
-    </div>
-  );
+      </PhoneFrame>
+    );
+  }
 
-  /* ─ Guardian Wait ─ */
-  if (guardianWait) return (
-    <div style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', height:'100%', gap:24, padding:32, textAlign:'center', background:BK_LIGHT }}>
-      <div className="icon-wrap iw-xl ic-blue anim-pulse" style={{ margin: '0 auto' }}><ShieldCheck size={36}/></div>
-      <p style={{ fontWeight:800, fontSize:22 }}>{t('Waiting for Guardian…','গার্ডিয়ানের জন্য অপেক্ষা…')}</p>
-      <p style={{ color:'#5F6368', fontSize:16 }}>{t('Your guardian is reviewing this transfer on their phone.','আপনার গার্ডিয়ান তাদের ফোনে এই লেনদেন দেখছেন।')}</p>
-      <div className="spinner" style={{ width:40, height:40, borderWidth:4 }}/>
-    </div>
-  );
-
-  /* ─ Confirm Screen — the Psychological Safety Net (GuidiaSafetyPanel)
-     handles the actual review/decision; this screen is just the backdrop. ─ */
-  if (step === 'confirm') return (
-    <div style={{ display:'flex', flexDirection:'column', height:'100%', background:'#fff' }}>
-      <div style={{ background:BK, padding:'16px 20px', display:'flex', alignItems:'center', gap:12, color:'#fff', flexShrink:0 }}>
-        <button onClick={handleEditFromSafetyPanel} style={{ color:'#fff' }}><ArrowLeft size={22}/></button>
-        <p style={{ fontWeight:800, fontSize:18 }}>{t('Confirm Transfer','স্থানান্তর নিশ্চিত করুন')}</p>
-      </div>
-      <div style={{ flex:1, padding:20 }}>
-        <div style={{ background:'#F8F9FA', borderRadius:10, padding:20, border:'1px solid #E8EAED' }}>
-          <div style={{ display:'flex', justifyContent:'space-between', paddingBottom:12, borderBottom:'1px solid #E8EAED', marginBottom:12 }}>
-            <p style={{ color:'#5F6368', fontSize:15 }}>{t('Recipient','প্রাপক')}</p>
-            <p style={{ fontWeight:700, fontSize:15 }}>{recipient}</p>
+  if (step === 'done') {
+    return (
+      <PhoneFrame>
+        <BkashHeader title="Transfer Complete" onBack={() => setStep('home')} right={<CheckCircle2 size={28}/>}/>
+        <div className="bkash-success">
+          <div className="bkash-success-icon">
+            <CheckCircle2 size={78}/>
           </div>
-          <div style={{ display:'flex', justifyContent:'space-between' }}>
-            <p style={{ color:'#5F6368', fontSize:15 }}>{t('Amount','পরিমাণ')}</p>
-            <p style={{ fontWeight:800, fontSize:20, color:BK }}>৳ {amount}</p>
+          <h2>{t('Transfer Complete', 'টাকা পাঠানো সম্পন্ন')}</h2>
+          <p>{recipientName || recipient}</p>
+          <strong>Tk {amount}</strong>
+          <span>{t('Approved by Guardian', 'গার্ডিয়ান অনুমোদিত')}</span>
+          <button className="bkash-primary-action" onClick={() => setStep('home')}>
+            Back to Home <ArrowRight size={22}/>
+          </button>
+        </div>
+      </PhoneFrame>
+    );
+  }
+
+  if (step === 'confirm') {
+    return (
+      <PhoneFrame>
+        <BkashHeader title="Send Money" onBack={handleEditFromSafetyPanel} right={<ShieldCheck size={28}/>}/>
+        <div className="bkash-screen-body">
+          <div className="bkash-review-card">
+            <p className="bkash-section-title">To</p>
+            <div className="bkash-person-row">
+              <div className="bkash-avatar"><UserCircle size={42}/></div>
+              <div>
+                <strong>{recipientName || 'Selected Recipient'}</strong>
+                <p>{recipient}</p>
+              </div>
+            </div>
+            <div className="bkash-amount-grid">
+              <div>
+                <span>Amount</span>
+                <strong>Tk {amount}</strong>
+              </div>
+              <div>
+                <span>Charge</span>
+                <strong>Tk 0.00</strong>
+              </div>
+              <div>
+                <span>Total</span>
+                <strong>Tk {amount}</strong>
+              </div>
+            </div>
+            <div className="bkash-pin-row">
+              <Lock size={20}/>
+              <span>•••••</span>
+              <ArrowRight size={24}/>
+            </div>
           </div>
         </div>
-      </div>
+        <GuidiaSafetyPanel
+          open={showSafetyPanel}
+          actionType="bkash_send_money"
+          title={t('Review before you send', 'পাঠানোর আগে যাচাই করুন')}
+          what={t('Send money via bKash', 'bKash এর মাধ্যমে টাকা পাঠানো')}
+          who={recipientName || recipient}
+          amountOrData={`Tk ${amount}`}
+          consequence={t(
+            'Once your guardian approves, the money leaves your account and cannot be undone.',
+            'আপনার গার্ডিয়ান অনুমোদন দিলে টাকা আপনার অ্যাকাউন্ট থেকে চলে যাবে এবং তা ফেরত আনা যাবে না।'
+          )}
+          onProceed={handleGuardianApprove}
+          onEdit={handleEditFromSafetyPanel}
+          onRequestHelp={handleHelpFromSafetyPanel}
+        />
+      </PhoneFrame>
+    );
+  }
 
-      <GuidiaSafetyPanel
-        open={showSafetyPanel}
-        actionType="bkash_send_money"
-        title={t('Review before you send', 'পাঠানোর আগে যাচাই করুন')}
-        what={t('Send money via bKash', 'bKash এর মাধ্যমে টাকা পাঠানো')}
-        who={recipient}
-        amountOrData={`৳ ${amount}`}
-        consequence={t(
-          'Once your guardian approves, the money leaves your account and cannot be undone.',
-          'আপনার গার্ডিয়ান অনুমোদন দিলে টাকা আপনার অ্যাকাউন্ট থেকে চলে যাবে এবং তা ফেরত আনা যাবে না।'
-        )}
-        onProceed={handleGuardianApprove}
-        onEdit={handleEditFromSafetyPanel}
-        onRequestHelp={handleHelpFromSafetyPanel}
-      />
-    </div>
-  );
+  if (step === 'send') {
+    return (
+      <PhoneFrame>
+        <BkashHeader title="Send Money" onBack={back} right={<ShieldCheck size={28}/>}/>
+        <div className="bkash-screen-body">
+          <div className="bkash-info-strip">
+            <ShieldCheck size={24}/>
+            <span>{t('Check the number twice before sending money.', 'টাকা পাঠানোর আগে নম্বর দুইবার যাচাই করুন।')}</span>
+          </div>
 
-  /* ─ Send Money Form ─ */
-  if (step === 'send') return (
-    <div style={{ display:'flex', flexDirection:'column', height:'100%', background:'#fff' }}>
-      <div style={{ background:BK, padding:'16px 20px', display:'flex', alignItems:'center', gap:12, color:'#fff', flexShrink:0 }}>
-        <button onClick={back} style={{ color:'#fff' }}><ArrowLeft size={22}/></button>
-        <p style={{ fontWeight:800, fontSize:18 }}>{t('Send Money','টাকা পাঠান')}</p>
-      </div>
-      <div style={{ flex:1, overflow:'auto', padding:20, display:'flex', flexDirection:'column', gap:18 }}>
-        <div style={{ background:'#FFF3E0', borderRadius:10, padding:14, border:'1px solid #FFB74D' }}>
-          <p style={{ fontSize:14, fontWeight:700, color:'#E65100' }}> {t('Always double-check the number before sending money!','টাকা পাঠানোর আগে সবসময় নম্বর দুইবার যাচাই করুন!')}</p>
+          <section className="bkash-card">
+            <p className="bkash-section-title">Saved Contacts</p>
+            <div className="bkash-contact-list">
+              {SAVED_CONTACTS.map((contact) => (
+                <button
+                  key={contact.id}
+                  className={`bkash-contact ${recipient === contact.phone ? 'selected' : ''}`}
+                  onClick={() => chooseContact(contact)}
+                >
+                  <UserCircle size={42}/>
+                  <strong>{contact.name}</strong>
+                  <span>{contact.detail}</span>
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <section className="bkash-card">
+            <label className="bkash-label" htmlFor="bkash-number">Mobile Number</label>
+            <input
+              id="bkash-number"
+              className="bkash-input"
+              type="tel"
+              placeholder="01XXXXXXXXX"
+              value={recipient}
+              onChange={(e) => { setRecipient(e.target.value); setRecipientName(''); }}
+            />
+          </section>
+
+          <section className="bkash-card">
+            <label className="bkash-label" htmlFor="bkash-amount">Amount</label>
+            <div className="bkash-money-input">
+              <span>Tk</span>
+              <input
+                id="bkash-amount"
+                type="number"
+                placeholder="0"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+              />
+              <ArrowRight size={28}/>
+            </div>
+          </section>
+
+          <button className="bkash-primary-action" onClick={handleSend} disabled={!recipient || !amount}>
+            Next <ArrowRight size={22}/>
+          </button>
         </div>
-        {/* Saved contacts */}
-        <div>
-          <p style={{ fontWeight:700, fontSize:15, marginBottom:10, color:'#5F6368' }}>{t('Saved Contacts','সংরক্ষিত পরিচিতি')}</p>
-          <div style={{ display:'flex', gap:16, overflowX:'auto', paddingBottom:4 }}>
-            {SAVED_CONTACTS.map(c => (
-              <button key={c.id} onClick={() => setRecipient(c.phone)} style={{ flexShrink:0, textAlign:'center', background: recipient===c.phone?BK_LIGHT:'#F8F9FA', border:`2px solid ${recipient===c.phone?BK:'#E8EAED'}`, borderRadius:12, padding:'12px 14px', cursor:'pointer', minWidth:80 }}>
-                <div style={{ fontSize:28, marginBottom:4 }}>{c.avatar}</div>
-                <p style={{ fontSize:12, fontWeight:700, color: recipient===c.phone?BK:'#3C4043' }}>{c.name.split(' ')[0]}</p>
+      </PhoneFrame>
+    );
+  }
+
+  return (
+    <PhoneFrame>
+      <div className="bkash-home-header">
+        <div className="bkash-home-top">
+          <button className="bkash-back-btn" onClick={onClose} aria-label="Close bKash practice">
+            <ArrowLeft size={26}/>
+          </button>
+          <div className="bkash-profile">
+            <div className="bkash-profile-pic"><UserCircle size={42}/></div>
+            <div>
+              <strong>Nayeem Raihan</strong>
+              <button>Tap for Balance</button>
+            </div>
+          </div>
+          <Bell size={27}/>
+        </div>
+      </div>
+
+      <div className="bkash-practice-strip">
+        {t('Practice mode. No real money will move.', 'অনুশীলন মোড। আসল টাকা যাবে না।')}
+      </div>
+
+      <div className="bkash-screen-body bkash-home-body">
+        <section className="bkash-menu-card">
+          <div className="bkash-menu-grid">
+            {MENU_ITEMS.map((item) => (
+              <button
+                key={item.label}
+                className="bkash-menu-item"
+                onClick={() => item.step === 'send'
+                  ? setStep('send')
+                  : showToast(`${item.label} - practice mode`, 'info')}
+              >
+                <span className={`bkash-menu-icon ${item.tone}`}>{item.icon}</span>
+                <strong>{item.label}</strong>
               </button>
             ))}
           </div>
-        </div>
-        {/* Number input */}
-        <div>
-          <label style={{ fontWeight:700, fontSize:15, display:'block', marginBottom:8 }}>{t('Mobile Number','মোবাইল নম্বর')}</label>
-          <input className="input-field" type="tel" placeholder="01XXXXXXXXX" value={recipient} onChange={e=>setRecipient(e.target.value)}
-            style={{ borderColor: recipient?BK:'#DADCE0', fontSize:18 }}/>
-        </div>
-        <div>
-          <label style={{ fontWeight:700, fontSize:15, display:'block', marginBottom:8 }}>{t('Amount (BDT ৳)','পরিমাণ (টাকা ৳)')}</label>
-          <input className="input-field" type="number" placeholder="0.00" value={amount} onChange={e=>setAmount(e.target.value)}
-            style={{ borderColor: amount?BK:'#DADCE0', fontSize:24, fontWeight:800, color:BK }}/>
-        </div>
-        <button onClick={handleSend} disabled={!recipient||!amount}
-          style={{ width:'100%', background: recipient&&amount?BK:'#CCC', color:'#fff', padding:'16px', borderRadius:8, fontWeight:800, fontSize:18, border:'none', cursor: recipient&&amount?'pointer':'default', marginTop:'auto' }}>
-          {t('Next →','পরবর্তী →')}
-        </button>
-      </div>
-    </div>
-  );
+          <button className="bkash-close-menu">Close ^</button>
+        </section>
 
-  /* ─ Home Screen ─ */
-  return (
-    <div style={{ display:'flex', flexDirection:'column', height:'100%', background:'#F5F5F5' }}>
-      {/* Header */}
-      <div style={{ background:BK, color:'#fff', flexShrink:0 }}>
-        <div style={{ padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
-          <div style={{ display:'flex', alignItems:'center', gap:10 }}>
-            <button onClick={onClose} style={{ color:'#fff', padding:4 }}><ArrowLeft size={20}/></button>
-            <div>
-              {/* bKash logo text */}
-              <p style={{ fontWeight:900, fontSize:22, letterSpacing:-0.5 }}>b<span style={{ fontWeight:400 }}>Kash</span></p>
-            </div>
+        <section className="bkash-offers-card">
+          <div className="bkash-card-heading">
+            <strong>Offer</strong>
+            <button>See All</button>
           </div>
-          <div style={{ textAlign:'right' }}>
-            <p style={{ fontSize:12, opacity:0.8 }}>{t('Available Balance','উপলব্ধ ব্যালেন্স')}</p>
-            <p style={{ fontWeight:900, fontSize:22 }}>৳ 12,450.00</p>
+          <div className="bkash-offers-row">
+            <div className="bkash-offer pink">10% Cash Back<br/><span>Practice Offer</span></div>
+            <div className="bkash-offer yellow">Friday Offer<br/><span>Learn safely</span></div>
+            <div className="bkash-offer teal">Mobile Bonus<br/><span>No real money</span></div>
           </div>
-        </div>
-        {/* Account number bar */}
-        <div style={{ background:'rgba(0,0,0,0.15)', padding:'8px 18px', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-          <p style={{ fontSize:13, opacity:0.9 }}>01XXXXXXXX ({t('Practice Account','অনুশীলন অ্যাকাউন্ট')})</p>
-          <span style={{ fontSize:12, background:'rgba(255,255,255,0.2)', padding:'3px 10px', borderRadius:12 }}>{t('Verified ','যাচাইকৃত ')}</span>
-        </div>
-      </div>
+        </section>
 
-      {/* Practice tip */}
-      <div style={{ background:'#FCE4EC', padding:'8px 14px', fontSize:13, color:'#880E4F', fontWeight:600, flexShrink:0 }}>
-         {t('Practice mode — no real money will move.','অনুশীলন মোড — আসল টাকা যাবে না।')}
-      </div>
-
-      {/* Menu Grid */}
-      <div style={{ flex:1, overflow:'auto', padding:16 }}>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:12, marginBottom:20 }}>
-          {MENU_ITEMS.map(m => (
-            <button key={m.step} onClick={() => m.step==='send'?setStep('send'):showToast(t(`${m.labelEn} — Practice mode`,`${m.labelBn} — অনুশীলন`))}
-              style={{ background:'#fff', borderRadius:12, padding:'18px 8px', textAlign:'center', border:'1px solid #E8EAED', cursor:'pointer', boxShadow:'0 1px 4px rgba(0,0,0,0.08)' }}>
-              <div style={{ fontSize:30, marginBottom:8 }}>{m.icon}</div>
-              <p style={{ fontSize:13, fontWeight:700, color:'#202124', lineHeight:1.3 }}>{t(m.labelEn, m.labelBn)}</p>
-            </button>
-          ))}
-        </div>
-
-        {/* Recent transactions */}
-        <div style={{ background:'#fff', borderRadius:12, border:'1px solid #E8EAED', overflow:'hidden' }}>
-          <div style={{ padding:'14px 16px', borderBottom:'1px solid #E8EAED', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-            <p style={{ fontWeight:700, fontSize:16 }}>{t('Recent Transactions','সাম্প্রতিক লেনদেন')}</p>
-            <p style={{ fontSize:13, color:BK, fontWeight:600 }}>{t('See All','সব দেখুন')}</p>
+        <section className="bkash-transactions-card">
+          <div className="bkash-card-heading">
+            <strong>Transactions</strong>
+            <button>See All</button>
           </div>
-          {[
-            { icon:<Send size={20}/>, label:t('Send Money to Rupa','রুপাকে টাকা পাঠানো'), amount:'-৳ 1,000', date:t('Yesterday','গতকাল'), color:'var(--danger)' },
-            { icon:<ArrowDownCircle size={20}/>, label:t('Add Money from Bank','ব্যাংক থেকে টাকা যোগ'), amount:'+৳ 5,000', date:'2 days ago', color:'var(--success)' },
-            { icon:<Smartphone size={20}/>, label:t('Mobile Recharge','মোবাইল রিচার্জ'), amount:'-৳ 100', date:'3 days ago', color:'var(--danger)' },
-          ].map((tx,i) => (
-            <div key={i} style={{ display:'flex', alignItems:'center', gap:14, padding:'14px 16px', borderBottom:i<2?'1px solid #F0F0F0':'none' }}>
-              <div style={{ width:44, height:44, borderRadius:12, background:`${BK}18`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:22, flexShrink:0 }}>{tx.icon}</div>
-              <div style={{ flex:1 }}>
-                <p style={{ fontWeight:600, fontSize:15 }}>{tx.label}</p>
-                <p style={{ fontSize:12, color:'#8E8E8E', marginTop:2 }}>{tx.date}</p>
+          {TRANSACTIONS.map((tx) => (
+            <div className="bkash-transaction" key={`${tx.label}-${tx.detail}`}>
+              <div className="bkash-transaction-icon"><Clock size={24}/></div>
+              <div>
+                <strong>{tx.label}</strong>
+                <p>{tx.detail}</p>
               </div>
-              <p style={{ fontWeight:800, fontSize:15, color:tx.color }}>{tx.amount}</p>
+              <span className={tx.type}>{tx.amount}</span>
             </div>
           ))}
-        </div>
+        </section>
       </div>
-    </div>
+
+      <nav className="bkash-bottom-nav">
+        <button className="active"><Home size={27}/><span>Home</span></button>
+        <button><ReceiptText size={27}/><span>History</span></button>
+        <button className="bkash-scan"><CreditCard size={30}/></button>
+        <button><Bell size={27}/><span>Inbox</span></button>
+      </nav>
+    </PhoneFrame>
   );
 }
