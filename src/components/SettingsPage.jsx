@@ -114,8 +114,8 @@ export default function SettingsPage() {
   };
 
   const Section = ({ title, children }) => (
-    <section style={{ marginBottom: 24 }}>
-      <p style={{ fontWeight: 800, fontSize: 15, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 10, paddingLeft: 4 }}>
+    <section className="settings-section">
+      <p className="settings-section-title">
         {title}
       </p>
       <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
@@ -127,20 +127,20 @@ export default function SettingsPage() {
   const Row = ({ icon, label, sub, right, onClick, divider = true }) => (
     <div
       onClick={onClick}
-      className="flex items-center gap-14"
-      style={{ padding: '16px 20px', borderBottom: divider ? '1px solid var(--border)' : 'none', cursor: onClick ? 'pointer' : 'default' }}
+      className={`settings-row${divider ? '' : ' no-divider'}`}
+      style={{ cursor: onClick ? 'pointer' : 'default' }}
     >
       <div className="icon-wrap iw-sm ic-blue" style={{ borderRadius: 10 }}>{icon}</div>
-      <div style={{ flex: 1, minWidth: 0 }}>
+      <div className="settings-row-copy">
         <p style={{ fontWeight: 700, fontSize: 17 }}>{label}</p>
         {sub && <p className="t-tiny" style={{ marginTop: 2 }}>{sub}</p>}
       </div>
-      {right}
+      {right && <div className="settings-row-control">{right}</div>}
     </div>
   );
 
   return (
-    <div>
+    <div className="settings-page">
       <div className="section-header">
         <h1 className="t-title anim-up">{t('Settings & Accessibility', 'সেটিংস ও অ্যাক্সেসিবিলিটি', 'सेटिंग्स और सुविधा')}</h1>
         <p className="t-sub anim-up d1" style={{ marginTop: 8 }}>
@@ -149,7 +149,7 @@ export default function SettingsPage() {
         <div className="section-divider" />
       </div>
 
-      <div className="card anim-up d1" style={{ marginBottom: 28, background: 'linear-gradient(135deg,var(--blue-light),var(--teal-light))', display: 'flex', alignItems: 'center', gap: 20, padding: 24, flexWrap: 'wrap' }}>
+      <div className="card settings-profile-card anim-up d1">
         <div style={{ width: 60, height: 60, borderRadius: '50%', background: 'var(--blue)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
           <User size={28} color="#fff" />
         </div>
@@ -169,7 +169,7 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(340px,1fr))', gap: 24, marginBottom: 24 }}>
+      <div className="settings-grid">
         <Section title={t('Profile', 'প্রোফাইল', 'प्रोफाइल')}>
           <form onSubmit={saveProfile} style={{ padding: 20, display: 'flex', flexDirection: 'column', gap: 14 }}>
             <div>
