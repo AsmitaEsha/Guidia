@@ -25,6 +25,9 @@ function handleUpload(req, res, next) {
   });
 }
 
+router.post('/sessions', screenshotLimiter, handleUpload, screenshotController.createSession);
+router.get('/sessions/:analysisId', screenshotController.getSession);
+
 router.use(requireAuth);
 router.post('/analyze', screenshotLimiter, handleUpload, screenshotController.analyze);
 

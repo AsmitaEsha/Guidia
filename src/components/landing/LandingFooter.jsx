@@ -29,7 +29,7 @@ export default function LandingFooter() {
 
         <div style={{ borderTop: '1px solid var(--border)', paddingTop: 24, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
           <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>© {new Date().getFullYear()} Guidia. All rights reserved.</p>
-          <Link to="/login" style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Sign In</Link>
+          <Link to="/onboarding" style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Start Setup</Link>
         </div>
       </div>
     </footer>

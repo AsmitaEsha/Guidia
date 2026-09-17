@@ -17,7 +17,7 @@ export default function FinalCTA() {
           </p>
         </div>
         <div className="flex gap-14" style={{ justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link to="/register" className="lp-btn lp-btn-primary" style={{ fontSize: 17 }}>
+          <Link to="/onboarding" className="lp-btn lp-btn-primary" style={{ fontSize: 17 }}>
             Get Started <ArrowRight size={18} />
           </Link>
           <a href="#features" className="lp-btn lp-btn-secondary" style={{ fontSize: 17 }}>

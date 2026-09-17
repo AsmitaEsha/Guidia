@@ -35,7 +35,12 @@ export function createApp() {
   }));
   app.use(cors({
     origin(origin, callback) {
-      if (!origin || allowedOrigins.has(origin)) {
+      if (
+        !origin ||
+        allowedOrigins.has(origin) ||
+        origin.startsWith('chrome-extension://') ||
+        origin.startsWith('edge-extension://')
+      ) {
         callback(null, true);
         return;
       }

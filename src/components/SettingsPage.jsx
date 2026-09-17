@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppStateContext';
 import { useAuth } from '../context/AuthContext';
 import GuidiaVoiceControls from './GuidiaVoiceControls';
-import { Settings, Globe, Volume2, ZoomIn, Moon, Bell, Shield, ChevronRight, LogOut, User } from 'lucide-react';
+import { Settings, Globe, Volume2, ZoomIn, Moon, Bell, Shield, ChevronRight, RotateCcw, User } from 'lucide-react';
 
 function Toggle({ on, onToggle }) {
   return (
@@ -18,14 +18,17 @@ export default function SettingsPage() {
           fontSize, setFontSize, darkMode, setDarkMode,
           voiceEnabled, setVoiceEnabled, voiceSpeed, setVoiceSpeed, voiceAutoPlay, setVoiceAutoPlay,
           reducedMotion, setReducedMotion,
-          persistPreferences } = useApp();
+          persistPreferences, resetFirstRun } = useApp();
   const { logout, user: authUser } = useAuth();
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState(true);
 
-  const handleLogout = async () => {
-    await logout();
-    navigate('/login', { replace: true });
+  const handleRestartSetup = async () => {
+    if (authUser) {
+      await logout();
+    }
+    resetFirstRun();
+    navigate('/onboarding', { replace: true });
   };
 
   const Section = ({ title, children, style={} }) => (
@@ -64,7 +67,7 @@ export default function SettingsPage() {
           </div>
           <div style={{ flex:1 }}>
             <p style={{ fontWeight:800, fontSize:22 }}>{user?.name || t('User','ব্যবহারকারী','उपयोगकर्ता')}</p>
-            <p className="t-sub">{user?.email || ''}</p>
+            <p className="t-sub">{user?.age ? t(`Age ${user.age}`, `Boyosh ${user.age}`, `Umra ${user.age}`) : ''}</p>
             <div className="flex items-center gap-8" style={{ marginTop:6 }}>
               <span className="badge badge-blue">{mode === 'scared' ? t('Nervous Mode','ভীত মোড','घबराया हुआ') : mode === 'unsure' ? t('Unsure Mode','অনিশ্চিত মোড','अनिश्चित') : t('Calm Mode','শান্ত মোড','शांत')}</span>
               <span className="badge badge-sage">{t('Guardian Connected','গার্ডিয়ান সংযুক্ত','गार्जियन जुड़ा हुआ')}</span>
@@ -155,10 +158,10 @@ export default function SettingsPage() {
           </Section>
         )}
 
-        {/* Sign Out */}
+        {/* Restart setup */}
         </div>
-        <button className="btn btn-ghost btn-full" style={{ color:'var(--danger)', border:'1px solid var(--danger-light)', marginTop:8 }} onClick={handleLogout}>
-          <LogOut size={20}/> {t('Sign Out','সাইন আউট')}
+        <button className="btn btn-ghost btn-full" style={{ color:'var(--danger)', border:'1px solid var(--danger-light)', marginTop:8 }} onClick={handleRestartSetup}>
+          <RotateCcw size={20}/> {t('Restart Setup','আবার সেটআপ করুন','Setup dobara karein')}
         </button>
       </div>
     </div>

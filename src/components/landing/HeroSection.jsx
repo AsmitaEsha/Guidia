@@ -25,7 +25,7 @@ export default function HeroSection() {
               Guidia helps older adults learn digital skills, stay safe online, and feel more connected — with friendly support every step of the way.
             </p>
             <div className="lp-hero-actions">
-              <Link to="/register" className="lp-btn lp-btn-primary">
+              <Link to="/onboarding" className="lp-btn lp-btn-primary">
                 Start Learning Today <ArrowRight size={19} />
               </Link>
               <a href="#features" className="lp-btn lp-btn-secondary">

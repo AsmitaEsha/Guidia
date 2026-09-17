@@ -123,12 +123,14 @@ function TutorialPlayer({ tut, onClose, onComplete }) {
   const [step, setStep] = useState(0);
   const steps = tut.steps[language] || tut.steps.en;
   const done = step >= steps.length;
+  const title = localizedTutorialTitle(tut, language, t);
+  const level = localizedTutorialLevel(tut, language, t);
 
   const STEP_ICONS = ['','','⌨','','','','','','',''];
 
   const handleNext = () => { if (done) return; voiceControls.stop(); setStep(s => s+1); };
   const handleComplete = () => {
-    addMemory({ title: tut.title, category:'learning', starred:false, summary: steps[steps.length-1] });
+    addMemory({ title, category:'learning', starred:false, summary: steps[steps.length-1] });
     onComplete();
   };
 
@@ -137,10 +139,10 @@ function TutorialPlayer({ tut, onClose, onComplete }) {
       <div style={{ padding:'20px 24px', background:'var(--surface)', borderBottom:'1px solid var(--border)', display:'flex', alignItems:'center', gap:16, flexShrink:0 }}>
         <button onClick={onClose} className="btn btn-icon btn-ghost"><ArrowLeft size={22}/></button>
         <div style={{ flex:1 }}>
-          <p style={{ fontWeight:800, fontSize:17 }}>{tut.title}</p>
+          <p style={{ fontWeight:800, fontSize:17 }}>{title}</p>
           <p className="t-tiny">{t('Step','ধাপ')} {Math.min(step+1, steps.length)} {t('of','/')} {steps.length}</p>
         </div>
-        <span className="badge badge-blue">{tut.level}</span>
+        <span className="badge badge-blue">{level}</span>
       </div>
 
       <div className="page-scroll" style={{ padding:24, flex:1 }}>
@@ -204,9 +206,35 @@ const APP_GUIDE_MAP = {
   travel: ['booking'],
 };
 
+const TUTORIAL_COPY = {
+  tut1: { title: ['Send a WhatsApp Message', 'WhatsApp মেসেজ পাঠান', 'WhatsApp संदेश भेजें'], level: ['Beginner', 'শুরু', 'शुरुआती'] },
+  tut2: { title: ['Send a Photo on WhatsApp', 'WhatsApp-এ ছবি পাঠান', 'WhatsApp पर फोटो भेजें'], level: ['Beginner', 'শুরু', 'शुरुआती'] },
+  tut3: { title: ['Make a Video Call', 'ভিডিও কল করুন', 'वीडियो कॉल करें'], level: ['Intermediate', 'মাঝারি', 'मध्यम'] },
+  tut4: { title: ['Send Money on bKash Safely', 'bKash-এ নিরাপদে টাকা পাঠান', 'bKash से सुरक्षित पैसे भेजें'], level: ['Intermediate', 'মাঝারি', 'मध्यम'] },
+  tut_gp: { title: ['Pay using Google Pay', 'Google Pay দিয়ে পেমেন্ট করুন', 'Google Pay से भुगतान करें'], level: ['Intermediate', 'মাঝারি', 'मध्यम'] },
+  tut_amz: { title: ['Order Safely on Amazon', 'Amazon-এ নিরাপদে অর্ডার করুন', 'Amazon पर सुरक्षित ऑर्डर करें'], level: ['Beginner', 'শুরু', 'शुरुआती'] },
+  tut_prac: { title: ['Book a Doctor Online', 'অনলাইনে ডাক্তার বুক করুন', 'ऑनलाइन डॉक्टर बुक करें'], level: ['Beginner', 'শুরু', 'शुरुआती'] },
+  tut_book: { title: ['Find a Safe Hotel', 'নিরাপদ হোটেল খুঁজুন', 'सुरक्षित होटल खोजें'], level: ['Intermediate', 'মাঝারি', 'मध्यम'] },
+  tut5: { title: ['Recognizing Scam Messages', 'স্ক্যাম মেসেজ চিনুন', 'स्कैम संदेश पहचानें'], level: ['Beginner', 'শুরু', 'शुरुआती'] },
+};
+
+function localizedTutorialTitle(tut, language, t) {
+  if (language === 'bn' && tut.titleBn) return tut.titleBn;
+  if (language === 'hi' && tut.titleHi) return tut.titleHi;
+  const copy = TUTORIAL_COPY[tut.id]?.title;
+  return copy ? t(...copy) : tut.title;
+}
+
+function localizedTutorialLevel(tut, language, t) {
+  if (language === 'bn' && tut.levelBn) return tut.levelBn;
+  if (language === 'hi' && tut.levelHi) return tut.levelHi;
+  const copy = TUTORIAL_COPY[tut.id]?.level;
+  return copy ? t(...copy) : tut.level;
+}
+
 // ── Main Learn Component ────────────────────────────────────
 export default function Learn() {
-  const { t, speak } = useApp();
+  const { t, speak, language } = useApp();
   const [activeTut, setActiveTut] = useState(null);
   const [activeGuide, setActiveGuide] = useState(null);
   const [completed, setCompleted] = useState(['tut1','tut2','tut5']);
@@ -270,6 +298,8 @@ export default function Learn() {
               {/* Tutorial list */}
               {tuts.map((tut, i) => {
                 const done = completed.includes(tut.id);
+                const title = localizedTutorialTitle(tut, language, t);
+                const level = localizedTutorialLevel(tut, language, t);
                 return (
                   <button key={tut.id} className={`card card-btn flex items-center gap-16 anim-up d${i+1}`}
                     onClick={() => { setActiveTut(tut); speak(t(`Starting: ${tut.title}`,`শুরু হচ্ছে: ${tut.title}`)); }}
@@ -278,7 +308,7 @@ export default function Learn() {
                       {done ? <Check size={24}/> : <BookOpen size={24}/>}
                     </div>
                     <div style={{ flex:1, textAlign:'left' }}>
-                      <p style={{ fontWeight:700, fontSize:17 }}>{tut.title}</p>
+                      <p style={{ fontWeight:700, fontSize:17 }}>{title}</p>
                       <div className="flex items-center gap-8" style={{ marginTop:4 }}>
                         <span className="badge" style={{ background:done?'var(--success-light)':'var(--blue-light)', color:done?'var(--success)':'var(--blue-dark)' }}>
                           {done ? t(' Completed',' সম্পন্ন') : tut.level}

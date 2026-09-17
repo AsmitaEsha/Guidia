@@ -10,7 +10,7 @@ export default function LandingNavbar() {
   return (
     <header className="lp-navbar">
       <div className="lp-container flex items-center justify-between" style={{ height: 82 }}>
-        <Link to="/" className="lp-brand" style={{ color: 'var(--text-primary)' }}>
+        <Link to="/landing" className="lp-brand" style={{ color: 'var(--text-primary)' }}>
           <GuidiaLogo size={44} />
           <span>
             <strong>Guidia</strong>
@@ -32,8 +32,7 @@ export default function LandingNavbar() {
           <button className="lp-search-btn" aria-label="Search">
             <Search size={24} />
           </button>
-          <Link to="/login" className="lp-btn lp-btn-secondary" style={{ padding: '10px 20px', fontSize: 15 }}>Sign In</Link>
-          <Link to="/register" className="lp-btn lp-btn-primary" style={{ padding: '10px 20px', fontSize: 15 }}>Get Started</Link>
+          <Link to="/onboarding" className="lp-btn lp-btn-primary" style={{ padding: '10px 20px', fontSize: 15 }}>Get Started</Link>
         </div>
 
         <button
@@ -55,8 +54,7 @@ export default function LandingNavbar() {
             </a>
           ))}
           <div className="flex gap-12" style={{ marginTop: 8 }}>
-            <Link to="/login" className="lp-btn lp-btn-secondary" style={{ flex: 1 }} onClick={() => setOpen(false)}>Sign In</Link>
-            <Link to="/register" className="lp-btn lp-btn-primary" style={{ flex: 1 }} onClick={() => setOpen(false)}>Get Started</Link>
+            <Link to="/onboarding" className="lp-btn lp-btn-primary" style={{ flex: 1 }} onClick={() => setOpen(false)}>Get Started</Link>
           </div>
         </div>
       )}

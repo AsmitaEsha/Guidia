@@ -35,6 +35,17 @@ function mapMemoryEntry(e) {
 
 const Ctx = createContext();
 export const useApp = () => useContext(Ctx);
+const LOCAL_PROFILE_KEY = 'guidia.localProfile';
+const LOCAL_PREFS_KEY = 'guidia.localPreferences';
+
+function readStoredJson(key, fallback) {
+  try {
+    const stored = localStorage.getItem(key);
+    return stored ? JSON.parse(stored) : fallback;
+  } catch {
+    return fallback;
+  }
+}
 
 // ── Voice: real backend TTS proxy (works in production, not just `npm run
 // dev`) with play/pause/resume/stop/replay/speed controls. A single shared
@@ -144,9 +155,14 @@ function setVoiceRate(rate) { _rate = rate; if (_audioEl) _audioEl.playbackRate 
 
 export function AppProvider({ children }) {
   const { user: authUser, accessToken, updatePreferences, authedFetch, ApiError } = useAuth();
-  const user = useMemo(() => (authUser ? { name: authUser.fullName, email: authUser.email } : null), [authUser]);
-  const [mode, setMode]           = useState('calm');
-  const [language, setLanguage]   = useState('en');
+  const [localProfile, setLocalProfile] = useState(() => readStoredJson(LOCAL_PROFILE_KEY, null));
+  const [localPrefs, setLocalPrefs] = useState(() => readStoredJson(LOCAL_PREFS_KEY, {}));
+  const user = useMemo(() => {
+    if (authUser) return { name: authUser.fullName, email: authUser.email, age: authUser.age };
+    return localProfile ? { name: localProfile.name, age: localProfile.age } : null;
+  }, [authUser, localProfile]);
+  const [mode, setMode]           = useState(localPrefs.mode || 'calm');
+  const [language, setLanguage]   = useState(localProfile?.language || localPrefs.language || 'en');
   const seededUserId = useRef(null);
 
   // The active dashboard section is derived from the real URL (/app/:tab)
@@ -165,13 +181,13 @@ export function AppProvider({ children }) {
   const [memoryEntries, setMemoryEntries]   = useState([]);
   const [memoryLoading, setMemoryLoading] = useState(true);
   const [toast, setToast]         = useState(null);
-  const [fontSize, setFontSize]   = useState(20);
-  const [darkMode, setDarkMode]   = useState(false);
-  const [voiceEnabled, setVoiceEnabled]   = useState(true);
-  const [voiceSpeed, setVoiceSpeed] = useState(1);
-  const [voiceAutoPlay, setVoiceAutoPlay] = useState(false);
+  const [fontSize, setFontSize]   = useState(localPrefs.fontSize || 20);
+  const [darkMode, setDarkMode]   = useState(Boolean(localPrefs.darkMode));
+  const [voiceEnabled, setVoiceEnabled]   = useState(localPrefs.voiceEnabled ?? true);
+  const [voiceSpeed, setVoiceSpeed] = useState(localPrefs.voiceSpeed || 1);
+  const [voiceAutoPlay, setVoiceAutoPlay] = useState(Boolean(localPrefs.voiceAutoPlay));
   const [voiceStatus, setVoiceStatus] = useState({ status: 'idle', currentText: '', error: '' });
-  const [reducedMotion, setReducedMotion] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(Boolean(localPrefs.reducedMotion));
 
   // Seed local Cognitive Load Governor / accessibility state from the
   // user's persisted preferences once per login, so a reload restores the
@@ -204,6 +220,10 @@ export function AppProvider({ children }) {
     document.documentElement.dataset.reducedMotion = reducedMotion ? 'true' : 'false';
   }, [reducedMotion]);
 
+  useEffect(() => {
+    document.documentElement.lang = language === 'bn' ? 'bn' : language === 'hi' ? 'hi' : 'en';
+  }, [language]);
+
   // Note: this scales body/base text (anything that inherits font-size
   // rather than setting its own px value). Most headings/labels in this
   // codebase currently hardcode their own px font-size and won't rescale —
@@ -213,11 +233,39 @@ export function AppProvider({ children }) {
   }, [fontSize]);
 
   const persistPreferences = useCallback((changes) => {
+    const nextLocalPrefs = {
+      ...localPrefs,
+      language: changes.preferredLanguage || changes.language || language,
+      mode: changes.cognitiveState?.toLowerCase?.() || changes.mode || mode,
+      fontSize: changes.fontSize ?? fontSize,
+      darkMode: changes.darkMode ?? darkMode,
+      voiceEnabled: changes.voiceEnabled ?? voiceEnabled,
+      voiceSpeed: changes.voiceSpeed ?? voiceSpeed,
+      voiceAutoPlay: changes.voiceAutoPlay ?? voiceAutoPlay,
+      reducedMotion: changes.reducedMotion ?? reducedMotion,
+    };
+    setLocalPrefs(nextLocalPrefs);
+    localStorage.setItem(LOCAL_PREFS_KEY, JSON.stringify(nextLocalPrefs));
     if (!authUser) return Promise.resolve();
     return updatePreferences(changes).catch((err) => {
       console.warn('Failed to save preferences:', err);
     });
-  }, [authUser, updatePreferences]);
+  }, [authUser, darkMode, fontSize, language, localPrefs, mode, reducedMotion, updatePreferences, voiceAutoPlay, voiceEnabled, voiceSpeed]);
+
+  const completeFirstRun = useCallback(({ name, age, language: nextLanguage }) => {
+    const profile = { name: name.trim(), age: Number(age), language: nextLanguage, onboardingDone: true };
+    setLocalProfile(profile);
+    setLanguage(nextLanguage);
+    localStorage.setItem(LOCAL_PROFILE_KEY, JSON.stringify(profile));
+    const nextPrefs = { ...localPrefs, language: nextLanguage, mode };
+    setLocalPrefs(nextPrefs);
+    localStorage.setItem(LOCAL_PREFS_KEY, JSON.stringify(nextPrefs));
+  }, [localPrefs, mode]);
+
+  const resetFirstRun = useCallback(() => {
+    localStorage.removeItem(LOCAL_PROFILE_KEY);
+    setLocalProfile(null);
+  }, []);
 
   // Load the user's real Memory Book once per login (keyed on id, not the
   // whole user object, so a preference update elsewhere doesn't re-fetch).
@@ -314,7 +362,9 @@ export function AppProvider({ children }) {
   return (
     <Ctx.Provider value={{
       user,
-      onboardingDone: authUser?.preference?.onboardingDone ?? false,
+      onboardingDone: Boolean(localProfile?.onboardingDone || authUser?.preference?.onboardingDone),
+      completeFirstRun,
+      resetFirstRun,
       persistPreferences,
       mode, setMode,
       language, setLanguage,

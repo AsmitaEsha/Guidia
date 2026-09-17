@@ -8,6 +8,7 @@ import Register from './pages/auth/Register';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import ResetPassword from './pages/auth/ResetPassword';
 import AdminDashboard from './pages/AdminDashboard';
+import ScreenshotExplain from './pages/ScreenshotExplain';
 import GuidiaLogo from './components/GuidiaLogo';
 import { Sidebar, TopBar, BottomNav } from './components/Navigation';
 import Onboarding          from './components/Onboarding';
@@ -83,6 +84,11 @@ function OnboardingPage() {
   );
 }
 
+function EntryRoute() {
+  const { onboardingDone } = useApp();
+  return <Navigate to={onboardingDone ? '/app/home' : '/onboarding'} replace />;
+}
+
 // ── Main authenticated application shell ────────────────────────────────
 function AppShell() {
   const { activeTab, mode, onboardingDone, darkMode } = useApp();
@@ -109,18 +115,44 @@ function AppShell() {
   );
 }
 
+function ScreenshotExplainShell() {
+  const { mode, onboardingDone, darkMode } = useApp();
+  const modeStyle = MODE_STYLES[mode] || MODE_STYLES.calm;
+
+  if (!onboardingDone) {
+    return <Navigate to="/onboarding" replace />;
+  }
+
+  return (
+    <div className="app-layout" data-mode={mode} data-theme={darkMode ? 'dark' : 'guidia-app'} style={{ color:'var(--text-1)', ...modeStyle }}>
+      <Toast/>
+      <Sidebar/>
+      <FloatingVoiceHelp/>
+      <div className="main-content">
+        <TopBar/>
+        <div className="page-content">
+          <ScreenshotExplain/>
+        </div>
+        <BottomNav/>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <AppProvider>
           <Routes>
-            <Route path="/" element={<Landing/>} />
+            <Route path="/" element={<EntryRoute/>} />
+            <Route path="/landing" element={<Landing/>} />
             <Route path="/login" element={<Login/>} />
             <Route path="/register" element={<Register/>} />
             <Route path="/forgot-password" element={<ForgotPassword/>} />
             <Route path="/reset-password" element={<ResetPassword/>} />
-            <Route path="/onboarding" element={<ProtectedRoute><OnboardingPage/></ProtectedRoute>} />
+            <Route path="/screenshot-explain/:analysisId" element={<ScreenshotExplainShell/>} />
+            <Route path="/onboarding" element={<OnboardingPage/>} />
             <Route path="/app" element={<Navigate to="/app/home" replace/>} />
             <Route path="/app/:tab" element={<ProtectedRoute><AppShell/></ProtectedRoute>} />
             <Route path="/admin" element={<ProtectedRoute role="ADMIN"><AdminDashboard/></ProtectedRoute>} />
