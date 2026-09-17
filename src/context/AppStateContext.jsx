@@ -162,7 +162,7 @@ export function AppProvider({ children }) {
     return localProfile ? { name: localProfile.name, age: localProfile.age } : null;
   }, [authUser, localProfile]);
   const [mode, setMode]           = useState(localPrefs.mode || 'calm');
-  const [language, setLanguage]   = useState(localProfile?.language || localPrefs.language || 'en');
+  const [language, setLanguage]   = useState(localPrefs.language || localProfile?.language || 'en');
   const seededUserId = useRef(null);
 
   // The active dashboard section is derived from the real URL (/app/:tab)
@@ -188,6 +188,7 @@ export function AppProvider({ children }) {
   const [voiceAutoPlay, setVoiceAutoPlay] = useState(Boolean(localPrefs.voiceAutoPlay));
   const [voiceStatus, setVoiceStatus] = useState({ status: 'idle', currentText: '', error: '' });
   const [reducedMotion, setReducedMotion] = useState(Boolean(localPrefs.reducedMotion));
+  const [notificationsEnabled, setNotificationsEnabled] = useState(localPrefs.notificationsEnabled ?? true);
 
   // Seed local Cognitive Load Governor / accessibility state from the
   // user's persisted preferences once per login, so a reload restores the
@@ -243,6 +244,7 @@ export function AppProvider({ children }) {
       voiceSpeed: changes.voiceSpeed ?? voiceSpeed,
       voiceAutoPlay: changes.voiceAutoPlay ?? voiceAutoPlay,
       reducedMotion: changes.reducedMotion ?? reducedMotion,
+      notificationsEnabled: changes.notificationsEnabled ?? notificationsEnabled,
     };
     setLocalPrefs(nextLocalPrefs);
     localStorage.setItem(LOCAL_PREFS_KEY, JSON.stringify(nextLocalPrefs));
@@ -250,7 +252,7 @@ export function AppProvider({ children }) {
     return updatePreferences(changes).catch((err) => {
       console.warn('Failed to save preferences:', err);
     });
-  }, [authUser, darkMode, fontSize, language, localPrefs, mode, reducedMotion, updatePreferences, voiceAutoPlay, voiceEnabled, voiceSpeed]);
+  }, [authUser, darkMode, fontSize, language, localPrefs, mode, notificationsEnabled, reducedMotion, updatePreferences, voiceAutoPlay, voiceEnabled, voiceSpeed]);
 
   const completeFirstRun = useCallback(({ name, age, language: nextLanguage }) => {
     const profile = { name: name.trim(), age: Number(age), language: nextLanguage, onboardingDone: true };
@@ -261,6 +263,24 @@ export function AppProvider({ children }) {
     setLocalPrefs(nextPrefs);
     localStorage.setItem(LOCAL_PREFS_KEY, JSON.stringify(nextPrefs));
   }, [localPrefs, mode]);
+
+  const updateLocalProfile = useCallback(({ name, age, language: nextLanguage }) => {
+    const profile = {
+      ...(localProfile || {}),
+      name: name?.trim() || localProfile?.name || '',
+      age: Number(age || localProfile?.age || 0),
+      language: nextLanguage || language,
+      onboardingDone: true,
+    };
+    setLocalProfile(profile);
+    localStorage.setItem(LOCAL_PROFILE_KEY, JSON.stringify(profile));
+    if (nextLanguage) {
+      setLanguage(nextLanguage);
+      const nextPrefs = { ...localPrefs, language: nextLanguage };
+      setLocalPrefs(nextPrefs);
+      localStorage.setItem(LOCAL_PREFS_KEY, JSON.stringify(nextPrefs));
+    }
+  }, [language, localPrefs, localProfile]);
 
   const resetFirstRun = useCallback(() => {
     localStorage.removeItem(LOCAL_PROFILE_KEY);
@@ -318,7 +338,15 @@ export function AppProvider({ children }) {
   }, []);
 
   const speakFn = useCallback((text, opts = {}) => {
-    if (!voiceEnabled || !authUser) return;
+    if (!voiceEnabled || !text) return;
+    if (!authUser) {
+      window.speechSynthesis?.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = language === 'bn' ? 'bn-BD' : language === 'hi' ? 'hi-IN' : 'en-US';
+      utterance.rate = opts.rate || voiceSpeed || recommendedVoiceRate(mode);
+      window.speechSynthesis?.speak(utterance);
+      return;
+    }
     const pauseMs = mode === 'scared' ? 700 : mode === 'unsure' ? 450 : 250;
     const rate = opts.rate || voiceSpeed || recommendedVoiceRate(mode);
     speak(text, language, apiFetchBlob, accessToken, { rate, mode, pauseMs, onComplete: opts.onComplete });
@@ -364,6 +392,7 @@ export function AppProvider({ children }) {
       user,
       onboardingDone: Boolean(localProfile?.onboardingDone || authUser?.preference?.onboardingDone),
       completeFirstRun,
+      updateLocalProfile,
       resetFirstRun,
       persistPreferences,
       mode, setMode,
@@ -380,6 +409,7 @@ export function AppProvider({ children }) {
       voiceAutoPlay, setVoiceAutoPlay,
       voiceStatus,
       reducedMotion, setReducedMotion,
+      notificationsEnabled, setNotificationsEnabled,
       speak: speakFn, voiceControls, t,
     }}>
       {children}
