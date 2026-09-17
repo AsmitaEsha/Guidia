@@ -66,10 +66,12 @@ const MODE_STYLES = {
 
 // ── Language + Emotional mode, reached once after registration ─────────
 function OnboardingPage() {
-  const { mode } = useApp();
+  const { mode, fontSize } = useApp();
   const modeStyle = MODE_STYLES[mode] || MODE_STYLES.calm;
+  const textScale = Math.max(0.8, Math.min(1.5, fontSize / 20));
+  const fontDelta = `${fontSize - 20}px`;
   return (
-    <div data-theme="light" style={{ minHeight:'100vh', background:'linear-gradient(160deg,#eef4f9,#e8f4f0)', display:'flex', flexDirection:'column', color:'var(--text-1)', ...modeStyle }} data-mode={mode}>
+    <div data-theme="light" style={{ minHeight:'100vh', background:'linear-gradient(160deg,#eef4f9,#e8f4f0)', display:'flex', flexDirection:'column', color:'var(--text-1)', ...modeStyle, fontSize:`${fontSize}px`, '--font-scale': textScale, '--font-delta': fontDelta }} data-mode={mode}>
       <Toast/>
       <div className="flex items-center gap-12 anim-up" style={{ padding:'24px 36px' }}>
         <GuidiaLogo size={42}/>
@@ -91,8 +93,10 @@ function EntryRoute() {
 
 // ── Main authenticated application shell ────────────────────────────────
 function AppShell() {
-  const { activeTab, mode, onboardingDone, darkMode } = useApp();
+  const { activeTab, mode, onboardingDone, darkMode, fontSize } = useApp();
   const modeStyle = MODE_STYLES[mode] || MODE_STYLES.calm;
+  const textScale = Math.max(0.8, Math.min(1.5, fontSize / 20));
+  const fontDelta = `${fontSize - 20}px`;
   const page = PAGES[activeTab] || PAGES.home;
 
   if (!onboardingDone) {
@@ -100,7 +104,7 @@ function AppShell() {
   }
 
   return (
-    <div className="app-layout" data-mode={mode} data-theme={darkMode ? 'dark' : 'guidia-app'} style={{ color:'var(--text-1)', ...modeStyle }}>
+    <div className="app-layout" data-mode={mode} data-theme={darkMode ? 'dark' : 'guidia-app'} style={{ color:'var(--text-1)', ...modeStyle, fontSize:`${fontSize}px`, '--font-scale': textScale, '--font-delta': fontDelta }}>
       <Toast/>
       <Sidebar/>
       <FloatingVoiceHelp/>
@@ -116,15 +120,17 @@ function AppShell() {
 }
 
 function ScreenshotExplainShell() {
-  const { mode, onboardingDone, darkMode } = useApp();
+  const { mode, onboardingDone, darkMode, fontSize } = useApp();
   const modeStyle = MODE_STYLES[mode] || MODE_STYLES.calm;
+  const textScale = Math.max(0.8, Math.min(1.5, fontSize / 20));
+  const fontDelta = `${fontSize - 20}px`;
 
   if (!onboardingDone) {
     return <Navigate to="/onboarding" replace />;
   }
 
   return (
-    <div className="app-layout" data-mode={mode} data-theme={darkMode ? 'dark' : 'guidia-app'} style={{ color:'var(--text-1)', ...modeStyle }}>
+    <div className="app-layout" data-mode={mode} data-theme={darkMode ? 'dark' : 'guidia-app'} style={{ color:'var(--text-1)', ...modeStyle, fontSize:`${fontSize}px`, '--font-scale': textScale, '--font-delta': fontDelta }}>
       <Toast/>
       <Sidebar/>
       <FloatingVoiceHelp/>

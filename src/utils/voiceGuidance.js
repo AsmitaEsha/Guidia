@@ -20,9 +20,22 @@ export function cleanSpokenText(text = '') {
     .replace(/https?:\/\/\S+/gi, ' link ')
     .replace(/[`*_#~|[\]{}]/g, ' ')
     .replace(/[•→⇒]/g, '. ')
-    .replace(/\s*>\s*/g, '. Then choose ')
+    .replace(/\s*>\s*/g, '. ')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+function findChunkBoundary(text, max) {
+  const slice = text.slice(0, max);
+  const punctuation = ['।', '.', '!', '?', '…', ';', ','];
+  const candidates = punctuation
+    .map((mark) => slice.lastIndexOf(mark))
+    .filter((idx) => idx > 35);
+
+  if (candidates.length > 0) return Math.max(...candidates) + 1;
+
+  const spaceIdx = text.lastIndexOf(' ', max);
+  return spaceIdx > 0 ? spaceIdx : max;
 }
 
 export function voiceChunks(text = '', mode = 'calm') {
@@ -30,13 +43,17 @@ export function voiceChunks(text = '', mode = 'calm') {
   const max = mode === 'scared' ? 95 : mode === 'unsure' ? 135 : 180;
   const chunks = [];
   let rem = clean;
+
   while (rem.length > 0) {
-    if (rem.length <= max) { chunks.push(rem); break; }
-    const sentenceIdx = rem.slice(0, max).lastIndexOf('.');
-    let idx = sentenceIdx > 35 ? sentenceIdx + 1 : rem.lastIndexOf(' ', max);
-    if (idx < 0) idx = max;
+    if (rem.length <= max) {
+      chunks.push(rem);
+      break;
+    }
+
+    const idx = findChunkBoundary(rem, max);
     chunks.push(rem.slice(0, idx).trim());
     rem = rem.slice(idx).trimStart();
   }
+
   return chunks.filter(Boolean);
 }

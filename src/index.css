@@ -446,6 +446,30 @@ input,textarea{font-family:inherit;}
 .app-layout span{
   line-height:1.55;
 }
+.app-layout,
+[data-theme="light"][data-mode]{
+  --font-delta:0px;
+}
+.app-layout .t-hero{font-size:clamp(32px,calc(44px + var(--font-delta)),58px) !important;}
+.app-layout .t-title{font-size:clamp(28px,calc(36px + var(--font-delta)),50px) !important;}
+.app-layout .t-head{font-size:clamp(24px,calc(28px + var(--font-delta)),42px) !important;}
+.app-layout .t-body{font-size:clamp(18px,calc(22px + var(--font-delta)),36px) !important;}
+.app-layout .t-sub{font-size:clamp(17px,calc(20px + var(--font-delta)),34px) !important;}
+.app-layout .t-tiny{font-size:clamp(15px,calc(18px + var(--font-delta)),30px) !important;}
+.app-layout .btn{font-size:clamp(17px,calc(19px + var(--font-delta)),31px) !important;}
+.app-layout .btn-lg{font-size:clamp(19px,calc(21px + var(--font-delta)),34px) !important;}
+.app-layout .btn-sm{font-size:clamp(15px,calc(17px + var(--font-delta)),28px) !important;}
+.app-layout .input-field{font-size:clamp(18px,calc(21px + var(--font-delta)),34px) !important;}
+.app-layout .seg-btn{font-size:clamp(16px,calc(18px + var(--font-delta)),30px) !important;}
+.app-layout .badge{font-size:clamp(14px,calc(16px + var(--font-delta)),27px) !important;}
+.app-layout .sidebar-item{font-size:clamp(16px,calc(18px + var(--font-delta)),30px) !important;}
+.app-layout .topbar-subtitle{font-size:clamp(14px,calc(15px + var(--font-delta)),26px) !important;}
+.app-layout .bubble-ai,
+.app-layout .bubble-user{font-size:clamp(18px,calc(21px + var(--font-delta)),34px) !important;}
+.app-layout .settings-section-title{font-size:clamp(14px,calc(15px + var(--font-delta)),26px) !important;}
+.app-layout .settings-row-copy>p:first-child{font-size:clamp(16px,calc(17px + var(--font-delta)),29px) !important;}
+.app-layout .settings-profile-card p[style*="font-size: 22"],
+.app-layout .settings-profile-card p[style*="font-size:22"]{font-size:clamp(19px,calc(22px + var(--font-delta)),35px) !important;}
 .app-layout p[style*="font-size: 11"],
 .app-layout p[style*="font-size:11"],
 .app-layout p[style*="font-size: 12"],
@@ -458,19 +482,19 @@ input,textarea{font-family:inherit;}
 .app-layout span[style*="font-size:12"],
 .app-layout span[style*="font-size: 13"],
 .app-layout span[style*="font-size:13"]{
-  font-size:16px !important;
+  font-size:clamp(14px,calc(16px + var(--font-delta)),27px) !important;
 }
 .app-layout p[style*="font-size: 14"],
 .app-layout p[style*="font-size:14"],
 .app-layout span[style*="font-size: 14"],
 .app-layout span[style*="font-size:14"]{
-  font-size:17px !important;
+  font-size:clamp(15px,calc(17px + var(--font-delta)),28px) !important;
 }
 .app-layout p[style*="font-size: 15"],
 .app-layout p[style*="font-size:15"],
 .app-layout span[style*="font-size: 15"],
 .app-layout span[style*="font-size:15"]{
-  font-size:18px !important;
+  font-size:clamp(16px,calc(18px + var(--font-delta)),30px) !important;
 }
 
 /* Sidebar (desktop) */

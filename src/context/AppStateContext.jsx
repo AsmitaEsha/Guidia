@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { FAKE_TRANSACTIONS } from '../data/hardcoded';
 import { useAuth } from './AuthContext';
 import { apiFetchBlob } from '../services/apiClient';
-import { recommendedVoiceRate, voiceChunks } from '../utils/voiceGuidance';
+import { cleanSpokenText, recommendedVoiceRate, voiceChunks } from '../utils/voiceGuidance';
 
 // NOTE: notifications/transactions below are still demo data seeded in
 // memory — see GUIDIA_IMPLEMENTATION_PLAN.md Phase 15 for the plan to back
@@ -69,6 +69,44 @@ let _cancelToken = 0;
 let _lastText = '';
 let _onComplete = null;
 let _setVoiceStatus = () => {};
+let _fallbackSpeak = null;
+
+const BROWSER_LANG = { en: 'en-US', bn: 'bn-BD', hi: 'hi-IN' };
+const VOICE_HINTS = {
+  en: ['en-us', 'english'],
+  bn: ['bn-bd', 'bn_in', 'bn-in', 'bn', 'bengali', 'bangla'],
+  hi: ['hi-in', 'hi', 'hindi'],
+};
+
+function getBrowserVoice(language) {
+  if (typeof window === 'undefined' || !window.speechSynthesis) return null;
+  const voices = window.speechSynthesis.getVoices();
+  const hints = VOICE_HINTS[language] || VOICE_HINTS.en;
+
+  return voices.find((voice) => hints.includes(voice.lang.toLowerCase()))
+    || voices.find((voice) => hints.some((hint) => `${voice.lang} ${voice.name}`.toLowerCase().includes(hint)))
+    || null;
+}
+
+function speakWithBrowserVoice(text, language, rate = 1) {
+  if (typeof window === 'undefined' || !window.speechSynthesis || !window.SpeechSynthesisUtterance) return false;
+
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(cleanSpokenText(text));
+  const browserLang = language === 'bn' ? 'bn' : language === 'hi' ? 'hi' : 'en';
+  const voice = getBrowserVoice(browserLang);
+  utterance.lang = voice?.lang || BROWSER_LANG[browserLang] || BROWSER_LANG.en;
+  utterance.rate = rate;
+  if (voice) utterance.voice = voice;
+  utterance.onstart = () => emitVoiceStatus({ status: 'playing', error: '' });
+  utterance.onend = () => {
+    emitVoiceStatus({ status: 'idle', currentText: '', error: '' });
+    _onComplete?.();
+  };
+  utterance.onerror = () => emitVoiceStatus({ status: 'error', error: "Voice guidance isn't available right now." });
+  window.speechSynthesis.speak(utterance);
+  return true;
+}
 
 function revokeBlobUrl() {
   if (_blobUrl) { URL.revokeObjectURL(_blobUrl); _blobUrl = null; }
@@ -110,6 +148,7 @@ async function playChunk(apiFetchBlob, accessToken, token = _cancelToken, pauseM
   } catch (err) {
     console.warn('Voice playback error:', err);
     if (token === _cancelToken) {
+      if (_fallbackSpeak?.(_chunks.slice(_chunkIndex).join(' '), _lastLang, _rate)) return;
       emitVoiceStatus({ status: 'error', error: "Voice guidance isn't available right now." });
     }
   }
@@ -118,7 +157,7 @@ async function playChunk(apiFetchBlob, accessToken, token = _cancelToken, pauseM
 // speak/pause/resume/stop/replay/setRate — the minimum voice control set
 // the product spec calls for. `speak` starts a fresh utterance; the others
 // operate on whatever is currently loaded.
-function speak(text, language, apiFetchBlob, accessToken, { rate = 1, mode = 'calm', pauseMs = 250, onComplete } = {}) {
+function speak(text, language, apiFetchBlob, accessToken, { rate = 1, mode = 'calm', pauseMs = 250, onComplete, fallbackSpeak } = {}) {
   if (!text || !apiFetchBlob) return;
   stopVoice();
   _cancelToken += 1;
@@ -129,6 +168,7 @@ function speak(text, language, apiFetchBlob, accessToken, { rate = 1, mode = 'ca
   _chunkIndex = 0;
   _lastLang = language === 'bn' ? 'bn' : language === 'hi' ? 'hi' : 'en';
   _rate = rate;
+  _fallbackSpeak = fallbackSpeak || null;
   emitVoiceStatus({ status: 'loading', currentText: text, error: '' });
   playChunk(apiFetchBlob, accessToken, token, pauseMs);
 }
@@ -138,16 +178,19 @@ function resumeVoice() { _audioEl?.play().then(() => emitVoiceStatus({ status: '
 function stopVoice() {
   _cancelToken += 1;
   if (_audioEl) { _audioEl.pause(); _audioEl.currentTime = 0; _audioEl.onended = null; }
+  if (typeof window !== 'undefined') window.speechSynthesis?.cancel();
   _chunkIndex = _chunks.length;
+  _fallbackSpeak = null;
   revokeBlobUrl();
   emitVoiceStatus({ status: 'idle', currentText: '', error: '' });
 }
-function replayVoice(apiFetchBlob, accessToken, mode = 'calm', pauseMs = 250) {
+function replayVoice(apiFetchBlob, accessToken, mode = 'calm', pauseMs = 250, fallbackSpeak) {
   if (_chunks.length === 0) return;
   _cancelToken += 1;
   const token = _cancelToken;
   _chunks = voiceChunks(_lastText, mode);
   _chunkIndex = 0;
+  _fallbackSpeak = fallbackSpeak || null;
   emitVoiceStatus({ status: 'loading', currentText: _lastText, error: '' });
   playChunk(apiFetchBlob, accessToken, token, pauseMs);
 }
@@ -339,24 +382,28 @@ export function AppProvider({ children }) {
 
   const speakFn = useCallback((text, opts = {}) => {
     if (!voiceEnabled || !text) return;
-    if (!authUser) {
-      window.speechSynthesis?.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = language === 'bn' ? 'bn-BD' : language === 'hi' ? 'hi-IN' : 'en-US';
-      utterance.rate = opts.rate || voiceSpeed || recommendedVoiceRate(mode);
-      window.speechSynthesis?.speak(utterance);
-      return;
-    }
     const pauseMs = mode === 'scared' ? 700 : mode === 'unsure' ? 450 : 250;
     const rate = opts.rate || voiceSpeed || recommendedVoiceRate(mode);
-    speak(text, language, apiFetchBlob, accessToken, { rate, mode, pauseMs, onComplete: opts.onComplete });
-  }, [voiceEnabled, language, authUser, accessToken, voiceSpeed, mode]);
+    speak(text, language, apiFetchBlob, accessToken, {
+      rate,
+      mode,
+      pauseMs,
+      onComplete: opts.onComplete,
+      fallbackSpeak: (fallbackText, fallbackLang, fallbackRate) => speakWithBrowserVoice(fallbackText, fallbackLang, fallbackRate),
+    });
+  }, [voiceEnabled, language, accessToken, voiceSpeed, mode]);
 
   const voiceControls = useMemo(() => ({
     pause: pauseVoice,
     resume: resumeVoice,
     stop: stopVoice,
-    replay: () => replayVoice(apiFetchBlob, accessToken, mode, mode === 'scared' ? 700 : mode === 'unsure' ? 450 : 250),
+    replay: () => replayVoice(
+      apiFetchBlob,
+      accessToken,
+      mode,
+      mode === 'scared' ? 700 : mode === 'unsure' ? 450 : 250,
+      (fallbackText, fallbackLang, fallbackRate) => speakWithBrowserVoice(fallbackText, fallbackLang, fallbackRate)
+    ),
     setRate: (rate) => {
       setVoiceRate(rate);
       setVoiceSpeed(rate);

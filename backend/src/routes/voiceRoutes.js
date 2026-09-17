@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import rateLimit from 'express-rate-limit';
 import { voiceController } from '../controllers/voiceController.js';
-import { requireAuth } from '../middleware/auth.js';
 
 const router = Router();
 
@@ -13,7 +12,6 @@ const voiceLimiter = rateLimit({
   message: { error: { code: 'RATE_LIMITED', message: 'Please wait a moment before requesting more voice playback.' } },
 });
 
-router.use(requireAuth);
 router.get('/speak', voiceLimiter, voiceController.speak);
 router.post('/speak', voiceLimiter, voiceController.speak);
 

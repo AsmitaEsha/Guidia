@@ -17,29 +17,45 @@ function cleanTextForSpeech(text) {
     .replace(/https?:\/\/\S+/gi, ' link ')
     .replace(/[`*_#~|[\]{}]/g, ' ')
     .replace(/[•→⇒]/g, '. ')
-    .replace(/\s*>\s*/g, '. Then choose ')
+    .replace(/\s*>\s*/g, '. ')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+function findChunkBoundary(text, max) {
+  const slice = text.slice(0, max);
+  const punctuation = ['।', '.', '!', '?', '…', ';', ','];
+  const candidates = punctuation
+    .map((mark) => slice.lastIndexOf(mark))
+    .filter((idx) => idx > 35);
+
+  if (candidates.length > 0) return Math.max(...candidates) + 1;
+
+  const spaceIdx = text.lastIndexOf(' ', max);
+  return spaceIdx > 0 ? spaceIdx : max;
 }
 
 function splitChunks(text) {
   const chunks = [];
   let rem = cleanTextForSpeech(text);
+
   while (rem.length > 0) {
-    if (rem.length <= MAX_CHUNK) { chunks.push(rem); break; }
-    let idx = rem.lastIndexOf(' ', MAX_CHUNK);
-    if (idx < 0) idx = MAX_CHUNK;
-    chunks.push(rem.slice(0, idx));
+    if (rem.length <= MAX_CHUNK) {
+      chunks.push(rem);
+      break;
+    }
+
+    const idx = findChunkBoundary(rem, MAX_CHUNK);
+    chunks.push(rem.slice(0, idx).trim());
     rem = rem.slice(idx).trimStart();
   }
+
   return chunks;
 }
 
 // Proxies Google Translate's TTS endpoint server-side so voice playback
-// works in production too, not just `npm run dev` (the old Vite-proxy-only
-// approach). Fetches only the first chunk and streams it back; the client
-// requests subsequent chunks by calling again with the remaining text if
-// needed (kept simple: the frontend already chunks and calls sequentially).
+// works in production too, not just `npm run dev`. The route is public but
+// rate-limited because Guidia's current first-run flow does not require login.
 export const voiceController = {
   async speak(req, res, next) {
     try {
@@ -49,9 +65,11 @@ export const voiceController = {
         speed: req.method === 'POST' ? req.body?.speed : req.query.speed,
         cognitiveState: req.method === 'POST' ? req.body?.cognitiveState : req.query.cognitiveState,
       });
+
       if (!result.success) {
         throw new ApiError(400, result.error.issues[0]?.message || 'Invalid request.', 'VALIDATION_ERROR');
       }
+
       const { text, lang } = result.data;
       const chunk = splitChunks(text)[0];
       const langCode = LANG_MAP[lang] || 'en';
