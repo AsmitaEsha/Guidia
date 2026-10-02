@@ -1,3 +1,10 @@
+import whatsappCover from '../../Cover_Photo/WhatsApp_logo.svg';
+import facebookCover from '../../Cover_Photo/Fb_logo.png';
+import bkashCover from '../../Cover_Photo/Bkash-Logo.png';
+import amazonCover from '../../Cover_Photo/amazon_logo.png';
+import gmailCover from '../../Cover_Photo/Gmail-logo.png';
+import bookingCover from '../../Cover_Photo/Booking.com-Logo.png';
+
 export const UI_GUIDES = [
   {
     id: 'whatsapp',
@@ -5,7 +12,7 @@ export const UI_GUIDES = [
     color: '#25D366',
     brandColor: '#075E54',
     logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/120px-WhatsApp.svg.png',
-    screenshot: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=360&h=640&fit=crop',
+    screenshot: whatsappCover,
     sections: [
       {
         title: { en: 'Sending Messages', bn: 'মেসেজ পাঠানো', hi: 'संदेश भेजना' },
@@ -36,7 +43,7 @@ export const UI_GUIDES = [
     color: '#1877F2',
     brandColor: '#0d5bba',
     logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/120px-Facebook_Logo_%282019%29.png',
-    screenshot: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=360&h=640&fit=crop',
+    screenshot: facebookCover,
     sections: [
       {
         title: { en: 'Posts & Feed', bn: 'পোস্ট ও ফিড', hi: 'पोस्ट और फ़ीड' },
@@ -63,7 +70,7 @@ export const UI_GUIDES = [
     color: '#E2136E',
     brandColor: '#b00e56',
     logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/46/BKash_logo.svg/120px-BKash_logo.svg',
-    screenshot: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=360&h=640&fit=crop',
+    screenshot: bkashCover,
     sections: [
       {
         title: { en: 'Sending Money', bn: 'টাকা পাঠানো', hi: 'पैसे भेजना' },
@@ -87,7 +94,7 @@ export const UI_GUIDES = [
     color: '#EA4335',
     brandColor: '#c5221f',
     logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/120px-Gmail_icon_%282020%29.svg.png',
-    screenshot: 'https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=360&h=640&fit=crop',
+    screenshot: gmailCover,
     sections: [
       {
         title: { en: 'Reading & Sending', bn: 'পড়া ও পাঠানো', hi: 'पढ़ना और भेजना' },
@@ -111,7 +118,7 @@ export const UI_GUIDES = [
     color: '#FF9900',
     brandColor: '#e47911',
     logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/200px-Amazon_logo.svg.png',
-    screenshot: 'https://images.unsplash.com/photo-1523474253046-8cd2748b5fd2?w=360&h=640&fit=crop',
+    screenshot: amazonCover,
     sections: [
       {
         title: { en: 'Shopping Safely', bn: 'নিরাপদ কেনাকাটা', hi: 'सुरक्षित खरीदारी' },
@@ -130,7 +137,7 @@ export const UI_GUIDES = [
     color: '#003580',
     brandColor: '#00224f',
     logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Booking.com_logo.svg/200px-Booking.com_logo.svg.png',
-    screenshot: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=360&h=640&fit=crop',
+    screenshot: bookingCover,
     sections: [
       {
         title: { en: 'Booking Hotels', bn: 'হোটেল বুকিং', hi: 'होटल बुकिंग' },
