@@ -24,10 +24,11 @@ const GUIDE_APP_KEY = {
 
 // ── App Button Guide Viewer ──────────────────────────────────
 function ButtonGuideViewer({ guide, onClose }) {
-  const { t, speak, language } = useApp();
+  const { t, speak, language, user } = useApp();
   const [active, setActive] = useState(null);
   const [hoverGuide, setHoverGuide] = useState(null);
   const isBkashGuide = guide.name === 'bKash';
+  const displayName = user?.name || t('Guidia Learner', 'Guidia শিক্ষার্থী', 'Guidia विद्यार्थी');
   const speakGuideButton = (btn) => {
     const l = typeof btn.label === 'string' ? btn.label : (btn.label[language] || btn.label.en);
     const d = typeof btn.desc === 'string' ? btn.desc : (btn.desc[language] || btn.desc.en);
@@ -71,8 +72,14 @@ function ButtonGuideViewer({ guide, onClose }) {
                     <AppLogo app="bkash" size={34} radius={8}/>
                   </div>
                   <div style={{ flex:1 }}>
-                    <p style={{ fontWeight:900, fontSize:18 }}>Nayeem Raihan</p>
-                    <span style={{ display:'inline-block', marginTop:6, background:'#fff', color:guide.color, borderRadius:999, padding:'7px 14px', fontWeight:900, fontSize:13 }}>Tap for Balance</span>
+                    <p style={{ fontWeight:900, fontSize:18 }}>{displayName}</p>
+                    <button
+                      type="button"
+                      onClick={() => speak(t('Tap for Balance means you can check your current bKash balance. In the real app, tap it and enter your PIN only if the official bKash screen asks securely.', 'Tap for Balance মানে আপনার বর্তমান bKash ব্যালেন্স দেখা। আসল অ্যাপে এটি চাপুন এবং শুধু নিরাপদ অফিসিয়াল স্ক্রিন চাইলে PIN দিন।', 'Tap for Balance से आप अपना bKash बैलेंस देख सकते हैं। असली ऐप में इसे दबाएं और केवल सुरक्षित आधिकारिक स्क्रीन पूछे तो PIN डालें।'))}
+                      style={{ display:'inline-block', marginTop:6, background:'#fff', color:guide.color, border:0, borderRadius:999, padding:'7px 14px', fontWeight:900, fontSize:13 }}
+                    >
+                      Tap for Balance
+                    </button>
                   </div>
                   <div style={{ width:44, height:44, borderRadius:'50%', background:'#fff', color:guide.color, display:'flex', alignItems:'center', justifyContent:'center', fontWeight:900 }}>?</div>
                 </div>

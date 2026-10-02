@@ -147,7 +147,7 @@ function PhoneFrame({ children, className = '' }) {
 }
 
 export default function BkashSim({ onClose }) {
-  const { t, speak, showToast } = useApp();
+  const { t, speak, showToast, user } = useApp();
   const [step, setStep] = useState('home');
   const [recipient, setRecipient] = useState('');
   const [recipientName, setRecipientName] = useState('');
@@ -197,6 +197,16 @@ export default function BkashSim({ onClose }) {
     showToast(t('No problem. Take your time before sending.', 'কোনো সমস্যা নেই। পাঠানোর আগে সময় নিন।'), 'info');
   };
 
+  const displayName = user?.name || t('Guidia Learner', 'Guidia শিক্ষার্থী', 'Guidia विद्यार्थी');
+  const explainBalance = () => {
+    speak(t(
+      'Tap for Balance shows your current bKash balance. In the real app, tap it and enter your PIN only on the official bKash screen. Never share your PIN with anyone.',
+      'Tap for Balance আপনার বর্তমান bKash ব্যালেন্স দেখায়। আসল অ্যাপে এটি চাপুন এবং শুধু অফিসিয়াল bKash স্ক্রিনে PIN দিন। কাউকে PIN বলবেন না।',
+      'Tap for Balance आपका bKash बैलेंस दिखाता है। असली ऐप में इसे दबाएं और केवल आधिकारिक bKash स्क्रीन पर PIN डालें। PIN किसी को न बताएं।'
+    ));
+    showToast(t('Tap for Balance checks your bKash balance safely.', 'Tap for Balance নিরাপদে bKash ব্যালেন্স দেখায়।', 'Tap for Balance सुरक्षित रूप से bKash बैलेंस दिखाता है।'), 'info');
+  };
+
   const explainMenuItem = (item) => {
     speak(`${item.label}. ${item.explain}`);
     if (['send', 'recharge', 'bill', 'savings', 'profile'].includes(item.step)) {
@@ -231,7 +241,7 @@ export default function BkashSim({ onClose }) {
               {feature.fields.map((field) => (
                 <div key={field.label}>
                   <span>{field.label}</span>
-                  <strong>{field.value}</strong>
+                  <strong>{featureKey === 'profile' && field.label === 'Name' ? displayName : field.value}</strong>
                 </div>
               ))}
             </div>
@@ -432,8 +442,8 @@ export default function BkashSim({ onClose }) {
           <button className="bkash-profile" onClick={() => setStep('profile')} style={{ border: 0, textAlign: 'left' }}>
             <div className="bkash-profile-pic"><UserCircle size={42}/></div>
             <div>
-              <strong>Nayeem Raihan</strong>
-              <span>Tap for Balance</span>
+              <strong>{displayName}</strong>
+              <span onClick={(event) => { event.stopPropagation(); explainBalance(); }}>Tap for Balance</span>
             </div>
           </button>
           <Bell size={27}/>
