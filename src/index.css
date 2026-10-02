@@ -1059,18 +1059,25 @@ button.toggle{
 .bkash-home-header{
   flex-shrink:0;
   color:#fff;
-  background:linear-gradient(135deg,#e2136e,#d50963);
-  padding:16px 18px 24px;
+  background:linear-gradient(180deg,#f85aa9 0%,#e2136e 72%,#c9055a 100%);
+  padding:16px 18px 34px;
   border-bottom-left-radius:22px;
   border-bottom-right-radius:22px;
   box-shadow:0 10px 26px rgba(226,19,110,0.24);
+  position:relative;
+  overflow:hidden;
 }
 .bkash-home-top{display:flex;align-items:center;justify-content:space-between;gap:14px;}
 .bkash-back-btn{width:46px;height:46px;border-radius:999px;color:#fff;display:flex;align-items:center;justify-content:center;}
 .bkash-profile{display:flex;align-items:center;gap:12px;flex:1;min-width:0;}
 .bkash-profile-pic{width:56px;height:56px;border-radius:18px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .bkash-profile strong{display:block;font-size:20px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.bkash-profile button{margin-top:4px;background:#fff;color:var(--bkash);font-size:16px;font-weight:900;border-radius:999px;padding:8px 16px;}
+.bkash-profile span{display:inline-block;margin-top:4px;background:#fff;color:var(--bkash);font-size:16px;font-weight:900;border-radius:999px;padding:8px 16px;}
+.bkash-hills{position:absolute;left:0;right:0;bottom:0;height:42px;opacity:0.42;pointer-events:none;}
+.bkash-hills span{position:absolute;bottom:-22px;width:52%;height:48px;border-radius:50% 50% 0 0;background:#aa064c;}
+.bkash-hills span:nth-child(1){left:-8%;height:38px;background:#b90755;}
+.bkash-hills span:nth-child(2){left:28%;height:50px;background:#8f0847;}
+.bkash-hills span:nth-child(3){right:-16%;height:36px;background:#6f083f;}
 .bkash-practice-strip{
   margin:12px 16px 0;
   padding:12px 16px;
@@ -1090,12 +1097,12 @@ button.toggle{
   border-radius:4px;
   box-shadow:0 2px 10px rgba(0,0,0,0.05);
 }
-.bkash-menu-card{padding:18px 14px 10px;}
-.bkash-menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 8px;}
-.bkash-menu-item{min-height:110px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;color:#333;border-radius:14px;}
+.bkash-menu-card{padding:16px 10px 8px;margin-top:-34px;position:relative;z-index:2;border-radius:16px;}
+.bkash-menu-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px 4px;}
+.bkash-menu-item{min-height:92px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:7px;text-align:center;color:#333;border-radius:12px;padding:6px 2px;}
 .bkash-menu-item:hover{background:#fafafa;}
-.bkash-menu-item strong{font-size:17px;font-weight:800;line-height:1.2;}
-.bkash-menu-icon{width:58px;height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;background:#fff0f7;color:var(--bkash);}
+.bkash-menu-item strong{font-size:12px;font-weight:800;line-height:1.18;}
+.bkash-menu-icon{width:48px;height:48px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:#fff0f7;color:var(--bkash);}
 .bkash-menu-icon.green{background:#e8f7ef;color:#0b8c50;}
 .bkash-menu-icon.blue{background:#edf5ff;color:#1775d1;}
 .bkash-menu-icon.orange{background:#fff2e8;color:#d66b21;}
@@ -1104,6 +1111,9 @@ button.toggle{
 .bkash-menu-icon.brown{background:#fff0e8;color:#9f582e;}
 .bkash-menu-icon.teal{background:#e9fbf8;color:#06877b;}
 .bkash-close-menu{display:block;margin:6px auto 0;color:var(--bkash);font-size:16px;font-weight:900;padding:8px 14px;}
+.bkash-ad-banner{min-height:112px;border-radius:10px;background:linear-gradient(135deg,#242424,#fb177f 62%,#ffd12f);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 20px;box-shadow:0 6px 16px rgba(226,19,110,0.18);}
+.bkash-ad-banner strong{display:block;font-size:22px;font-weight:900;line-height:1.1;}
+.bkash-ad-banner span{display:block;font-size:15px;font-weight:800;margin-top:8px;max-width:250px;}
 .bkash-card{padding:18px;}
 .bkash-section-title,.bkash-card-heading strong{font-size:18px;font-weight:900;color:#333;}
 .bkash-card-heading{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid #f0f0f0;}
@@ -1180,16 +1190,115 @@ button.toggle{
 
 @media(max-width:620px){
   .bkash-phone{min-height:calc(100vh - 92px);}
-  .bkash-menu-grid{gap:10px 4px;}
-  .bkash-menu-item{min-height:102px;}
-  .bkash-menu-icon{width:52px;height:52px;}
-  .bkash-menu-item strong{font-size:15px;}
+  .bkash-menu-grid{gap:10px 2px;}
+  .bkash-menu-item{min-height:86px;}
+  .bkash-menu-icon{width:44px;height:44px;}
+  .bkash-menu-item strong{font-size:11px;}
   .bkash-home-header{padding-left:14px;padding-right:14px;}
   .bkash-profile strong{font-size:18px;}
-  .bkash-profile button{font-size:14px;padding:7px 12px;}
+  .bkash-profile span{font-size:14px;padding:7px 12px;}
   .bkash-amount-grid{grid-template-columns:1fr;}
   .bkash-amount-grid div{border-right:none;border-bottom:1px solid #f0f0f0;}
   .bkash-amount-grid div:last-child{border-bottom:none;}
+}
+
+.guide-option-with-tooltip{outline:none;}
+.guide-option-with-tooltip:focus-visible{box-shadow:0 0 0 3px rgba(226,19,110,0.22);}
+.guide-help-dot{
+  position:absolute;
+  right:4px;
+  top:4px;
+  width:22px;
+  height:22px;
+  border-radius:999px;
+  background:#fff;
+  color:var(--bkash);
+  border:1px solid rgba(226,19,110,0.24);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,0.12);
+}
+.guide-tooltip-card{
+  position:absolute;
+  left:calc(100% + 12px);
+  top:50%;
+  transform:translateY(-50%);
+  z-index:50;
+  width:min(320px,calc(100vw - 48px));
+  max-width:320px;
+  padding:12px;
+  border-radius:14px;
+  background:#fff;
+  color:#1f2937;
+  border:1px solid rgba(15,23,42,0.08);
+  box-shadow:0 14px 36px rgba(15,23,42,0.18);
+  text-align:left;
+  pointer-events:none;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+.guide-option-with-tooltip:nth-child(4n) .guide-tooltip-card,
+.guide-option-with-tooltip:nth-child(4n - 1) .guide-tooltip-card{
+  left:auto;
+  right:calc(100% + 12px);
+}
+.guide-tooltip-arrow{
+  position:absolute;
+  left:-7px;
+  top:50%;
+  width:14px;
+  height:14px;
+  background:#fff;
+  border-left:1px solid rgba(15,23,42,0.08);
+  border-bottom:1px solid rgba(15,23,42,0.08);
+  transform:translateY(-50%) rotate(45deg);
+}
+.guide-option-with-tooltip:nth-child(4n) .guide-tooltip-arrow,
+.guide-option-with-tooltip:nth-child(4n - 1) .guide-tooltip-arrow{
+  left:auto;
+  right:-7px;
+  border-left:0;
+  border-bottom:0;
+  border-right:1px solid rgba(15,23,42,0.08);
+  border-top:1px solid rgba(15,23,42,0.08);
+}
+.guide-tooltip-title{
+  display:block;
+  font-size:16px;
+  line-height:1.2;
+  font-weight:900;
+  color:#111827;
+  margin-bottom:6px;
+  white-space:normal;
+}
+.guide-tooltip-body{
+  display:block;
+  font-size:14px;
+  line-height:1.45;
+  font-weight:700;
+  color:#334155;
+  white-space:normal;
+}
+
+@media(max-width:900px){
+  .guide-tooltip-card{
+    left:50% !important;
+    right:auto !important;
+    top:calc(100% + 10px);
+    transform:translateX(-50%);
+  }
+  .guide-tooltip-arrow,
+  .guide-option-with-tooltip:nth-child(4n) .guide-tooltip-arrow,
+  .guide-option-with-tooltip:nth-child(4n - 1) .guide-tooltip-arrow{
+    left:50%;
+    right:auto;
+    top:-7px;
+    border:0;
+    border-left:1px solid rgba(15,23,42,0.08);
+    border-top:1px solid rgba(15,23,42,0.08);
+    transform:translateX(-50%) rotate(45deg);
+  }
 }
 
 /* ============================================

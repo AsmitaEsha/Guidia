@@ -70,6 +70,7 @@ let _lastText = '';
 let _onComplete = null;
 let _setVoiceStatus = () => {};
 let _fallbackSpeak = null;
+let _usingBrowserVoice = false;
 
 const BROWSER_LANG = { en: 'en-US', bn: 'bn-BD', hi: 'hi-IN' };
 const VOICE_HINTS = {
@@ -92,6 +93,7 @@ function speakWithBrowserVoice(text, language, rate = 1) {
   if (typeof window === 'undefined' || !window.speechSynthesis || !window.SpeechSynthesisUtterance) return false;
 
   window.speechSynthesis.cancel();
+  _usingBrowserVoice = true;
   const utterance = new SpeechSynthesisUtterance(cleanSpokenText(text));
   const browserLang = language === 'bn' ? 'bn' : language === 'hi' ? 'hi' : 'en';
   const voice = getBrowserVoice(browserLang);
@@ -100,11 +102,16 @@ function speakWithBrowserVoice(text, language, rate = 1) {
   if (voice) utterance.voice = voice;
   utterance.onstart = () => emitVoiceStatus({ status: 'playing', error: '' });
   utterance.onend = () => {
+    _usingBrowserVoice = false;
     emitVoiceStatus({ status: 'idle', currentText: '', error: '' });
     _onComplete?.();
   };
-  utterance.onerror = () => emitVoiceStatus({ status: 'error', error: "Voice guidance isn't available right now." });
+  utterance.onerror = () => {
+    _usingBrowserVoice = false;
+    emitVoiceStatus({ status: 'error', error: "Voice guidance isn't available right now." });
+  };
   window.speechSynthesis.speak(utterance);
+  emitVoiceStatus({ status: 'playing', error: '' });
   return true;
 }
 
@@ -158,7 +165,7 @@ async function playChunk(apiFetchBlob, accessToken, token = _cancelToken, pauseM
 // the product spec calls for. `speak` starts a fresh utterance; the others
 // operate on whatever is currently loaded.
 function speak(text, language, apiFetchBlob, accessToken, { rate = 1, mode = 'calm', pauseMs = 250, onComplete, fallbackSpeak } = {}) {
-  if (!text || !apiFetchBlob) return;
+  if (!text) return;
   stopVoice();
   _cancelToken += 1;
   const token = _cancelToken;
@@ -170,28 +177,50 @@ function speak(text, language, apiFetchBlob, accessToken, { rate = 1, mode = 'ca
   _rate = rate;
   _fallbackSpeak = fallbackSpeak || null;
   emitVoiceStatus({ status: 'loading', currentText: text, error: '' });
+
+  // Browser TTS starts synchronously from the user's click, so it avoids
+  // autoplay restrictions that can block fetched <audio> playback.
+  if (_fallbackSpeak?.(text, _lastLang, _rate)) return;
+  if (!apiFetchBlob) {
+    emitVoiceStatus({ status: 'error', error: "Voice guidance isn't available right now." });
+    return;
+  }
+
   playChunk(apiFetchBlob, accessToken, token, pauseMs);
 }
 
-function pauseVoice() { _audioEl?.pause(); emitVoiceStatus({ status: 'paused' }); }
-function resumeVoice() { _audioEl?.play().then(() => emitVoiceStatus({ status: 'playing' })).catch(() => {}); }
+function pauseVoice() {
+  if (_usingBrowserVoice && typeof window !== 'undefined') window.speechSynthesis?.pause();
+  _audioEl?.pause();
+  emitVoiceStatus({ status: 'paused' });
+}
+function resumeVoice() {
+  if (_usingBrowserVoice && typeof window !== 'undefined') {
+    window.speechSynthesis?.resume();
+    emitVoiceStatus({ status: 'playing' });
+    return;
+  }
+  _audioEl?.play().then(() => emitVoiceStatus({ status: 'playing' })).catch(() => {});
+}
 function stopVoice() {
   _cancelToken += 1;
   if (_audioEl) { _audioEl.pause(); _audioEl.currentTime = 0; _audioEl.onended = null; }
   if (typeof window !== 'undefined') window.speechSynthesis?.cancel();
+  _usingBrowserVoice = false;
   _chunkIndex = _chunks.length;
   _fallbackSpeak = null;
   revokeBlobUrl();
   emitVoiceStatus({ status: 'idle', currentText: '', error: '' });
 }
 function replayVoice(apiFetchBlob, accessToken, mode = 'calm', pauseMs = 250, fallbackSpeak) {
-  if (_chunks.length === 0) return;
+  if (!_lastText) return;
   _cancelToken += 1;
   const token = _cancelToken;
   _chunks = voiceChunks(_lastText, mode);
   _chunkIndex = 0;
   _fallbackSpeak = fallbackSpeak || null;
   emitVoiceStatus({ status: 'loading', currentText: _lastText, error: '' });
+  if (_fallbackSpeak?.(_lastText, _lastLang, _rate)) return;
   playChunk(apiFetchBlob, accessToken, token, pauseMs);
 }
 function setVoiceRate(rate) { _rate = rate; if (_audioEl) _audioEl.playbackRate = rate; }

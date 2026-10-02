@@ -11,12 +11,14 @@ import {
   Home,
   Landmark,
   Lock,
+  PiggyBank,
   ReceiptText,
   Send,
   ShieldCheck,
   Smartphone,
   Store,
   UserCircle,
+  UserCog,
   Users,
   WalletCards,
 } from 'lucide-react';
@@ -26,15 +28,22 @@ import GuidiaSafetyPanel from '../GuidiaSafetyPanel';
 const BKASH = '#e2136e';
 
 const MENU_ITEMS = [
-  { icon: <Send size={30}/>, label: 'Send Money', step: 'send', tone: 'pink' },
-  { icon: <Smartphone size={30}/>, label: 'Mobile Recharge', step: 'recharge', tone: 'green' },
-  { icon: <Banknote size={30}/>, label: 'Cash Out', step: 'cashout', tone: 'blue' },
-  { icon: <Store size={30}/>, label: 'Make Payment', step: 'pay', tone: 'orange' },
-  { icon: <WalletCards size={30}/>, label: 'Add Money', step: 'add', tone: 'purple' },
-  { icon: <ReceiptText size={30}/>, label: 'Pay Bill', step: 'bill', tone: 'gray' },
-  { icon: <Gift size={30}/>, label: 'Savings', step: 'savings', tone: 'pink' },
-  { icon: <Landmark size={30}/>, label: 'Loan', step: 'loan', tone: 'brown' },
-  { icon: <Users size={30}/>, label: 'Split Bill', step: 'split', tone: 'teal' },
+  { icon: <Send size={26}/>, label: 'Send Money', step: 'send', tone: 'pink', explain: 'Send Money lets you send taka to another bKash number. Always check the number twice before confirming.' },
+  { icon: <Smartphone size={26}/>, label: 'Mobile Recharge', step: 'recharge', tone: 'green', explain: 'Mobile Recharge adds phone balance for you or a family member. Check the phone number and operator first.' },
+  { icon: <Banknote size={26}/>, label: 'Cash Out', step: 'cashout', tone: 'blue', explain: 'Cash Out is for taking physical cash from an agent. Confirm the agent number before using it.' },
+  { icon: <Store size={26}/>, label: 'Make Payment', step: 'pay', tone: 'orange', explain: 'Make Payment is for paying shops or merchants. Match the shop name on screen before confirming.' },
+  { icon: <WalletCards size={26}/>, label: 'Add Money', step: 'add', tone: 'purple', explain: 'Add Money brings money into bKash from a bank or card. Use only your own trusted bank account.' },
+  { icon: <ReceiptText size={26}/>, label: 'Pay Bill', step: 'bill', tone: 'gray', explain: 'Pay Bill helps pay electricity, gas, water, internet, or other bills. Copy the customer number from the real bill.' },
+  { icon: <PiggyBank size={26}/>, label: 'Savings', step: 'savings', tone: 'pink', explain: 'Savings helps keep money aside for future needs. Read the plan time and charges before starting.' },
+  { icon: <Landmark size={26}/>, label: 'Loan', step: 'loan', tone: 'brown', explain: 'Loan shows borrowing options. Read all charges carefully and ask family before taking any loan.' },
+  { icon: <ShieldCheck size={26}/>, label: 'Insurance', step: 'insurance', tone: 'teal', explain: 'Insurance can protect against certain risks. Read what is covered before buying.' },
+  { icon: <ArrowRight size={26}/>, label: 'bKash to Bank', step: 'bank', tone: 'pink', explain: 'bKash to Bank moves money to a bank account. Check the bank account name and number carefully.' },
+  { icon: <Landmark size={26}/>, label: 'Education Fee', step: 'education', tone: 'green', explain: 'Education Fee is for school or college payments. Use the official student ID or bill number.' },
+  { icon: <Users size={26}/>, label: 'Microfinance', step: 'microfinance', tone: 'blue', explain: 'Microfinance payments are for partner organizations. Confirm the organization name before paying.' },
+  { icon: <CreditCard size={26}/>, label: 'Toll', step: 'toll', tone: 'blue', explain: 'Toll is for road or bridge toll payments. Check vehicle and toll details before payment.' },
+  { icon: <Gift size={26}/>, label: 'Request Money', step: 'request', tone: 'pink', explain: 'Request Money asks someone to send you money. Only request from people you know.' },
+  { icon: <ArrowRight size={26}/>, label: 'Remittance', step: 'remittance', tone: 'green', explain: 'Remittance helps receive money sent from abroad. Never share your PIN to receive money.' },
+  { icon: <Users size={26}/>, label: 'Donation', step: 'donation', tone: 'orange', explain: 'Donation sends money to a cause. Make sure the organization is real before donating.' },
 ];
 
 const SAVED_CONTACTS = [
@@ -48,6 +57,78 @@ const TRANSACTIONS = [
   { label: 'Received Money', detail: 'Karim', amount: '+ Tk 800.00', type: 'in' },
   { label: 'Mobile Recharge', detail: '01722*****91', amount: '- Tk 100.00', type: 'out' },
 ];
+
+const FEATURE_GUIDES = {
+  recharge: {
+    title: 'Mobile Recharge',
+    icon: <Smartphone size={38}/>,
+    accent: '#16a34a',
+    note: 'Recharge your own or a family member phone number. In practice mode, no money will move.',
+    fields: [
+      { label: 'Mobile Number', value: '01722 999991' },
+      { label: 'Operator', value: 'Grameenphone' },
+      { label: 'Amount', value: 'Tk 100' },
+    ],
+    steps: [
+      'Choose Mobile Recharge from the home screen.',
+      'Type the phone number carefully and check the operator name.',
+      'Choose the amount, then review once before confirming.',
+      'Never recharge a stranger who calls and pressures you.',
+    ],
+  },
+  bill: {
+    title: 'Pay Bill',
+    icon: <ReceiptText size={38}/>,
+    accent: '#2563eb',
+    note: 'Pay electricity, gas, water, internet, or school bills from one place.',
+    fields: [
+      { label: 'Bill Type', value: 'Electricity' },
+      { label: 'Customer Number', value: '1234 5678 90' },
+      { label: 'Amount', value: 'Tk 850' },
+    ],
+    steps: [
+      'Choose Pay Bill from the home screen.',
+      'Pick the correct bill company before typing any number.',
+      'Enter the customer or meter number from the official bill paper.',
+      'Match the name and amount before payment.',
+    ],
+  },
+  savings: {
+    title: 'Savings',
+    icon: <PiggyBank size={38}/>,
+    accent: BKASH,
+    note: 'Savings helps you set money aside little by little for future needs.',
+    fields: [
+      { label: 'Goal', value: 'Medicine fund' },
+      { label: 'Monthly Save', value: 'Tk 500' },
+      { label: 'Duration', value: '6 months' },
+    ],
+    steps: [
+      'Choose Savings from the home screen.',
+      'Read the plan name, duration, and any charges slowly.',
+      'Start with a small amount you are comfortable saving.',
+      'Ask family before opening a long-term savings plan.',
+    ],
+  },
+  profile: {
+    title: 'Create Profile',
+    icon: <UserCog size={38}/>,
+    accent: '#7c3aed',
+    note: 'Your profile keeps your name, mobile number, photo, and security settings in one safe place.',
+    fields: [
+      { label: 'Name', value: 'Nayeem Raihan' },
+      { label: 'Mobile', value: '01722 999991' },
+      { label: 'Security', value: 'PIN and trusted device' },
+    ],
+    steps: [
+      'Tap your photo or My Profile from the bKash home screen.',
+      'Check that your name and phone number are correct.',
+      'Add a clear profile photo only if you want to.',
+      'Set a secret PIN and never tell it to anyone.',
+      'Turn on login alerts so you know if someone tries to use your account.',
+    ],
+  },
+};
 
 function BkashHeader({ title = 'bKash', onBack, right }) {
   return (
@@ -114,6 +195,78 @@ export default function BkashSim({ onClose }) {
       'সাহায্য চাওয়া ঠিক আছে। পাঠানোর আগে Guidia সহকারী বা বিশ্বস্ত পরিবারকে জিজ্ঞাসা করুন।'
     ));
     showToast(t('No problem. Take your time before sending.', 'কোনো সমস্যা নেই। পাঠানোর আগে সময় নিন।'), 'info');
+  };
+
+  const explainMenuItem = (item) => {
+    speak(`${item.label}. ${item.explain}`);
+    if (['send', 'recharge', 'bill', 'savings', 'profile'].includes(item.step)) {
+      setStep(item.step);
+      return;
+    }
+    showToast(`${item.label} - practice explanation`, 'info');
+  };
+
+  const renderFeatureGuide = (featureKey) => {
+    const feature = FEATURE_GUIDES[featureKey];
+    if (!feature) return null;
+
+    return (
+      <PhoneFrame>
+        <BkashHeader title={feature.title} onBack={back} right={feature.icon}/>
+        <div className="bkash-screen-body">
+          <div className="bkash-info-strip" style={{ color: feature.accent }}>
+            <ShieldCheck size={24}/>
+            <span>{feature.note}</span>
+          </div>
+
+          <section className="bkash-card">
+            <div className="bkash-person-row">
+              <div className="bkash-avatar" style={{ color: feature.accent }}>{feature.icon}</div>
+              <div>
+                <strong>{feature.title} Practice</strong>
+                <p>No real transaction will happen here.</p>
+              </div>
+            </div>
+            <div className="bkash-amount-grid">
+              {feature.fields.map((field) => (
+                <div key={field.label}>
+                  <span>{field.label}</span>
+                  <strong>{field.value}</strong>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="bkash-card">
+            <p className="bkash-section-title">Learning steps</p>
+            <div className="bkash-contact-list" style={{ flexDirection: 'column' }}>
+              {feature.steps.map((item, index) => (
+                <button
+                  key={item}
+                  className="bkash-contact selected"
+                  onClick={() => speak(`${index + 1}. ${item}`)}
+                  style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-start', textAlign: 'left' }}
+                >
+                  <span className="bkash-menu-icon pink" style={{ width: 34, height: 34 }}>{index + 1}</span>
+                  <strong>{item}</strong>
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <button
+            className="bkash-primary-action"
+            onClick={() => {
+              showToast(`${feature.title} practice completed.`, 'success');
+              speak(`${feature.title} practice completed safely.`);
+              setStep('home');
+            }}
+          >
+            Finish Practice <CheckCircle2 size={22}/>
+          </button>
+        </div>
+      </PhoneFrame>
+    );
   };
 
   if (guardianWait) {
@@ -265,6 +418,10 @@ export default function BkashSim({ onClose }) {
     );
   }
 
+  if (['recharge', 'bill', 'savings', 'profile'].includes(step)) {
+    return renderFeatureGuide(step);
+  }
+
   return (
     <PhoneFrame>
       <div className="bkash-home-header">
@@ -272,14 +429,17 @@ export default function BkashSim({ onClose }) {
           <button className="bkash-back-btn" onClick={onClose} aria-label="Close bKash practice">
             <ArrowLeft size={26}/>
           </button>
-          <div className="bkash-profile">
+          <button className="bkash-profile" onClick={() => setStep('profile')} style={{ border: 0, textAlign: 'left' }}>
             <div className="bkash-profile-pic"><UserCircle size={42}/></div>
             <div>
               <strong>Nayeem Raihan</strong>
-              <button>Tap for Balance</button>
+              <span>Tap for Balance</span>
             </div>
-          </div>
+          </button>
           <Bell size={27}/>
+        </div>
+        <div className="bkash-hills" aria-hidden="true">
+          <span></span><span></span><span></span>
         </div>
       </div>
 
@@ -294,9 +454,7 @@ export default function BkashSim({ onClose }) {
               <button
                 key={item.label}
                 className="bkash-menu-item"
-                onClick={() => item.step === 'send'
-                  ? setStep('send')
-                  : showToast(`${item.label} - practice mode`, 'info')}
+                onClick={() => explainMenuItem(item)}
               >
                 <span className={`bkash-menu-icon ${item.tone}`}>{item.icon}</span>
                 <strong>{item.label}</strong>
@@ -306,16 +464,12 @@ export default function BkashSim({ onClose }) {
           <button className="bkash-close-menu">Close ^</button>
         </section>
 
-        <section className="bkash-offers-card">
-          <div className="bkash-card-heading">
-            <strong>Offer</strong>
-            <button>See All</button>
+        <section className="bkash-ad-banner">
+          <div>
+            <strong>Learn first. Pay safely.</strong>
+            <span>Practice every bKash option with voice help.</span>
           </div>
-          <div className="bkash-offers-row">
-            <div className="bkash-offer pink">10% Cash Back<br/><span>Practice Offer</span></div>
-            <div className="bkash-offer yellow">Friday Offer<br/><span>Learn safely</span></div>
-            <div className="bkash-offer teal">Mobile Bonus<br/><span>No real money</span></div>
-          </div>
+          <Gift size={42}/>
         </section>
 
         <section className="bkash-transactions-card">
@@ -338,7 +492,7 @@ export default function BkashSim({ onClose }) {
 
       <nav className="bkash-bottom-nav">
         <button className="active"><Home size={27}/><span>Home</span></button>
-        <button><ReceiptText size={27}/><span>History</span></button>
+        <button onClick={() => { speak('My bKash shows your profile, saved services, and account options.'); setStep('profile'); }}><UserCog size={27}/><span>My bKash</span></button>
         <button className="bkash-scan"><CreditCard size={30}/></button>
         <button><Bell size={27}/><span>Inbox</span></button>
       </nav>

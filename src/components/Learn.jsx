@@ -26,6 +26,19 @@ const GUIDE_APP_KEY = {
 function ButtonGuideViewer({ guide, onClose }) {
   const { t, speak, language } = useApp();
   const [active, setActive] = useState(null);
+  const [hoverGuide, setHoverGuide] = useState(null);
+  const isBkashGuide = guide.name === 'bKash';
+  const speakGuideButton = (btn) => {
+    const l = typeof btn.label === 'string' ? btn.label : (btn.label[language] || btn.label.en);
+    const d = typeof btn.desc === 'string' ? btn.desc : (btn.desc[language] || btn.desc.en);
+    speak(l + '. ' + d);
+  };
+  const localized = (value) => typeof value === 'string' ? value : (value?.[language] || value?.en || '');
+  const tooltipFor = (btn) => ({
+    title: localized(btn.tooltip?.title || btn.label),
+    body: localized(btn.tooltip?.body || btn.desc),
+    image: btn.tooltip?.image || btn.tooltipImage || guide.tooltipImage || guide.image,
+  });
 
   return (
     <div className="flex-col" style={{ height:'100%' }}>
@@ -49,19 +62,105 @@ function ButtonGuideViewer({ guide, onClose }) {
           ))}
         </div>
 
-        {/* App image banner */}
-        <div style={{ borderRadius:'var(--r-lg)', overflow:'hidden', marginBottom:20, height:160, position:'relative' }}>
-          <img src={guide.image} alt={guide.name} style={{ width:'100%', height:'100%', objectFit:'cover' }}
-            onError={e => { e.target.parentNode.style.background=guide.color; e.target.style.display='none'; }}/>
-          <div style={{ position:'absolute', inset:0, background:`linear-gradient(to right, ${guide.color}cc, transparent)` }}/>
-          <div style={{ position:'absolute', top:16, left:16, color:'#fff' }}>
-            <p style={{ fontWeight:900, fontSize:22 }}>{guide.name}</p>
-            <p style={{ fontSize:13, opacity:0.9 }}>{guide.buttons.length} {t('buttons explained','টি বাটনের ব্যাখ্যা')}</p>
+        {isBkashGuide ? (
+          <div className="bkash-guide-layout" style={{ maxWidth:520, margin:'0 auto 20px' }}>
+            <div style={{ borderRadius:18, overflow:'visible', background:'#f7f7f7', border:'1px solid var(--border)', boxShadow:'var(--sh-sm)' }}>
+              <div style={{ position:'relative', minHeight:126, padding:'18px 20px 36px', color:'#fff', background:'linear-gradient(180deg,#f85aa9 0%,#e2136e 72%,#c9055a 100%)', overflow:'hidden' }}>
+                <div style={{ display:'flex', alignItems:'center', gap:12, position:'relative', zIndex:1 }}>
+                  <div style={{ width:52, height:52, borderRadius:'50%', background:'rgba(255,255,255,0.24)', display:'flex', alignItems:'center', justifyContent:'center' }}>
+                    <AppLogo app="bkash" size={34} radius={8}/>
+                  </div>
+                  <div style={{ flex:1 }}>
+                    <p style={{ fontWeight:900, fontSize:18 }}>Nayeem Raihan</p>
+                    <span style={{ display:'inline-block', marginTop:6, background:'#fff', color:guide.color, borderRadius:999, padding:'7px 14px', fontWeight:900, fontSize:13 }}>Tap for Balance</span>
+                  </div>
+                  <div style={{ width:44, height:44, borderRadius:'50%', background:'#fff', color:guide.color, display:'flex', alignItems:'center', justifyContent:'center', fontWeight:900 }}>?</div>
+                </div>
+                <div style={{ position:'absolute', left:-30, right:-30, bottom:-26, height:56, background:'rgba(100,0,52,0.34)', borderRadius:'50% 50% 0 0' }}/>
+              </div>
+
+              <div style={{ margin:'-22px 12px 12px', background:'#fff', borderRadius:16, padding:'14px 8px 10px', position:'relative', zIndex:2, boxShadow:'0 6px 18px rgba(0,0,0,0.08)' }}>
+                <div style={{ display:'grid', gridTemplateColumns:'repeat(4,minmax(0,1fr))', gap:'12px 4px' }}>
+                  {guide.buttons.map((btn, i) => {
+                    const isOpen = active === i;
+                    const imap = INTENSITY_MAP[btn.intensity] || INTENSITY_MAP.info;
+                    const tip = tooltipFor(btn);
+                    const showTooltip = hoverGuide === i;
+                    return (
+                      <button key={i}
+                        className="guide-option-with-tooltip"
+                        onMouseEnter={() => setHoverGuide(i)}
+                        onMouseLeave={() => setHoverGuide((current) => current === i ? null : current)}
+                        onFocus={() => setHoverGuide(i)}
+                        onBlur={() => setHoverGuide((current) => current === i ? null : current)}
+                        onClick={() => { setActive(i); speakGuideButton(btn); }}
+                        style={{ minHeight:84, padding:'4px 2px', border:'none', background:isOpen ? '#fff0f7' : 'transparent', borderRadius:12, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'flex-start', gap:7, cursor:'pointer', position:'relative' }}>
+                        <span style={{ width:46, height:46, borderRadius:'50%', background:imap.bg, color:btn.color, display:'flex', alignItems:'center', justifyContent:'center', border:`1px solid ${imap.border}44` }}>
+                          {btn.icon}
+                        </span>
+                        <strong style={{ fontSize:11, lineHeight:1.18, color:'#333', fontWeight:800 }}>
+                          {typeof btn.label === 'string' ? btn.label : (btn.label[language] || btn.label.en)}
+                        </strong>
+                        <span
+                          className="guide-help-dot"
+                          role="button"
+                          tabIndex={0}
+                          aria-label={`${tip.title} help`}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            setHoverGuide((current) => current === i ? null : i);
+                          }}
+                          onKeyDown={(event) => {
+                            if (event.key === 'Enter' || event.key === ' ') {
+                              event.preventDefault();
+                              event.stopPropagation();
+                              setHoverGuide((current) => current === i ? null : i);
+                            }
+                          }}
+                        >
+                          <Info size={12}/>
+                        </span>
+                        {showTooltip && (
+                          <span className="guide-tooltip-card" role="tooltip">
+                            <span className="guide-tooltip-arrow" />
+                            <span className="guide-tooltip-title">{tip.title}</span>
+                            <span className="guide-tooltip-body">{tip.body}</span>
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+                <button style={{ display:'block', margin:'8px auto 0', color:guide.color, fontWeight:900, fontSize:13 }}>Close ^</button>
+              </div>
+
+              <div style={{ margin:12, minHeight:116, borderRadius:12, background:'linear-gradient(135deg,#242424,#fb177f 62%,#ffd12f)', color:'#fff', padding:'18px 20px', display:'flex', alignItems:'center', justifyContent:'space-between', gap:12 }}>
+                <div>
+                  <strong style={{ display:'block', fontSize:20, lineHeight:1.1 }}>Learn first. Pay safely.</strong>
+                  <span style={{ display:'block', fontSize:13, fontWeight:800, marginTop:8 }}>Tap any option to hear what it does.</span>
+                </div>
+                <AppLogo app="bkash" size={46} radius={12}/>
+              </div>
+            </div>
+
           </div>
-        </div>
+        ) : (
+          <>
+            {/* App image banner */}
+            <div style={{ borderRadius:'var(--r-lg)', overflow:'hidden', marginBottom:20, height:160, position:'relative' }}>
+              <img src={guide.image} alt={guide.name} style={{ width:'100%', height:'100%', objectFit:'cover' }}
+                onError={e => { e.target.parentNode.style.background=guide.color; e.target.style.display='none'; }}/>
+              <div style={{ position:'absolute', inset:0, background:`linear-gradient(to right, ${guide.color}cc, transparent)` }}/>
+              <div style={{ position:'absolute', top:16, left:16, color:'#fff' }}>
+                <p style={{ fontWeight:900, fontSize:22 }}>{guide.name}</p>
+                <p style={{ fontSize:13, opacity:0.9 }}>{guide.buttons.length} {t('buttons explained','টি বাটনের ব্যাখ্যা')}</p>
+              </div>
+            </div>
+          </>
+        )}
 
         {/* Button cards */}
-        <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
+        {!isBkashGuide && <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
           {guide.buttons.map((btn, i) => {
             const imap = INTENSITY_MAP[btn.intensity] || INTENSITY_MAP.info;
             const isOpen = active === i;
@@ -72,7 +171,7 @@ function ButtonGuideViewer({ guide, onClose }) {
                   if (!isOpen) {
                     const l = typeof btn.label === 'string' ? btn.label : (btn.label[language] || btn.label.en);
                     const d = typeof btn.desc === 'string' ? btn.desc : (btn.desc[language] || btn.desc.en);
-                    speak(l + '. ' + d); 
+                    speakGuideButton(btn); 
                   }
                 }}
                 style={{ textAlign:'left', padding:0, border:'none', background:'transparent', cursor:'pointer', width:'100%' }}>
@@ -105,7 +204,7 @@ function ButtonGuideViewer({ guide, onClose }) {
               </button>
             );
           })}
-        </div>
+        </div>}
       </div>
 
       <div style={{ padding:'12px 20px', background:'var(--surface)', borderTop:'1px solid var(--border)', flexShrink:0 }}>

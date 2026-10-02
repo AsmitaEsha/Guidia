@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useApp } from '../../context/AppStateContext';
 import { ArrowLeft, Search, Bell, MessageCircle, Home, Users, PlaySquare, Menu, ThumbsUp, MessageSquare, Share2 } from 'lucide-react';
 import { FAKE_FACEBOOK_POSTS } from '../../data/hardcoded';
 
 const FB_BLUE = '#1877F2';
+const REACTIONS = [
+  { id: 'like', label: 'Like', bn: 'লাইক', icon: '👍', color: FB_BLUE },
+  { id: 'love', label: 'Love', bn: 'ভালোবাসা', icon: '❤️', color: '#E41E3F' },
+  { id: 'care', label: 'Care', bn: 'যত্ন', icon: '🤗', color: '#F7B125' },
+  { id: 'haha', label: 'Haha', bn: 'হাহা', icon: '😄', color: '#F7B125' },
+  { id: 'wow', label: 'Wow', bn: 'ওয়াও', icon: '😮', color: '#F7B125' },
+  { id: 'sad', label: 'Sad', bn: 'দুঃখ', icon: '😢', color: '#F7B125' },
+  { id: 'angry', label: 'Angry', bn: 'রাগ', icon: '😡', color: '#F5533D' },
+];
 
 export default function FacebookSim({ onClose }) {
   const { t, speak } = useApp();
-  const [liked, setLiked] = useState({});
+  const [reactions, setReactions] = useState({});
+  const [reactionPickerFor, setReactionPickerFor] = useState(null);
   const [activeNav, setActiveNav] = useState('home');
+  const holdTimer = useRef(null);
+  const holdOpened = useRef(false);
   const [friendReqs] = useState([
     { id:'f1', name:'Kamal Hossain', mutual:'3 mutual friends', avatar:'' },
     { id:'f2', name:'Nasreen Akter', mutual:'7 mutual friends', avatar:'' },
@@ -20,6 +32,41 @@ export default function FacebookSim({ onClose }) {
     { name:'Dr. Ahmed', avatar:'', bg:'#ccffdd' },
     { name:'Mosque', avatar:'', bg:'#cce0ff' },
   ];
+
+  const clearHoldTimer = () => {
+    if (holdTimer.current) {
+      clearTimeout(holdTimer.current);
+      holdTimer.current = null;
+    }
+  };
+
+  const startHold = (postId) => {
+    clearHoldTimer();
+    holdOpened.current = false;
+    holdTimer.current = setTimeout(() => {
+      holdOpened.current = true;
+      setReactionPickerFor(postId);
+      speak(t('Hold menu opened. Choose a reaction.', 'রিঅ্যাকশন মেনু খুলেছে। একটি বেছে নিন।'));
+    }, 450);
+  };
+
+  const finishPress = (postId) => {
+    clearHoldTimer();
+    if (holdOpened.current) {
+      holdOpened.current = false;
+      return;
+    }
+    const nextReaction = reactions[postId] ? null : 'like';
+    setReactions((prev) => ({ ...prev, [postId]: nextReaction }));
+    speak(nextReaction ? t('You liked this!', 'লাইক দিয়েছেন!') : t('Like removed.', 'লাইক সরানো হয়েছে।'));
+  };
+
+  const chooseReaction = (postId, reactionId) => {
+    const reaction = REACTIONS.find((item) => item.id === reactionId);
+    setReactions((prev) => ({ ...prev, [postId]: reactionId }));
+    setReactionPickerFor(null);
+    speak(t(`${reaction?.label || 'Reaction'} selected.`, `${reaction?.bn || 'রিঅ্যাকশন'} বেছে নেওয়া হয়েছে।`));
+  };
 
   return (
     <div style={{ display:'flex', flexDirection:'column', height:'100%', background:'#F0F2F5' }}>
@@ -122,15 +169,41 @@ export default function FacebookSim({ onClose }) {
                 <div style={{ display:'flex', marginRight:4 }}>
                   {['','',''].map((e,j) => <span key={j} style={{ width:20, height:20, borderRadius:'50%', background:'#fff', display:'flex', alignItems:'center', justifyContent:'center', fontSize:12, marginLeft:j>0?-4:0, border:'1px solid #fff', zIndex:3-j }}>{e}</span>)}
                 </div>
-                <span style={{ fontSize:14, color:'#65676B' }}>{liked[p.id]?p.likes+1:p.likes}</span>
+                <span style={{ fontSize:14, color:'#65676B' }}>{reactions[p.id]?p.likes+1:p.likes}</span>
               </div>
               <span style={{ fontSize:14, color:'#65676B' }}>{p.comments} {t('comments','মন্তব্য')}</span>
             </div>
             {/* Action Buttons */}
-            <div style={{ display:'flex', padding:'4px 8px' }}>
-              <button onClick={() => { setLiked(v=>({...v,[p.id]:!v[p.id]})); speak(t('You liked this!','লাইক দিয়েছেন!')); }}
-                style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'8px 0', border:'none', background:'none', fontSize:14, fontWeight:700, color:liked[p.id]?FB_BLUE:'#65676B', cursor:'pointer' }}>
-                <ThumbsUp size={18} fill={liked[p.id]?FB_BLUE:'none'} color={liked[p.id]?FB_BLUE:'#65676B'}/> {t('Like','লাইক')}
+            <div style={{ display:'flex', padding:'4px 8px', position:'relative' }}>
+              {reactionPickerFor === p.id && (
+                <div style={{ position:'absolute', left:10, bottom:44, background:'#fff', border:'1px solid #CDD0D4', borderRadius:28, boxShadow:'0 8px 24px rgba(0,0,0,0.18)', padding:'6px 8px', display:'flex', gap:4, zIndex:5 }}
+                  onMouseLeave={() => setReactionPickerFor(null)}>
+                  {REACTIONS.map((reaction) => (
+                    <button key={reaction.id}
+                      onClick={() => chooseReaction(p.id, reaction.id)}
+                      title={reaction.label}
+                      style={{ width:38, height:38, borderRadius:'50%', border:'none', background:'transparent', cursor:'pointer', fontSize:24, display:'flex', alignItems:'center', justifyContent:'center', transition:'transform 0.15s' }}
+                      onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-6px) scale(1.18)'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.transform = ''; }}>
+                      {reaction.icon}
+                    </button>
+                  ))}
+                </div>
+              )}
+              <button
+                onMouseDown={() => startHold(p.id)}
+                onMouseUp={() => finishPress(p.id)}
+                onMouseLeave={clearHoldTimer}
+                onTouchStart={() => startHold(p.id)}
+                onTouchEnd={() => finishPress(p.id)}
+                onTouchCancel={clearHoldTimer}
+                style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'8px 0', border:'none', background:'none', fontSize:14, fontWeight:700, color:reactions[p.id] ? (REACTIONS.find((r) => r.id === reactions[p.id])?.color || FB_BLUE) : '#65676B', cursor:'pointer' }}>
+                {reactions[p.id] && reactions[p.id] !== 'like' ? (
+                  <span style={{ fontSize:18, lineHeight:1 }}>{REACTIONS.find((r) => r.id === reactions[p.id])?.icon}</span>
+                ) : (
+                  <ThumbsUp size={18} fill={reactions[p.id] ? FB_BLUE : 'none'} color={reactions[p.id] ? FB_BLUE : '#65676B'}/>
+                )}
+                {t(REACTIONS.find((r) => r.id === reactions[p.id])?.label || 'Like', REACTIONS.find((r) => r.id === reactions[p.id])?.bn || 'লাইক')}
               </button>
               <button style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'8px 0', border:'none', background:'none', fontSize:14, fontWeight:700, color:'#65676B', cursor:'pointer' }}>
                 <MessageSquare size={18}/> {t('Comment','মন্তব্য')}
