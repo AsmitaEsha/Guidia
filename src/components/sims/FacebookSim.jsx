@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useApp } from '../../context/AppStateContext';
 import { ArrowLeft, Search, Bell, MessageCircle, Home, Users, PlaySquare, Menu, ThumbsUp, MessageSquare, Share2 } from 'lucide-react';
 import { FAKE_FACEBOOK_POSTS } from '../../data/hardcoded';
@@ -21,11 +21,6 @@ export default function FacebookSim({ onClose }) {
   const [activeNav, setActiveNav] = useState('home');
   const holdTimer = useRef(null);
   const holdOpened = useRef(false);
-  const [friendReqs] = useState([
-    { id:'f1', name:'Kamal Hossain', mutual:'3 mutual friends', avatar:'' },
-    { id:'f2', name:'Nasreen Akter', mutual:'7 mutual friends', avatar:'' },
-  ]);
-
   const stories = [
     { name:t('Your Story','আপনার স্টোরি'), avatar:'', bg:'#e4e6eb' },
     { name:'Rupa', avatar:'', bg:'#ffcccc' },

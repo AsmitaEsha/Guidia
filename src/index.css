@@ -1089,6 +1089,21 @@ button.toggle{
   border:1px solid rgba(226,19,110,0.16);
   flex-shrink:0;
 }
+.bkash-pin-warning{
+  margin:12px 16px 0;
+  padding:12px 14px;
+  border-radius:12px;
+  background:#fff4e6;
+  color:#8a3d00;
+  border:1px solid #ffbf69;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  font-weight:900;
+  line-height:1.35;
+}
+.bkash-pin-warning strong{font-size:13px;text-transform:uppercase;letter-spacing:0;}
+.bkash-pin-warning span{font-size:17px;}
 .bkash-screen-body{flex:1;overflow:auto;padding:18px 16px 96px;display:flex;flex-direction:column;gap:16px;}
 .bkash-home-body{padding-top:14px;}
 .bkash-menu-card,.bkash-card,.bkash-offers-card,.bkash-transactions-card,.bkash-review-card{

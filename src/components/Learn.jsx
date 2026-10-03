@@ -28,6 +28,11 @@ function ButtonGuideViewer({ guide, onClose }) {
   const [active, setActive] = useState(null);
   const [hoverGuide, setHoverGuide] = useState(null);
   const isBkashGuide = guide.name === 'bKash';
+  const isNagadGuide = guide.name === 'Nagad';
+  const isWalletGuide = isBkashGuide || isNagadGuide;
+  const walletTheme = isNagadGuide
+    ? { app: 'nagad', gradient: 'linear-gradient(180deg,#ff7949 0%,#f05a22 72%,#d84315 100%)', notice: t('Never share your OTP or PIN with anyone', 'আপনার OTP বা PIN কখনো কারও সাথে শেয়ার করবেন না', 'अपना OTP या PIN कभी किसी के साथ साझा न करें') }
+    : { app: 'bkash', gradient: 'linear-gradient(180deg,#f85aa9 0%,#e2136e 72%,#c9055a 100%)', notice: t('Never share your 5-digit PIN with anyone', 'আপনার ৫-সংখ্যার PIN কখনো কারও সাথে শেয়ার করবেন না', 'अपना 5 अंकों का PIN कभी किसी के साथ साझा न करें') };
   const displayName = user?.name || t('Guidia Learner', 'Guidia শিক্ষার্থী', 'Guidia विद्यार्थी');
   const speakGuideButton = (btn) => {
     const l = typeof btn.label === 'string' ? btn.label : (btn.label[language] || btn.label.en);
@@ -63,19 +68,25 @@ function ButtonGuideViewer({ guide, onClose }) {
           ))}
         </div>
 
-        {isBkashGuide ? (
+        {isWalletGuide ? (
           <div className="bkash-guide-layout" style={{ maxWidth:520, margin:'0 auto 20px' }}>
             <div style={{ borderRadius:18, overflow:'visible', background:'#f7f7f7', border:'1px solid var(--border)', boxShadow:'var(--sh-sm)' }}>
-              <div style={{ position:'relative', minHeight:126, padding:'18px 20px 36px', color:'#fff', background:'linear-gradient(180deg,#f85aa9 0%,#e2136e 72%,#c9055a 100%)', overflow:'hidden' }}>
+              <div className="bkash-pin-warning">
+                <strong>{t('Safety notice', 'নিরাপত্তা সতর্কতা', 'सुरक्षा सूचना')}</strong>
+                <span>{walletTheme.notice}</span>
+              </div>
+              <div style={{ position:'relative', minHeight:126, padding:'18px 20px 36px', color:'#fff', background:walletTheme.gradient, overflow:'hidden' }}>
                 <div style={{ display:'flex', alignItems:'center', gap:12, position:'relative', zIndex:1 }}>
                   <div style={{ width:52, height:52, borderRadius:'50%', background:'rgba(255,255,255,0.24)', display:'flex', alignItems:'center', justifyContent:'center' }}>
-                    <AppLogo app="bkash" size={34} radius={8}/>
+                    <AppLogo app={walletTheme.app} size={34} radius={8}/>
                   </div>
                   <div style={{ flex:1 }}>
                     <p style={{ fontWeight:900, fontSize:18 }}>{displayName}</p>
                     <button
                       type="button"
-                      onClick={() => speak(t('Tap for Balance means you can check your current bKash balance. In the real app, tap it and enter your PIN only if the official bKash screen asks securely.', 'Tap for Balance মানে আপনার বর্তমান bKash ব্যালেন্স দেখা। আসল অ্যাপে এটি চাপুন এবং শুধু নিরাপদ অফিসিয়াল স্ক্রিন চাইলে PIN দিন।', 'Tap for Balance से आप अपना bKash बैलेंस देख सकते हैं। असली ऐप में इसे दबाएं और केवल सुरक्षित आधिकारिक स्क्रीन पूछे तो PIN डालें।'))}
+                      onClick={() => speak(isNagadGuide
+                        ? t('Tap for Balance means you can check your current Nagad balance. In the real app, tap it and enter your PIN only on the official Nagad screen.', 'Tap for Balance মানে আপনার বর্তমান Nagad ব্যালেন্স দেখা। আসল অ্যাপে এটি চাপুন এবং শুধু অফিসিয়াল Nagad স্ক্রিনে PIN দিন।', 'Tap for Balance से आप अपना Nagad बैलेंस देख सकते हैं। असली ऐप में इसे दबाएं और केवल आधिकारिक Nagad स्क्रीन पर PIN डालें।')
+                        : t('Tap for Balance means you can check your current bKash balance. In the real app, tap it and enter your PIN only if the official bKash screen asks securely.', 'Tap for Balance মানে আপনার বর্তমান bKash ব্যালেন্স দেখা। আসল অ্যাপে এটি চাপুন এবং শুধু নিরাপদ অফিসিয়াল স্ক্রিন চাইলে PIN দিন।', 'Tap for Balance से आप अपना bKash बैलेंस देख सकते हैं। असली ऐप में इसे दबाएं और केवल सुरक्षित आधिकारिक स्क्रीन पूछे तो PIN डालें।'))}
                       style={{ display:'inline-block', marginTop:6, background:'#fff', color:guide.color, border:0, borderRadius:999, padding:'7px 14px', fontWeight:900, fontSize:13 }}
                     >
                       Tap for Balance
@@ -146,7 +157,7 @@ function ButtonGuideViewer({ guide, onClose }) {
                   <strong style={{ display:'block', fontSize:20, lineHeight:1.1 }}>Learn first. Pay safely.</strong>
                   <span style={{ display:'block', fontSize:13, fontWeight:800, marginTop:8 }}>Tap any option to hear what it does.</span>
                 </div>
-                <AppLogo app="bkash" size={46} radius={12}/>
+                <AppLogo app={walletTheme.app} size={46} radius={12}/>
               </div>
             </div>
 
@@ -167,7 +178,7 @@ function ButtonGuideViewer({ guide, onClose }) {
         )}
 
         {/* Button cards */}
-        {!isBkashGuide && <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
+        {!isWalletGuide && <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
           {guide.buttons.map((btn, i) => {
             const imap = INTENSITY_MAP[btn.intensity] || INTENSITY_MAP.info;
             const isOpen = active === i;

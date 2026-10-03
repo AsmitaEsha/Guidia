@@ -457,6 +457,11 @@ export default function BkashSim({ onClose }) {
         {t('Practice mode. No real money will move.', 'অনুশীলন মোড। আসল টাকা যাবে না।')}
       </div>
 
+      <div className="bkash-pin-warning">
+        <strong>{t('Safety notice', 'নিরাপত্তা সতর্কতা', 'सुरक्षा सूचना')}</strong>
+        <span>{t('Never share your 5-digit PIN with anyone', 'আপনার ৫-সংখ্যার PIN কখনো কারও সাথে শেয়ার করবেন না', 'अपना 5 अंकों का PIN कभी किसी के साथ साझा न करें')}</span>
+      </div>
+
       <div className="bkash-screen-body bkash-home-body">
         <section className="bkash-menu-card">
           <div className="bkash-menu-grid">

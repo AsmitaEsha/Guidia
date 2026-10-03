@@ -1,13 +1,12 @@
-import React from 'react';
 import { 
   Send, Edit2, Paperclip, Mic, Video, Trash2, Ban, Circle,
   ThumbsUp, Share2, Camera, MessageSquare, Flag, UserPlus, UserMinus,
   Reply, AlertOctagon, Star, Archive, AlertTriangle, PlusCircle,
-  LogOut, Store, Lock, CheckCircle, X, Clock, Smartphone, Key, CheckCircle2,
+  Store, Lock, CheckCircle, Clock, Smartphone, Key, CheckCircle2,
   QrCode, Users, Landmark, Receipt, User, ArrowDownToLine, CreditCard,
   Activity, Settings, AlertCircle, Search, Sliders, Calendar, CheckSquare,
   Square, Stethoscope, CalendarPlus, Pill, FlaskConical, DollarSign,
-  ShoppingCart, Zap, RotateCcw, Heart, Banknote
+  ShoppingCart, Zap, RotateCcw, Heart, Banknote, ShieldCheck, Gift
 } from 'lucide-react';
 import facebookPic from '../../Cover_Photo/facebookpic.jpg';
 import bkashPic from '../../Cover_Photo/Bkash-Logo.png';
@@ -94,7 +93,18 @@ export const BUTTON_GUIDES = {
     image: 'https://images.unsplash.com/photo-1607703703520-bb638e84caf2?w=400&auto=format&fit=crop',
     buttons: [
       { label: {en:'Send Money', bn:'সেন্ড মানি', hi:'पैसे भेजें'}, color: '#F05A22', intensity: 'action', icon: <Send size={20}/>, desc: {en:'Main orange send button — double-check the recipient number before tapping.', bn:'প্রধান কমলা সেন্ড বাটন — প্রাপকের নম্বর যাচাই করুন।', hi:'मुख्य नारंगी सेंड बटन — प्राप्तकर्ता का नंबर दोबारा जांचें।'} },
+      { label: {en:'Cash Out', bn:'ক্যাশ আউট', hi:'कैश आउट'}, color: '#F97316', intensity: 'warn', icon: <Banknote size={20}/>, desc: {en:'Withdraw cash from a Nagad agent. Confirm the agent number before continuing.', bn:'Nagad এজেন্ট থেকে নগদ টাকা তুলুন। চালিয়ে যাওয়ার আগে এজেন্ট নম্বর মিলিয়ে নিন।', hi:'Nagad एजेंट से नकद निकालें। आगे बढ़ने से पहले एजेंट नंबर जांचें।'} },
       { label: {en:'Mobile Recharge', bn:'মোবাইল রিচার্জ', hi:'मोबाइल रिचार्ज'}, color: '#25D366', intensity: 'safe', icon: <Smartphone size={20}/>, desc: {en:'Safely tops up a mobile phone balance directly from your app.', bn:'অ্যাপ থেকে সরাসরি মোবাইল ব্যালেন্স রিচার্জ করুন। নিরাপদ।', hi:'ऐप से सीधे मोबाइल फोन रिचार्ज करें। सुरक्षित।'} },
+      { label: {en:'Add Money', bn:'অ্যাড মানি', hi:'पैसे जोड़ें'}, color: '#16A34A', intensity: 'safe', icon: <PlusCircle size={20}/>, desc: {en:'Add money to Nagad from a bank or card. Use only your own trusted account.', bn:'ব্যাংক বা কার্ড থেকে Nagad-এ টাকা যোগ করুন। নিজের বিশ্বস্ত অ্যাকাউন্ট ব্যবহার করুন।', hi:'बैंक या कार्ड से Nagad में पैसे जोड़ें। अपना भरोसेमंद खाता ही इस्तेमाल करें।'} },
+      { label: {en:'Transfer Money', bn:'ট্রান্সফার মানি', hi:'पैसे ट्रांसफर'}, color: '#F05A22', intensity: 'action', icon: <ArrowDownToLine size={20}/>, desc: {en:'Move money to another account or service. Check the name and number carefully.', bn:'অন্য অ্যাকাউন্ট বা সার্ভিসে টাকা পাঠায়। নাম ও নম্বর ভালোভাবে দেখুন।', hi:'दूसरे खाते या सेवा में पैसे भेजता है। नाम और नंबर ध्यान से जांचें।'} },
+      { label: {en:'Insurance', bn:'ইনস্যুরেন্স', hi:'इंश्योरेंस'}, color: '#0EA5E9', intensity: 'info', icon: <ShieldCheck size={20}/>, desc: {en:'Insurance options can protect against certain risks. Read coverage and charges first.', bn:'ইনস্যুরেন্স কিছু ঝুঁকি থেকে সুরক্ষা দিতে পারে। আগে কভারেজ ও চার্জ পড়ুন।', hi:'इंश्योरेंस कुछ जोखिमों से सुरक्षा दे सकता है। पहले कवरेज और शुल्क पढ़ें।'} },
+      { label: {en:'Nagad Mela', bn:'Nagad মেলা', hi:'Nagad मेला'}, color: '#F05A22', intensity: 'info', icon: <Gift size={20}/>, desc: {en:'Shows Nagad offers and campaigns. Read conditions before joining an offer.', bn:'Nagad অফার ও ক্যাম্পেইন দেখায়। অফারে যোগ দেওয়ার আগে শর্ত পড়ুন।', hi:'Nagad ऑफर और कैंपेन दिखाता है। ऑफर लेने से पहले शर्तें पढ़ें।'} },
+      { label: {en:'Savings', bn:'সেভিংস', hi:'सेविंग्स'}, color: '#F05A22', intensity: 'info', icon: <Landmark size={20}/>, desc: {en:'Set money aside for later. Read duration, charges, and withdrawal rules before starting.', bn:'ভবিষ্যতের জন্য টাকা জমাতে সাহায্য করে। সময়, চার্জ ও টাকা তোলার নিয়ম পড়ুন।', hi:'बाद के लिए पैसे अलग रखें। समय, शुल्क और निकालने के नियम पढ़ें।'} },
+      { label: {en:'Merchant Pay', bn:'মার্চেন্ট পে', hi:'मर्चेंट भुगतान'}, color: '#1877F2', intensity: 'action', icon: <Store size={20}/>, desc: {en:'Pay a shop or merchant. Match the shop name before confirming.', bn:'দোকান বা মার্চেন্টকে পে করুন। নিশ্চিত করার আগে দোকানের নাম মিলিয়ে নিন।', hi:'दुकान या मर्चेंट को भुगतान करें। पुष्टि से पहले दुकान का नाम मिलाएं।'} },
+      { label: {en:'Bill Pay', bn:'বিল পে', hi:'बिल भुगतान'}, color: '#2563EB', intensity: 'action', icon: <Receipt size={20}/>, desc: {en:'Pay utility or service bills. Copy the customer number from the real bill.', bn:'ইউটিলিটি বা সার্ভিস বিল দিন। আসল বিল থেকে customer number লিখুন।', hi:'यूटिलिटी या सेवा बिल दें। असली बिल से customer number लिखें।'} },
+      { label: {en:'EMI Payment', bn:'EMI পেমেন্ট', hi:'EMI भुगतान'}, color: '#F97316', intensity: 'warn', icon: <CreditCard size={20}/>, desc: {en:'Pay a monthly installment. Check the lender name and due amount first.', bn:'মাসিক কিস্তি পেমেন্ট করুন। আগে প্রতিষ্ঠান ও বকেয়া টাকা মিলিয়ে নিন।', hi:'मासिक किस्त दें। पहले संस्था और बकाया राशि जांचें।'} },
+      { label: {en:'Donation', bn:'ডোনেশন', hi:'दान'}, color: '#F05A22', intensity: 'warn', icon: <Heart size={20}/>, desc: {en:'Donate to a cause. Make sure the organization is real before sending money.', bn:'দান করার আগে প্রতিষ্ঠানটি সত্যি কি না নিশ্চিত করুন।', hi:'दान करने से पहले संस्था असली है या नहीं जांचें।'} },
+      { label: {en:'QR Code', bn:'QR কোড', hi:'QR कोड'}, color: '#F05A22', intensity: 'action', icon: <QrCode size={20}/>, desc: {en:'Scan a QR code to pay. Check the merchant name and amount before confirming.', bn:'QR স্ক্যান করে পে করুন। নিশ্চিত করার আগে মার্চেন্ট নাম ও পরিমাণ দেখুন।', hi:'QR स्कैन करके भुगतान करें। पुष्टि से पहले मर्चेंट नाम और राशि देखें।'} },
       { label: {en:'OTP Input Box', bn:'OTP বক্স', hi:'OTP बॉक्स'}, color: '#EA4335', intensity: 'danger', icon: <Key size={20}/>, desc: {en:'RED ALERT — this box is where you type your OTP. NEVER give this to anyone on a phone call!', bn:'রেড অ্যালার্ট — এখানে আপনার OTP দিন। ফোনে কাউকে দেবেন না!', hi:'रेड अलर्ट — यहाँ अपना OTP टाइप करें। फ़ोन पर किसी को न बताएं!'} },
       { label: {en:'Confirm Transfer', bn:'কনফার্ম করুন', hi:'पुष्टि करें'}, color: '#F05A22', intensity: 'action', icon: <CheckCircle2 size={20}/>, desc: {en:'Orange confirm — final step. Once pressed, money is sent instantly.', bn:'কমলা কনফার্ম — শেষ ধাপ। চাপলেই সাথে সাথে টাকা চলে যাবে।', hi:'नारंगी पुष्टि — अंतिम चरण। दबाते ही पैसे तुरंत भेज दिए जाएंगे।'} },
     ]
