@@ -1,4 +1,3 @@
-import React from 'react';
 import { APP_LOGOS } from '../data/hardcoded';
 
 
@@ -24,12 +23,23 @@ function PractoLogo({ size, radius }) {
   );
 }
 
+function MoMoLogo({ size, radius }) {
+  return (
+    <div style={{ width:size, height:size, borderRadius:radius, background:'#A50064', color:'#fff', flexShrink:0, display:'grid', gridTemplateColumns:'1fr 1fr', gap:size*0.06, padding:size*0.14, alignItems:'center', justifyItems:'center', boxShadow:'inset 0 -6px 14px rgba(0,0,0,0.12)' }}>
+      {['Mo', 'Mo', 'Mo', 'Mo'].map((part, index) => (
+        <span key={index} style={{ fontSize:size*0.2, fontWeight:900, lineHeight:1, letterSpacing:0 }}>{part}</span>
+      ))}
+    </div>
+  );
+}
+
 export default function AppLogo({ app, size = 48, radius = 14, style = {} }) {
   const src = APP_LOGOS[app];
 
   // Custom inline SVG logos for apps without free Wikipedia SVGs
   if (app === 'messenger') return <MessengerLogo size={size} radius={radius}/>;
   if (app === 'practo')    return <PractoLogo    size={size} radius={radius}/>;
+  if (app === 'momo')      return <MoMoLogo      size={size} radius={radius}/>;
 
   if (src) {
     return (

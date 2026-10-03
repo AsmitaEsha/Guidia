@@ -11,6 +11,7 @@ import MessengerSim from './sims/MessengerSim';
 import GmailSim from './sims/GmailSim';
 import BkashSim from './sims/BkashSim';
 import NagadSim from './sims/NagadSim';
+import MoMoSim from './sims/MoMoSim';
 import GPaySim from './sims/GPaySim';
 import PayPalSim from './sims/PayPalSim';
 import BookingSim from './sims/BookingSim';
@@ -24,6 +25,7 @@ const SIMS = [
   { id:'gmail', label:'Gmail', app:'gmail', color:'#EA4335', bg:'#fce8e8', sub:'Spot scam emails', subBn:'স্ক্যাম ইমেইল চিনুন', subHi:'स्कैम ईमेल पहचानें', done:false },
   { id:'bkash', label:'bKash', app:'bkash', color:'#E2136E', bg:'#fce8f3', sub:'Safe mobile banking', subBn:'নিরাপদ মোবাইল ব্যাংকিং', subHi:'सुरक्षित मोबाइल बैंकिंग', done:false },
   { id:'nagad', label:'Nagad', app:'nagad', color:'#F05A22', bg:'#fff3ed', sub:'OTP safety lesson', subBn:'OTP নিরাপত্তা পাঠ', subHi:'OTP सुरक्षा पाঠ', done:false },
+  { id:'momo', label:'MoMo', app:'momo', color:'#A50064', bg:'#fff0f8', sub:'Vietnam mobile wallet', subBn:'Vietnam mobile wallet', subHi:'Vietnam mobile wallet', done:false },
   { id:'gpay', label:'Google Pay', app:'googlepay', color:'#1A73E8', bg:'#e8f0fe', sub:'Send money safely', subBn:'নিরাপদে টাকা পাঠান', subHi:'सुरक्षित पैसे भेजें', done:false },
   { id:'paypal', label:'PayPal', app:'paypal', color:'#003087', bg:'#e6f2ff', sub:'International payments', subBn:'আন্তর্জাতিক পেমেন্ট', subHi:'अंतरराष्ट्रीय भुगतान', done:false },
   { id:'booking', label:'Booking.com',app:'booking', color:'#003580', bg:'#e6f0fa', sub:'Book hotels online', subBn:'অনলাইনে হোটেল বুকিং', subHi:'ऑनलाइन होटल बुक करें', done:false },
@@ -54,6 +56,7 @@ export default function Practice() {
     if (active === 'gmail') SimComponent = <GmailSim onClose={()=>setActive(null)}/>;
     if (active === 'bkash') SimComponent = <BkashSim onClose={()=>setActive(null)}/>;
     if (active === 'nagad') SimComponent = <NagadSim onClose={()=>setActive(null)}/>;
+    if (active === 'momo') SimComponent = <MoMoSim onClose={()=>setActive(null)}/>;
     if (active === 'gpay') SimComponent = <GPaySim onClose={()=>setActive(null)}/>;
     if (active === 'paypal') SimComponent = <PayPalSim onClose={()=>setActive(null)}/>;
     if (active === 'booking') SimComponent = <BookingSim onClose={()=>setActive(null)}/>;

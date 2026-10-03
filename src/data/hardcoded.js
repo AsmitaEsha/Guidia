@@ -15,6 +15,7 @@ export const APP_LOGOS = {
   chrome: 'https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg',
   bkash: 'https://download.logo.wine/logo/BKash/BKash-Icon-Logo.wine.png',
   nagad: 'https://download.logo.wine/logo/Nagad/Nagad-Logo.wine.png',
+  momo: null,
 };
 
 
@@ -304,6 +305,10 @@ export const PRACTICE_TASKS = {
   ],
   nagad: [
     { id:'ng1', level:'Beginner', levelBn:'শুরু', levelHi:'शुरुआती', title:'Spot an OTP scam', titleBn:'OTP প্রতারণা চিনুন', titleHi:'OTP स्कैम पहचानें', steps:{en:['Read the fake SMS carefully.','Notice it asks for your OTP.','Remember: Never share OTP. Delete the message.'],bn:['ভুয়া SMS টি পড়ুন।','লক্ষ্য করুন এটি OTP চাইছে।','মনে রাখবেন: OTP দেবেন না। মেসেজ মুছুন।'],hi:['नकली SMS को ध्यान से पढ़ें।','ध्यान दें कि यह आपके OTP के लिए पूछता है।','याद रखें: कभी भी OTP शेयर न करें। संदेश हटा दें।']} }
+  ],
+  momo: [
+    { id:'mm1', level:'Beginner', levelBn:'Beginner', levelHi:'Beginner', title:'Pay a shop with QR', titleBn:'Pay a shop with QR', titleHi:'Pay a shop with QR', steps:{en:['Tap Scan QR on the MoMo home screen.','Check the merchant name after scanning.','Enter or confirm the amount in VND.','Review the safety panel before confirming.'],bn:['Tap Scan QR on the MoMo home screen.','Check the merchant name after scanning.','Enter or confirm the amount in VND.','Review the safety panel before confirming.'],hi:['Tap Scan QR on the MoMo home screen.','Check the merchant name after scanning.','Enter or confirm the amount in VND.','Review the safety panel before confirming.']} },
+    { id:'mm2', level:'Hard', levelBn:'Hard', levelHi:'Hard', title:'Avoid MoMo OTP scams', titleBn:'Avoid MoMo OTP scams', titleHi:'Avoid MoMo OTP scams', steps:{en:['Stop if anyone asks for your OTP, password, or verification code.','Do not tap unknown links that claim to be MoMo rewards.','Open MoMo yourself and check transaction history.','Ask a trusted person before sending money if you feel unsure.'],bn:['Stop if anyone asks for your OTP, password, or verification code.','Do not tap unknown links that claim to be MoMo rewards.','Open MoMo yourself and check transaction history.','Ask a trusted person before sending money if you feel unsure.'],hi:['Stop if anyone asks for your OTP, password, or verification code.','Do not tap unknown links that claim to be MoMo rewards.','Open MoMo yourself and check transaction history.','Ask a trusted person before sending money if you feel unsure.']} }
   ],
   googlepay: [
     { id:'gp1', level:'Beginner', levelBn:'শুরু', levelHi:'शुरुआती', title:'Pay a shop (Scan QR)', titleBn:'দোকানে পে করুন (QR)', titleHi:'दुकान पर भुगतान करें (QR)', steps:{en:['Tap "Scan any QR code".','Point your camera at the shop\'s code.','Enter amount and pay.'],bn:['"Scan any QR code" এ চাপ দিন।','দোকানের কোডে ক্যামেরা ধরুন।','পরিমাণ লিখে পে করুন।'],hi:['"Scan any QR code" पर टैप करें।','दुकान के कोड पर अपना कैमरा पॉइंट करें।','राशि दर्ज करें और भुगतान करें।']} },

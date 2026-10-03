@@ -18,7 +18,7 @@ const INTENSITY_MAP = {
 // App name → AppLogo key
 const GUIDE_APP_KEY = {
   'WhatsApp':'whatsapp','Facebook':'facebook','Gmail':'gmail','bKash':'bkash',
-  'Nagad':'nagad','Google Pay':'googlepay','PayPal':'paypal','Booking.com':'booking',
+  'Nagad':'nagad','MoMo':'momo','Google Pay':'googlepay','PayPal':'paypal','Booking.com':'booking',
   'Practo':'practo','Amazon':'amazon'
 };
 
@@ -29,6 +29,7 @@ function ButtonGuideViewer({ guide, onClose }) {
   const [hoverGuide, setHoverGuide] = useState(null);
   const isBkashGuide = guide.name === 'bKash';
   const isNagadGuide = guide.name === 'Nagad';
+  const isMoMoGuide = guide.name === 'MoMo';
   const isWalletGuide = isBkashGuide || isNagadGuide;
   const walletTheme = isNagadGuide
     ? { app: 'nagad', gradient: 'linear-gradient(180deg,#ff7949 0%,#f05a22 72%,#d84315 100%)', notice: t('Never share your OTP or PIN with anyone', 'আপনার OTP বা PIN কখনো কারও সাথে শেয়ার করবেন না', 'अपना OTP या PIN कभी किसी के साथ साझा न करें') }
@@ -43,8 +44,14 @@ function ButtonGuideViewer({ guide, onClose }) {
   const tooltipFor = (btn) => ({
     title: localized(btn.tooltip?.title || btn.label),
     body: localized(btn.tooltip?.body || btn.desc),
-    image: btn.tooltip?.image || btn.tooltipImage || guide.tooltipImage || guide.image,
   });
+  const renderGuideTooltip = (tip) => (
+    <span className="guide-tooltip-card" role="tooltip">
+      <span className="guide-tooltip-arrow" />
+      <span className="guide-tooltip-title">{tip.title}</span>
+      <span className="guide-tooltip-body">{tip.body}</span>
+    </span>
+  );
 
   return (
     <div className="flex-col" style={{ height:'100%' }}>
@@ -68,7 +75,163 @@ function ButtonGuideViewer({ guide, onClose }) {
           ))}
         </div>
 
-        {isWalletGuide ? (
+        {isMoMoGuide ? (
+          <div style={{ maxWidth:560, margin:'0 auto 20px' }}>
+            <div style={{ borderRadius:22, overflow:'visible', background:'#f6f2f4', border:'1px solid var(--border)', boxShadow:'var(--sh-sm)' }}>
+              <div style={{ background:'linear-gradient(135deg,#7d004c 0%,#a50064 48%,#d91b85 100%)', color:'#fff', padding:'18px 18px 28px', position:'relative', overflow:'hidden' }}>
+                <div style={{ position:'absolute', right:-36, top:-48, width:150, height:150, borderRadius:'50%', background:'rgba(255,255,255,0.12)' }} />
+                <div style={{ display:'flex', alignItems:'center', gap:12, position:'relative', zIndex:1 }}>
+                  <AppLogo app="momo" size={48} radius={12}/>
+                  <div style={{ flex:1 }}>
+                    <p style={{ fontWeight:900, fontSize:20, lineHeight:1 }}>MoMo Wallet</p>
+                    <p style={{ marginTop:5, fontSize:13, fontWeight:700, opacity:0.86 }}>Practice screen - no real money</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => speak('MoMo notifications are for app alerts. Be careful with reward messages that ask for OTP, password, or a link.')}
+                    style={{ width:40, height:40, borderRadius:'50%', background:'rgba(255,255,255,0.18)', color:'#fff', fontWeight:900 }}
+                  >
+                    3
+                  </button>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => speak('Wallet balance shows your money. Do not show it to strangers, and never enter password or OTP for someone on a call.')}
+                  style={{ width:'100%', marginTop:16, background:'#fff', color:'#7d004c', borderRadius:16, padding:'13px 14px', display:'flex', alignItems:'center', justifyContent:'space-between', boxShadow:'0 12px 28px rgba(61,0,38,0.22)' }}
+                >
+                  <span style={{ fontWeight:800, fontSize:13 }}>Wallet Balance</span>
+                  <strong style={{ fontSize:20 }}>231,624 VND</strong>
+                </button>
+              </div>
+
+              <div style={{ margin:'-16px 14px 12px', background:'#fff', borderRadius:18, padding:12, position:'relative', zIndex:2, boxShadow:'0 8px 22px rgba(43,20,31,0.10)' }}>
+                <div className="momo-quick-grid" style={{ display:'grid', gridTemplateColumns:'repeat(4,minmax(0,1fr))', gap:8 }}>
+                  {guide.buttons.slice(0, 4).map((btn, i) => {
+                    const isOpen = active === i;
+                    const imap = INTENSITY_MAP[btn.intensity] || INTENSITY_MAP.info;
+                    const tip = tooltipFor(btn);
+                    const guideKey = `momo-quick-${i}`;
+                    const showTooltip = hoverGuide === guideKey;
+                    return (
+                      <button
+                        key={i}
+                        className="guide-option-with-tooltip"
+                        onMouseEnter={() => setHoverGuide(guideKey)}
+                        onMouseLeave={() => setHoverGuide((current) => current === guideKey ? null : current)}
+                        onFocus={() => setHoverGuide(guideKey)}
+                        onBlur={() => setHoverGuide((current) => current === guideKey ? null : current)}
+                        onClick={() => {
+                          setActive(isOpen ? null : i);
+                          if (!isOpen) speakGuideButton(btn);
+                        }}
+                        style={{ minHeight:88, border:`1.5px solid ${isOpen ? imap.border : '#f0e4eb'}`, background:isOpen ? imap.bg : '#fff', borderRadius:14, padding:'9px 5px', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:7, position:'relative', zIndex:showTooltip ? 60 : 1 }}
+                      >
+                        <span style={{ width:44, height:44, borderRadius:'50%', background:btn.color, color:'#fff', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:`0 0 0 4px ${imap.bg}` }}>
+                          {btn.icon}
+                        </span>
+                        <strong style={{ fontSize:11, lineHeight:1.12, color:'#31202a' }}>{localized(btn.label)}</strong>
+                        <span
+                          className="guide-help-dot"
+                          role="button"
+                          tabIndex={0}
+                          aria-label={`${tip.title} help`}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            setHoverGuide((current) => current === guideKey ? null : guideKey);
+                          }}
+                          onKeyDown={(event) => {
+                            if (event.key === 'Enter' || event.key === ' ') {
+                              event.preventDefault();
+                              event.stopPropagation();
+                              setHoverGuide((current) => current === guideKey ? null : guideKey);
+                            }
+                          }}
+                        >
+                          <Info size={12}/>
+                        </span>
+                        {showTooltip && renderGuideTooltip(tip)}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div style={{ margin:'0 14px 14px', background:'#fff', borderRadius:18, overflow:'visible', border:'1px solid #efe5ea', position:'relative', zIndex:3 }}>
+                <div style={{ padding:'12px 14px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid #f0e4eb' }}>
+                  <strong style={{ color:'#342633' }}>MoMo services</strong>
+                  <span style={{ color:'#a50064', fontSize:12, fontWeight:900 }}>{guide.buttons.length} buttons</span>
+                </div>
+                <div className="momo-guide-grid" style={{ display:'grid', gridTemplateColumns:'repeat(3,minmax(0,1fr))' }}>
+                  {guide.buttons.map((btn, i) => {
+                    const isOpen = active === i;
+                    const imap = INTENSITY_MAP[btn.intensity] || INTENSITY_MAP.info;
+                    const tip = tooltipFor(btn);
+                    const guideKey = `momo-service-${i}`;
+                    const showTooltip = hoverGuide === guideKey;
+                    return (
+                      <button
+                        key={i}
+                        className="guide-option-with-tooltip"
+                        onMouseEnter={() => setHoverGuide(guideKey)}
+                        onMouseLeave={() => setHoverGuide((current) => current === guideKey ? null : current)}
+                        onFocus={() => setHoverGuide(guideKey)}
+                        onBlur={() => setHoverGuide((current) => current === guideKey ? null : current)}
+                        onClick={() => {
+                          setActive(isOpen ? null : i);
+                          if (!isOpen) speakGuideButton(btn);
+                        }}
+                        style={{ minHeight:96, border:0, borderRight:(i + 1) % 3 === 0 ? 'none' : '1px solid #f0e4eb', borderBottom:i >= guide.buttons.length - 3 ? 'none' : '1px solid #f0e4eb', background:isOpen ? imap.bg : '#fff', padding:8, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:7, position:'relative', zIndex:showTooltip ? 60 : 1 }}
+                      >
+                        <span style={{ width:38, height:38, borderRadius:12, background:`${btn.color}18`, color:btn.color, display:'flex', alignItems:'center', justifyContent:'center' }}>
+                          {btn.icon}
+                        </span>
+                        <strong style={{ fontSize:12, lineHeight:1.14, color:'#3b3138' }}>{localized(btn.label)}</strong>
+                        <span style={{ padding:'2px 6px', borderRadius:999, background:imap.bg, color:imap.text, border:`1px solid ${imap.border}`, fontSize:9, fontWeight:900 }}>
+                          {localized(imap.label)}
+                        </span>
+                        <span
+                          className="guide-help-dot"
+                          role="button"
+                          tabIndex={0}
+                          aria-label={`${tip.title} help`}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            setHoverGuide((current) => current === guideKey ? null : guideKey);
+                          }}
+                          onKeyDown={(event) => {
+                            if (event.key === 'Enter' || event.key === ' ') {
+                              event.preventDefault();
+                              event.stopPropagation();
+                              setHoverGuide((current) => current === guideKey ? null : guideKey);
+                            }
+                          }}
+                        >
+                          <Info size={12}/>
+                        </span>
+                        {showTooltip && renderGuideTooltip(tip)}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {active !== null && guide.buttons[active] && (
+                <div style={{ margin:'0 14px 14px', borderRadius:16, background:INTENSITY_MAP[guide.buttons[active].intensity]?.bg || '#fff', border:`1.5px solid ${INTENSITY_MAP[guide.buttons[active].intensity]?.border || '#ddd'}`, padding:14 }}>
+                  <strong style={{ display:'block', marginBottom:6, color:'#271923' }}>{localized(guide.buttons[active].label)}</strong>
+                  <p style={{ fontSize:14, lineHeight:1.55, color:'#3f3540' }}>{localized(guide.buttons[active].desc)}</p>
+                </div>
+              )}
+
+              <div style={{ margin:14, borderRadius:16, background:'#fff7fb', border:'1px solid #f2cfe4', padding:14, display:'flex', gap:10, alignItems:'flex-start' }}>
+                <span style={{ width:30, height:30, borderRadius:'50%', background:'#a50064', color:'#fff', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:900, flexShrink:0 }}>!</span>
+                <p style={{ fontSize:13, lineHeight:1.5, color:'#5b2746', fontWeight:700 }}>
+                  In real MoMo, stop if anyone asks for OTP, password, or a verification code. Review receiver name, amount, and fee before confirming.
+                </p>
+              </div>
+            </div>
+          </div>
+        ) : isWalletGuide ? (
           <div className="bkash-guide-layout" style={{ maxWidth:520, margin:'0 auto 20px' }}>
             <div style={{ borderRadius:18, overflow:'visible', background:'#f7f7f7', border:'1px solid var(--border)', boxShadow:'var(--sh-sm)' }}>
               <div className="bkash-pin-warning">
@@ -138,13 +301,7 @@ function ButtonGuideViewer({ guide, onClose }) {
                         >
                           <Info size={12}/>
                         </span>
-                        {showTooltip && (
-                          <span className="guide-tooltip-card" role="tooltip">
-                            <span className="guide-tooltip-arrow" />
-                            <span className="guide-tooltip-title">{tip.title}</span>
-                            <span className="guide-tooltip-body">{tip.body}</span>
-                          </span>
-                        )}
+                        {showTooltip && renderGuideTooltip(tip)}
                       </button>
                     );
                   })}
@@ -178,7 +335,7 @@ function ButtonGuideViewer({ guide, onClose }) {
         )}
 
         {/* Button cards */}
-        {!isWalletGuide && <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
+        {!isMoMoGuide && !isWalletGuide && <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
           {guide.buttons.map((btn, i) => {
             const imap = INTENSITY_MAP[btn.intensity] || INTENSITY_MAP.info;
             const isOpen = active === i;
@@ -187,8 +344,6 @@ function ButtonGuideViewer({ guide, onClose }) {
                 onClick={() => { 
                   setActive(isOpen ? null : i); 
                   if (!isOpen) {
-                    const l = typeof btn.label === 'string' ? btn.label : (btn.label[language] || btn.label.en);
-                    const d = typeof btn.desc === 'string' ? btn.desc : (btn.desc[language] || btn.desc.en);
                     speakGuideButton(btn); 
                   }
                 }}
@@ -317,7 +472,7 @@ function TutorialPlayer({ tut, onClose, onComplete }) {
 // ── APP KEY MAP for Button Guides ────────────────────────────
 const APP_GUIDE_MAP = {
   messaging: ['whatsapp', 'facebook', 'gmail'],
-  banking: ['bkash', 'nagad', 'googlepay', 'paypal'],
+  banking: ['bkash', 'nagad', 'momo', 'googlepay', 'paypal'],
   shopping: ['amazon'],
   health: ['practo'],
   travel: ['booking'],
@@ -428,7 +583,7 @@ export default function Learn() {
                       <p style={{ fontWeight:700, fontSize:17 }}>{title}</p>
                       <div className="flex items-center gap-8" style={{ marginTop:4 }}>
                         <span className="badge" style={{ background:done?'var(--success-light)':'var(--blue-light)', color:done?'var(--success)':'var(--blue-dark)' }}>
-                          {done ? t(' Completed',' সম্পন্ন') : tut.level}
+                          {done ? t(' Completed',' সম্পন্ন') : level}
                         </span>
                         <span className="t-tiny">⏱ {tut.duration}</span>
                       </div>
