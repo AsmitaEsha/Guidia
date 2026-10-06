@@ -1,494 +1,55 @@
-import { createContext, useContext, useState, useCallback, useMemo, useEffect, useRef } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FAKE_TRANSACTIONS } from '../data/hardcoded';
 import { useAuth } from './AuthContext';
-import { apiFetchBlob } from '../services/apiClient';
-import { cleanSpokenText, recommendedVoiceRate, voiceChunks } from '../utils/voiceGuidance';
+import { usePreferences } from './PreferencesContext';
+import { useVoice } from './VoiceContext';
+import { useNotifications } from './NotificationContext';
+import { useToast } from './ToastContext';
+import { post } from '../services/apiClient';
 
-// NOTE: notifications/transactions below are still demo data seeded in
-// memory — see GUIDIA_IMPLEMENTATION_PLAN.md Phase 15 for the plan to back
-// notifications with real generated events. Memory Book entries (below) are
-// real, persisted, per-user data as of Phase 13. Guardian data now lives
-// entirely behind GuardianDashboard's own real API calls (Phase 12).
-
-function formatRelativeDate(iso) {
-  const date = new Date(iso);
-  const now = new Date();
-  const startOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
-  const days = Math.round((startOfDay(now) - startOfDay(date)) / 86400000);
-  if (days <= 0) return 'Today';
-  if (days === 1) return 'Yesterday';
-  if (days < 7) return `${days} days ago`;
-  return date.toLocaleDateString();
-}
-
-function mapMemoryEntry(e) {
-  return {
-    id: e.id,
-    title: e.title,
-    category: e.category.toLowerCase(),
-    summary: e.summary,
-    starred: e.starred,
-    date: formatRelativeDate(e.createdAt),
-  };
-}
-
-const Ctx = createContext();
-export const useApp = () => useContext(Ctx);
-const LOCAL_PROFILE_KEY = 'guidia.localProfile';
-const LOCAL_PREFS_KEY = 'guidia.localPreferences';
-
-function readStoredJson(key, fallback) {
-  try {
-    const stored = localStorage.getItem(key);
-    return stored ? JSON.parse(stored) : fallback;
-  } catch {
-    return fallback;
-  }
-}
-
-// ── Voice: real backend TTS proxy (works in production, not just `npm run
-// dev`) with play/pause/resume/stop/replay/speed controls. A single shared
-// <audio> element and chunk queue live at module scope since only one
-// utterance should ever play at a time.
-
-let _audioEl = null;
-function getAudioEl() {
-  if (!_audioEl) { _audioEl = new Audio(); }
-  return _audioEl;
-}
-
-// Module-scope playback state — only one utterance should ever play at a
-// time regardless of which component triggered it.
-let _chunks = [];
-let _chunkIndex = -1;
-let _lastLang = 'en';
-let _rate = 1;
-let _blobUrl = null;
-let _cancelToken = 0;
-let _lastText = '';
-let _onComplete = null;
-let _setVoiceStatus = () => {};
-let _fallbackSpeak = null;
-let _usingBrowserVoice = false;
-
-const BROWSER_LANG = { en: 'en-US', bn: 'bn-BD', hi: 'hi-IN' };
-const VOICE_HINTS = {
-  en: ['en-us', 'english'],
-  bn: ['bn-bd', 'bn_in', 'bn-in', 'bn', 'bengali', 'bangla'],
-  hi: ['hi-in', 'hi', 'hindi'],
-};
-
-function getBrowserVoice(language) {
-  if (typeof window === 'undefined' || !window.speechSynthesis) return null;
-  const voices = window.speechSynthesis.getVoices();
-  const hints = VOICE_HINTS[language] || VOICE_HINTS.en;
-
-  return voices.find((voice) => hints.includes(voice.lang.toLowerCase()))
-    || voices.find((voice) => hints.some((hint) => `${voice.lang} ${voice.name}`.toLowerCase().includes(hint)))
-    || null;
-}
-
-function speakWithBrowserVoice(text, language, rate = 1) {
-  if (typeof window === 'undefined' || !window.speechSynthesis || !window.SpeechSynthesisUtterance) return false;
-
-  window.speechSynthesis.cancel();
-  _usingBrowserVoice = true;
-  const utterance = new SpeechSynthesisUtterance(cleanSpokenText(text));
-  const browserLang = language === 'bn' ? 'bn' : language === 'hi' ? 'hi' : 'en';
-  const voice = getBrowserVoice(browserLang);
-  utterance.lang = voice?.lang || BROWSER_LANG[browserLang] || BROWSER_LANG.en;
-  utterance.rate = rate;
-  if (voice) utterance.voice = voice;
-  utterance.onstart = () => emitVoiceStatus({ status: 'playing', error: '' });
-  utterance.onend = () => {
-    _usingBrowserVoice = false;
-    emitVoiceStatus({ status: 'idle', currentText: '', error: '' });
-    _onComplete?.();
-  };
-  utterance.onerror = () => {
-    _usingBrowserVoice = false;
-    emitVoiceStatus({ status: 'error', error: "Voice guidance isn't available right now." });
-  };
-  window.speechSynthesis.speak(utterance);
-  emitVoiceStatus({ status: 'playing', error: '' });
-  return true;
-}
-
-function revokeBlobUrl() {
-  if (_blobUrl) { URL.revokeObjectURL(_blobUrl); _blobUrl = null; }
-}
-
-function emitVoiceStatus(next) {
-  _setVoiceStatus((prev) => ({ ...prev, ...next }));
-}
-
-function delay(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-async function playChunk(apiFetchBlob, accessToken, token = _cancelToken, pauseMs = 250) {
-  if (_chunkIndex >= _chunks.length) return;
-  try {
-    if (token !== _cancelToken) return;
-    emitVoiceStatus({ status: 'loading', error: '' });
-    const blob = await apiFetchBlob(`/voice/speak?text=${encodeURIComponent(_chunks[_chunkIndex])}&lang=${_lastLang}&speed=${_rate}`, { accessToken });
-    if (token !== _cancelToken) return;
-    revokeBlobUrl();
-    _blobUrl = URL.createObjectURL(blob);
-    const el = getAudioEl();
-    el.src = _blobUrl;
-    el.playbackRate = _rate;
-    el.onended = async () => {
-      if (token !== _cancelToken) return;
-      _chunkIndex += 1;
-      if (_chunkIndex >= _chunks.length) {
-        emitVoiceStatus({ status: 'idle' });
-        _onComplete?.();
-        return;
-      }
-      await delay(pauseMs);
-      playChunk(apiFetchBlob, accessToken, token, pauseMs);
-    };
-    await el.play();
-    emitVoiceStatus({ status: 'playing', error: '' });
-  } catch (err) {
-    console.warn('Voice playback error:', err);
-    if (token === _cancelToken) {
-      if (_fallbackSpeak?.(_chunks.slice(_chunkIndex).join(' '), _lastLang, _rate)) return;
-      emitVoiceStatus({ status: 'error', error: "Voice guidance isn't available right now." });
-    }
-  }
-}
-
-// speak/pause/resume/stop/replay/setRate — the minimum voice control set
-// the product spec calls for. `speak` starts a fresh utterance; the others
-// operate on whatever is currently loaded.
-function speak(text, language, apiFetchBlob, accessToken, { rate = 1, mode = 'calm', pauseMs = 250, onComplete, fallbackSpeak } = {}) {
-  if (!text) return;
-  stopVoice();
-  _cancelToken += 1;
-  const token = _cancelToken;
-  _lastText = text;
-  _onComplete = onComplete || null;
-  _chunks = voiceChunks(text, mode);
-  _chunkIndex = 0;
-  _lastLang = language === 'bn' ? 'bn' : language === 'hi' ? 'hi' : 'en';
-  _rate = rate;
-  _fallbackSpeak = fallbackSpeak || null;
-  emitVoiceStatus({ status: 'loading', currentText: text, error: '' });
-
-  // Browser TTS starts synchronously from the user's click, so it avoids
-  // autoplay restrictions that can block fetched <audio> playback.
-  if (_fallbackSpeak?.(text, _lastLang, _rate)) return;
-  if (!apiFetchBlob) {
-    emitVoiceStatus({ status: 'error', error: "Voice guidance isn't available right now." });
-    return;
-  }
-
-  playChunk(apiFetchBlob, accessToken, token, pauseMs);
-}
-
-function pauseVoice() {
-  if (_usingBrowserVoice && typeof window !== 'undefined') window.speechSynthesis?.pause();
-  _audioEl?.pause();
-  emitVoiceStatus({ status: 'paused' });
-}
-function resumeVoice() {
-  if (_usingBrowserVoice && typeof window !== 'undefined') {
-    window.speechSynthesis?.resume();
-    emitVoiceStatus({ status: 'playing' });
-    return;
-  }
-  _audioEl?.play().then(() => emitVoiceStatus({ status: 'playing' })).catch(() => {});
-}
-function stopVoice() {
-  _cancelToken += 1;
-  if (_audioEl) { _audioEl.pause(); _audioEl.currentTime = 0; _audioEl.onended = null; }
-  if (typeof window !== 'undefined') window.speechSynthesis?.cancel();
-  _usingBrowserVoice = false;
-  _chunkIndex = _chunks.length;
-  _fallbackSpeak = null;
-  revokeBlobUrl();
-  emitVoiceStatus({ status: 'idle', currentText: '', error: '' });
-}
-function replayVoice(apiFetchBlob, accessToken, mode = 'calm', pauseMs = 250, fallbackSpeak) {
-  if (!_lastText) return;
-  _cancelToken += 1;
-  const token = _cancelToken;
-  _chunks = voiceChunks(_lastText, mode);
-  _chunkIndex = 0;
-  _fallbackSpeak = fallbackSpeak || null;
-  emitVoiceStatus({ status: 'loading', currentText: _lastText, error: '' });
-  if (_fallbackSpeak?.(_lastText, _lastLang, _rate)) return;
-  playChunk(apiFetchBlob, accessToken, token, pauseMs);
-}
-function setVoiceRate(rate) { _rate = rate; if (_audioEl) _audioEl.playbackRate = rate; }
-
-export function AppProvider({ children }) {
-  const { user: authUser, accessToken, updatePreferences, authedFetch, ApiError } = useAuth();
-  const [localProfile, setLocalProfile] = useState(() => readStoredJson(LOCAL_PROFILE_KEY, null));
-  const [localPrefs, setLocalPrefs] = useState(() => readStoredJson(LOCAL_PREFS_KEY, {}));
-  const user = useMemo(() => {
-    if (authUser) return { name: authUser.fullName, email: authUser.email, age: authUser.age };
-    return localProfile ? { name: localProfile.name, age: localProfile.age } : null;
-  }, [authUser, localProfile]);
-  const [mode, setMode]           = useState(localPrefs.mode || 'calm');
-  const [language, setLanguage]   = useState(localPrefs.language || localProfile?.language || 'en');
-  const seededUserId = useRef(null);
-
-  // The active dashboard section is derived from the real URL (/app/:tab)
-  // rather than local-only state, so the browser's back/forward buttons and
-  // direct links work correctly instead of always landing on a dead end.
+// Compatibility facade over the focused contexts, so the existing app
+// simulators and guides keep working unchanged. New code should use the
+// specific hooks (usePreferences, useVoice, useNotifications, …) instead.
+// This file holds no state of its own.
+export function useApp() {
+  const { user: authUser } = useAuth();
+  const { language, setLanguage, t, mode, setMode, prefs, setPreference } = usePreferences();
+  const { speak, voiceStatus, voiceControls } = useVoice();
+  const { items, unreadCount, markRead } = useNotifications();
+  const { toast, showToast } = useToast();
   const location = useLocation();
   const navigate = useNavigate();
-  const activeTab = useMemo(() => {
-    const match = /^\/app\/([^/]+)/.exec(location.pathname);
-    return match ? match[1] : 'home';
-  }, [location.pathname]);
+
+  const activeTab = useMemo(() => /^\/app\/([^/]+)/.exec(location.pathname)?.[1] || 'home', [location.pathname]);
   const setActiveTab = useCallback((tab) => navigate(`/app/${tab}`), [navigate]);
-  const [notifications, setNotifications] = useState([]);
-  const [readNotifIds, setReadNotifIds]   = useState(() => new Set());
-  const [transactions]            = useState(FAKE_TRANSACTIONS);
-  const [memoryEntries, setMemoryEntries]   = useState([]);
-  const [memoryLoading, setMemoryLoading] = useState(true);
-  const [toast, setToast]         = useState(null);
-  const [fontSize, setFontSize]   = useState(localPrefs.fontSize || 20);
-  const [darkMode, setDarkMode]   = useState(Boolean(localPrefs.darkMode));
-  const [voiceEnabled, setVoiceEnabled]   = useState(localPrefs.voiceEnabled ?? true);
-  const [voiceSpeed, setVoiceSpeed] = useState(localPrefs.voiceSpeed || 1);
-  const [voiceAutoPlay, setVoiceAutoPlay] = useState(Boolean(localPrefs.voiceAutoPlay));
-  const [voiceStatus, setVoiceStatus] = useState({ status: 'idle', currentText: '', error: '' });
-  const [reducedMotion, setReducedMotion] = useState(Boolean(localPrefs.reducedMotion));
-  const [notificationsEnabled, setNotificationsEnabled] = useState(localPrefs.notificationsEnabled ?? true);
-
-  // Seed local Cognitive Load Governor / accessibility state from the
-  // user's persisted preferences once per login, so a reload restores the
-  // real saved state instead of resetting to defaults.
-  useEffect(() => {
-    if (!authUser?.preference || seededUserId.current === authUser.id) return;
-    seededUserId.current = authUser.id;
-    const p = authUser.preference;
-    setMode(p.cognitiveState.toLowerCase());
-    setLanguage(authUser.preferredLanguage);
-    setFontSize(Math.max(p.fontSize || 20, 20));
-    setDarkMode(p.darkMode);
-    setVoiceEnabled(p.voiceEnabled);
-    setVoiceSpeed(p.voiceSpeed || recommendedVoiceRate(p.cognitiveState?.toLowerCase() || 'calm'));
-    setVoiceAutoPlay(Boolean(p.voiceAutoPlay));
-    setReducedMotion(p.reducedMotion);
-  }, [authUser]);
-
-  useEffect(() => {
-    _setVoiceStatus = setVoiceStatus;
-    return () => { stopVoice(); _setVoiceStatus = () => {}; };
-  }, []);
-
-  // Reduced motion is applied globally (it's a document-wide accessibility
-  // setting). Theme is intentionally *not* set globally here — the public
-  // marketing/auth pages (Landing/Login/Register) always stay light per the
-  // product's visual identity; only the authenticated dashboard shell reads
-  // `darkMode` and sets its own `data-theme`, in App.jsx.
-  useEffect(() => {
-    document.documentElement.dataset.reducedMotion = reducedMotion ? 'true' : 'false';
-  }, [reducedMotion]);
-
-  useEffect(() => {
-    document.documentElement.lang = language === 'bn' ? 'bn' : language === 'hi' ? 'hi' : 'en';
-  }, [language]);
-
-  // Note: this scales body/base text (anything that inherits font-size
-  // rather than setting its own px value). Most headings/labels in this
-  // codebase currently hardcode their own px font-size and won't rescale —
-  // a fuller fix means migrating those to rem, tracked as follow-up work.
-  useEffect(() => {
-    document.documentElement.style.setProperty('--user-font-size', `${fontSize}px`);
-  }, [fontSize]);
-
-  const persistPreferences = useCallback((changes) => {
-    const nextLocalPrefs = {
-      ...localPrefs,
-      language: changes.preferredLanguage || changes.language || language,
-      mode: changes.cognitiveState?.toLowerCase?.() || changes.mode || mode,
-      fontSize: changes.fontSize ?? fontSize,
-      darkMode: changes.darkMode ?? darkMode,
-      voiceEnabled: changes.voiceEnabled ?? voiceEnabled,
-      voiceSpeed: changes.voiceSpeed ?? voiceSpeed,
-      voiceAutoPlay: changes.voiceAutoPlay ?? voiceAutoPlay,
-      reducedMotion: changes.reducedMotion ?? reducedMotion,
-      notificationsEnabled: changes.notificationsEnabled ?? notificationsEnabled,
-    };
-    setLocalPrefs(nextLocalPrefs);
-    localStorage.setItem(LOCAL_PREFS_KEY, JSON.stringify(nextLocalPrefs));
-    if (!authUser) return Promise.resolve();
-    return updatePreferences(changes).catch((err) => {
-      console.warn('Failed to save preferences:', err);
-    });
-  }, [authUser, darkMode, fontSize, language, localPrefs, mode, notificationsEnabled, reducedMotion, updatePreferences, voiceAutoPlay, voiceEnabled, voiceSpeed]);
-
-  const completeFirstRun = useCallback(({ name, age, language: nextLanguage }) => {
-    const profile = { name: name.trim(), age: Number(age), language: nextLanguage, onboardingDone: true };
-    setLocalProfile(profile);
-    setLanguage(nextLanguage);
-    localStorage.setItem(LOCAL_PROFILE_KEY, JSON.stringify(profile));
-    const nextPrefs = { ...localPrefs, language: nextLanguage, mode };
-    setLocalPrefs(nextPrefs);
-    localStorage.setItem(LOCAL_PREFS_KEY, JSON.stringify(nextPrefs));
-  }, [localPrefs, mode]);
-
-  const updateLocalProfile = useCallback(({ name, age, language: nextLanguage }) => {
-    const profile = {
-      ...(localProfile || {}),
-      name: name?.trim() || localProfile?.name || '',
-      age: Number(age || localProfile?.age || 0),
-      language: nextLanguage || language,
-      onboardingDone: true,
-    };
-    setLocalProfile(profile);
-    localStorage.setItem(LOCAL_PROFILE_KEY, JSON.stringify(profile));
-    if (nextLanguage) {
-      setLanguage(nextLanguage);
-      const nextPrefs = { ...localPrefs, language: nextLanguage };
-      setLocalPrefs(nextPrefs);
-      localStorage.setItem(LOCAL_PREFS_KEY, JSON.stringify(nextPrefs));
-    }
-  }, [language, localPrefs, localProfile]);
-
-  const resetFirstRun = useCallback(() => {
-    localStorage.removeItem(LOCAL_PROFILE_KEY);
-    setLocalProfile(null);
-  }, []);
-
-  // Load the user's real Memory Book once per login (keyed on id, not the
-  // whole user object, so a preference update elsewhere doesn't re-fetch).
-  // AppProvider wraps public routes too (Landing/Login/Register), so this
-  // must skip fetching entirely — not just skip rendering — when signed out.
-  const authUserId = authUser?.id;
-  useEffect(() => {
-    stopVoice();
-  }, [location.pathname, authUserId]);
-  useEffect(() => {
-    let cancelled = false;
-    const request = authUserId ? authedFetch('/memory') : Promise.resolve({ entries: [] });
-    request
-      .then(({ entries }) => {
-        if (cancelled) return;
-        setMemoryEntries(entries.map(mapMemoryEntry));
-      })
-      .catch(() => {})
-      .finally(() => { if (!cancelled) setMemoryLoading(false); });
-    return () => { cancelled = true; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authUserId]);
-
-  // Notifications are synthesized server-side from real events (safety
-  // checks, memory entries, guardian resolutions) — see
-  // backend/src/services/notificationService.js. Read/unread state is not
-  // yet persisted server-side, so it's tracked client-side for this session.
-  useEffect(() => {
-    let cancelled = false;
-    const request = authUserId ? authedFetch('/notifications') : Promise.resolve({ items: [] });
-    request
-      .then(({ items }) => {
-        if (cancelled) return;
-        setNotifications(items.map((n) => ({ ...n, time: formatRelativeDate(n.time) })));
-      })
-      .catch(() => {});
-    return () => { cancelled = true; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authUserId]);
-
-  const notificationsWithRead = useMemo(
-    () => notifications.map((n) => ({ ...n, read: readNotifIds.has(n.id) })),
-    [notifications, readNotifIds]
-  );
-  const unreadCount = notificationsWithRead.filter(n => !n.read).length;
-
-  const showToast = useCallback((msg, type = 'info') => {
-    setToast({ msg, type });
-    setTimeout(() => setToast(null), 3500);
-  }, []);
-
-  const speakFn = useCallback((text, opts = {}) => {
-    if (!voiceEnabled || !text) return;
-    const pauseMs = mode === 'scared' ? 700 : mode === 'unsure' ? 450 : 250;
-    const rate = opts.rate || voiceSpeed || recommendedVoiceRate(mode);
-    speak(text, language, apiFetchBlob, accessToken, {
-      rate,
-      mode,
-      pauseMs,
-      onComplete: opts.onComplete,
-      fallbackSpeak: (fallbackText, fallbackLang, fallbackRate) => speakWithBrowserVoice(fallbackText, fallbackLang, fallbackRate),
-    });
-  }, [voiceEnabled, language, accessToken, voiceSpeed, mode]);
-
-  const voiceControls = useMemo(() => ({
-    pause: pauseVoice,
-    resume: resumeVoice,
-    stop: stopVoice,
-    replay: () => replayVoice(
-      apiFetchBlob,
-      accessToken,
-      mode,
-      mode === 'scared' ? 700 : mode === 'unsure' ? 450 : 250,
-      (fallbackText, fallbackLang, fallbackRate) => speakWithBrowserVoice(fallbackText, fallbackLang, fallbackRate)
-    ),
-    setRate: (rate) => {
-      setVoiceRate(rate);
-      setVoiceSpeed(rate);
-      persistPreferences({ voiceSpeed: rate });
-    },
-  }), [accessToken, mode, persistPreferences]);
 
   const addMemory = useCallback(async ({ title, category, summary, starred }) => {
     if (!authUser) return;
     try {
-      const { entry } = await authedFetch('/memory', {
-        method: 'POST',
-        body: { title, category: category.toUpperCase(), summary, starred: starred ?? false },
-      });
-      setMemoryEntries(prev => [mapMemoryEntry(entry), ...prev]);
-    } catch (err) {
-      console.warn('Failed to save memory entry:', err instanceof ApiError ? err.message : err);
+      await post('/memory', { title, category: String(category).toUpperCase(), summary, starred: Boolean(starred) });
+    } catch {
+      /* the action itself still succeeded; memory save is best-effort here */
     }
-  }, [authUser, authedFetch, ApiError]);
+  }, [authUser]);
 
-  const markNotifRead = useCallback((id) => {
-    setReadNotifIds(prev => new Set(prev).add(id));
-  }, []);
+  const user = useMemo(() => (authUser ? { name: authUser.fullName, email: authUser.email, age: authUser.age } : null), [authUser]);
 
-  const t = (en, bn, hi) => {
-    if (language === 'bn') return bn || en;
-    if (language === 'hi') return hi || en;
-    return en;
+  return {
+    user,
+    onboardingDone: Boolean(authUser?.preference?.onboardingDone),
+    language, setLanguage, t,
+    mode, setMode,
+    fontSize: prefs.fontSize,
+    darkMode: prefs.darkMode,
+    reducedMotion: prefs.reducedMotion,
+    voiceEnabled: prefs.voiceEnabled,
+    voiceSpeed: prefs.voiceSpeed,
+    voiceAutoPlay: prefs.voiceAutoPlay,
+    setVoiceEnabled: (v) => setPreference('voiceEnabled', v),
+    speak, voiceStatus, voiceControls,
+    notifications: items, unreadCount, markNotifRead: markRead,
+    toast, showToast,
+    activeTab, setActiveTab,
+    addMemory,
   };
-
-  return (
-    <Ctx.Provider value={{
-      user,
-      onboardingDone: Boolean(localProfile?.onboardingDone || authUser?.preference?.onboardingDone),
-      completeFirstRun,
-      updateLocalProfile,
-      resetFirstRun,
-      persistPreferences,
-      mode, setMode,
-      language, setLanguage,
-      activeTab, setActiveTab,
-      notifications: notificationsWithRead, unreadCount, markNotifRead,
-      transactions,
-      memoryEntries, memoryLoading, addMemory,
-      toast, showToast,
-      fontSize, setFontSize,
-      darkMode, setDarkMode,
-      voiceEnabled, setVoiceEnabled,
-      voiceSpeed, setVoiceSpeed,
-      voiceAutoPlay, setVoiceAutoPlay,
-      voiceStatus,
-      reducedMotion, setReducedMotion,
-      notificationsEnabled, setNotificationsEnabled,
-      speak: speakFn, voiceControls, t,
-    }}>
-      {children}
-    </Ctx.Provider>
-  );
 }

@@ -1,171 +1,107 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
-import { AppProvider, useApp } from './context/AppStateContext';
-import ProtectedRoute from './components/ProtectedRoute';
-import Landing from './pages/Landing';
-import Login from './pages/auth/Login';
-import Register from './pages/auth/Register';
-import ForgotPassword from './pages/auth/ForgotPassword';
-import ResetPassword from './pages/auth/ResetPassword';
-import AdminDashboard from './pages/AdminDashboard';
-import ScreenshotExplain from './pages/ScreenshotExplain';
-import GuidiaLogo from './components/GuidiaLogo';
-import { Sidebar, TopBar, BottomNav } from './components/Navigation';
-import Onboarding          from './components/Onboarding';
-import Home                from './components/Home';
-import Learn               from './components/Learn';
-import Practice            from './components/Practice';
-import Assistant           from './components/Assistant';
-import Safety              from './components/Safety';
-import MemoryBook          from './components/MemoryBook';
-import SettingsPage        from './components/SettingsPage';
-import Notifications       from './components/Notifications';
-import UIExplainer         from './components/UIExplainer';
-import GuardianDashboard   from './components/GuardianDashboard';
-import ProgressDashboard   from './components/ProgressDashboard';
-import EmergencyHelp       from './components/EmergencyHelp';
-import FloatingVoiceHelp   from './components/FloatingVoiceHelp';
-import { CheckCircle, AlertTriangle, Info } from 'lucide-react';
+import { lazy, Suspense } from 'react';
+import { BrowserRouter, Navigate, Route, Routes, useParams } from 'react-router-dom';
+import { ConfigProvider } from './context/ConfigContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import { PreferencesProvider } from './context/PreferencesContext';
+import { ToastProvider } from './context/ToastContext';
+import { VoiceProvider } from './context/VoiceContext';
+import { NotificationProvider } from './context/NotificationContext';
+import ProtectedRoute, { FullPageSpinner } from './components/ProtectedRoute';
+import AppShell from './components/shell/AppShell';
+import AppErrorBoundary from './components/AppErrorBoundary';
+import { PageSkeleton } from './components/PageSkeleton';
 
-function Toast() {
-  const { toast } = useApp();
-  if (!toast) return null;
-  const icon = toast.type === 'success'
-    ? <CheckCircle size={18} color="var(--success)"/>
-    : toast.type === 'danger'
-    ? <AlertTriangle size={18} color="var(--danger)"/>
-    : <Info size={18} color="var(--blue)"/>;
-  return (
-    <div className="toast" style={{ borderLeftColor: toast.type==='success'?'var(--success)':toast.type==='danger'?'var(--danger)':'var(--blue)' }}>
-      {icon}
-      <p style={{ fontWeight:600, fontSize:15 }}>{toast.msg}</p>
-    </div>
-  );
+const Landing = lazy(() => import('./pages/Landing'));
+const Showcase = lazy(() => import('./pages/Showcase'));
+const Login = lazy(() => import('./pages/auth/Login'));
+const Register = lazy(() => import('./pages/auth/Register'));
+const ForgotPassword = lazy(() => import('./pages/auth/ForgotPassword'));
+const ResetPassword = lazy(() => import('./pages/auth/ResetPassword'));
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+const OnboardingPage = lazy(() => import('./pages/app/OnboardingPage'));
+const HomePage = lazy(() => import('./pages/app/HomePage'));
+const AskPage = lazy(() => import('./pages/app/AskPage'));
+const SafetyPage = lazy(() => import('./pages/app/SafetyPage'));
+const MemoryPage = lazy(() => import('./pages/app/MemoryPage'));
+const ProgressPage = lazy(() => import('./pages/app/ProgressPage'));
+const PeoplePage = lazy(() => import('./pages/app/PeoplePage'));
+const HelpPage = lazy(() => import('./pages/app/HelpPage'));
+const NotificationsPage = lazy(() => import('./pages/app/NotificationsPage'));
+const SettingsPage = lazy(() => import('./pages/app/SettingsPage'));
+const ScreenUploadPage = lazy(() => import('./pages/app/ScreenPage').then((m) => ({ default: m.ScreenUploadPage })));
+const ScreenResultPage = lazy(() => import('./pages/app/ScreenPage').then((m) => ({ default: m.ScreenResultPage })));
+const LearnPage = lazy(() => import('./pages/app/LearnPage').then((m) => ({ default: m.LearnPage })));
+const LessonPage = lazy(() => import('./pages/app/LearnPage').then((m) => ({ default: m.LessonPage })));
+const PracticeHomePage = lazy(() => import('./pages/app/PracticePage').then((m) => ({ default: m.PracticeHomePage })));
+const PracticeAppPage = lazy(() => import('./pages/app/PracticePage').then((m) => ({ default: m.PracticeAppPage })));
+
+function RootRedirect() {
+  const { status, user } = useAuth();
+  if (status === 'loading') return <FullPageSpinner />;
+  if (status !== 'authenticated') return <Navigate to="/landing" replace />;
+  if (user?.role === 'ADMIN') return <Navigate to="/admin" replace />;
+  return <Navigate to={user?.preference?.onboardingDone ? '/app/home' : '/onboarding'} replace />;
 }
 
-const PAGES = {
-  home:         { component:<Home/>,               fullH:false },
-  learn:        { component:<Learn/>,              fullH:false },
-  practice:     { component:<Practice/>,           fullH:false },
-  assistant:    { component:<Assistant/>,          fullH:true  },
-  safety:       { component:<Safety/>,             fullH:false },
-  screenshot:   { component:<UIExplainer/>,        fullH:true  },
-  memory:       { component:<MemoryBook/>,         fullH:false },
-  progress:     { component:<ProgressDashboard/>,  fullH:false },
-  emergency:    { component:<EmergencyHelp/>,      fullH:false },
-  settings:     { component:<SettingsPage/>,       fullH:false },
-  notifications:{ component:<Notifications/>,      fullH:false },
-  guardian:     { component:<GuardianDashboard/>,  fullH:false },
-};
-
-const MODE_STYLES = {
-  calm:   { fontSize:'17px', '--anim-speed':'1s', '--spacing-ratio':1 },
-  unsure: { fontSize:'18px', '--anim-speed':'1.5s', '--spacing-ratio':1.2 },
-  scared: { fontSize:'20px', '--anim-speed':'2s', '--spacing-ratio':1.5 },
-};
-
-// ── Language + Emotional mode, reached once after registration ─────────
-function OnboardingPage() {
-  const { mode, fontSize } = useApp();
-  const modeStyle = MODE_STYLES[mode] || MODE_STYLES.calm;
-  const textScale = Math.max(0.8, Math.min(1.5, fontSize / 20));
-  const fontDelta = `${fontSize - 20}px`;
-  return (
-    <div data-theme="light" style={{ minHeight:'100vh', background:'linear-gradient(160deg,#eef4f9,#e8f4f0)', display:'flex', flexDirection:'column', color:'var(--text-1)', ...modeStyle, fontSize:`${fontSize}px`, '--font-scale': textScale, '--font-delta': fontDelta }} data-mode={mode}>
-      <Toast/>
-      <div className="flex items-center gap-12 anim-up" style={{ padding:'24px 36px' }}>
-        <GuidiaLogo size={42}/>
-        <span style={{ fontWeight:800, fontSize:22 }}>Guidia</span>
-      </div>
-      <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', padding:'16px 16px 48px' }}>
-        <div className="auth-card anim-up d1" style={{ maxWidth:520 }}>
-          <Onboarding/>
-        </div>
-      </div>
-    </div>
-  );
+// V1 extension links → V2 screen viewer.
+function LegacyScreenshotRedirect() {
+  const { analysisId } = useParams();
+  return <Navigate to={`/app/screen/${analysisId}`} replace />;
 }
 
-function EntryRoute() {
-  const { onboardingDone } = useApp();
-  return <Navigate to={onboardingDone ? '/app/home' : '/onboarding'} replace />;
-}
-
-// ── Main authenticated application shell ────────────────────────────────
-function AppShell() {
-  const { activeTab, mode, onboardingDone, darkMode, fontSize } = useApp();
-  const modeStyle = MODE_STYLES[mode] || MODE_STYLES.calm;
-  const textScale = Math.max(0.8, Math.min(1.5, fontSize / 20));
-  const fontDelta = `${fontSize - 20}px`;
-  const page = PAGES[activeTab] || PAGES.home;
-
-  if (!onboardingDone) {
-    return <Navigate to="/onboarding" replace />;
-  }
-
-  return (
-    <div className="app-layout" data-mode={mode} data-theme={darkMode ? 'dark' : 'guidia-app'} style={{ color:'var(--text-1)', ...modeStyle, fontSize:`${fontSize}px`, '--font-scale': textScale, '--font-delta': fontDelta }}>
-      <Toast/>
-      <Sidebar/>
-      <FloatingVoiceHelp/>
-      <div className="main-content">
-        <TopBar/>
-        <div className={`page-content${page.fullH ? ' full-h' : ''}`}>
-          {page.component}
-        </div>
-        <BottomNav/>
-      </div>
-    </div>
-  );
-}
-
-function ScreenshotExplainShell() {
-  const { mode, onboardingDone, darkMode, fontSize } = useApp();
-  const modeStyle = MODE_STYLES[mode] || MODE_STYLES.calm;
-  const textScale = Math.max(0.8, Math.min(1.5, fontSize / 20));
-  const fontDelta = `${fontSize - 20}px`;
-
-  if (!onboardingDone) {
-    return <Navigate to="/onboarding" replace />;
-  }
-
-  return (
-    <div className="app-layout" data-mode={mode} data-theme={darkMode ? 'dark' : 'guidia-app'} style={{ color:'var(--text-1)', ...modeStyle, fontSize:`${fontSize}px`, '--font-scale': textScale, '--font-delta': fontDelta }}>
-      <Toast/>
-      <Sidebar/>
-      <FloatingVoiceHelp/>
-      <div className="main-content">
-        <TopBar/>
-        <div className="page-content">
-          <ScreenshotExplain/>
-        </div>
-        <BottomNav/>
-      </div>
-    </div>
-  );
-}
+const APP_ROUTES = [
+  ['home', HomePage, 'home'], ['ask', AskPage, 'chat'], ['screen', ScreenUploadPage, 'panel'], ['screen/:id', ScreenResultPage, 'panel'],
+  ['learn', LearnPage, 'cards'], ['learn/:slug', LessonPage, 'panel'], ['practice', PracticeHomePage, 'cards'], ['practice/:slug', PracticeAppPage, 'panel'],
+  ['safety', SafetyPage, 'panel'], ['memory', MemoryPage, 'cards'], ['progress', ProgressPage, 'cards'], ['people', PeoplePage, 'list'],
+  ['help', HelpPage, 'panel'], ['notifications', NotificationsPage, 'list'], ['settings', SettingsPage, 'list'],
+];
 
 export default function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <AppProvider>
-          <Routes>
-            <Route path="/" element={<EntryRoute/>} />
-            <Route path="/landing" element={<Landing/>} />
-            <Route path="/login" element={<Login/>} />
-            <Route path="/register" element={<Register/>} />
-            <Route path="/forgot-password" element={<ForgotPassword/>} />
-            <Route path="/reset-password" element={<ResetPassword/>} />
-            <Route path="/screenshot-explain/:analysisId" element={<ScreenshotExplainShell/>} />
-            <Route path="/onboarding" element={<OnboardingPage/>} />
-            <Route path="/app" element={<Navigate to="/app/home" replace/>} />
-            <Route path="/app/:tab" element={<ProtectedRoute><AppShell/></ProtectedRoute>} />
-            <Route path="/admin" element={<ProtectedRoute role="ADMIN"><AdminDashboard/></ProtectedRoute>} />
-            <Route path="*" element={<Navigate to="/" replace/>} />
-          </Routes>
-        </AppProvider>
-      </AuthProvider>
+      <ConfigProvider>
+        <AuthProvider>
+          <PreferencesProvider>
+            <ToastProvider>
+              <VoiceProvider>
+                <NotificationProvider>
+                  <AppErrorBoundary>
+                    <Suspense fallback={<FullPageSpinner />}>
+                      <Routes>
+                        <Route path="/" element={<RootRedirect />} />
+                        <Route path="/landing" element={<Landing />} />
+                        <Route path="/showcase" element={<Showcase />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/forgot-password" element={<ForgotPassword />} />
+                        <Route path="/reset-password" element={<ResetPassword />} />
+                        <Route path="/onboarding" element={<ProtectedRoute requireOnboarding={false}><OnboardingPage /></ProtectedRoute>} />
+                        <Route path="/screenshot-explain/:analysisId" element={<LegacyScreenshotRedirect />} />
+                        <Route path="/admin" element={<ProtectedRoute role="ADMIN" requireOnboarding={false}><AdminDashboard /></ProtectedRoute>} />
+
+                        <Route path="/app" element={<ProtectedRoute><AppShell /></ProtectedRoute>}>
+                          <Route index element={<Navigate to="home" replace />} />
+                          {APP_ROUTES.map(([path, Page, skeleton]) => (
+                            <Route key={path} path={path} element={<Suspense fallback={<PageSkeleton kind={skeleton} />}><Page /></Suspense>} />
+                          ))}
+                          {/* V1 paths */}
+                          <Route path="assistant" element={<Navigate to="/app/ask" replace />} />
+                          <Route path="guardian" element={<Navigate to="/app/people" replace />} />
+                          <Route path="emergency" element={<Navigate to="/app/help" replace />} />
+                          <Route path="*" element={<Suspense fallback={null}><NotFoundPage inShell /></Suspense>} />
+                        </Route>
+
+                        <Route path="*" element={<NotFoundPage />} />
+                      </Routes>
+                    </Suspense>
+                  </AppErrorBoundary>
+                </NotificationProvider>
+              </VoiceProvider>
+            </ToastProvider>
+          </PreferencesProvider>
+        </AuthProvider>
+      </ConfigProvider>
     </BrowserRouter>
   );
 }

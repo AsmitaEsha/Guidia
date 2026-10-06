@@ -1,0 +1,24 @@
+{"text": "Never share your OTP with anyone, including bank staff.", "label": "SAFE", "language": "en"}
+{"text": "Your one-time code is 4821. Do not share it with anyone.", "label": "SAFE", "language": "en"}
+{"text": "আপনার ওটিপি কখনো কাউকে দেবেন না।", "label": "SAFE", "language": "bn"}
+{"text": "Reminder: your appointment is on Tuesday at 10am.", "label": "SAFE", "language": "en"}
+{"text": "अपना पिन कभी किसी को न बताएं।", "label": "SAFE", "language": "hi"}
+{"text": "Mẹ ơi tối nay con về ăn cơm nhé.", "label": "SAFE", "language": "vi"}
+{"text": "Abba bari fire call dio", "label": "SAFE", "language": "bn-Latn"}
+{"text": "Congratulations, you have been selected for a special offer, reply YES", "label": "SUSPICIOUS", "language": "en"}
+{"text": "Your parcel could not be delivered, check details at bit.ly/xyz", "label": "SUSPICIOUS", "language": "en"}
+{"text": "আপনার সিম কার্ড আপডেট করুন এই লিংকে", "label": "SUSPICIOUS", "language": "bn"}
+{"text": "आपने इनाम जीता है, जल्दी संपर्क करें", "label": "SUSPICIOUS", "language": "hi"}
+{"text": "Bạn đã trúng thưởng, liên hệ ngay", "label": "SUSPICIOUS", "language": "vi"}
+{"text": "apnar number lucky draw te jitse", "label": "SUSPICIOUS", "language": "bn-Latn"}
+{"text": "Please tell me the code we just sent you to verify your account.", "label": "HIGH_RISK", "language": "en"}
+{"text": "Pay a 500 taka fee to receive your prize.", "label": "HIGH_RISK", "language": "en"}
+{"text": "আপনার পিন নম্বরটি বলুন, অ্যাকাউন্ট ঠিক করে দেব।", "label": "HIGH_RISK", "language": "bn"}
+{"text": "अपना ओटीपी बताइए, आपका खाता चालू रहेगा।", "label": "HIGH_RISK", "language": "hi"}
+{"text": "Đọc mã OTP cho tôi để xác minh tài khoản.", "label": "HIGH_RISK", "language": "vi"}
+{"text": "Abba amar phone noshto, ei notun number e taka pathao", "label": "HIGH_RISK", "language": "bn-Latn"}
+{"text": "URGENT: your account will be blocked today, verify now at http://bkash-login-secure.example and enter your PIN", "label": "CRITICAL", "language": "en"}
+{"text": "Grandma it's me, I had an accident, send money now and don't tell mum", "label": "CRITICAL", "language": "en"}
+{"text": "জরুরি: আজই অ্যাকাউন্ট বন্ধ হবে, এখনই ওটিপি পাঠান", "label": "CRITICAL", "language": "bn"}
+{"text": "तुरंत पैसे भेजो वरना पुलिस केस होगा, किसी को मत बताना", "label": "CRITICAL", "language": "hi"}
+{"text": "Khẩn cấp: tài khoản bị khóa hôm nay, nhập mật khẩu tại link này", "label": "CRITICAL", "language": "vi"}

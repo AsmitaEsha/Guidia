@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useApp } from '../../context/AppStateContext';
-import { ArrowLeft, Search, User, Video, Pill, FileText, ChevronRight, MapPin } from 'lucide-react';
+import { ArrowLeft, Search, User, Video, Pill, FileText, MapPin } from 'lucide-react';
 
 const PR_BLUE = '#28328C';
 const PR_CYAN = '#14BEF0';

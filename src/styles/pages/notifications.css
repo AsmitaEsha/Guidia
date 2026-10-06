@@ -1,0 +1,13 @@
+/* ── Notifications ────────────────────────────────────────────────────── */
+.notif-group { font-size: var(--fs-sm); font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-subtle); }
+:lang(bn) .notif-group, :lang(hi) .notif-group { text-transform: none; letter-spacing: 0; }
+.notif-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s-2); }
+.notif { position: relative; display: flex; align-items: center; gap: var(--s-2); padding-right: var(--s-2); border-radius: var(--r-xl); border: 1px solid var(--border); background: var(--card); box-shadow: var(--shadow-1); transition: box-shadow var(--t-base) var(--ease), background-color var(--t-base) var(--ease); }
+.notif:hover { box-shadow: var(--shadow-2); }
+.notif.is-unread { background: color-mix(in srgb, var(--primary-soft) 55%, var(--card)); border-color: var(--primary-soft-2); }
+.notif.is-unread::before { content: ''; position: absolute; left: 10px; top: 50%; width: 10px; height: 10px; margin-top: -5px; border-radius: 50%; background: var(--primary); }
+.notif.is-urgent { border-left: 6px solid var(--danger-700); }
+.notif-main { flex: 1; min-width: 0; display: flex; align-items: flex-start; gap: var(--s-4); padding: var(--s-4) var(--s-3) var(--s-4) var(--s-6); border: 0; background: transparent; text-align: left; color: inherit; border-radius: var(--r-xl); }
+.notif.is-urgent .notif-main { padding-left: var(--s-5); }
+.notif-title { font-weight: 650; }
+.notif.is-unread .notif-title { font-weight: 800; }

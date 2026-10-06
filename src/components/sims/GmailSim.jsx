@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppStateContext';
-import { ArrowLeft, Search, Edit, Star, AlertTriangle, Inbox, Send as SendIcon, Trash2, ChevronRight } from 'lucide-react';
-import { FAKE_GMAIL_INBOX } from '../../data/hardcoded';
+import { ArrowLeft, Search, Edit, Star, AlertTriangle, Trash2 } from 'lucide-react';
+import { FAKE_GMAIL_INBOX } from '../../demo/simulationFixtures';
 
 const GM_RED = '#EA4335';
 
@@ -96,9 +96,9 @@ export default function GmailSim({ onClose }) {
 
       {/* Email List */}
       <div style={{ flex:1, overflowY:'auto' }}>
-        {FAKE_GMAIL_INBOX.map((e,i) => (
+        {FAKE_GMAIL_INBOX.map((e) => (
           <button key={e.id} onClick={() => { setOpen(e); speak(e.safe ? t('Opening safe email.','নিরাপদ ইমেইল খোলা হচ্ছে।') : t('Warning! Suspicious email.','সতর্কতা! সন্দেহজনক ইমেইল।')); }}
-            style={{ display:'flex', alignItems:'center', gap:12, width:'100%', padding:'12px 16px', background:e.read?'#fff':'#E8F0FE', borderBottom:'1px solid #E8EAED', cursor:'pointer', border:'none', borderBottom:'1px solid #E8EAED', textAlign:'left' }}>
+            style={{ display:'flex', alignItems:'center', gap:12, width:'100%', padding:'12px 16px', background:e.read?'#fff':'#E8F0FE', cursor:'pointer', border:'none', borderBottom:'1px solid #E8EAED', textAlign:'left' }}>
             <div style={{ width:42, height:42, borderRadius:'50%', background:e.safe?AVATAR_COLORS[e.from]||'#1A73E8':'#E37400', display:'flex', alignItems:'center', justifyContent:'center', color:'#fff', fontWeight:800, fontSize:17, flexShrink:0 }}>
               {e.safe ? (AVATARS[e.from]||e.from[0]) : ''}
             </div>

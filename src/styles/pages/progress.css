@@ -1,0 +1,33 @@
+/* ── Progress — an empowering journey, not a scoreboard ───────────────── */
+.indicator-grid { display: grid; gap: var(--s-4); grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 1100px) { .indicator-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 420px) { .indicator-grid { grid-template-columns: 1fr; } }
+.indicator { display: flex; flex-direction: column; gap: var(--s-2); }
+.indicator-value { font-size: 2.2rem; font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; margin-top: var(--s-2); }
+.indicator-label { font-weight: 650; color: var(--fg-muted); }
+.indicator.is-highlight { background: linear-gradient(160deg, var(--card) 40%, var(--gold-100)); border-color: color-mix(in srgb, var(--gold-500) 40%, var(--border)); }
+
+.two-stories { display: grid; gap: var(--s-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); }
+.story { display: flex; gap: var(--s-5); align-items: center; padding: var(--s-6); border-radius: var(--r-2xl); }
+.story-warm { background: linear-gradient(160deg, var(--card) 45%, var(--warm-soft)); }
+@media (max-width: 520px) { .story { flex-direction: column; align-items: flex-start; padding: var(--s-5); } }
+
+.review-card { display: flex; gap: var(--s-4); align-items: center; flex-wrap: wrap; border-radius: var(--r-2xl); }
+
+.skill-list { list-style: none; margin: 0; padding: 0; }
+.skill-row { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(220px, 1fr) auto; gap: var(--s-4); align-items: center; padding: var(--s-4) var(--s-5); border-bottom: 1px solid var(--border); }
+.skill-row:last-child { border-bottom: 0; }
+@media (max-width: 760px) { .skill-row { grid-template-columns: 1fr; gap: var(--s-2); } .skill-level { justify-self: start; } }
+.skill-main { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+
+.mastery-path { display: flex; align-items: center; }
+.mastery-stop { position: relative; flex: 1; display: flex; justify-content: center; }
+.mastery-link { position: absolute; left: 50%; right: -50%; top: 50%; height: 3px; transform: translateY(-50%); background: var(--border); border-radius: 3px; }
+.mastery-stop[data-state='done'] .mastery-link { background: var(--primary); }
+.mastery-dot { position: relative; z-index: 1; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--card); border: 2px solid var(--border-strong); color: var(--on-primary); }
+.mastery-dot svg { width: 12px; height: 12px; stroke-width: 3; }
+.mastery-stop[data-state='done'] .mastery-dot { background: var(--primary); border-color: var(--primary); }
+.mastery-stop[data-state='current'] .mastery-dot { width: 28px; height: 28px; background: var(--primary); border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-soft-2); }
+.mastery-stop[data-milestone] .mastery-dot { width: 28px; height: 28px; border-color: var(--gold-500); color: var(--gold-500); }
+.mastery-stop[data-milestone][data-state='done'] .mastery-dot, .mastery-stop[data-milestone][data-state='current'] .mastery-dot { background: var(--gold-500); color: #fff; border-color: var(--gold-500); }
+.mastery-stop[data-milestone] .mastery-dot svg { width: 14px; height: 14px; fill: currentColor; }

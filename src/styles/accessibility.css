@@ -1,0 +1,30 @@
+/* ── Accessibility layer (loaded last so it wins) ─────────────────────── */
+
+/* High contrast: stronger separation without changing layout or brand. */
+:root[data-contrast='high'] :is(.card, .choice, .chip, .input, .textarea, .select, .notif, .person-card, .memory-card, .action-tile, .demo-frame, .lp-proof) { border-width: 2px; border-color: var(--border-strong); }
+:root[data-contrast='high'] :is(.btn-secondary, .btn-quiet) { --btn-border: var(--fg); }
+:root[data-contrast='high'] :is(.text-muted, .text-subtle, .hint, .lead) { color: var(--fg-muted); }
+:root[data-contrast='high'] .badge { border: 1.5px solid currentColor; }
+:root[data-contrast='high'] .nav-link[aria-current='page'], :root[data-contrast='high'] .bottom-nav [aria-current='page'] { outline: 2px solid var(--primary); outline-offset: -2px; }
+:root[data-contrast='high'] .skeleton { background: var(--card-2); }
+
+/* Windows High Contrast / forced colours */
+@media (forced-colors: active) {
+  .btn, .chip, .choice, .card, .input, .textarea, .select, .badge, .switch-track, .check-box { border: 1px solid CanvasText; }
+  .btn-primary, .chip[aria-pressed='true'], .choice[aria-pressed='true'], .choice[aria-checked='true'] { background: Highlight; color: HighlightText; }
+  .switch input:checked + .switch-track { background: Highlight; }
+  :focus-visible { outline: 3px solid Highlight; }
+  .screen-marker { forced-color-adjust: none; }
+}
+
+/* Touch devices: generous targets everywhere. */
+@media (pointer: coarse) {
+  .btn-sm { min-height: 48px; }
+  .btn-icon.btn-sm { width: 48px; min-width: 48px; min-height: 48px; }
+  .chip { min-height: 48px; }
+}
+
+@media print {
+  .sidebar, .topbar, .bottom-nav, .toast-region, .skip-link { display: none !important; }
+  .main { margin: 0; }
+}

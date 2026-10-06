@@ -1,0 +1,11 @@
+{
+  "intent": [
+    "LEARN_APP", "START_LESSON", "CONTINUE_LEARNING",
+    "SEND_MONEY", "RECEIVE_MONEY", "BOOK_APPOINTMENT",
+    "SEND_MESSAGE", "READ_MESSAGE", "SEND_EMAIL", "READ_EMAIL", "SHOP_ONLINE",
+    "CHECK_SCREEN", "EXPLAIN_SCREEN", "SAFETY_CHECK", "SCAM_CHECK",
+    "CONTACT_GUARDIAN", "REQUEST_HELP", "NAVIGATION", "UNKNOWN"
+  ],
+  "safety": ["SAFE", "SUSPICIOUS", "HIGH_RISK", "CRITICAL"],
+  "languages": ["en", "bn", "bn-Latn", "hi", "vi", "mixed"]
+}

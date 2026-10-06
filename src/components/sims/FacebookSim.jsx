@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useApp } from '../../context/AppStateContext';
 import { ArrowLeft, Search, Bell, MessageCircle, Home, Users, PlaySquare, Menu, ThumbsUp, MessageSquare, Share2 } from 'lucide-react';
-import { FAKE_FACEBOOK_POSTS } from '../../data/hardcoded';
+import { FAKE_FACEBOOK_POSTS } from '../../demo/simulationFixtures';
 
 const FB_BLUE = '#1877F2';
 const REACTIONS = [

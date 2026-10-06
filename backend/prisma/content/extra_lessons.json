@@ -1,0 +1,160 @@
+[
+  {
+    "slug": "verify-family-money-request",
+    "domain": "DIGITAL_SAFETY",
+    "category": "safety",
+    "difficulty": "BEGINNER",
+    "estimatedMinutes": 4,
+    "skillKey": "safety.verify_identity",
+    "title": {
+      "en": "A message says it's from family and asks for money",
+      "bn": "পরিবারের নামে মেসেজ এসে টাকা চাইছে",
+      "hi": "परिवार के नाम से संदेश आया और पैसे मांग रहा है",
+      "vi": "Tin nhắn tự nhận là người thân và xin tiền"
+    },
+    "description": {
+      "en": "A name or photo is not proof. Learn to check with someone using a number you already trust.",
+      "bn": "নাম বা ছবি প্রমাণ নয়। আগে থেকে জানা নম্বরে ফোন করে যাচাই করতে শিখুন।",
+      "hi": "नाम या फोटो सबूत नहीं है। पहले से भरोसेमंद नंबर पर फोन करके जांचना सीखें।",
+      "vi": "Tên hay ảnh đại diện không phải là bằng chứng. Hãy học cách kiểm tra bằng số điện thoại bạn đã tin tưởng."
+    },
+    "steps": [
+      { "en": "Stop. You do not have to answer or send anything right now.", "bn": "থামুন। এখনই উত্তর দিতে বা কিছু পাঠাতে হবে না।", "hi": "रुकिए। अभी जवाब देने या कुछ भेजने की जरूरत नहीं है।", "vi": "Dừng lại. Bạn không cần trả lời hay gửi gì ngay bây giờ." },
+      { "en": "Notice the pressure: words like 'urgent', 'right now' or 'don't tell anyone' are warning signs.", "bn": "চাপটা লক্ষ্য করুন: 'জরুরি', 'এখনই', 'কাউকে বলবেন না' — এগুলো সতর্কতার চিহ্ন।", "hi": "दबाव पर ध्यान दें: 'जरूरी', 'अभी', 'किसी को मत बताना' जैसे शब्द चेतावनी के संकेत हैं।", "vi": "Để ý sự hối thúc: những từ như 'khẩn cấp', 'ngay lập tức', 'đừng nói với ai' là dấu hiệu cảnh báo." },
+      { "en": "Call your family member on the number already saved in your phone — not a number from the message.", "bn": "আপনার ফোনে আগে থেকে সেভ করা নম্বরে পরিবারের সদস্যকে ফোন করুন — মেসেজের নম্বরে নয়।", "hi": "अपने फोन में पहले से सेव नंबर पर परिवार के सदस्य को फोन करें — संदेश वाले नंबर पर नहीं।", "vi": "Gọi cho người thân bằng số đã lưu sẵn trong điện thoại — không dùng số trong tin nhắn." },
+      { "en": "If you can't reach them, ask a trusted person to help you check before sending any money.", "bn": "তাঁকে না পেলে টাকা পাঠানোর আগে বিশ্বস্ত কাউকে যাচাই করতে বলুন।", "hi": "अगर बात न हो सके, तो पैसे भेजने से पहले किसी भरोसेमंद व्यक्ति से जांच करवाएं।", "vi": "Nếu không liên lạc được, hãy nhờ một người đáng tin kiểm tra giúp trước khi chuyển tiền." }
+    ]
+  },
+  {
+    "slug": "group-chat-basics",
+    "domain": "SOCIAL_COMMUNICATION",
+    "category": "messaging",
+    "difficulty": "BEGINNER",
+    "estimatedMinutes": 5,
+    "skillKey": "social.group_chat",
+    "applicationSlug": "whatsapp",
+    "title": {
+      "en": "Taking part in a family group chat",
+      "bn": "পরিবারের গ্রুপ চ্যাটে অংশ নেওয়া",
+      "hi": "परिवार के ग्रुप चैट में भाग लेना",
+      "vi": "Tham gia nhóm trò chuyện gia đình"
+    },
+    "description": {
+      "en": "Reply to one person, mute a busy group, and remember that everyone in the group sees what you send.",
+      "bn": "একজনকে উত্তর দিন, ব্যস্ত গ্রুপ মিউট করুন, আর মনে রাখুন গ্রুপের সবাই আপনার পাঠানো জিনিস দেখে।",
+      "hi": "किसी एक को जवाब दें, व्यस्त ग्रुप को म्यूट करें, और याद रखें कि ग्रुप में सभी आपका भेजा देखते हैं।",
+      "vi": "Trả lời một người, tắt thông báo nhóm ồn ào, và nhớ rằng mọi người trong nhóm đều thấy những gì bạn gửi."
+    },
+    "steps": [
+      { "en": "Open the group. The group name is at the top; the members are listed when you tap it.", "bn": "গ্রুপটি খুলুন। উপরে গ্রুপের নাম; নামে চাপ দিলে সদস্যদের তালিকা দেখা যায়।", "hi": "ग्रुप खोलें। ऊपर ग्रुप का नाम है; उस पर टैप करने से सदस्यों की सूची दिखती है।", "vi": "Mở nhóm. Tên nhóm ở trên cùng; chạm vào để xem danh sách thành viên." },
+      { "en": "To reply to one message, press and hold it, then choose Reply.", "bn": "একটি মেসেজের উত্তর দিতে সেটি চেপে ধরে রাখুন, তারপর Reply বেছে নিন।", "hi": "किसी एक संदेश का जवाब देने के लिए उसे दबाकर रखें, फिर Reply चुनें।", "vi": "Để trả lời một tin nhắn, nhấn giữ tin đó rồi chọn Trả lời." },
+      { "en": "Remember: everyone in the group can read what you send. Share private things one-to-one.", "bn": "মনে রাখবেন: গ্রুপের সবাই আপনার পাঠানো লেখা পড়তে পারে। ব্যক্তিগত কথা আলাদা করে বলুন।", "hi": "याद रखें: ग्रुप में सभी आपका भेजा पढ़ सकते हैं। निजी बातें अलग से भेजें।", "vi": "Hãy nhớ: mọi người trong nhóm đều đọc được tin bạn gửi. Chuyện riêng hãy nhắn riêng." },
+      { "en": "If the group is too busy, tap the group name, then Mute notifications. You stay in the group.", "bn": "গ্রুপে খুব বেশি মেসেজ এলে গ্রুপের নামে চাপ দিয়ে Mute notifications বেছে নিন। আপনি গ্রুপেই থাকবেন।", "hi": "अगर ग्रुप में बहुत संदेश आते हैं, तो ग्रुप के नाम पर टैप करके Mute notifications चुनें। आप ग्रुप में बने रहेंगे।", "vi": "Nếu nhóm quá nhiều tin, chạm tên nhóm rồi chọn Tắt thông báo. Bạn vẫn ở trong nhóm." }
+    ]
+  },
+  {
+    "slug": "is-this-forward-true",
+    "domain": "INFORMATION_LITERACY",
+    "category": "safety",
+    "difficulty": "BEGINNER",
+    "estimatedMinutes": 4,
+    "skillKey": "info.check_forward",
+    "title": {
+      "en": "Is this forwarded message true?",
+      "bn": "ফরোয়ার্ড করা মেসেজটি কি সত্যি?",
+      "hi": "क्या यह फॉरवर्ड किया गया संदेश सच है?",
+      "vi": "Tin nhắn chuyển tiếp này có thật không?"
+    },
+    "description": {
+      "en": "Before you share news, check who wrote it and whether a trusted source says the same.",
+      "bn": "খবর শেয়ার করার আগে দেখুন কে লিখেছে এবং কোনো বিশ্বস্ত উৎস একই কথা বলছে কিনা।",
+      "hi": "खबर शेयर करने से पहले देखें कि किसने लिखी और क्या कोई भरोसेमंद स्रोत भी यही कहता है।",
+      "vi": "Trước khi chia sẻ tin, hãy xem ai viết và nguồn đáng tin có nói giống vậy không."
+    },
+    "steps": [
+      { "en": "Look for who wrote it. 'Forwarded many times' with no name or source is a reason to be careful.", "bn": "কে লিখেছে দেখুন। নাম বা উৎস ছাড়া 'অনেকবার ফরোয়ার্ড' হলে সাবধান হোন।", "hi": "देखें किसने लिखा। बिना नाम या स्रोत के 'कई बार फॉरवर्ड' संदेश पर सावधान रहें।", "vi": "Xem ai là người viết. Tin 'đã chuyển tiếp nhiều lần' không có tên hay nguồn thì cần cẩn thận." },
+      { "en": "Strong feelings — fear, anger, 'share before it's deleted' — are often used to spread false news.", "bn": "ভয়, রাগ বা 'মুছে যাওয়ার আগে শেয়ার করুন' — এসব দিয়ে প্রায়ই ভুল খবর ছড়ানো হয়।", "hi": "डर, गुस्सा या 'डिलीट होने से पहले शेयर करें' — ऐसी बातें अक्सर झूठी खबर फैलाने में इस्तेमाल होती हैं।", "vi": "Cảm xúc mạnh — sợ hãi, tức giận, 'chia sẻ trước khi bị xóa' — thường được dùng để lan truyền tin giả." },
+      { "en": "Check a trusted news site or official page. If none of them mention it, treat it as unverified.", "bn": "বিশ্বস্ত সংবাদ সাইট বা সরকারি পেজে দেখুন। কোথাও না থাকলে এটিকে অযাচাইকৃত ধরুন।", "hi": "किसी भरोसेमंद समाचार साइट या आधिकारिक पेज पर देखें। कहीं जिक्र न हो तो इसे असत्यापित मानें।", "vi": "Kiểm tra trang tin uy tín hoặc trang chính thức. Nếu không nơi nào nhắc tới, hãy coi là chưa được xác minh." },
+      { "en": "When unsure, don't forward it. Not sharing is always a safe choice.", "bn": "নিশ্চিত না হলে ফরোয়ার্ড করবেন না। শেয়ার না করাই সবসময় নিরাপদ।", "hi": "पक्का न हो तो फॉरवर्ड न करें। शेयर न करना हमेशा सुरक्षित है।", "vi": "Khi không chắc, đừng chuyển tiếp. Không chia sẻ luôn là lựa chọn an toàn." }
+    ]
+  },
+  {
+    "slug": "ai-can-make-mistakes",
+    "domain": "AI_PRIVACY_LITERACY",
+    "category": "safety",
+    "difficulty": "BEGINNER",
+    "estimatedMinutes": 4,
+    "skillKey": "ai.basics",
+    "title": {
+      "en": "AI helpers can make mistakes — and voices can be faked",
+      "bn": "এআই ভুল করতে পারে — আর কণ্ঠস্বরও নকল করা যায়",
+      "hi": "AI गलती कर सकता है — और आवाज़ भी नकली बनाई जा सकती है",
+      "vi": "AI có thể sai — và giọng nói cũng có thể bị làm giả"
+    },
+    "description": {
+      "en": "What AI is good at, when to double-check it, and what you should never tell any AI.",
+      "bn": "এআই কী ভালো পারে, কখন যাচাই করবেন, আর কোন তথ্য কোনো এআই-কে কখনো দেবেন না।",
+      "hi": "AI किसमें अच्छा है, कब दोबारा जांचें, और कौन सी जानकारी किसी AI को कभी न दें।",
+      "vi": "AI giỏi việc gì, khi nào cần kiểm tra lại, và điều gì không bao giờ nên nói với AI."
+    },
+    "steps": [
+      { "en": "AI, including Guidia, can explain things — but it can also be wrong. Check important answers.", "bn": "Guidia-সহ এআই অনেক কিছু বুঝিয়ে দিতে পারে — কিন্তু ভুলও করতে পারে। গুরুত্বপূর্ণ উত্তর যাচাই করুন।", "hi": "Guidia समेत AI चीज़ें समझा सकता है — पर गलत भी हो सकता है। ज़रूरी जवाब जांचें।", "vi": "AI, kể cả Guidia, có thể giải thích mọi thứ — nhưng cũng có thể sai. Hãy kiểm tra những câu trả lời quan trọng." },
+      { "en": "Never type a password, PIN or OTP into any AI chat. Guidia will never ask for them.", "bn": "কোনো এআই চ্যাটে কখনো পাসওয়ার্ড, পিন বা ওটিপি লিখবেন না। Guidia কখনো এগুলো চাইবে না।", "hi": "किसी भी AI चैट में कभी पासवर्ड, पिन या ओटीपी न लिखें। Guidia कभी इन्हें नहीं मांगेगा।", "vi": "Đừng bao giờ nhập mật khẩu, mã PIN hay OTP vào bất kỳ trò chuyện AI nào. Guidia sẽ không bao giờ hỏi những thứ đó." },
+      { "en": "A phone call can copy a loved one's voice. If a call asks for money, hang up and call them back on their saved number.", "bn": "ফোনে প্রিয়জনের কণ্ঠ নকল করা যায়। ফোনে টাকা চাইলে কেটে দিয়ে সেভ করা নম্বরে নিজে ফোন করুন।", "hi": "फोन पर किसी अपने की आवाज़ नकल की जा सकती है। अगर कॉल में पैसे मांगे जाएं, तो काटकर सेव नंबर पर खुद फोन करें।", "vi": "Cuộc gọi có thể bắt chước giọng người thân. Nếu cuộc gọi xin tiền, hãy cúp máy và tự gọi lại số đã lưu." },
+      { "en": "Pictures can be made by AI too. A photo alone doesn't prove something happened.", "bn": "ছবিও এআই দিয়ে বানানো যায়। শুধু একটি ছবি দেখে কিছু ঘটেছে ধরে নেবেন না।", "hi": "तस्वीरें भी AI से बनाई जा सकती हैं। सिर्फ एक फोटो से यह साबित नहीं होता कि कुछ हुआ।", "vi": "Hình ảnh cũng có thể do AI tạo ra. Chỉ một tấm ảnh không chứng minh điều gì đã xảy ra." }
+    ]
+  },
+  {
+    "slug": "who-can-see-my-post",
+    "domain": "AI_PRIVACY_LITERACY",
+    "category": "social",
+    "difficulty": "BEGINNER",
+    "estimatedMinutes": 4,
+    "skillKey": "privacy.post_audience",
+    "applicationSlug": "facebook",
+    "title": {
+      "en": "Who can see what I post?",
+      "bn": "আমার পোস্ট কে কে দেখতে পায়?",
+      "hi": "मेरी पोस्ट कौन देख सकता है?",
+      "vi": "Ai có thể xem bài tôi đăng?"
+    },
+    "description": {
+      "en": "Choose the audience before you post, and keep your phone number, address and travel plans private.",
+      "bn": "পোস্ট করার আগে কে দেখবে তা ঠিক করুন, আর ফোন নম্বর, ঠিকানা ও ভ্রমণের পরিকল্পনা গোপন রাখুন।",
+      "hi": "पोस्ट करने से पहले दर्शक चुनें, और अपना फोन नंबर, पता और यात्रा की योजना निजी रखें।",
+      "vi": "Chọn người xem trước khi đăng, và giữ kín số điện thoại, địa chỉ và kế hoạch đi xa."
+    },
+    "steps": [
+      { "en": "Before posting, find the audience button under your name — it may say Public, Friends or Only me.", "bn": "পোস্ট করার আগে নামের নিচে দর্শক বাটনটি খুঁজুন — সেখানে Public, Friends বা Only me লেখা থাকতে পারে।", "hi": "पोस्ट करने से पहले अपने नाम के नीचे ऑडियंस बटन देखें — उस पर Public, Friends या Only me लिखा हो सकता है।", "vi": "Trước khi đăng, tìm nút người xem dưới tên bạn — có thể ghi Công khai, Bạn bè hoặc Chỉ mình tôi." },
+      { "en": "Public means anyone on the internet, including strangers. Friends is usually safer for family photos.", "bn": "Public মানে ইন্টারনেটের যে কেউ, অচেনা মানুষও। পারিবারিক ছবির জন্য Friends সাধারণত নিরাপদ।", "hi": "Public का मतलब इंटरनेट पर कोई भी, अजनबी भी। पारिवारिक फोटो के लिए Friends आमतौर पर सुरक्षित है।", "vi": "Công khai nghĩa là bất kỳ ai trên mạng, kể cả người lạ. Bạn bè thường an toàn hơn cho ảnh gia đình." },
+      { "en": "Don't post your phone number, home address or 'we are away for two weeks'.", "bn": "ফোন নম্বর, বাড়ির ঠিকানা বা 'আমরা দুই সপ্তাহ বাইরে' — এসব পোস্ট করবেন না।", "hi": "अपना फोन नंबर, घर का पता या 'हम दो हफ्ते बाहर हैं' पोस्ट न करें।", "vi": "Đừng đăng số điện thoại, địa chỉ nhà hay 'chúng tôi đi vắng hai tuần'." },
+      { "en": "You can change who sees an old post: open the post's menu (three dots) and choose Edit audience.", "bn": "পুরনো পোস্ট কে দেখবে তা বদলাতে পারেন: পোস্টের মেনু (তিন বিন্দু) খুলে Edit audience বেছে নিন।", "hi": "पुरानी पोस्ट कौन देखे, यह बदल सकते हैं: पोस्ट का मेनू (तीन बिंदु) खोलें और Edit audience चुनें।", "vi": "Bạn có thể đổi người xem bài cũ: mở menu bài viết (ba chấm) và chọn Chỉnh sửa người xem." }
+    ]
+  },
+  {
+    "slug": "i-clicked-a-bad-link",
+    "domain": "DIGITAL_SAFETY",
+    "category": "safety",
+    "difficulty": "BEGINNER",
+    "estimatedMinutes": 3,
+    "skillKey": "safety.incident_recovery",
+    "title": {
+      "en": "I think I clicked a bad link — what now?",
+      "bn": "মনে হচ্ছে ভুল লিংকে ঢুকে গেছি — এখন কী করব?",
+      "hi": "लगता है मैंने गलत लिंक खोल दिया — अब क्या करूं?",
+      "vi": "Hình như tôi đã bấm vào đường link xấu — giờ làm gì?"
+    },
+    "description": {
+      "en": "Calm, simple steps if you opened a suspicious page or typed something you shouldn't have.",
+      "bn": "সন্দেহজনক পেজ খুলে ফেললে বা ভুল কিছু লিখে ফেললে শান্তভাবে করণীয় ধাপ।",
+      "hi": "संदिग्ध पेज खुल जाए या कुछ गलत लिख दिया हो, तो शांत और आसान कदम।",
+      "vi": "Các bước đơn giản, bình tĩnh nếu bạn đã mở trang đáng ngờ hoặc lỡ nhập thông tin không nên nhập."
+    },
+    "steps": [
+      { "en": "Don't type anything else on that page. Close it.", "bn": "ওই পেজে আর কিছু লিখবেন না। পেজটি বন্ধ করুন।", "hi": "उस पेज पर और कुछ न लिखें। उसे बंद कर दें।", "vi": "Đừng nhập thêm gì trên trang đó. Hãy đóng trang lại." },
+      { "en": "If you typed a password there, change it from the official app or website — not from a link.", "bn": "সেখানে পাসওয়ার্ড দিয়ে থাকলে অফিসিয়াল অ্যাপ বা ওয়েবসাইট থেকে পাসওয়ার্ড বদলান — লিংক থেকে নয়।", "hi": "अगर वहां पासवर्ड डाला था, तो आधिकारिक ऐप या वेबसाइट से पासवर्ड बदलें — लिंक से नहीं।", "vi": "Nếu đã nhập mật khẩu ở đó, hãy đổi mật khẩu từ ứng dụng hoặc trang web chính thức — không qua đường link." },
+      { "en": "If money or a PIN was involved, call your bank or payment service using the number on their official app or card.", "bn": "টাকা বা পিন জড়িত থাকলে অফিসিয়াল অ্যাপ বা কার্ডে থাকা নম্বরে ব্যাংক বা পেমেন্ট সেবায় ফোন করুন।", "hi": "अगर पैसे या पिन शामिल थे, तो आधिकारिक ऐप या कार्ड पर दिए नंबर से बैंक या भुगतान सेवा को फोन करें।", "vi": "Nếu liên quan đến tiền hoặc mã PIN, hãy gọi ngân hàng hoặc dịch vụ thanh toán theo số trên ứng dụng chính thức hoặc trên thẻ." },
+      { "en": "Tell someone you trust. Keep the message — it may help if you report it.", "bn": "বিশ্বস্ত কাউকে জানান। মেসেজটি মুছবেন না — রিপোর্ট করতে কাজে লাগতে পারে।", "hi": "किसी भरोसेमंद व्यक्ति को बताएं। संदेश मिटाएं नहीं — रिपोर्ट करने में काम आ सकता है।", "vi": "Hãy nói với người bạn tin tưởng. Giữ lại tin nhắn — có thể cần khi báo cáo." }
+    ]
+  }
+]

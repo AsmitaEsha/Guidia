@@ -1,63 +1,68 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, Search, X } from 'lucide-react';
-import GuidiaLogo from '../GuidiaLogo';
-import { NAV_LINKS } from '../../data/landingContent';
+import { Globe, Menu } from 'lucide-react';
+import { usePreferences } from '../../context/PreferencesContext';
+import { useAuth } from '../../context/AuthContext';
+import { useScrolled } from '../../hooks/useOnline';
+import { LANGUAGES } from '../../config/languages';
+import { GuidiaMark } from '../GuidiaLogo';
+import { LANDING_LINKS } from '../../data/landing';
+import { Button, IconButton, Sheet } from '../ui';
+
+export function LanguagePicker({ className }) {
+  const { t, language, setLanguage } = usePreferences();
+  return (
+    <label className={`lang-chip ${className || ''}`}>
+      <Globe aria-hidden="true" />
+      <span className="sr-only">{t('Language', 'ভাষা', 'भाषा', 'Ngôn ngữ')}</span>
+      <select className="lang-select" value={language} onChange={(e) => setLanguage(e.target.value)}>
+        {LANGUAGES.map((l) => <option key={l.code} value={l.code} lang={l.htmlLang}>{l.nativeName}</option>)}
+      </select>
+    </label>
+  );
+}
 
 export default function LandingNavbar() {
+  const { t } = usePreferences();
+  const { status } = useAuth();
+  const scrolled = useScrolled(8);
   const [open, setOpen] = useState(false);
+  const signedIn = status === 'authenticated';
 
   return (
-    <header className="lp-navbar">
-      <div className="lp-container flex items-center justify-between" style={{ height: 82 }}>
-        <Link to="/landing" className="lp-brand" style={{ color: 'var(--text-primary)' }}>
-          <GuidiaLogo size={44} />
-          <span>
-            <strong>Guidia</strong>
-            <small>Learn. Practice. Stay Safe.</small>
-          </span>
+    <header className="lp-nav" data-scrolled={scrolled}>
+      <div className="lp-container lp-nav-inner">
+        <Link to="/landing" className="brand" aria-label="Guidia">
+          <GuidiaMark size={40} title="" />
+          <span className="brand-name">Guidia</span>
         </Link>
-
-        <nav className="flex items-center gap-32" style={{ display: 'flex' }} aria-label="Primary">
-          <div className="lp-desktop-nav flex items-center gap-24">
-            {NAV_LINKS.map((l) => (
-              <a key={l.href} href={l.href} className="lp-navlink" style={{ color: 'var(--text-secondary)', fontWeight: 600, fontSize: 15 }}>
-                {l.label}
-              </a>
-            ))}
-          </div>
+        <nav className="lp-nav-links" aria-label={t('Sections', 'বিভাগ', 'हिस्से', 'Mục')}>
+          {LANDING_LINKS.map(([id, label]) => <a key={id} href={`#${id}`}>{t(...label)}</a>)}
         </nav>
-
-        <div className="lp-desktop-nav flex items-center gap-12">
-          <button className="lp-search-btn" aria-label="Search">
-            <Search size={24} />
-          </button>
-          <Link to="/onboarding" className="lp-btn lp-btn-primary" style={{ padding: '10px 20px', fontSize: 15 }}>Get Started</Link>
+        <div className="lp-nav-actions">
+          <LanguagePicker className="hide-md" />
+          {signedIn ? (
+            <Button size="sm" arrow to="/">{t('Open Guidia', 'Guidia খুলুন', 'Guidia खोलें', 'Mở Guidia')}</Button>
+          ) : (
+            <>
+              <Button variant="ghost" size="sm" to="/login" className="hide-sm">{t('Sign in', 'সাইন ইন', 'साइन इन', 'Đăng nhập')}</Button>
+              <Button size="sm" to="/register">{t('Get started', 'শুরু করুন', 'शुरू करें', 'Bắt đầu')}</Button>
+            </>
+          )}
+          <IconButton icon={Menu} className="show-md" label={t('Menu', 'মেনু', 'मेनू', 'Menu')} onClick={() => setOpen(true)} aria-expanded={open} />
         </div>
-
-        <button
-          className="lp-mobile-menu-btn btn-icon"
-          style={{ display: 'none', background: 'none', border: 'none', color: 'var(--text-primary)', padding: 8 }}
-          onClick={() => setOpen((o) => !o)}
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          aria-expanded={open}
-        >
-          {open ? <X size={26} /> : <Menu size={26} />}
-        </button>
       </div>
-
-      {open && (
-        <div className="lp-mobile-drawer" style={{ borderTop: '1px solid var(--border)', padding: '16px 24px 24px', display: 'flex', flexDirection: 'column', gap: 16, background: 'var(--surface)' }}>
-          {NAV_LINKS.map((l) => (
-            <a key={l.href} href={l.href} onClick={() => setOpen(false)} style={{ color: 'var(--text-primary)', fontWeight: 600, fontSize: 16 }}>
-              {l.label}
-            </a>
-          ))}
-          <div className="flex gap-12" style={{ marginTop: 8 }}>
-            <Link to="/onboarding" className="lp-btn lp-btn-primary" style={{ flex: 1 }} onClick={() => setOpen(false)}>Get Started</Link>
+      <Sheet open={open} onClose={() => setOpen(false)} title="Guidia">
+        <div className="stack" style={{ '--gap': 'var(--s-2)' }}>
+          {LANDING_LINKS.map(([id, label]) => <a key={id} href={`#${id}`} className="lp-sheet-link" onClick={() => setOpen(false)}>{t(...label)}</a>)}
+          <div className="row-between card card-tint" style={{ padding: 'var(--s-3) var(--s-4)', marginTop: 'var(--s-2)' }}>
+            <span className="text-strong">{t('Language', 'ভাষা', 'भाषा', 'Ngôn ngữ')}</span>
+            <LanguagePicker />
           </div>
+          {!signedIn && <Button variant="secondary" block to="/login">{t('Sign in', 'সাইন ইন', 'साइन इन', 'Đăng nhập')}</Button>}
+          <Button block to={signedIn ? '/' : '/register'}>{signedIn ? t('Open Guidia', 'Guidia খুলুন', 'Guidia खोलें', 'Mở Guidia') : t('Get started', 'শুরু করুন', 'शुरू करें', 'Bắt đầu')}</Button>
         </div>
-      )}
+      </Sheet>
     </header>
   );
 }

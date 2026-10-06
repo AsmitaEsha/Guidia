@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useApp } from '../../context/AppStateContext';
-import { ArrowLeft, Search, Calendar, Users, MapPin, Star, BedDouble } from 'lucide-react';
+import { ArrowLeft, Search, Calendar, Users } from 'lucide-react';
 
 const BK_BLUE = '#003580';
 const BK_YELLOW = '#feba02';

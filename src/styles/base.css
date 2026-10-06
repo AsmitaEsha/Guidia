@@ -1,0 +1,140 @@
+/* Global base: reset, document typography, focus, layout primitives.
+   Inside the signed-in product the root font size follows the user's
+   chosen text size (data-scale="user"), so every rem — headings, controls,
+   cards — grows together and layouts reflow instead of clipping. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--shell-topbar) + 16px);
+}
+:root[data-scale='user'] { font-size: var(--user-font-size); }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: var(--lh-body);
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+:root[data-scale='user'] body { font-size: 1rem; }
+
+#root { min-height: 100vh; display: flex; flex-direction: column; }
+#root > * { flex: 1 0 auto; }
+
+/* Themed wrappers (landing forces light; the app follows the user). */
+.gx { color: var(--fg); background: var(--bg); font-family: var(--font-sans); line-height: var(--lh-body); }
+
+h1, h2, h3, h4, h5, h6 { margin: 0; line-height: var(--lh-tight); color: var(--fg); font-weight: 750; letter-spacing: -0.012em; text-wrap: balance; }
+p { margin: 0; text-wrap: pretty; }
+ul, ol { margin: 0; }
+a { color: var(--primary); text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
+a:hover { text-decoration-thickness: 2px; }
+button, input, select, textarea { font: inherit; color: inherit; letter-spacing: inherit; }
+button { cursor: pointer; }
+img, svg, video { display: block; max-width: 100%; }
+img { height: auto; }
+svg { flex-shrink: 0; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 0; }
+fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+legend { padding: 0; }
+::selection { background: var(--primary-soft-2); color: var(--fg); }
+
+/* Bengali and Devanagari need a little more line height for conjuncts. */
+:lang(bn), :lang(hi) { --lh-body: 1.75; }
+:lang(bn) h1, :lang(bn) h2, :lang(bn) h3, :lang(hi) h1, :lang(hi) h2, :lang(hi) h3 { line-height: 1.35; letter-spacing: 0; }
+
+/* ── One focus style everywhere: 3px, high contrast, clear offset ─────── */
+:focus { outline: none; }
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+:root[data-contrast='high'] :focus-visible { outline-width: 4px; }
+
+.sr-only {
+  position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.skip-link {
+  position: fixed; left: var(--s-4); top: -100px; z-index: 200;
+  background: var(--primary); color: var(--on-primary); padding: var(--s-3) var(--s-5);
+  border-radius: var(--r-md); font-weight: 700; text-decoration: none; box-shadow: var(--shadow-3);
+}
+.skip-link:focus { top: var(--s-4); }
+
+/* ── Typography helpers ───────────────────────────────────────────────── */
+.h-display { font-family: var(--font-display); font-size: var(--fs-2xl); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+.h-page { font-size: var(--fs-2xl); font-weight: 750; letter-spacing: -0.02em; }
+.h-section { font-size: var(--fs-lg); font-weight: 720; }
+.h-card { font-size: var(--fs-md); font-weight: 700; line-height: var(--lh-snug); }
+.lead { font-size: var(--fs-md); color: var(--fg-muted); line-height: 1.55; }
+.text-muted { color: var(--fg-muted); }
+.text-subtle { color: var(--fg-subtle); font-size: var(--fs-sm); }
+.text-sm { font-size: var(--fs-sm); }
+.text-strong { font-weight: 700; }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  font-size: var(--fs-sm); font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; color: var(--primary);
+}
+:lang(bn) .eyebrow, :lang(hi) .eyebrow { text-transform: none; letter-spacing: 0; }
+.num { font-variant-numeric: tabular-nums; }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.clamp-2, .clamp-3, .clamp-4 { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
+.clamp-2 { -webkit-line-clamp: 2; } .clamp-3 { -webkit-line-clamp: 3; } .clamp-4 { -webkit-line-clamp: 4; }
+
+/* ── Layout primitives ────────────────────────────────────────────────── */
+.stack { display: flex; flex-direction: column; gap: var(--gap, var(--s-4)); min-width: 0; }
+.row { display: flex; align-items: center; gap: var(--gap, var(--s-3)); flex-wrap: wrap; min-width: 0; }
+.row-nowrap { flex-wrap: nowrap; }
+.row-between { display: flex; align-items: center; justify-content: space-between; gap: var(--gap, var(--s-3)); flex-wrap: wrap; min-width: 0; }
+.row-top { align-items: flex-start; }
+.grow { flex: 1; min-width: 0; }
+.grid { display: grid; gap: var(--gap, var(--s-4)); grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--min, 260px)), 1fr)); }
+.grid-fit { grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min, 260px)), 1fr)); }
+.center { display: grid; place-items: center; }
+.mt-auto { margin-top: auto; }
+.ml-auto { margin-left: auto; }
+.self-start { align-self: flex-start; }
+
+.page {
+  width: 100%;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: var(--s-6) var(--gutter) var(--s-9);
+  display: flex; flex-direction: column; gap: var(--step-gap);
+}
+.page-narrow { max-width: min(var(--content-width), var(--content-narrow)); }
+.page-wide { max-width: 1320px; }
+
+@media (max-width: 1023px) {
+  .page { padding-bottom: calc(var(--s-9) + 72px + env(safe-area-inset-bottom)); }
+}
+@media (max-width: 640px) {
+  .page { padding-top: var(--s-5); gap: calc(var(--step-gap) * 0.75); }
+}
+
+.section { display: flex; flex-direction: column; gap: var(--s-4); }
+
+/* Hidden on small screens / large screens */
+@media (max-width: 640px) { .hide-sm { display: none !important; } }
+@media (min-width: 641px) { .show-sm { display: none !important; } }
+@media (max-width: 1023px) { .hide-md { display: none !important; } }
+@media (min-width: 1024px) { .show-md { display: none !important; } }
+
+/* Reassurance lines appear only in "very gentle" mode. */
+.reassure { display: var(--reassurance-display); align-items: flex-start; gap: var(--s-3); }
+
+/* Scrollbars: thin and calm */
+* { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }

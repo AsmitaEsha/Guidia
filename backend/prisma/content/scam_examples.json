@@ -1,0 +1,74 @@
+[
+  {
+    "id": "s1",
+    "severity": "critical",
+    "type": "Banking Scam",
+    "icon": "",
+    "message": "\"URGENT: Your bKash account will be suspended TODAY unless you verify immediately. Click: http://bkash-verify-now.com/urgent\"",
+    "tactics": [
+      "Artificial urgency (\"TODAY\", \"URGENT\")",
+      "Fake website link (not the real bKash)",
+      "Fear of losing account access"
+    ],
+    "safetyTips": {
+      "en": [
+        "Real bKash will never ask you to click a link via SMS.",
+        "bKash only communicates through their official app or 16247.",
+        "Delete this message and tell your family."
+      ],
+      "bn": [
+        "আসল bKash কখনো SMS-এ লিংক দিয়ে যোগাযোগ করে না।",
+        "bKash শুধু তাদের অফিসিয়াল অ্যাপ বা 16247 নম্বরে যোগাযোগ করে।",
+        "এই মেসেজটি মুছুন এবং পরিবারকে জানান।"
+      ]
+    }
+  },
+  {
+    "id": "s2",
+    "severity": "high",
+    "type": "OTP Scam",
+    "icon": "",
+    "message": "\"Hi, I am calling from your bank. There is suspicious activity on your account. Please tell me the OTP you just received to verify your identity.\"",
+    "tactics": [
+      "Phone call impersonating bank",
+      "Asking for OTP (One-Time Password)",
+      "Creating panic about account security"
+    ],
+    "safetyTips": {
+      "en": [
+        "No real bank will ever ask for your OTP over the phone.",
+        "OTP is only for YOU. Never share it.",
+        "Hang up immediately and call your family."
+      ],
+      "bn": [
+        "কোনো আসল ব্যাংক কখনো ফোনে OTP চাইবে না।",
+        "OTP শুধুমাত্র আপনার জন্য। কাউকে দেবেন না।",
+        "সঙ্গে সঙ্গে ফোন কেটে পরিবারকে ডাকুন।"
+      ]
+    }
+  },
+  {
+    "id": "s3",
+    "severity": "warning",
+    "type": "Prize Scam",
+    "icon": "",
+    "message": "\"Congratulations! You have been selected to win 50,000 Taka! To claim your prize, send 500 Taka processing fee to this number: 017XXXXXXXX\"",
+    "tactics": [
+      "Unrealistic prize offer",
+      "Requesting upfront payment",
+      "Fake sense of being specially selected"
+    ],
+    "safetyTips": {
+      "en": [
+        "If you never entered a contest, you cannot win a prize.",
+        "Legitimate prizes never require an upfront fee.",
+        "Block the number and inform your family."
+      ],
+      "bn": [
+        "আপনি যদি কোনো প্রতিযোগিতায় অংশ না নিয়ে থাকেন, তাহলে পুরস্কার জেতার প্রশ্নই আসে না।",
+        "আসল পুরস্কারে কখনো আগে টাকা পাঠাতে হয় না।",
+        "নম্বরটি ব্লক করুন এবং পরিবারকে জানান।"
+      ]
+    }
+  }
+]

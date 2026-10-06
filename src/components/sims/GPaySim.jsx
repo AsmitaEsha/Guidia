@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useApp } from '../../context/AppStateContext';
-import { ArrowLeft, Search, Scan, Smartphone, Banknote, UserPlus, CreditCard, History, QrCode } from 'lucide-react';
+import { ArrowLeft, Scan, Smartphone, Banknote, UserPlus, CreditCard, History, QrCode } from 'lucide-react';
 
 const GP_BLUE = '#1A73E8';
 const GP_BG = '#F8F9FA';

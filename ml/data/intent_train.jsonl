@@ -1,0 +1,95 @@
+{"text": "how do i use whatsapp", "label": "LEARN_APP", "language": "en"}
+{"text": "হোয়াটসঅ্যাপ কীভাবে চালাতে হয় শিখতে চাই", "label": "LEARN_APP", "language": "bn"}
+{"text": "facebook kivabe chalay ektu shikhan", "label": "LEARN_APP", "language": "bn-Latn"}
+{"text": "मुझे यूट्यूब चलाना सिखाओ", "label": "LEARN_APP", "language": "hi"}
+{"text": "chỉ tôi cách dùng zalo với", "label": "LEARN_APP", "language": "vi"}
+{"text": "start a new lesson please", "label": "START_LESSON", "language": "en"}
+{"text": "নতুন একটা পাঠ শুরু করো", "label": "START_LESSON", "language": "bn"}
+{"text": "ekta notun lesson shuru koro", "label": "START_LESSON", "language": "bn-Latn"}
+{"text": "नया पाठ शुरू करो", "label": "START_LESSON", "language": "hi"}
+{"text": "bắt đầu bài học mới", "label": "START_LESSON", "language": "vi"}
+{"text": "where did i stop yesterday", "label": "CONTINUE_LEARNING", "language": "en"}
+{"text": "গতকাল যেখানে থেমেছিলাম সেখান থেকে চালাও", "label": "CONTINUE_LEARNING", "language": "bn"}
+{"text": "ager lesson ta abar continue korbo", "label": "CONTINUE_LEARNING", "language": "bn-Latn"}
+{"text": "पिछला पाठ जारी रखो", "label": "CONTINUE_LEARNING", "language": "hi"}
+{"text": "học tiếp bài hôm qua", "label": "CONTINUE_LEARNING", "language": "vi"}
+{"text": "I want to send money through bKash", "label": "SEND_MONEY", "language": "en"}
+{"text": "আমি বিকাশে টাকা পাঠাতে চাই", "label": "SEND_MONEY", "language": "bn"}
+{"text": "bkash e taka pathabo kivabe", "label": "SEND_MONEY", "language": "bn-Latn"}
+{"text": "मुझे बेटे को पैसे भेजने हैं", "label": "SEND_MONEY", "language": "hi"}
+{"text": "tôi muốn chuyển tiền cho con gái", "label": "SEND_MONEY", "language": "vi"}
+{"text": "how can my son send me money", "label": "RECEIVE_MONEY", "language": "en"}
+{"text": "ছেলে টাকা পাঠালে আমি কীভাবে পাব", "label": "RECEIVE_MONEY", "language": "bn"}
+{"text": "amar account e taka asbe kivabe", "label": "RECEIVE_MONEY", "language": "bn-Latn"}
+{"text": "पैसे मेरे खाते में कैसे आएंगे", "label": "RECEIVE_MONEY", "language": "hi"}
+{"text": "làm sao để nhận tiền", "label": "RECEIVE_MONEY", "language": "vi"}
+{"text": "book a doctor for next week", "label": "BOOK_APPOINTMENT", "language": "en"}
+{"text": "ডাক্তারের সিরিয়াল দিতে চাই", "label": "BOOK_APPOINTMENT", "language": "bn"}
+{"text": "doctor er appointment nibo online e", "label": "BOOK_APPOINTMENT", "language": "bn-Latn"}
+{"text": "डॉक्टर का अपॉइंटमेंट बुक करना है", "label": "BOOK_APPOINTMENT", "language": "hi"}
+{"text": "đặt lịch khám bác sĩ", "label": "BOOK_APPOINTMENT", "language": "vi"}
+{"text": "how do i send a photo to my daughter", "label": "SEND_MESSAGE", "language": "en"}
+{"text": "নাতিকে একটা মেসেজ পাঠাব", "label": "SEND_MESSAGE", "language": "bn"}
+{"text": "whatsapp e chobi pathabo", "label": "SEND_MESSAGE", "language": "bn-Latn"}
+{"text": "बेटी को संदेश भेजना है", "label": "SEND_MESSAGE", "language": "hi"}
+{"text": "nhắn tin cho cháu", "label": "SEND_MESSAGE", "language": "vi"}
+{"text": "someone sent me a message how do i open it", "label": "READ_MESSAGE", "language": "en"}
+{"text": "নতুন মেসেজ কোথায় দেখব", "label": "READ_MESSAGE", "language": "bn"}
+{"text": "message ta porbo kivabe", "label": "READ_MESSAGE", "language": "bn-Latn"}
+{"text": "नया मैसेज कैसे पढ़ूं", "label": "READ_MESSAGE", "language": "hi"}
+{"text": "đọc tin nhắn mới ở đâu", "label": "READ_MESSAGE", "language": "vi"}
+{"text": "write an email to the bank", "label": "SEND_EMAIL", "language": "en"}
+{"text": "ইমেইল পাঠাতে চাই", "label": "SEND_EMAIL", "language": "bn"}
+{"text": "gmail diye mail pathabo", "label": "SEND_EMAIL", "language": "bn-Latn"}
+{"text": "ईमेल कैसे भेजते हैं", "label": "SEND_EMAIL", "language": "hi"}
+{"text": "gửi email như thế nào", "label": "SEND_EMAIL", "language": "vi"}
+{"text": "check my inbox", "label": "READ_EMAIL", "language": "en"}
+{"text": "আমার ইমেইল খুলে দেখব", "label": "READ_EMAIL", "language": "bn"}
+{"text": "mail ashche kina dekhbo", "label": "READ_EMAIL", "language": "bn-Latn"}
+{"text": "मेरे ईमेल देखने हैं", "label": "READ_EMAIL", "language": "hi"}
+{"text": "xem hộp thư email", "label": "READ_EMAIL", "language": "vi"}
+{"text": "i want to buy medicine online", "label": "SHOP_ONLINE", "language": "en"}
+{"text": "অনলাইনে শাড়ি কিনব", "label": "SHOP_ONLINE", "language": "bn"}
+{"text": "daraz theke order dibo", "label": "SHOP_ONLINE", "language": "bn-Latn"}
+{"text": "ऑनलाइन सामान कैसे मंगाएं", "label": "SHOP_ONLINE", "language": "hi"}
+{"text": "mua hàng trên shopee", "label": "SHOP_ONLINE", "language": "vi"}
+{"text": "what should i press now", "label": "CHECK_SCREEN", "language": "en"}
+{"text": "এখন কোন বাটনে চাপব", "label": "CHECK_SCREEN", "language": "bn"}
+{"text": "ekhon kothay chap dibo", "label": "CHECK_SCREEN", "language": "bn-Latn"}
+{"text": "अब कौन सा बटन दबाऊं", "label": "CHECK_SCREEN", "language": "hi"}
+{"text": "bây giờ bấm nút nào", "label": "CHECK_SCREEN", "language": "vi"}
+{"text": "what is this page on my phone", "label": "EXPLAIN_SCREEN", "language": "en"}
+{"text": "এই স্ক্রিনটা কী বোঝাচ্ছে", "label": "EXPLAIN_SCREEN", "language": "bn"}
+{"text": "ei page ta ki", "label": "EXPLAIN_SCREEN", "language": "bn-Latn"}
+{"text": "यह स्क्रीन क्या है", "label": "EXPLAIN_SCREEN", "language": "hi"}
+{"text": "màn hình này là gì vậy", "label": "EXPLAIN_SCREEN", "language": "vi"}
+{"text": "is it safe to give my phone number here", "label": "SAFETY_CHECK", "language": "en"}
+{"text": "এখানে ছবি দেওয়া কি নিরাপদ", "label": "SAFETY_CHECK", "language": "bn"}
+{"text": "ei app ta safe to", "label": "SAFETY_CHECK", "language": "bn-Latn"}
+{"text": "क्या यह ऐप सुरक्षित है", "label": "SAFETY_CHECK", "language": "hi"}
+{"text": "ứng dụng này có an toàn không", "label": "SAFETY_CHECK", "language": "vi"}
+{"text": "i got a message saying i won a prize is it real", "label": "SCAM_CHECK", "language": "en"}
+{"text": "এই মেসেজটা কি প্রতারণা", "label": "SCAM_CHECK", "language": "bn"}
+{"text": "ei sms ta fake naki", "label": "SCAM_CHECK", "language": "bn-Latn"}
+{"text": "क्या यह मैसेज फर्जी है", "label": "SCAM_CHECK", "language": "hi"}
+{"text": "tin nhắn này có phải lừa đảo không", "label": "SCAM_CHECK", "language": "vi"}
+{"text": "tell my son i need him", "label": "CONTACT_GUARDIAN", "language": "en"}
+{"text": "আমার মেয়েকে জানাও", "label": "CONTACT_GUARDIAN", "language": "bn"}
+{"text": "chele ke ektu khobor dao", "label": "CONTACT_GUARDIAN", "language": "bn-Latn"}
+{"text": "मेरे बेटे को बुलाओ", "label": "CONTACT_GUARDIAN", "language": "hi"}
+{"text": "báo cho con trai tôi", "label": "CONTACT_GUARDIAN", "language": "vi"}
+{"text": "i am lost please help", "label": "REQUEST_HELP", "language": "en"}
+{"text": "আমি কিছু বুঝতে পারছি না সাহায্য করো", "label": "REQUEST_HELP", "language": "bn"}
+{"text": "ami atke gechi help lagbe", "label": "REQUEST_HELP", "language": "bn-Latn"}
+{"text": "मुझे कुछ समझ नहीं आ रहा मदद करो", "label": "REQUEST_HELP", "language": "hi"}
+{"text": "tôi không hiểu gì cả giúp tôi", "label": "REQUEST_HELP", "language": "vi"}
+{"text": "go back to home", "label": "NAVIGATION", "language": "en"}
+{"text": "পরের ধাপে যাও", "label": "NAVIGATION", "language": "bn"}
+{"text": "home e jao", "label": "NAVIGATION", "language": "bn-Latn"}
+{"text": "पीछे जाओ", "label": "NAVIGATION", "language": "hi"}
+{"text": "quay lại trang chủ", "label": "NAVIGATION", "language": "vi"}
+{"text": "what is the weather today", "label": "UNKNOWN", "language": "en"}
+{"text": "আজ কী রান্না করব", "label": "UNKNOWN", "language": "bn"}
+{"text": "cricket score koto", "label": "UNKNOWN", "language": "bn-Latn"}
+{"text": "आज कौन सा त्योहार है", "label": "UNKNOWN", "language": "hi"}
+{"text": "hôm nay trời có mưa không", "label": "UNKNOWN", "language": "vi"}

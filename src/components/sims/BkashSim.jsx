@@ -152,7 +152,7 @@ export default function BkashSim({ onClose }) {
   const [recipient, setRecipient] = useState('');
   const [recipientName, setRecipientName] = useState('');
   const [amount, setAmount] = useState('');
-  const [guardianWait, setGuardianWait] = useState(false);
+  const [guardianApproved, setGuardianApproved] = useState(false);
   const [showSafetyPanel, setShowSafetyPanel] = useState(false);
 
   const back = () => {
@@ -171,15 +171,13 @@ export default function BkashSim({ onClose }) {
     setShowSafetyPanel(true);
   };
 
-  const handleGuardianApprove = () => {
+  // Called by the Safety Net only after the server executed the practice
+  // transfer (including a real guardian approval when one was required).
+  const handleGuardianApprove = (proposal) => {
     setShowSafetyPanel(false);
-    setGuardianWait(true);
-    speak(t('Notifying guardian for approval...', 'গার্ডিয়ানকে অনুমোদনের জন্য জানানো হচ্ছে...'));
-    setTimeout(() => {
-      setGuardianWait(false);
-      setStep('done');
-      speak(t('Guardian approved. Transfer successful.', 'গার্ডিয়ান অনুমোদন দিয়েছেন। টাকা পাঠানো সফল হয়েছে।'));
-    }, 3000);
+    setGuardianApproved(proposal?.guardianApproval?.status === 'APPROVED');
+    setStep('done');
+    speak(t('Practice transfer complete. No real money was moved.', 'অনুশীলনের টাকা পাঠানো সম্পন্ন। কোনো আসল টাকা যায়নি।'));
   };
 
   const handleEditFromSafetyPanel = () => {
@@ -279,19 +277,6 @@ export default function BkashSim({ onClose }) {
     );
   };
 
-  if (guardianWait) {
-    return (
-      <PhoneFrame className="bkash-wait-screen">
-        <div className="bkash-wait-card">
-          <ShieldCheck size={64}/>
-          <h2>{t('Waiting for Guardian', 'গার্ডিয়ানের জন্য অপেক্ষা')}</h2>
-          <p>{t('Your guardian is reviewing this transfer.', 'আপনার গার্ডিয়ান এই লেনদেনটি দেখছেন।')}</p>
-          <div className="spinner" style={{ width: 44, height: 44, borderWidth: 4 }}/>
-        </div>
-      </PhoneFrame>
-    );
-  }
-
   if (step === 'done') {
     return (
       <PhoneFrame>
@@ -303,7 +288,7 @@ export default function BkashSim({ onClose }) {
           <h2>{t('Transfer Complete', 'টাকা পাঠানো সম্পন্ন')}</h2>
           <p>{recipientName || recipient}</p>
           <strong>Tk {amount}</strong>
-          <span>{t('Approved by Guardian', 'গার্ডিয়ান অনুমোদিত')}</span>
+          <span>{guardianApproved ? t('Approved by your guardian · Practice only', 'আপনার গার্ডিয়ান অনুমোদিত · শুধু অনুশীলন') : t('Practice only — no real money moved', 'শুধু অনুশীলন — আসল টাকা যায়নি')}</span>
           <button className="bkash-primary-action" onClick={() => setStep('home')}>
             Back to Home <ArrowRight size={22}/>
           </button>
@@ -355,8 +340,8 @@ export default function BkashSim({ onClose }) {
           who={recipientName || recipient}
           amountOrData={`Tk ${amount}`}
           consequence={t(
-            'Once your guardian approves, the money leaves your account and cannot be undone.',
-            'আপনার গার্ডিয়ান অনুমোদন দিলে টাকা আপনার অ্যাকাউন্ট থেকে চলে যাবে এবং তা ফেরত আনা যাবে না।'
+            'In the real app, sent money usually cannot be taken back. Here it is practice money only.',
+            'আসল অ্যাপে পাঠানো টাকা সাধারণত ফেরত আনা যায় না। এখানে শুধু অনুশীলনের টাকা।'
           )}
           onProceed={handleGuardianApprove}
           onEdit={handleEditFromSafetyPanel}

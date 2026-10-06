@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useApp } from '../../context/AppStateContext';
-import { ArrowLeft, Search, ShoppingCart, Menu, Home, User, Star } from 'lucide-react';
+import { ArrowLeft, Search, ShoppingCart, Star } from 'lucide-react';
 
 const AMZ_DARK = '#232f3e';
 const AMZ_ORANGE = '#f3a847';

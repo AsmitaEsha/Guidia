@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppStateContext';
 import { ArrowLeft, Phone, Video, Search, MoreVertical, Send, Smile, Paperclip, Camera, Mic } from 'lucide-react';
-import { FAKE_CONTACTS, FAKE_WHATSAPP_MESSAGES } from '../../data/hardcoded';
+import { FAKE_CONTACTS, FAKE_WHATSAPP_MESSAGES } from '../../demo/simulationFixtures';
 
 const WA_GREEN = '#25D366';
 const WA_DARK = '#075E54';
@@ -101,7 +101,7 @@ export default function WhatsAppSim({ onClose }) {
         <div style={{ display:'flex', gap:0 }}>
           {['chats','status','calls'].map(s => (
             <button key={s} onClick={()=>setTab(s)}
-              style={{ flex:1, padding:'10px 0', fontSize:13, fontWeight:700, color: tab===s?'#fff':'rgba(255,255,255,0.6)', borderBottom: tab===s?`3px solid ${WA_GREEN}`:'3px solid transparent', background:'none', border:'none', borderBottom: tab===s?`3px solid ${WA_GREEN}`:'3px solid transparent', cursor:'pointer', textTransform:'uppercase', letterSpacing:0.5 }}>
+              style={{ flex:1, padding:'10px 0', fontSize:13, fontWeight:700, color: tab===s?'#fff':'rgba(255,255,255,0.6)', background:'none', border:'none', borderBottom: tab===s?`3px solid ${WA_GREEN}`:'3px solid transparent', cursor:'pointer', textTransform:'uppercase', letterSpacing:0.5 }}>
               {s === 'chats' ? t('Chats','চ্যাট') : s === 'status' ? t('Status','স্ট্যাটাস') : t('Calls','কল')}
             </button>
           ))}
@@ -123,7 +123,7 @@ export default function WhatsAppSim({ onClose }) {
       {/* Contact list */}
       <div style={{ flex:1, overflowY:'auto' }}>
         {FAKE_CONTACTS.map((c, i) => (
-          <button key={c.id} onClick={() => openChat(c)} style={{ display:'flex', alignItems:'center', gap:14, width:'100%', padding:'12px 16px', borderBottom:'1px solid #F0F0F0', background:'#fff', textAlign:'left', cursor:'pointer', border:'none', borderBottom:'1px solid #F0F0F0' }}>
+          <button key={c.id} onClick={() => openChat(c)} style={{ display:'flex', alignItems:'center', gap:14, width:'100%', padding:'12px 16px', background:'#fff', textAlign:'left', cursor:'pointer', border:'none', borderBottom:'1px solid #F0F0F0' }}>
             <div style={{ width:52, height:52, borderRadius:'50%', background:`hsl(${i*60},55%,55%)`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:24, flexShrink:0 }}>{c.avatar}</div>
             <div style={{ flex:1 }}>
               <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline' }}>

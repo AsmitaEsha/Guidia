@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useApp } from '../../context/AppStateContext';
-import { ArrowLeft, Bell, Settings, Send, Download, Plus, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Bell, Settings, Send, Download, Plus } from 'lucide-react';
 
 const PP_BLUE = '#003087';
 const PP_LIGHT = '#0079C1';

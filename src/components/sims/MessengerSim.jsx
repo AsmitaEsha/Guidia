@@ -154,7 +154,7 @@ export default function MessengerSim({ onClose }) {
       {/* Chat List */}
       <div style={{ flex:1, overflowY:'auto' }}>
         {CONTACTS.map((c,i) => (
-          <button key={c.id} onClick={()=>openChat(c)} style={{ display:'flex', alignItems:'center', gap:14, width:'100%', padding:'12px 16px', borderBottom:'1px solid #F0F2F5', background:'#fff', textAlign:'left', border:'none', borderBottom:'1px solid #F0F2F5', cursor:'pointer' }}>
+          <button key={c.id} onClick={()=>openChat(c)} style={{ display:'flex', alignItems:'center', gap:14, width:'100%', padding:'12px 16px', background:'#fff', textAlign:'left', border:'none', borderBottom:'1px solid #F0F2F5', cursor:'pointer' }}>
             <div style={{ position:'relative', flexShrink:0 }}>
               <div style={{ width:54, height:54, borderRadius:'50%', background:c.color, display:'flex', alignItems:'center', justifyContent:'center', fontSize:26 }}>{c.avatar}</div>
               {c.active && <div style={{ position:'absolute', bottom:2, right:2, width:14, height:14, borderRadius:'50%', background:'#44B700', border:'2px solid #fff' }}/>}

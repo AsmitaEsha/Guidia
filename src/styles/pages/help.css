@@ -1,0 +1,25 @@
+/* ── Help — the most emotionally sensitive page: calm, human, clear ───── */
+.help-hero { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s-3); padding-top: var(--s-3); }
+.help-hero-mark { width: 72px; height: 72px; border-radius: 24px; display: grid; place-items: center; background: var(--coral-50); color: var(--coral-700); box-shadow: inset 0 0 0 1px var(--coral-100); margin-bottom: var(--s-2); }
+[data-gx-theme='dark'] .help-hero-mark { color: var(--coral-600); }
+.help-hero-mark svg { width: 36px; height: 36px; }
+.help-title { font-family: var(--font-display); font-size: clamp(2.2rem, 1.6rem + 2vw, 3rem); font-weight: 700; letter-spacing: -0.02em; }
+:lang(bn) .help-title, :lang(hi) .help-title { font-family: var(--font-sans); }
+
+.emergency-note { display: flex; gap: var(--s-3); align-items: flex-start; padding: var(--s-3) var(--s-4); border-radius: var(--r-lg); background: var(--card); border: 1px solid var(--border); color: var(--fg-muted); font-size: var(--fs-sm); }
+.emergency-note > svg { color: var(--danger-700); width: 20px; height: 20px; flex-shrink: 0; margin-top: 3px; }
+.emergency-note strong { color: var(--fg); }
+
+.help-form { border-radius: var(--r-2xl); }
+.reason-grid { display: grid; gap: var(--choice-gap); grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); }
+.reason-grid .choice { min-height: 76px; }
+
+.help-status { display: flex; flex-direction: column; gap: var(--s-5); border-radius: var(--r-2xl); border: 2px solid color-mix(in srgb, var(--primary) 30%, var(--border)); }
+.help-status-head { display: flex; gap: var(--s-4); align-items: center; }
+.help-status-icon { width: 64px; height: 64px; border-radius: 20px; display: grid; place-items: center; flex-shrink: 0; background: var(--ok-100); color: var(--ok-700); }
+.help-status-icon.is-warn { background: var(--warn-100); color: var(--warn-700); }
+.help-status-icon svg { width: 32px; height: 32px; }
+.reassure-line { padding: var(--s-3) var(--s-4); border-radius: var(--r-md); background: var(--primary-soft); font-weight: 600; }
+
+.past-requests summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; }
+.past-requests[open] summary { margin-bottom: var(--s-2); }
