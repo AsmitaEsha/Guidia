@@ -33,11 +33,6 @@ function HomeHero({ t, firstName }) {
         <h1 id="home-question" className="home-question">{t('What would you like to do today?', 'আজ আপনি কী করতে চান?', 'आज आप क्या करना चाहेंगे?', 'Hôm nay bạn muốn làm gì?')}</h1>
         <p className="lead">{t('Pick one small step. Guidia stays beside you, and nothing in practice can go wrong for real.', 'একটি ছোট ধাপ বেছে নিন। Guidia আপনার পাশে আছে, অনুশীলনে আসলে কিছু ভুল হবে না।', 'एक छोटा कदम चुनें। Guidia आपके साथ है, अभ्यास में असल में कुछ गलत नहीं होगा।', 'Chọn một bước nhỏ. Guidia luôn ở bên bạn, khi luyện tập không có gì hỏng thật cả.')}</p>
       </div>
-      <svg className="home-hero-art" viewBox="0 0 200 200" aria-hidden="true">
-        <path d="M60 160 C 16 104, 56 36, 136 36 C 136 100, 108 148, 60 160 Z" fill="var(--primary)" opacity="0.10" />
-        <path d="M144 44 C 188 100, 144 168, 64 168 C 64 108, 92 60, 144 44 Z" fill="var(--coral-500)" opacity="0.12" />
-        <circle cx="102" cy="102" r="14" fill="var(--gold-500)" opacity="0.35" />
-      </svg>
     </section>
   );
 }
@@ -84,7 +79,7 @@ function ContinueCard({ t, language, task, onChanged, recommended }) {
         <span className="icon-chip icon-chip-lg tone-gold" aria-hidden="true"><Sparkles /></span>
         <div className="stack grow" style={{ '--gap': 'var(--s-2)' }}>
           <p className="eyebrow">{t('Start with a small step', 'ছোট একটি ধাপে শুরু করুন', 'एक छोटे कदम से शुरू करें', 'Bắt đầu với một bước nhỏ')}</p>
-          <h2 className="h-section">{recommended ? localize(recommended.title, language) : t('Send your first message', 'প্রথম মেসেজ পাঠান', 'अपना पहला संदेश भेजें', 'Gửi tin nhắn đầu tiên')}</h2>
+          <h2 className="h-section">{recommended ? localize(recommended.title, language) : t('Send your first message', 'প্রথম মেসেজ পাঠান', 'अपना पहला मैसेज भेजें', 'Gửi tin nhắn đầu tiên')}</h2>
           <p className="text-muted">{t('Nothing in progress right now. This short lesson is a good place to begin.', 'এখন কিছু চলছে না। শুরু করার জন্য এই ছোট পাঠটি ভালো।', 'अभी कुछ चल नहीं रहा। शुरू करने के लिए यह छोटा पाठ अच्छा है।', 'Hiện chưa có bài nào đang học. Bài ngắn này là điểm khởi đầu tốt.')}</p>
         </div>
         <Button arrow to={`/app/learn/${recommended?.slug || 'whatsapp-send-message'}`}>{t('Start learning', 'শেখা শুরু করুন', 'सीखना शुरू करें', 'Bắt đầu học')}</Button>
@@ -287,7 +282,7 @@ export default function HomePage() {
   const { user } = useAuth();
   const { t, language } = usePreferences();
   const task = useResource('/tasks/active', { select: (d) => d.task });
-  const memories = useResource('/memory', { select: (d) => d.entries.slice(0, 3) });
+  const memories = useResource(`/memory?lang=${language}`, { select: (d) => d.entries.slice(0, 3) });
   const progress = useResource('/progress/me', { select: (d) => d.progress });
   const lessons = useResource('/learning/lessons', { select: (d) => d.lessons });
 

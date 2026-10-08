@@ -7,6 +7,7 @@ import { env } from '../config/env.js';
 import { ApiError } from '../middleware/errorHandler.js';
 import { logger } from '../lib/logger.js';
 import { aiGateway } from './gateway.js';
+import { forSpeech } from './pronunciation.js';
 
 // Spoken guidance ("read it to me"). Engines, in order:
 //   1. the AI provider's own voice (xAI), when configured
@@ -34,7 +35,7 @@ const EDGE_VOICES = () => ({
 // Pick the voice from the words themselves, so a sentence that only exists
 // in English is read by an English voice even when the app is in Hindi, and
 // Bengali text is never read by a Hindi voice.
-const VI_MARKS = /[ăâđêôơưạảấầẩẫậắằẳẵặẹẻẽếềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ]/i;
+const VI_MARKS = /[àáảãạăằắẳẵặâầấẩẫậđèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵ]/i;
 export function spokenLanguage(text, fallback = 'en') {
   const bn = (text.match(/[ঀ-৿]/g) || []).length;
   const hi = (text.match(/[ऀ-ॿ]/g) || []).length;
@@ -92,7 +93,8 @@ function styled(text, speed) {
   return `Read this aloud ${pace}: ${text}`;
 }
 
-async function geminiSpeech({ text, speed }) {
+async function geminiSpeech({ parts, speed }) {
+  const text = parts.map((p) => p.text).join(' ');
   if (!env.ai.gemini.apiKey || Date.now() < geminiCoolDownUntil) throw new Error('Gemini speech unavailable');
   const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${env.ai.gemini.ttsModel}:generateContent`, {
     method: 'POST',
@@ -125,13 +127,48 @@ async function geminiSpeech({ text, speed }) {
 
 // The free voice service occasionally drops a connection; one fresh retry
 // fixes almost every failure.
-async function edgeSpeech(args) {
+async function edgeWithRetry(args) {
   try {
     return await edgeOnce(args);
   } catch (err) {
     logger.warn('Free voice failed once, retrying', { message: err.message });
     return edgeOnce(args);
   }
+}
+
+// An English phrase inside Bengali or Hindi text (2+ Latin words, e.g. an
+// untranslated lesson title) is read by the English voice, the rest by the
+// native one, and the MP3 parts are joined into one clip.
+const LATIN_RUN = /[A-Za-z][\w'’.]*(?:[\s,]+[A-Za-z][\w'’.]*)+/g;
+
+export function speechSegments(text, lang) {
+  if (lang !== 'bn' && lang !== 'hi') return [{ text: forSpeech(text, lang), lang }];
+  const out = [];
+  let last = 0;
+  for (const m of text.matchAll(LATIN_RUN)) {
+    // A phrase the dictionary fully covers ("Send Money") stays in the native voice.
+    if (!/[A-Za-z]/.test(forSpeech(m[0], lang))) continue;
+    if (m.index > last) out.push({ text: text.slice(last, m.index), lang });
+    out.push({ text: m[0], lang: 'en' });
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) out.push({ text: text.slice(last), lang });
+  // Drop punctuation-only pieces, then rejoin neighbours in the same language.
+  const merged = [];
+  for (const seg of out.filter((x) => /[\p{L}\p{N}]/u.test(x.text))) {
+    const prev = merged[merged.length - 1];
+    if (prev && prev.lang === seg.lang) prev.text = `${prev.text.trim()}, ${seg.text.trim()}`;
+    else merged.push({ ...seg });
+  }
+  // Every part gets its voice's spellings (native words, and "Guidia").
+  return merged.map((x) => ({ lang: x.lang, text: forSpeech(x.text, x.lang).trim() }));
+}
+
+async function edgeSpeech({ parts, speed }) {
+  if (parts.length === 1) return edgeWithRetry({ text: parts[0].text, language: parts[0].lang, speed });
+  const clips = [];
+  for (const part of parts) clips.push(await edgeWithRetry({ text: part.text, language: part.lang, speed }));
+  return { audio: Buffer.concat(clips.map((c) => c.audio)), mimeType: 'audio/mpeg', ext: 'mp3' };
 }
 
 const MIME = { mp3: 'audio/mpeg', wav: 'audio/wav' };
@@ -185,14 +222,16 @@ export const speechService = {
     if (engine === 'provider') return aiGateway.synthesizeSpeech({ text, language: locale, speed, meta });
 
     const lang = spokenLanguage(text, language);
+    const parts = speechSegments(text, lang);
+    const spoken = parts.map((p) => `${p.lang}:${p.text}`).join('|');
     const rounded = Math.round(speed * 20) / 20;
     for (const name of this.order()) {
       const voice = name === 'edge' ? EDGE_VOICES()[lang] : env.ai.gemini.ttsVoice;
-      const key = crypto.createHash('sha256').update(`${name}|${voice}|${lang}|${rounded}|${text}`).digest('hex').slice(0, 40);
+      const key = crypto.createHash('sha256').update(`${name}|${voice}|${lang}|${rounded}|${spoken}`).digest('hex').slice(0, 40);
       const cached = await readCache(key);
       if (cached) return { ...cached, cached: true, engine: name };
       try {
-        const clip = await ENGINES[name]({ text, language: lang, speed: rounded });
+        const clip = await ENGINES[name]({ parts, speed: rounded });
         writeCache(key, clip);
         return { audio: clip.audio, mimeType: clip.mimeType, cached: false, engine: name };
       } catch (err) {

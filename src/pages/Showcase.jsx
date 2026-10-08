@@ -30,7 +30,7 @@ function ProblemStep({ t }) {
       </div>
       <div className="sc-problem">
         <div className={`sc-confusing ${beat >= 2 ? 'is-calm' : ''}`}>
-          <div className="sc-pop">⚠ {t('Update required! Enter PIN to keep your account', 'আপডেট দরকার! অ্যাকাউন্ট রাখতে পিন দিন', 'अपडेट ज़रूरी! खाता बचाने के लिए पिन डालें', 'Cần cập nhật! Nhập PIN để giữ tài khoản')}</div>
+          <div className="sc-pop">{t('Update required! Enter PIN to keep your account', 'আপডেট দরকার! অ্যাকাউন্ট রাখতে পিন দিন', 'अपडेट ज़रूरी! खाता बचाने के लिए पिन डालें', 'Cần cập nhật! Nhập PIN để giữ tài khoản')}</div>
           <div className="sc-btns"><span>OK</span><span>Allow</span><span>Continue</span><span>Verify</span></div>
         </div>
         {beat >= 1 && <p className="sc-thought fade">“{t('What should I press?', 'আমি কোথায় চাপব?', 'मैं क्या दबाऊं?', 'Tôi nên bấm gì?')}”</p>}

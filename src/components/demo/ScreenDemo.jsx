@@ -15,7 +15,7 @@ const CLUES = [
   { tone: 'danger', label: ['Urgent warning banner', 'জরুরি সতর্কবার্তা', 'जरूरी चेतावनी बैनर', 'Biểu ngữ cảnh báo gấp'],
     why: ['Pressure like "suspended today" is designed to rush you. Real services give you time.', '"আজই বন্ধ" ধরনের চাপ আপনাকে তাড়াহুড়ো করাতে চায়। আসল সেবা সময় দেয়।', '"आज ही बंद" जैसा दबाव आपको जल्दबाज़ी कराने के लिए है। असली सेवाएं समय देती हैं।', 'Áp lực như "khóa hôm nay" nhằm hối thúc bạn. Dịch vụ thật luôn cho bạn thời gian.'] },
   { tone: 'danger', label: ['PIN box', 'পিনের ঘর', 'पिन का बॉक्स', 'Ô nhập mã PIN'],
-    why: ['Never type your PIN on a page you opened from a message. This is how money is stolen.', 'মেসেজ থেকে খোলা পেজে কখনো পিন লিখবেন না। এভাবেই টাকা চুরি হয়।', 'संदेश से खुले पेज पर कभी पिन न लिखें। ऐसे ही पैसे चुराए जाते हैं।', 'Đừng bao giờ nhập PIN trên trang mở từ tin nhắn. Tiền bị lấy cắp theo cách này.'] },
+    why: ['Never type your PIN on a page you opened from a message. This is how money is stolen.', 'মেসেজ থেকে খোলা পেজে কখনো পিন লিখবেন না। এভাবেই টাকা চুরি হয়।', 'मैसेज से खुले पेज पर कभी पिन न लिखें। ऐसे ही पैसे चुराए जाते हैं।', 'Đừng bao giờ nhập PIN trên trang mở từ tin nhắn. Tiền bị lấy cắp theo cách này.'] },
   { tone: 'brand', label: ['Close / Cancel', 'বন্ধ / বাতিল', 'बंद / रद्द', 'Đóng / Hủy'],
     why: ['This is the safe choice. Close the page and open the official app yourself.', 'এটাই নিরাপদ পথ। পেজটি বন্ধ করে নিজে অফিসিয়াল অ্যাপ খুলুন।', 'यही सुरक्षित विकल्प है। पेज बंद करें और खुद आधिकारिक ऐप खोलें।', 'Đây là lựa chọn an toàn. Đóng trang và tự mở ứng dụng chính thức.'] },
 ];
@@ -45,7 +45,7 @@ export default function ScreenDemo() {
       <div className="demo-screen">
         <div className="demo-phone" role="group" aria-label={t('Example screenshot of a fake verification page', 'ভুয়া যাচাই পেজের উদাহরণ স্ক্রিনশট', 'नकली सत्यापन पेज का उदाहरण स्क्रीनशॉट', 'Ảnh ví dụ về trang xác minh giả')}>
           <div className="dp-url dp-anchor"><Lock aria-hidden="true" /><span>secure-wallet-verify.example</span>{marker(0)}</div>
-          <div className="dp-banner dp-anchor">⚠ {t('Your account will be SUSPENDED today! Verify now', 'আজই আপনার অ্যাকাউন্ট বন্ধ হবে! এখনই যাচাই করুন', 'आज आपका खाता बंद होगा! अभी सत्यापित करें', 'Tài khoản sẽ bị KHÓA hôm nay! Xác minh ngay')}{marker(1)}</div>
+          <div className="dp-banner dp-anchor">{t('Your account will be SUSPENDED today! Verify now', 'আজই আপনার অ্যাকাউন্ট বন্ধ হবে! এখনই যাচাই করুন', 'आज आपका खाता बंद होगा! अभी सत्यापित करें', 'Tài khoản sẽ bị KHÓA hôm nay! Xác minh ngay')}{marker(1)}</div>
           <div className="dp-body">
             <p className="dp-h">{t('Account verification', 'অ্যাকাউন্ট যাচাই', 'खाता सत्यापन', 'Xác minh tài khoản')}</p>
             <div className="dp-field"><span>{t('Mobile number', 'মোবাইল নম্বর', 'मोबाइल नंबर', 'Số điện thoại')}</span><b>01X-XXXX-XX12</b></div>

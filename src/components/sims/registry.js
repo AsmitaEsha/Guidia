@@ -6,6 +6,7 @@ export const SIMULATORS = {
   whatsapp: lazy(() => import('./WhatsAppSim')),
   facebook: lazy(() => import('./FacebookSim')),
   messenger: lazy(() => import('./MessengerSim')),
+  imo: lazy(() => import('./ImoSim')),
   gmail: lazy(() => import('./GmailSim')),
   bkash: lazy(() => import('./BkashSim')),
   nagad: lazy(() => import('./NagadSim')),

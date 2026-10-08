@@ -10,6 +10,7 @@ import { hashToken, randomToken } from '../security/tokens.js';
 import { audit, AUDIT } from './auditService.js';
 import { outbox } from '../notifications/outbox.js';
 import { logger } from '../lib/logger.js';
+import { guardianService } from './guardianService.js';
 
 const PASSWORD_MIN_LENGTH = 8;
 const RESET_TTL_MS = 30 * 60 * 1000;
@@ -39,6 +40,8 @@ export function toPublicUser(user) {
     preferredLanguage: user.preferredLanguage,
     age: user.age ?? null,
     countryCode: user.countryCode ?? null,
+    phone: user.phone ?? null,
+    createdAt: user.createdAt,
     preference: user.preference ?? null,
   };
 }
@@ -61,17 +64,26 @@ async function issueSession(user, { userAgent, rememberMe = true, familyId, tx =
 }
 
 export const authService = {
-  async register({ fullName, email, password, confirmPassword, preferredLanguage }, { userAgent, requestId } = {}) {
+  async register({ fullName, email, password, confirmPassword, preferredLanguage, accountType = 'LEARNER', familyCode }, { userAgent, requestId } = {}) {
     if (password !== confirmPassword) throw new ApiError(400, 'Those passwords do not match.', 'PASSWORD_MISMATCH');
     if (!isPasswordStrong(password)) throw new ApiError(400, WEAK_PASSWORD_MESSAGE, 'WEAK_PASSWORD');
 
     if (await userRepository.findByEmail(email)) {
       throw new ApiError(409, 'An account with this email already exists.', 'EMAIL_TAKEN');
     }
+    const isFamily = accountType === 'FAMILY';
+    // Check the family code before creating anything, so a typo never
+    // leaves a half-made account behind.
+    const code = isFamily && familyCode ? await guardianService.findFamilyCode(familyCode) : null;
     const passwordHash = await bcrypt.hash(password, 12);
-    const user = await userRepository.create({ fullName, email, passwordHash, preferredLanguage: preferredLanguage || 'en' });
+    let user = await userRepository.create({ fullName, email, passwordHash, preferredLanguage: preferredLanguage || 'en', role: isFamily ? 'GUARDIAN' : 'SENIOR' });
+    if (isFamily) {
+      // Family members go straight to their dashboard; there is nothing to learn first.
+      user = await userRepository.updatePreference(user.id, { onboardingDone: true });
+      if (code) await guardianService.linkWithCode(user.id, familyCode, { requestId });
+    }
     const tokens = await issueSession(user, { userAgent });
-    await audit({ actorUserId: user.id, action: AUDIT.REGISTERED, targetType: 'User', targetId: user.id, requestId });
+    await audit({ actorUserId: user.id, action: AUDIT.REGISTERED, targetType: 'User', targetId: user.id, requestId, metadata: { accountType } });
     return { user: toPublicUser(user), ...tokens };
   },
 

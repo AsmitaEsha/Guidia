@@ -55,10 +55,6 @@ export default function AuthLayout({ children, statement }) {
             <li><Globe aria-hidden="true" />English · বাংলা · हिन्दी · Tiếng Việt</li>
           </ul>
         </div>
-        <svg className="auth-art" viewBox="0 0 200 200" aria-hidden="true">
-          <path d="M60 160 C 16 104, 56 36, 136 36 C 136 100, 108 148, 60 160 Z" fill="#fff" opacity="0.07" />
-          <path d="M144 44 C 188 100, 144 168, 64 168 C 64 108, 92 60, 144 44 Z" fill="#f2795c" opacity="0.18" />
-        </svg>
       </aside>
 
       <main className="auth-main" id="main">

@@ -1,16 +1,40 @@
 import { useState } from 'react';
-import { BookOpen, HeartHandshake, MessageCircle, PlayCircle, ScanSearch, ShieldCheck, Hand, Sparkles } from 'lucide-react';
+import { BookOpen, HeartHandshake, MessageCircle, PlayCircle, ScanSearch, ShieldCheck, Hand, Sparkles, SlidersHorizontal, Volume2, VolumeX } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useVoice } from '../../context/VoiceContext';
+import { getLanguage } from '../../config/languages';
 import { usePreferences } from '../../context/PreferencesContext';
 import { LANGUAGES } from '../../config/languages';
 import { SIMULATORS } from '../sims/registry';
 import { Button } from '../ui';
-import { GuidiaMark } from '../GuidiaLogo';
 import ProductWalkthrough from './ProductWalkthrough';
 import portrait560 from '../../assets/hero-portrait-560.webp';
 import portrait900 from '../../assets/hero-portrait-900.webp';
 
+const GUIDANCE = {
+  calm: ['Comfortable pace', 'স্বচ্ছন্দ গতি', 'आरामदायक गति', 'Nhịp thoải mái'],
+  unsure: ['A little more help', 'একটু বেশি সাহায্য', 'थोड़ी ज़्यादा मदद', 'Thêm chút trợ giúp'],
+  scared: ['Very gentle, step by step', 'খুব ধীরে, এক এক ধাপে', 'बहुत सहज, एक-एक कदम', 'Rất nhẹ nhàng, từng bước'],
+};
+
+// What the visitor chose in the welcome setup, with a way to change it.
+function PersonalBar({ t, language, mode, prefs, onListen }) {
+  return (
+    <div className="lp-personal rise" role="group" aria-label={t('Set up for you', 'আপনার জন্য সাজানো', 'आपके लिए सजाया गया', 'Thiết lập cho bạn')}>
+      <span className="lp-personal-title"><Sparkles aria-hidden="true" />{t('Set up for you', 'আপনার জন্য সাজানো', 'आपके लिए सजाया गया', 'Thiết lập cho bạn')}</span>
+      <span className="lp-personal-chip">{getLanguage(language).nativeName}</span>
+      <span className="lp-personal-chip">{t(...(GUIDANCE[mode] || GUIDANCE.calm))}</span>
+      <span className="lp-personal-chip num">{t(`Text ${prefs.fontSize}px`, `লেখা ${prefs.fontSize}px`, `अक्षर ${prefs.fontSize}px`, `Chữ ${prefs.fontSize}px`)}</span>
+      <span className="lp-personal-chip">{prefs.voiceEnabled ? <Volume2 aria-hidden="true" /> : <VolumeX aria-hidden="true" />}{prefs.voiceEnabled ? t('Voice on', 'ভয়েস চালু', 'आवाज़ चालू', 'Bật giọng nói') : t('Voice off', 'ভয়েস বন্ধ', 'आवाज़ बंद', 'Tắt giọng nói')}</span>
+      {prefs.voiceEnabled && <button type="button" className="lp-personal-action" onClick={onListen}><Volume2 aria-hidden="true" />{t('Read this page to me', 'পেজটি পড়ে শোনান', 'यह पेज पढ़कर सुनाएं', 'Đọc trang này cho tôi')}</button>}
+      <Link className="lp-personal-action" to="/welcome"><SlidersHorizontal aria-hidden="true" />{t('Change', 'বদলান', 'बदलें', 'Thay đổi')}</Link>
+    </div>
+  );
+}
+
 export default function LandingHero() {
-  const { t } = usePreferences();
+  const { t, language, mode, prefs } = usePreferences();
+  const { speak } = useVoice();
   const [walk, setWalk] = useState(null);
   const appCount = Object.keys(SIMULATORS).length;
 
@@ -18,8 +42,13 @@ export default function LandingHero() {
     <section className="lp-hero" aria-labelledby="lp-hero-title">
       <div className="lp-container lp-hero-grid">
         <div className="lp-hero-copy rise">
-          <p className="eyebrow"><GuidiaMark size={20} title="" /> Guidia</p>
+          <PersonalBar t={t} language={language} mode={mode} prefs={prefs} onListen={() => speak([
+            t('Technology should feel understandable.', 'প্রযুক্তি বোঝা সহজ হওয়া উচিত।', 'तकनीक समझ में आने वाली होनी चाहिए।', 'Công nghệ nên dễ hiểu.'),
+            t('Guidia helps you learn your apps step by step, practise safely with pretend money, understand confusing screens, spot scams, and call your family when you need help.', 'Guidia আপনাকে ধাপে ধাপে অ্যাপ শিখতে, নকল টাকায় নিরাপদে অনুশীলন করতে, কঠিন স্ক্রিন বুঝতে, প্রতারণা চিনতে, আর দরকারে পরিবারকে ডাকতে সাহায্য করে।', 'Guidia आपको एक-एक कदम में ऐप सीखने, नकली पैसों से सुरक्षित अभ्यास करने, उलझी स्क्रीन समझने, धोखा पहचानने, और ज़रूरत पर परिवार को बुलाने में मदद करता है।', 'Guidia giúp bạn học ứng dụng từng bước, luyện tập an toàn với tiền giả, hiểu màn hình khó, nhận ra lừa đảo và gọi gia đình khi cần giúp.'),
+            t('Press Get started to begin.', 'শুরু করতে "শুরু করুন" চাপুন।', 'शुरू करने के लिए "शुरू करें" दबाएं।', 'Bấm Bắt đầu để bắt đầu.'),
+          ].join(' '))} />
           <h1 id="lp-hero-title" className="lp-display">{t('Technology should feel understandable.', 'প্রযুক্তি বোঝা সহজ হওয়া উচিত।', 'तकनीक समझ में आने वाली होनी चाहिए।', 'Công nghệ nên dễ hiểu.')}</h1>
+          {mode === 'scared' && <p className="lp-reassure">{t('Take your time. Nothing here can break, and nothing costs money.', 'সময় নিন। এখানে কিছুই নষ্ট হবে না, আর কোনো টাকাও লাগবে না।', 'आराम से। यहाँ कुछ खराब नहीं होगा, और कोई पैसा नहीं लगेगा।', 'Cứ từ từ. Ở đây không có gì hỏng được, và không tốn tiền.')}</p>}
           <p className="lp-lead">{t('Guidia helps older adults learn, practise, understand confusing screens, stay safer online, remember what they learn, and ask for help when needed.', 'Guidia প্রবীণদের শিখতে, অনুশীলন করতে, বিভ্রান্তিকর স্ক্রিন বুঝতে, অনলাইনে নিরাপদ থাকতে, শেখা মনে রাখতে এবং দরকারে সাহায্য চাইতে সাহায্য করে।', 'Guidia बुज़ुर्गों को सीखने, अभ्यास करने, उलझन भरी स्क्रीन समझने, ऑनलाइन सुरक्षित रहने, सीखा हुआ याद रखने और ज़रूरत पर मदद मांगने में मदद करता है।', 'Guidia giúp người lớn tuổi học, luyện tập, hiểu màn hình khó hiểu, an toàn hơn trên mạng, nhớ điều đã học và nhờ giúp khi cần.')}</p>
           <div className="lp-hero-ctas">
             <Button size="lg" arrow to="/register">{t('Get started', 'শুরু করুন', 'शुरू करें', 'Bắt đầu')}</Button>

@@ -4,6 +4,7 @@ import { AlertTriangle, Bell, BookOpen, Check, CheckCheck, ChevronRight, HeartHa
 import { usePreferences } from '../../context/PreferencesContext';
 import { useNotifications } from '../../context/NotificationContext';
 import { formatDate, formatRelative } from '../../i18n';
+import { notificationText } from '../../data/notificationText';
 import { Button, EmptyState, ErrorState, IconButton, PageHeader, Segmented, Skeleton } from '../../components/ui';
 
 // type → category, icon and where tapping should go.
@@ -43,14 +44,14 @@ export default function NotificationsPage() {
 
   const groups = useMemo(() => {
     const list = items
-      .map((n) => ({ ...n, meta: TYPE[n.type] || { cat: 'system', icon: Bell, to: null } }))
+      .map((n) => ({ ...n, ...notificationText(n, t), meta: TYPE[n.type] || { cat: 'system', icon: Bell, to: null } }))
       .filter((n) => cat === 'all' || n.meta.cat === cat);
     // Unread urgent first, then newest.
     list.sort((a, b) => (Number(a.read) - Number(b.read)) || ((RANK[a.severity] ?? 3) - (RANK[b.severity] ?? 3)) || (new Date(b.createdAt) - new Date(a.createdAt)));
     const out = { today: [], yesterday: [], earlier: [] };
     for (const n of list) out[dayGroup(n.createdAt)].push(n);
     return out;
-  }, [items, cat]);
+  }, [items, cat, t]);
 
   const open = (n) => {
     if (!n.read) markRead(n.id);

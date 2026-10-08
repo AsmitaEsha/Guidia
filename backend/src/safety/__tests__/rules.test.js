@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { runRuleEngine, maxSeverity, guidanceFor } from '../rules.js';
 
 // These scenarios mirror the ones manually verified against the live API
-// during development (see GUIDIA_IMPLEMENTATION_PLAN.md Phase 10) — codified
+// during development — codified
 // here so they can't silently regress.
 
 test('maxSeverity never lowers severity', () => {

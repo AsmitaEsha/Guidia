@@ -1,12 +1,14 @@
 import { prisma } from '../config/prisma.js';
 import { ApiError } from '../middleware/errorHandler.js';
 import { notificationService } from '../notifications/notificationService.js';
+import { memoryService } from './memoryService.js';
 import { outbox } from '../notifications/outbox.js';
 import { audit, AUDIT } from './auditService.js';
 import { actionService } from './actionService.js';
 import { progressService } from './progressService.js';
 import { ALL_SCOPES, DEFAULT_SCOPES, guardianScopes, requireGuardianScope } from './guardianAccess.js';
 import { stableHash } from '../security/tokens.js';
+import crypto from 'node:crypto';
 import { env } from '../config/env.js';
 
 const person = { select: { id: true, fullName: true, email: true } };
@@ -41,11 +43,90 @@ function toPublicApproval(a) {
   };
 }
 
+// Family codes: 6 characters, no look-alikes (0/O, 1/I/L), easy to read
+// aloud over the phone.
+const CODE_ALPHABET = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+const CODE_TTL_MS = 7 * 24 * 60 * 60_000;
+// What a family member sees after connecting with a code. The learner can
+// change any of these later.
+const FAMILY_SCOPES = ['EMERGENCY_ALERTS', 'SAFETY_ALERTS', 'LEARNING_PROGRESS', 'TASK_ACTIVITY'];
+const normaliseCode = (code) => String(code || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+function newCode() {
+  return Array.from(crypto.randomBytes(6), (b) => CODE_ALPHABET[b % CODE_ALPHABET.length]).join('');
+}
+
 async function loadRelationship(id) {
   return prisma.guardianRelationship.findUnique({ where: { id }, include: { senior: person, guardian: person, permissions: true } });
 }
 
 export const guardianService = {
+  /** The learner's current family code, created (or renewed) on request. */
+  async familyCode(seniorUserId, { renew = false } = {}) {
+    const current = await prisma.familyLinkCode.findFirst({ where: { seniorUserId, expiresAt: { gt: new Date() } }, orderBy: { createdAt: 'desc' } });
+    if (current && !renew) return { code: current.code, expiresAt: current.expiresAt };
+    await prisma.familyLinkCode.deleteMany({ where: { seniorUserId } });
+    for (let attempt = 0; attempt < 5; attempt += 1) {
+      try {
+        const row = await prisma.familyLinkCode.create({ data: { code: newCode(), seniorUserId, expiresAt: new Date(Date.now() + CODE_TTL_MS) } });
+        return { code: row.code, expiresAt: row.expiresAt };
+      } catch (err) {
+        if (err?.code !== 'P2002') throw err; // unique clash: try another code
+      }
+    }
+    throw new ApiError(503, 'Could not create a family code right now. Please try again.', 'CODE_UNAVAILABLE');
+  },
+
+  async findFamilyCode(code) {
+    const row = await prisma.familyLinkCode.findUnique({ where: { code: normaliseCode(code) }, include: { senior: { select: { id: true, fullName: true } } } });
+    if (!row || row.expiresAt <= new Date()) {
+      throw new ApiError(400, "That family code didn't work. Please check it, or ask for a new one.", 'INVALID_FAMILY_CODE');
+    }
+    return row;
+  },
+
+  // Entering a learner's family code connects straight away: sharing the
+  // code is the learner's consent. An existing invitation is activated.
+  async linkWithCode(guardianUserId, code, { requestId } = {}) {
+    const row = await this.findFamilyCode(code);
+    const seniorUserId = row.seniorUserId;
+    if (seniorUserId === guardianUserId) throw new ApiError(400, 'This is your own family code. Share it with your family instead.', 'INVALID_GUARDIAN');
+    const guardianUser = await prisma.user.findUnique({ where: { id: guardianUserId }, select: { fullName: true, email: true } });
+    const email = guardianUser.email.toLowerCase();
+
+    const relId = await prisma.$transaction(async (tx) => {
+      const existing = await tx.guardianRelationship.findFirst({
+        where: { seniorUserId, OR: [{ guardianUserId }, { guardianEmail: email }], status: { in: ['PENDING', 'ACTIVE'] } },
+        include: { permissions: true },
+      });
+      let id;
+      if (existing?.status === 'ACTIVE') return existing.id;
+      if (existing) {
+        await tx.guardianRelationship.update({ where: { id: existing.id }, data: { guardianUserId, status: 'ACTIVE', respondedAt: new Date() } });
+        const have = new Set(existing.permissions.filter((p) => !p.revokedAt).map((p) => p.scope));
+        const add = FAMILY_SCOPES.filter((sc) => !have.has(sc));
+        if (add.length) await tx.guardianPermission.createMany({ data: add.map((scope) => ({ relationshipId: existing.id, scope })) });
+        id = existing.id;
+      } else {
+        const rel = await tx.guardianRelationship.create({
+          data: { seniorUserId, guardianUserId, guardianEmail: email, status: 'ACTIVE', respondedAt: new Date(), role: 'PRIMARY', permissions: { create: FAMILY_SCOPES.map((scope) => ({ scope })) } },
+        });
+        id = rel.id;
+      }
+      await notificationService.notify(tx, {
+        userId: seniorUserId,
+        type: 'GUARDIAN_CONNECTED',
+        severity: 'MEDIUM',
+        title: `${guardianUser.fullName} is now connected as your family`,
+        body: 'They will be told when you press "I need help". You can change what they see in Trusted people.',
+        i18n: { key: 'family_connected', vars: { name: guardianUser.fullName } },
+        dedupeKey: `guardian_connected:${id}`,
+      });
+      await audit({ actorUserId: guardianUserId, actorType: 'GUARDIAN', action: AUDIT.GUARDIAN_CONNECTED, targetType: 'GuardianRelationship', targetId: id, requestId, metadata: { via: 'family_code' } }, tx);
+      return id;
+    });
+    return toPublicRelationship(await loadRelationship(relId));
+  },
+
   async invite(seniorUserId, { guardianEmail, approvalThreshold = 0, role = 'PRIMARY', permissions = DEFAULT_SCOPES }, { requestId } = {}) {
     const senior = await prisma.user.findUnique({ where: { id: seniorUserId } });
     const email = guardianEmail.toLowerCase();
@@ -67,6 +148,7 @@ export const guardianService = {
           severity: 'HIGH',
           title: `${senior.fullName} invited you to be a trusted person`,
           body: 'Open Guardian to accept or decline.',
+          i18n: { key: 'guardian_invite', vars: { name: senior.fullName } },
           data: { relationshipId: rel.id },
           dedupeKey: `guardian_invite:${rel.id}`,
           email: { template: 'guardian_invite', data: { seniorName: senior.fullName } },
@@ -112,6 +194,7 @@ export const guardianService = {
         severity: 'MEDIUM',
         title: `${guardianUser.fullName} is now one of your trusted people`,
         body: 'You can change what they can see at any time in Guardian.',
+        i18n: { key: 'guardian_connected', vars: { name: guardianUser.fullName } },
         dedupeKey: `guardian_connected:${relationshipId}`,
       });
       await audit({ actorUserId: guardianUserId, actorType: 'GUARDIAN', action: AUDIT.GUARDIAN_CONNECTED, targetType: 'GuardianRelationship', targetId: relationshipId, requestId }, tx);
@@ -138,6 +221,7 @@ export const guardianService = {
           severity: 'MEDIUM',
           title: 'A trusted-person connection ended',
           body: `${user.fullName} ended the connection on Guidia.`,
+          i18n: { key: 'guardian_revoked', vars: { name: user.fullName } },
           dedupeKey: `guardian_revoked:${relationshipId}`,
         });
       }
@@ -180,6 +264,7 @@ export const guardianService = {
           severity: 'MEDIUM',
           title: 'Your sharing settings changed',
           body: `What ${rel.guardian?.fullName || rel.guardianEmail} can see was updated.`,
+          i18n: { key: 'sharing_changed', vars: { name: rel.guardian?.fullName || rel.guardianEmail } },
           data: { added, removed },
           dedupeKey: `perm:${relationshipId}:${changeKey}`,
         });
@@ -190,6 +275,7 @@ export const guardianService = {
             severity: 'LOW',
             title: 'Sharing settings changed',
             body: 'The person you help updated what you can see.',
+            i18n: { key: 'sharing_changed_guardian', vars: {} },
             dedupeKey: `perm_g:${relationshipId}:${changeKey}`,
           });
         }
@@ -226,7 +312,8 @@ export const guardianService = {
     const access = await guardianScopes(guardianUserId, seniorUserId);
     if (!access) throw new ApiError(404, 'That person was not found.', 'NOT_FOUND');
     const { scopes, relationship } = access;
-    const senior = await prisma.user.findUnique({ where: { id: seniorUserId }, select: { id: true, fullName: true } });
+    const senior = await prisma.user.findUnique({ where: { id: seniorUserId }, select: { id: true, fullName: true, phone: true, preferredLanguage: true } });
+    if (!scopes.has('EMERGENCY_ALERTS')) delete senior.phone;
     const overview = { senior, permissions: [...scopes], connectedSince: relationship.respondedAt };
 
     if (scopes.has('LEARNING_PROGRESS')) overview.progress = await progressService.summary(seniorUserId);
@@ -251,7 +338,9 @@ export const guardianService = {
       });
     }
     if (scopes.has('MEMORY_BOOK')) {
-      overview.recentMemories = await prisma.memoryBookEntry.findMany({ where: { userId: seniorUserId }, orderBy: { createdAt: 'desc' }, take: 5, select: { title: true, category: true, createdAt: true } });
+      const viewer = await prisma.user.findUnique({ where: { id: guardianUserId }, select: { preferredLanguage: true } });
+      const memories = await prisma.memoryBookEntry.findMany({ where: { userId: seniorUserId }, orderBy: { createdAt: 'desc' }, take: 5, select: { title: true, summary: true, lessonId: true, category: true, createdAt: true } });
+      overview.recentMemories = (await memoryService.localize(memories, viewer?.preferredLanguage)).map(({ title, category, createdAt }) => ({ title, category, createdAt }));
     }
     return overview;
   },

@@ -23,8 +23,7 @@ const APPLICATIONS = [
   { slug: 'booking', displayName: 'Booking.com', category: 'TRAVEL', countryCodes: [], currency: 'USD', riskProfile: 'MEDIUM' },
   { slug: 'practo', displayName: 'Practo', category: 'HEALTHCARE', countryCodes: ['IN'], currency: 'INR', riskProfile: 'MEDIUM' },
   { slug: 'amazon', displayName: 'Amazon', category: 'SHOPPING', countryCodes: ['IN'], currency: 'INR', riskProfile: 'MEDIUM' },
-  // Lessons only — no practice simulator yet.
-  { slug: 'imo', displayName: 'imo', category: 'MESSAGING', countryCodes: ['BD', 'IN'], currency: null, riskProfile: 'LOW', hasSimulation: false },
+  { slug: 'imo', displayName: 'imo', category: 'MESSAGING', countryCodes: ['BD', 'IN'], currency: null, riskProfile: 'LOW', hasSimulation: true },
 ];
 
 // V1 tutorial id → app, domain and skill.
@@ -98,12 +97,16 @@ async function upsertLesson(lesson, steps) {
 
 async function seedLessons(appIds) {
   const tutorials = content('tutorials');
+  // Everyday-app lessons (all four languages) replace the V1 tutorials that
+  // share their slug; the V1 ones only had English and Bengali.
+  const everyday = content('everyday_lessons');
+  const replaced = new Set(everyday.map((l) => l.slug));
   let sortOrder = 0;
   const lessons = [];
   for (const [category, list] of Object.entries(tutorials)) {
     for (const t of list) {
       const meta = TUTORIAL_META[t.id];
-      if (!meta) continue;
+      if (!meta || replaced.has(meta.slug)) continue;
       const steps = zipSteps(t.steps);
       lessons.push(await upsertLesson({
         slug: meta.slug,
@@ -119,19 +122,59 @@ async function seedLessons(appIds) {
       }, steps));
     }
   }
-  for (const extra of [...content('extra_lessons'), ...content('app_lessons')]) {
+  for (const extra of [...everyday, ...content('app_lessons'), ...content('extra_lessons')]) {
     const { steps, applicationSlug, ...rest } = extra;
     lessons.push(await upsertLesson({ ...rest, applicationId: applicationSlug ? appIds[applicationSlug] : null, sortOrder: sortOrder++ }, steps));
   }
   return lessons;
 }
 
+// Guided practice in all four languages. Each step names the simulator
+// action that completes it, so the practice app can check the learner
+// really did the step. Apps listed here replace their V1 tasks entirely.
+async function seedGuidedScenarios(appIds) {
+  const guided = content('practice_scenarios');
+  let count = 0;
+  for (const [appSlug, list] of Object.entries(guided)) {
+    if (!appIds[appSlug]) continue;
+    const keep = [];
+    for (const sc of list) {
+      const data = {
+        slug: `${appSlug}-${sc.id}`,
+        applicationId: appIds[appSlug],
+        skillKey: sc.skill,
+        title: sc.title,
+        difficulty: sc.level || 'BEGINNER',
+        status: 'PUBLISHED',
+      };
+      const row = await prisma.scenario.upsert({ where: { slug: data.slug }, create: data, update: data });
+      await prisma.scenarioStep.deleteMany({ where: { scenarioId: row.id } });
+      await prisma.scenarioStep.createMany({
+        data: sc.steps.map((st, order) => ({
+          scenarioId: row.id,
+          order,
+          instruction: st.text,
+          expectedAction: st.expect,
+          hint: st.hint ?? undefined,
+          riskLevel: /pin|otp|send money|transfer|pay/i.test(st.text.en || '') ? 'HIGH' : 'LOW',
+        })),
+      });
+      keep.push(data.slug);
+      count += 1;
+    }
+    // Older practice for this app is retired, not deleted (history stays valid).
+    await prisma.scenario.updateMany({ where: { applicationId: appIds[appSlug], slug: { notIn: keep } }, data: { status: 'ARCHIVED' } });
+  }
+  return { count, apps: new Set(Object.keys(guided)) };
+}
+
 async function seedScenarios(appIds) {
   const tasks = content('practice_tasks');
-  let count = 0;
+  const guided = await seedGuidedScenarios(appIds);
+  let count = guided.count;
   for (const [appKey, list] of Object.entries(tasks)) {
     const appSlug = TASK_APP[appKey] || appKey;
-    if (!appIds[appSlug]) continue;
+    if (!appIds[appSlug] || guided.apps.has(appSlug)) continue;
     for (const task of list) {
       const title = { en: task.title, ...(task.titleBn ? { bn: task.titleBn } : {}), ...(task.titleHi ? { hi: task.titleHi } : {}) };
       const data = {

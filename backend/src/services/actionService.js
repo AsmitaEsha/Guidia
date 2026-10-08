@@ -166,6 +166,7 @@ export const actionService = {
           title: `${senior.fullName} is asking for your approval`,
           body: `Practice ${p.actionType.replace(/_/g, ' ').toLowerCase()}${amountText ? ` of ${amountText}` : ''} in ${p.applicationSlug}. No real money moves.`,
           data: { actionProposalId: p.id, seniorId: userId },
+          i18n: { key: 'approval_request', vars: { name: senior.fullName, action: p.actionType, amount: amountText || '', app: p.applicationSlug } },
           dedupeKey: `approval:${p.id}`,
           email: { template: 'approval_request', data: { seniorName: senior.fullName, what: p.actionType.replace(/_/g, ' ').toLowerCase(), application: p.applicationSlug, amount: amountText } },
         });
@@ -225,6 +226,7 @@ export const actionService = {
       title: decision === 'APPROVED' ? 'Your guardian approved' : 'Your guardian would like to talk first',
       body: `${guardian?.fullName || 'Your guardian'} ${outcome} your practice ${p.actionType.replace(/_/g, ' ').toLowerCase()}.`,
       data: { actionProposalId: p.id, decision },
+      i18n: { key: 'approval_result', vars: { name: guardian?.fullName || '', decision, action: p.actionType } },
       dedupeKey: `approval_result:${p.id}`,
     });
   },

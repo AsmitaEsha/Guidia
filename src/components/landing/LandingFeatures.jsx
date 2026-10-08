@@ -58,11 +58,11 @@ export default function LandingFeatures() {
         id="safety" tint
         eyebrow={['Safety intelligence', 'নিরাপত্তা বুদ্ধিমত্তা', 'सुरक्षा समझ', 'An toàn thông minh']}
         title={['Pause. Verify. Respond safely.', 'থামুন। যাচাই করুন। নিরাপদে সাড়া দিন।', 'रुकें। जांचें। सुरक्षित जवाब दें।', 'Dừng lại. Kiểm tra. Phản hồi an toàn.']}
-        body={['Paste a suspicious message. Guidia explains the warning signs and walks you through the safe response — calmly.', 'সন্দেহজনক মেসেজ পেস্ট করুন। Guidia সতর্কতার চিহ্ন বুঝিয়ে শান্তভাবে নিরাপদ পদক্ষেপ দেখায়।', 'संदिग्ध संदेश डालें। Guidia चेतावनी के संकेत समझाकर शांति से सुरक्षित कदम बताता है।', 'Dán tin nhắn đáng ngờ. Guidia giải thích dấu hiệu cảnh báo và bình tĩnh hướng dẫn cách phản hồi an toàn.']}
+        body={['Paste a suspicious message. Guidia explains the warning signs and walks you through the safe response — calmly.', 'সন্দেহজনক মেসেজ পেস্ট করুন। Guidia সতর্কতার চিহ্ন বুঝিয়ে শান্তভাবে নিরাপদ পদক্ষেপ দেখায়।', 'संदिग्ध मैसेज डालें। Guidia चेतावनी के संकेत समझाकर शांति से सुरक्षित कदम बताता है।', 'Dán tin nhắn đáng ngờ. Guidia giải thích dấu hiệu cảnh báo và bình tĩnh hướng dẫn cách phản hồi an toàn.']}
         points={[
           ['Clear risk levels — in words, not just colours', 'স্পষ্ট ঝুঁকির মাত্রা — শুধু রং নয়, কথায়', 'साफ़ जोखिम स्तर — सिर्फ़ रंग नहीं, शब्दों में', 'Mức rủi ro rõ ràng — bằng lời, không chỉ màu'],
           ['Codes and passwords are removed before checking', 'যাচাইয়ের আগে কোড ও পাসওয়ার্ড সরানো হয়', 'जांच से पहले कोड और पासवर्ड हटाए जाते हैं', 'Mã và mật khẩu được xóa trước khi kiểm tra'],
-          ['Practise spotting scams with pretend messages', 'নকল মেসেজে প্রতারণা চেনার অনুশীলন', 'नकली संदेशों से धोखा पहचानने का अभ्यास', 'Luyện nhận biết lừa đảo với tin nhắn giả'],
+          ['Practise spotting scams with pretend messages', 'নকল মেসেজে প্রতারণা চেনার অনুশীলন', 'नकली मैसेज से धोखा पहचानने का अभ्यास', 'Luyện nhận biết lừa đảo với tin nhắn giả'],
         ]}
         demo={<ScamDemo />}
       />

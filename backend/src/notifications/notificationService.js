@@ -26,7 +26,9 @@ export const notificationService = {
    * Creates an in-app notification (deduplicated by dedupeKey) and, by
    * severity, an email outbox event — inside the caller's transaction.
    */
-  async notify(tx, { userId, type, severity = 'LOW', title, body, data, dedupeKey, email }) {
+  async notify(tx, { userId, type, severity = 'LOW', title, body, data, i18n, dedupeKey, email }) {
+    // i18n ({ key, vars }) lets the app show the alert in the reader's language.
+    if (i18n) data = { ...(data || {}), i18n };
     let notification;
     if (dedupeKey) {
       const existing = await tx.notification.findUnique({ where: { userId_dedupeKey: { userId, dedupeKey } } });

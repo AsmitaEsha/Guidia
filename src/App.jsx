@@ -2,7 +2,7 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter, Navigate, Route, Routes, useParams } from 'react-router-dom';
 import { ConfigProvider } from './context/ConfigContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import { PreferencesProvider } from './context/PreferencesContext';
+import { PreferencesProvider, usePreferences } from './context/PreferencesContext';
 import { ToastProvider } from './context/ToastContext';
 import { VoiceProvider } from './context/VoiceContext';
 import { NotificationProvider } from './context/NotificationContext';
@@ -35,12 +35,15 @@ const LearnPage = lazy(() => import('./pages/app/LearnPage').then((m) => ({ defa
 const LessonPage = lazy(() => import('./pages/app/LearnPage').then((m) => ({ default: m.LessonPage })));
 const PracticeHomePage = lazy(() => import('./pages/app/PracticePage').then((m) => ({ default: m.PracticeHomePage })));
 const PracticeAppPage = lazy(() => import('./pages/app/PracticePage').then((m) => ({ default: m.PracticeAppPage })));
+const FamilyPage = lazy(() => import('./pages/app/FamilyPage'));
 
 function RootRedirect() {
   const { status, user } = useAuth();
+  const { setupDone } = usePreferences();
   if (status === 'loading') return <FullPageSpinner />;
-  if (status !== 'authenticated') return <Navigate to="/landing" replace />;
+  if (status !== 'authenticated') return <Navigate to={setupDone ? '/landing' : '/welcome'} replace />;
   if (user?.role === 'ADMIN') return <Navigate to="/admin" replace />;
+  if (user?.role === 'GUARDIAN') return <Navigate to="/app/family" replace />;
   return <Navigate to={user?.preference?.onboardingDone ? '/app/home' : '/onboarding'} replace />;
 }
 
@@ -55,6 +58,7 @@ const APP_ROUTES = [
   ['learn', LearnPage, 'cards'], ['learn/:slug', LessonPage, 'panel'], ['practice', PracticeHomePage, 'cards'], ['practice/:slug', PracticeAppPage, 'panel'],
   ['safety', SafetyPage, 'panel'], ['memory', MemoryPage, 'cards'], ['progress', ProgressPage, 'cards'], ['people', PeoplePage, 'list'],
   ['help', HelpPage, 'panel'], ['notifications', NotificationsPage, 'list'], ['settings', SettingsPage, 'list'],
+  ['family', FamilyPage, 'cards'],
 ];
 
 export default function App() {
@@ -70,6 +74,7 @@ export default function App() {
                     <Suspense fallback={<FullPageSpinner />}>
                       <Routes>
                         <Route path="/" element={<RootRedirect />} />
+                        <Route path="/welcome" element={<OnboardingPage guest />} />
                         <Route path="/landing" element={<Landing />} />
                         <Route path="/showcase" element={<Showcase />} />
                         <Route path="/login" element={<Login />} />
@@ -81,7 +86,7 @@ export default function App() {
                         <Route path="/admin" element={<ProtectedRoute role="ADMIN" requireOnboarding={false}><AdminDashboard /></ProtectedRoute>} />
 
                         <Route path="/app" element={<ProtectedRoute><AppShell /></ProtectedRoute>}>
-                          <Route index element={<Navigate to="home" replace />} />
+                          <Route index element={<RootRedirect />} />
                           {APP_ROUTES.map(([path, Page, skeleton]) => (
                             <Route key={path} path={path} element={<Suspense fallback={<PageSkeleton kind={skeleton} />}><Page /></Suspense>} />
                           ))}

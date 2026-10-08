@@ -1,252 +1,101 @@
 import { useState } from 'react';
-import { useApp } from '../../context/AppStateContext';
-import { ArrowLeft, ShieldCheck, Send, ArrowDownCircle, Banknote, Smartphone, FileText, Store, Bell, Gift, Heart, QrCode, CreditCard, UserCircle, Landmark, PlusCircle, Home, History, MessageCircle, Menu, Info, Phone } from 'lucide-react';
-import GuidiaSafetyPanel from '../GuidiaSafetyPanel';
+import { ArrowDownToLine, Bell, Gift, History, Home, QrCode, Receipt, Send, ShieldAlert, Smartphone, Store, UserRound } from 'lucide-react';
+import { Screen, StatusBar, T, Tap, useAutoOpen, useSim, useStack } from './kit/SimKit';
+import { BalancePill, PayBillFlow, RechargeFlow, ScamCall, ScanPayFlow, SendMoneyFlow, Statement, useWallet } from './kit/MoneyKit';
 
-const NG = '#F05A22';
-const NG_LIGHT = '#FFF3EE';
+// Nagad (Bangladesh): orange-red home, services, and the OTP-scam call.
 
-const SERVICES = [
-  { icon:<Send size={24}/>, en:'Send Money', bn:'টাকা পাঠান', step:'send', explain:'Send Money lets you send taka to another Nagad number. Check the number twice before sending.' },
-  { icon:<Banknote size={24}/>, en:'Cash Out', bn:'ক্যাশ আউট', step:'otp', explain:'Cash Out helps withdraw cash from an agent. Confirm the agent number before continuing.' },
-  { icon:<Smartphone size={24}/>, en:'Mobile Recharge', bn:'মোবাইল রিচার্জ', step:'recharge', explain:'Mobile Recharge adds phone balance. Check the number and operator first.'},
-  { icon:<PlusCircle size={24}/>, en:'Add Money', bn:'অ্যাড মানি', step:'add', explain:'Add Money brings money into Nagad from a bank or card. Use your own trusted account.' },
-  { icon:<ArrowDownCircle size={24}/>, en:'Transfer Money', bn:'ট্রান্সফার মানি', step:'transfer', explain:'Transfer Money moves money to another service or account. Check all details first.' },
-  { icon:<ShieldCheck size={24}/>, en:'Insurance', bn:'ইনস্যুরেন্স', step:'insurance', explain:'Insurance can protect against certain risks. Read coverage and charges first.' },
-  { icon:<Gift size={24}/>, en:'Nagad Mela', bn:'নগদ মেলা', step:'mela', explain:'Nagad Mela shows offers and campaigns. Read conditions before joining.' },
-  { icon:<Landmark size={24}/>, en:'Savings', bn:'সেভিংস', step:'savings', explain:'Savings helps set money aside. Read time, fees, and withdrawal rules.' },
+const BRAND = {
+  name: 'Nagad', color: '#EC1C24', currency: 'BDT', symbol: '৳', locale: 'en-IN', region: 'BD', pinLength: 4, confirm: 'hold',
+  ownNumber: '01811-000000',
+  quickAmounts: [500, 1000, 2000, 5000], rechargeAmounts: [20, 50, 100, 300],
+  sendFee: () => 0, billAmount: 1560,
+  words: {
+    sendMoney: T('Send Money', 'সেন্ড মানি', 'सेंड मनी', 'Gửi tiền'),
+    recharge: T('Mobile Recharge', 'মোবাইল রিচার্জ', 'मोबाइल रिचार्ज', 'Nạp tiền điện thoại'),
+    payBill: T('Bill Pay', 'বিল পে', 'बिल भुगतान', 'Thanh toán hóa đơn'),
+    statement: T('Transactions', 'লেনদেন', 'लेन-देन', 'Giao dịch'),
+    tapBalance: T('Tap for Balance', 'ব্যালেন্স দেখুন', 'बैलेंस देखें', 'Chạm để xem số dư'),
+    confirm: T('Confirm', 'নিশ্চিত করুন', 'पुष्टि करें', 'Xác nhận'),
+  },
+};
+const OPERATORS = [
+  { id: 'gp', name: 'Grameenphone', short: 'GP', color: '#1aa0db' },
+  { id: 'robi', name: 'Robi', short: 'R', color: '#e4002b' },
+  { id: 'bl', name: 'Banglalink', short: 'BL', color: '#f26522' },
+  { id: 'tt', name: 'Teletalk', short: 'TT', color: '#00a651' },
+];
+const BILLERS = [
+  { id: 'nesco', name: 'NESCO (Electricity)', color: '#f9a825', kind: T('Electricity', 'বিদ্যুৎ', 'बिजली', 'Điện') },
+  { id: 'wasa', name: 'Chattogram WASA', color: '#1e88e5', kind: T('Water', 'পানি', 'पानी', 'Nước') },
 ];
 
-const PAYMENTS = [
-  { icon:<Store size={24}/>, en:'Merchant Pay', bn:'মার্চেন্ট পে', step:'pay', explain:'Merchant Pay pays a shop. Match the shop name before confirming.' },
-  { icon:<FileText size={24}/>, en:'Bill Pay', bn:'বিল পে', step:'bill', explain:'Bill Pay pays utility or service bills. Copy the customer number from the real bill.' },
-  { icon:<CreditCard size={24}/>, en:'EMI Collection', bn:'EMI কালেকশন', step:'emi', explain:'EMI Collection pays a monthly installment. Check the lender and amount first.' },
-  { icon:<Heart size={24}/>, en:'Donation', bn:'ডোনেশন', step:'donation', explain:'Donation sends money to a cause. Make sure the organization is real.' },
-  { icon:<FileText size={24}/>, en:'Income Tax', bn:'ইনকাম ট্যাক্স', step:'tax', explain:'Income Tax is for official tax payments. Use only official tax information.' },
-];
+export default function NagadSim() {
+  const { t } = useSim();
+  const nav = useStack('home');
+  const wallet = useWallet(18250);
+  const [scam, setScam] = useAutoOpen(['decline_scam_call', 'hang_up_scam']);
+  const [tab, setTab] = useState('home');
+  const back = () => nav.reset('home');
 
-const OTHERS = [
-  { icon:<Store size={24}/>, en:'Nagad Sheba', bn:'নগদ সেবা', step:'sheba', explain:'Nagad Sheba shows support services and help options.' },
-  { icon:<Phone size={24}/>, en:'Contact Us', bn:'যোগাযোগ', step:'contact', explain:'Contact Us shows official Nagad support options. Use official support only.' },
-  { icon:<Info size={24}/>, en:'Limits and Charge', bn:'লিমিট ও চার্জ', step:'limits', explain:'Limits and Charge explains transaction limits and fees. Read this before sending money.' },
-];
+  if (nav.screen === 'send') return <SendMoneyFlow brand={BRAND} wallet={wallet} onExit={back} />;
+  if (nav.screen === 'cashout') return <SendMoneyFlow brand={{ ...BRAND, sendFee: (a) => Math.round(a * 0.0115) }} wallet={wallet} onExit={back} title={t('Cash Out', 'ক্যাশ আউট', 'कैश आउट', 'Rút tiền mặt')} />;
+  if (nav.screen === 'recharge') return <RechargeFlow brand={BRAND} wallet={wallet} onExit={back} operators={OPERATORS} ownNumber={BRAND.ownNumber} />;
+  if (nav.screen === 'bill') return <PayBillFlow brand={BRAND} wallet={wallet} onExit={back} billers={BILLERS} />;
+  if (nav.screen === 'scan') return <ScanPayFlow brand={BRAND} wallet={wallet} onExit={back} shop="Shapla Pharmacy" />;
+  if (nav.screen === 'statement') return <Statement brand={BRAND} wallet={wallet} onExit={back} />;
 
-export default function NagadSim({ onClose }) {
-  const { t, speak, showToast, user } = useApp();
-  const [step, setStep] = useState('home');
-  const [otp, setOtp] = useState(['','','','','','']);
-  const [otpSent, setOtpSent] = useState(false);
-  const [amount, setAmount] = useState('');
-  const [phone, setPhone] = useState('');
-  const [showSafetyPanel, setShowSafetyPanel] = useState(false);
+  const services = [
+    ['send', Send, BRAND.words.sendMoney, 'open_send_money', () => nav.push('send')],
+    ['cashout', ArrowDownToLine, T('Cash Out', 'ক্যাশ আউট', 'कैश आउट', 'Rút tiền mặt'), 'open_cash_out', () => nav.push('cashout')],
+    ['recharge', Smartphone, BRAND.words.recharge, 'open_recharge', () => nav.push('recharge')],
+    ['pay', Store, T('Merchant Pay', 'মার্চেন্ট পে', 'मर्चेंट पे', 'Thanh toán cửa hàng'), 'open_scan', () => nav.push('scan')],
+    ['bill', Receipt, BRAND.words.payBill, 'open_pay_bill', () => nav.push('bill')],
+    ['history', History, BRAND.words.statement, 'open_statement', () => nav.push('statement')],
+  ];
 
-  const sendOTP = () => {
-    setOtpSent(true);
-    speak(t('OTP sent! Remember: NEVER share your OTP with anyone, even Nagad staff.','OTP পাঠানো হয়েছে! মনে রাখুন: কখনো OTP কাউকে দেবেন না।'));
-    showToast(t('Demo OTP: 7-7-7-4-2-1 (Never share real OTPs!)', 'ডেমো OTP: 7-7-7-4-2-1 (আসল OTP শেয়ার করবেন না!)'), 'danger');
-  };
-
-  const verified = otp.join('') === '777421';
-  const displayName = user?.name || t('Guidia Learner', 'Guidia শিক্ষার্থী', 'Guidia विद्यार्थी');
-  const explainBalance = () => {
-    speak(t('Tap for Balance shows your current Nagad balance. In the real app, enter your PIN only on the official Nagad screen, and never share it with anyone.', 'Tap for Balance আপনার বর্তমান Nagad ব্যালেন্স দেখায়। আসল অ্যাপে শুধু অফিসিয়াল Nagad স্ক্রিনে PIN দিন এবং কাউকে বলবেন না।'));
-    showToast(t('Tap for Balance checks your Nagad balance safely.', 'Tap for Balance নিরাপদে Nagad ব্যালেন্স দেখায়।'), 'info');
-  };
-  const handleMenu = (m) => {
-    speak(`${t(m.en, m.bn)}. ${m.explain}`);
-    if (m.step === 'send') setStep('send');
-    else if (m.step === 'otp') setStep('otp');
-    else showToast(t(`${m.en} — Practice explanation`, `${m.bn} — অনুশীলন ব্যাখ্যা`), 'info');
-  };
-
-  /* ─ OTP Screen ─ */
-  if (step === 'otp') return (
-    <div style={{ display:'flex', flexDirection:'column', height:'100%', background:'#fff' }}>
-      <div style={{ background:NG, padding:'16px 20px', display:'flex', alignItems:'center', gap:12, color:'#fff', flexShrink:0 }}>
-        <button onClick={()=>setStep('home')} style={{ color:'#fff' }}><ArrowLeft size={22}/></button>
-        <p style={{ fontWeight:800, fontSize:18 }}> {t('OTP Lesson','OTP পাঠ')}</p>
-      </div>
-      <div style={{ flex:1, overflow:'auto', padding:24, display:'flex', flexDirection:'column', gap:20 }}>
-        <div style={{ background:'#FCE8E6', borderRadius:12, padding:18, border:'1px solid #F28B82' }}>
-          <p style={{ fontWeight:800, fontSize:17, color:'#C62828', marginBottom:8 }}> {t('What is an OTP?','OTP কী?')}</p>
-          <p style={{ fontSize:15, lineHeight:1.7, color:'#B71C1C' }}>
-            {t('An OTP (One-Time Password) is a 6-digit secret code sent ONLY to your phone. No bank, Nagad agent, or company ever needs your OTP. If anyone asks — it\'s a SCAM!',
-               'OTP (ওয়ান-টাইম পাসওয়ার্ড) শুধুমাত্র আপনার ফোনে পাঠানো ৬ সংখ্যার গোপন কোড। কোনো ব্যাংক, এজেন্ট বা কোম্পানি কখনো OTP চায় না। কেউ চাইলে — সেটি প্রতারণা!')}
-          </p>
+  return (
+    <div className="ng" style={{ '--accent': BRAND.color }}>
+      <Screen nav={nav}>
+        <div className="ng-head">
+          <StatusBar dark bg="transparent" />
+          <div className="bk-head-row">
+            <span className="bk-avatar"><UserRound size={22} /></span>
+            <span className="bk-hello"><strong>{t('Amma', 'আম্মা', 'अम्मा', 'Mẹ')}</strong><BalancePill balance={wallet.balance} brand={BRAND} /></span>
+            <Tap className="sim-icon-btn" style={{ color: '#fff' }} act="open_notifications" onClick={() => setTab('inbox')} label={t('Notifications', 'নোটিফিকেশন', 'सूचनाएं', 'Thông báo')}><Bell size={22} /></Tap>
+            <span className="ng-logo">নগদ</span>
+          </div>
         </div>
-        {!otpSent ? (
-          <button onClick={sendOTP} style={{ width:'100%', background:NG, color:'#fff', padding:'16px', borderRadius:10, fontWeight:800, fontSize:17, border:'none', cursor:'pointer' }}>
-             {t('Send Demo OTP to My Phone','ডেমো OTP ফোনে পাঠান')}
-          </button>
-        ) : (
-          <>
-            <div>
-              <p style={{ fontWeight:700, fontSize:15, marginBottom:12, color:'#202124' }}>
-                {t('Enter OTP (demo: 777421):','OTP লিখুন (ডেমো: 777421):')}
-              </p>
-              <div style={{ display:'flex', gap:10, justifyContent:'center' }}>
-                {otp.map((v,i) => (
-                  <input key={i} id={`notp-${i}`} type="tel" maxLength={1} value={v}
-                    onChange={e => {
-                      if (!/^\d*$/.test(e.target.value)) return;
-                      const n=[...otp]; n[i]=e.target.value.slice(-1); setOtp(n);
-                      if (e.target.value && i<5) document.getElementById(`notp-${i+1}`)?.focus();
-                    }}
-                    style={{ width:50, height:60, borderRadius:10, border:`2px solid ${v?(verified?'var(--success)':NG):'#DADCE0'}`, fontSize:28, fontWeight:800, textAlign:'center', outline:'none', background: v&&verified?'var(--success-light)':v?NG_LIGHT:'#fff' }}/>
+        <div className="sim-scroll" style={{ paddingTop: 14 }}>
+          {tab === 'home' ? (
+            <>
+              <div className="ng-grid">
+                {services.map(([id, Icon, label, act, fn]) => (
+                  <Tap key={id} className="bk-tile" act={act} onClick={fn} explain={label}>
+                    <span className="ng-tile-icon"><Icon size={24} /></span><span>{t(...label)}</span>
+                  </Tap>
                 ))}
               </div>
-            </div>
-            {verified && (
-              <div style={{ background:'var(--success-light)', borderRadius:12, padding:20, textAlign:'center', border:'1px solid var(--success)' }} className="anim-scale">
-                <ShieldCheck size={52} color="var(--success)" style={{ margin:'0 auto 12px' }}/>
-                <p style={{ fontWeight:800, fontSize:20, color:'var(--success)', marginBottom:8 }}>{t(' OTP Verified!',' OTP যাচাই হয়েছে!')}</p>
-                <p style={{ fontSize:15, color:'#388E3C', lineHeight:1.6 }}>
-                  {t('Great work! Remember: In real life, NEVER share your OTP. Not even with people claiming to be from Nagad!',
-                     'দারুণ! মনে রাখুন: বাস্তবে কখনো OTP কাউকে দেবেন না। Nagad-এর লোক বলেও না!')}
-                </p>
+              <div className="bk-offer" style={{ background: 'linear-gradient(120deg,#fff3e0,#ffe0b2)', color: '#7a3d00' }}><Gift size={20} />{t('Nagad Islamic savings: ask a family member before you sign up.', 'নগদ ইসলামিক সেভিংস: শুরুর আগে পরিবারের কাউকে জিজ্ঞেস করুন।', 'Nagad इस्लामिक सेविंग्स: शुरू करने से पहले परिवार से पूछें।', 'Tiết kiệm Nagad: hỏi người thân trước khi đăng ký.')}</div>
+              <p className="sim-safety" style={{ margin: '4px 16px 90px' }}><ShieldAlert size={16} />{t('Nagad staff never ask for your PIN or OTP. Anyone who does is a scammer.', 'নগদের কর্মীরা কখনো পিন বা ওটিপি চান না। যে চায় সে প্রতারক।', 'Nagad के कर्मचारी कभी पिन या ओटीपी नहीं मांगते। जो मांगे वह धोखेबाज़ है।', 'Nhân viên Nagad không bao giờ hỏi PIN hay OTP. Ai hỏi là kẻ lừa đảo.')}</p>
+            </>
+          ) : (
+            <div>
+              <p className="wa-section">{t('Notifications', 'নোটিফিকেশন', 'सूचनाएं', 'Thông báo')}</p>
+              <div className="sim-row" style={{ alignItems: 'flex-start' }}>
+                <span className="sim-avatar sm" style={{ background: '#e53935' }}><ShieldAlert size={18} /></span>
+                <span className="sim-row-main"><span className="sim-row-title">{t('Your OTP is 482915', 'আপনার ওটিপি 482915', 'आपका ओटीपी 482915 है', 'Mã OTP của bạn là 482915')}</span><span className="sim-row-sub" style={{ whiteSpace: 'normal' }}>{t('Never share this code with anyone — not even Nagad staff.', 'এই কোড কাউকে দেবেন না — নগদের কর্মীদেরও না।', 'यह कोड किसी को न दें — Nagad के कर्मचारियों को भी नहीं।', 'Đừng đưa mã này cho ai — kể cả nhân viên Nagad.')}</span></span>
               </div>
-            )}
-          </>
-        )}
-        <button onClick={()=>setStep('home')} style={{ background:'none', border:'1px solid #DADCE0', padding:'12px', borderRadius:8, fontWeight:600, fontSize:15, cursor:'pointer', color:'#5F6368' }}>
-          ← {t('Back to Nagad Home','নাগাদ হোমে ফিরুন')}
-        </button>
-      </div>
-    </div>
-  );
-
-  /* ─ Send Money Form ─ */
-  if (step === 'send') return (
-    <div style={{ display:'flex', flexDirection:'column', height:'100%', background:'#fff' }}>
-      <div style={{ background:NG, padding:'16px 20px', display:'flex', alignItems:'center', gap:12, color:'#fff', flexShrink:0 }}>
-        <button onClick={()=>setStep('home')} style={{ color:'#fff' }}><ArrowLeft size={22}/></button>
-        <p style={{ fontWeight:800, fontSize:18 }}>{t('Send Money','টাকা পাঠান')}</p>
-      </div>
-      <div style={{ flex:1, overflow:'auto', padding:20, display:'flex', flexDirection:'column', gap:16 }}>
-        <div style={{ background:'#FFF3E0', borderRadius:10, padding:14, border:'1px solid #FFB74D' }}>
-          <p style={{ fontSize:14, fontWeight:700, color:'#E65100' }}> {t('Always confirm the number before sending!','পাঠানোর আগে নম্বর নিশ্চিত করুন!')}</p>
-        </div>
-        <div>
-          <label style={{ fontWeight:700, fontSize:15, display:'block', marginBottom:8 }}>{t('Recipient Number','প্রাপকের নম্বর')}</label>
-          <input className="input-field" type="tel" placeholder="01XXXXXXXXX" value={phone} onChange={e=>setPhone(e.target.value)} style={{ fontSize:18 }}/>
-        </div>
-        <div>
-          <label style={{ fontWeight:700, fontSize:15, display:'block', marginBottom:8 }}>{t('Amount ৳','পরিমাণ ৳')}</label>
-          <input className="input-field" type="number" placeholder="0.00" value={amount} onChange={e=>setAmount(e.target.value)} style={{ fontSize:24, fontWeight:800, color:NG }}/>
-        </div>
-        <button onClick={() => phone&&amount&&setShowSafetyPanel(true)} disabled={!phone||!amount}
-          style={{ width:'100%', background:phone&&amount?NG:'#CCC', color:'#fff', padding:'16px', borderRadius:8, fontWeight:800, fontSize:17, border:'none', cursor:phone&&amount?'pointer':'default', marginTop:'auto' }}>
-          {t('Review & Send →','পর্যালোচনা ও পাঠান →')}
-        </button>
-      </div>
-
-      <GuidiaSafetyPanel
-        open={showSafetyPanel}
-        actionType="nagad_send_money"
-        title={t('Review before you send', 'পাঠানোর আগে যাচাই করুন')}
-        what={t('Send money via Nagad', 'Nagad এর মাধ্যমে টাকা পাঠানো')}
-        who={phone}
-        amountOrData={`৳ ${amount}`}
-        consequence={t(
-          'After OTP verification, the money leaves your account and cannot be undone.',
-          'OTP যাচাইয়ের পর টাকা আপনার অ্যাকাউন্ট থেকে চলে যাবে এবং তা ফেরত আনা যাবে না।'
-        )}
-        onProceed={() => { setShowSafetyPanel(false); setStep('otp'); }}
-        onEdit={() => setShowSafetyPanel(false)}
-        onRequestHelp={() => {
-          setShowSafetyPanel(false);
-          speak(t("It's okay to ask for help. Consider asking Guidia's AI Assistant or a trusted family member before sending.", 'সাহায্য চাওয়া ঠিক আছে। পাঠানোর আগে Guidia সহকারী বা বিশ্বস্ত পরিবারকে জিজ্ঞাসা করুন।'));
-          showToast(t('No problem — take your time. Ask the AI Assistant if you need help.', 'কোনো সমস্যা নেই — সময় নিন। প্রয়োজনে AI সহকারীকে জিজ্ঞাসা করুন।'), 'info');
-        }}
-      />
-    </div>
-  );
-
-  /* ─ Home Screen ─ */
-  return (
-    <div style={{ display:'flex', flexDirection:'column', height:'100%', background:'#F7F7F7', position:'relative', overflow:'hidden' }}>
-      <div style={{ background:`linear-gradient(155deg,${NG},#ff6f3f 76%,#ff8b5c)`, color:'#fff', flexShrink:0, padding:'10px 14px 22px', position:'relative', overflow:'hidden' }}>
-        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:6 }}>
-          <button onClick={onClose} style={{ color:'#fff', padding:4 }}><ArrowLeft size={20}/></button>
-          <div style={{ textAlign:'center' }}>
-            <p style={{ fontWeight:900, fontSize:24, lineHeight:1 }}>নগদ</p>
-            <p style={{ fontSize:9, fontWeight:800, opacity:0.9 }}>ডাক বিভাগের ডিজিটাল লেনদেন</p>
-          </div>
-          <Bell size={20}/>
-        </div>
-        <div style={{ display:'flex', alignItems:'center', gap:10, position:'relative', zIndex:1 }}>
-          <div style={{ width:52, height:52, borderRadius:'50%', background:'rgba(255,255,255,0.22)', display:'flex', alignItems:'center', justifyContent:'center', border:'2px solid rgba(255,255,255,0.35)' }}><UserCircle size={38}/></div>
-          <div style={{ flex:1 }}>
-            <p style={{ fontSize:10, opacity:0.86 }}>স্বাগতম</p>
-            <strong style={{ display:'block', fontSize:15, fontWeight:900 }}>{displayName}</strong>
-            <button onClick={explainBalance} style={{ marginTop:5, background:'#fff', color:NG, border:0, borderRadius:999, padding:'6px 12px', fontWeight:900, fontSize:11 }}>Tap for Balance</button>
-          </div>
-        </div>
-        <div style={{ position:'absolute', right:-28, bottom:-30, width:150, height:150, borderRadius:'50%', background:'rgba(255,255,255,0.12)' }}/>
-        <div style={{ position:'absolute', right:35, top:42, width:96, height:96, borderRadius:'50%', border:'2px solid rgba(255,255,255,0.12)' }}/>
-      </div>
-
-      {/* Tip */}
-      <div style={{ background:'#FFF3E0', padding:'8px 14px', fontSize:13, color:'#E65100', fontWeight:600, flexShrink:0 }}>
-         {t('Tap "Cash In" to learn about OTP safety!','"ক্যাশ ইন" চাপ দিয়ে OTP নিরাপত্তা শিখুন!')}
-      </div>
-
-      <div style={{ flex:1, overflow:'auto', padding:'10px 12px 82px' }}>
-        {[
-          { title:t('Services','সার্ভিস'), items:SERVICES.slice(0, 4) },
-          { title:t('Payments','পেমেন্ট'), items:PAYMENTS },
-          { title:t('Others','অন্যান্য'), items:OTHERS },
-        ].map((section) => (
-          <section key={section.title} style={{ marginBottom:12 }}>
-            <p style={{ fontWeight:900, fontSize:12, color:'#777', margin:'0 0 8px 2px' }}>{section.title}</p>
-            <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:8 }}>
-              {section.items.map(m => (
-                <button key={m.step+m.en} onClick={() => handleMenu(m)}
-                  style={{ background:'#fff', borderRadius:12, minHeight:82, padding:'8px 3px', textAlign:'center', border:'1px solid #ededed', cursor:'pointer', boxShadow:'0 1px 5px rgba(0,0,0,0.06)' }}>
-                  <div style={{ width:42, height:42, margin:'0 auto 6px', borderRadius:11, background:NG, color:'#fff', display:'flex', alignItems:'center', justifyContent:'center' }}>{m.icon}</div>
-                  <p style={{ fontSize:9.5, fontWeight:800, color:'#202124', lineHeight:1.12 }}>{t(m.en, m.bn)}</p>
-                </button>
-              ))}
             </div>
-          </section>
-        ))}
-
-        {/* Transactions */}
-        <div style={{ background:'#fff', borderRadius:12, border:'1px solid #E8EAED', overflow:'hidden', display:'none' }}>
-          <div style={{ padding:'14px 16px', borderBottom:'1px solid #F0F0F0', display:'flex', justifyContent:'space-between' }}>
-            <p style={{ fontWeight:700, fontSize:16 }}>{t('Transactions','লেনদেন')}</p>
-            <p style={{ fontSize:13, color:NG, fontWeight:600 }}>{t('See All','সব দেখুন')}</p>
-          </div>
-          {[
-            { icon:<Smartphone size={20}/>, label:t('Recharge 01XXXXXXXX','রিচার্জ 01XXXXXXXX'), amount:'-৳ 100', date:t('Today','আজ'), c:'var(--danger)' },
-            { icon:<Send size={20}/>, label:t('Sent to Rupa','রুপাকে পাঠানো'), amount:'-৳ 500', date:t('Yesterday','গতকাল'), c:'var(--danger)' },
-            { icon:<ArrowDownCircle size={20}/>, label:t('Cash In','ক্যাশ ইন'), amount:'+৳ 3,000', date:'3 days ago', c:'var(--success)' },
-          ].map((tx,i) => (
-            <div key={i} style={{ display:'flex', alignItems:'center', gap:14, padding:'14px 16px', borderBottom:i<2?'1px solid #F5F5F5':'none' }}>
-              <div style={{ width:44, height:44, borderRadius:12, background:`${NG}18`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:22, flexShrink:0 }}>{tx.icon}</div>
-              <div style={{ flex:1 }}>
-                <p style={{ fontWeight:600, fontSize:15 }}>{tx.label}</p>
-                <p style={{ fontSize:12, color:'#8E8E8E', marginTop:2 }}>{tx.date}</p>
-              </div>
-              <p style={{ fontWeight:800, fontSize:15, color:tx.c }}>{tx.amount}</p>
-            </div>
-          ))}
+          )}
         </div>
-      </div>
-      <nav style={{ position:'absolute', left:0, right:0, bottom:0, minHeight:64, background:'#fff', borderTop:'1px solid #e8e8e8', display:'grid', gridTemplateColumns:'repeat(5,1fr)', boxShadow:'0 -6px 18px rgba(0,0,0,0.08)' }}>
-        {[
-          { icon:<Home size={20}/>, label:'Home', active:true },
-          { icon:<History size={20}/>, label:'Transactions' },
-          { icon:<QrCode size={20}/>, label:'People' },
-          { icon:<MessageCircle size={20}/>, label:'My Nagad' },
-          { icon:<Menu size={20}/>, label:'More' },
-        ].map((item) => (
-          <button key={item.label} style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:3, color:item.active?NG:'#777', fontSize:9, fontWeight:800 }}>
-            {item.icon}
-            <span>{item.label}</span>
-          </button>
-        ))}
-      </nav>
+        <nav className="bk-nav">
+          <Tap className="bk-nav-item" aria-selected={tab === 'home'} act="tab_home" onClick={() => setTab('home')} style={{ '--sel': BRAND.color }}><Home size={22} />{t('Home', 'হোম', 'होम', 'Trang chủ')}</Tap>
+          <Tap className="bk-qr" style={{ background: BRAND.color }} act="open_scan" onClick={() => nav.push('scan')} label={t('Scan QR', 'কিউআর স্ক্যান', 'QR स्कैन', 'Quét QR')}><QrCode size={28} /></Tap>
+          <Tap className="bk-nav-item" aria-selected={tab === 'inbox'} act="tab_inbox" onClick={() => setTab('inbox')}><Bell size={22} />{t('Alerts', 'অ্যালার্ট', 'अलर्ट', 'Thông báo')}</Tap>
+        </nav>
+      </Screen>
+      {scam && <ScamCall brand={BRAND} caller={t('"Nagad Head Office"', '"নগদ হেড অফিস"', '"Nagad हेड ऑफ़िस"', '"Trụ sở Nagad"')} onEnd={() => setScam(false)} />}
     </div>
   );
 }

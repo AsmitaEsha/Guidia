@@ -8,15 +8,15 @@ import { useVoice } from '../../context/VoiceContext';
 import { LANGUAGES } from '../../config/languages';
 import { useOnline, useScrolled } from '../../hooks/useOnline';
 import { announce } from '../../utils/announce';
-import { ALL_NAV, BOTTOM_NAV, HELP_ITEM, MORE_NAV, NAV_GROUPS, UTILITY_NAV, navForPath } from './navigation';
+import { ALL_NAV, navFor, navForPath } from './navigation';
 import { GuidiaMark } from '../GuidiaLogo';
 import { Avatar, Button, IconButton, Sheet } from '../ui';
 import VoiceControl from '../voice/VoiceControl';
 import AppErrorBoundary from '../AppErrorBoundary';
 
-function Brand({ t }) {
+function Brand({ t, home = 'home' }) {
   return (
-    <Link to="/app/home" className="brand" aria-label={t('Guidia — home', 'Guidia — হোম', 'Guidia — होम', 'Guidia — trang chủ')}>
+    <Link to={`/app/${home}`} className="brand" aria-label={t('Guidia — home', 'Guidia — হোম', 'Guidia — होम', 'Guidia — trang chủ')}>
       <GuidiaMark size={44} title="" />
       <span>
         <span className="brand-name">Guidia</span>
@@ -86,6 +86,8 @@ export default function AppShell() {
   const navigate = useNavigate();
   const mainRef = useRef(null);
   const current = navForPath(location.pathname);
+  const nav = navFor(user?.role);
+  const { groups: NAV_GROUPS, utility: UTILITY_NAV, help: HELP_ITEM, bottom: BOTTOM_NAV, more: MORE_NAV } = nav;
 
   // The signed-in product scales with the user's chosen text size.
   useEffect(() => {
@@ -118,8 +120,8 @@ export default function AppShell() {
       <a href="#main" className="skip-link">{t('Skip to content', 'মূল অংশে যান', 'मुख्य भाग पर जाएं', 'Chuyển đến nội dung')}</a>
 
       <aside className="sidebar" aria-label={t('Main menu', 'মূল মেনু', 'मुख्य मेनू', 'Menu chính')}>
-        <Brand t={t} />
-        <Button variant="help" block icon={LifeBuoy} to="/app/help" className="sidebar-help">{t(...HELP_ITEM.label)}</Button>
+        <Brand t={t} home={nav.home} />
+        {HELP_ITEM && <Button variant="help" block icon={LifeBuoy} to="/app/help" className="sidebar-help">{t(...HELP_ITEM.label)}</Button>}
         <nav className="nav" aria-label={t('Sections', 'বিভাগ', 'हिस्से', 'Mục')}>
           {NAV_GROUPS.map((group) => (
             <div className="nav-group" key={group.id} role="group" aria-labelledby={`nav-${group.id}`}>
@@ -145,7 +147,7 @@ export default function AppShell() {
 
       <div className="main">
         <header className="topbar" data-scrolled={scrolled}>
-          <Brand t={t} />
+          <Brand t={t} home={nav.home} />
           <div className="topbar-context" aria-hidden="true">
             {current && <span className="topbar-crumb">{t(...(current.group?.label || ['Guidia']))}</span>}
             {current && <span className="topbar-title">{t(...current.label)}</span>}
@@ -157,16 +159,18 @@ export default function AppShell() {
               <Bell aria-hidden="true" />
               {unreadCount > 0 && <span className="count-badge" aria-hidden="true">{unreadCount > 9 ? '9+' : unreadCount}</span>}
             </Link>
-            <Button variant="help" size="sm" icon={LifeBuoy} to="/app/help" className="topbar-help">
-              <span className="help-label">{t(...HELP_ITEM.short)}</span>
-            </Button>
+            {HELP_ITEM && (
+              <Button variant="help" size="sm" icon={LifeBuoy} to="/app/help" className="topbar-help">
+                <span className="help-label">{t(...HELP_ITEM.short)}</span>
+              </Button>
+            )}
           </div>
         </header>
 
         <OfflineBanner t={t} />
 
         <main id="main" className="main-content" tabIndex={-1} ref={mainRef}>
-          <AppErrorBoundary key={location.pathname} homeTo="/app/home">
+          <AppErrorBoundary key={location.pathname} homeTo={`/app/${nav.home}`}>
             <div key={location.pathname} className="route-enter">
               <Outlet />
             </div>

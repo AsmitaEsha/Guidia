@@ -18,6 +18,8 @@ const profileSchema = z.object({
   // Optional and self-reported; never required, never used as ability.
   age: z.number().int().min(18, 'Please enter a valid age.').max(120, 'Please enter a valid age.').nullable().optional(),
   countryCode: z.string().length(2).toUpperCase().nullable().optional(),
+  // Shown only to connected family members, so they can call back.
+  phone: z.string().trim().max(24).regex(/^[+\d][\d\s()-]{5,22}$/, 'Please enter a phone number with digits only.').nullable().optional().or(z.literal('').transform(() => null)),
 }).strict();
 
 const preferencesSchema = z.object({

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
-  ArrowLeft, Camera, Clock, ImagePlus, ImageUp, Lock, Maximize, MessageCircle, MessageSquareText, Minus, Pause, Play,
+  ArrowLeft, EyeOff, Camera, Clock, ImagePlus, ImageUp, Lock, Maximize, MessageCircle, MessageSquareText, Minus, Pause, Play,
   Plus, RotateCcw, ScanSearch, Send, ShieldCheck, Square, Trash2, Volume2, X,
 } from 'lucide-react';
 import { usePreferences } from '../../context/PreferencesContext';
@@ -113,8 +113,8 @@ export function ScreenUploadPage() {
 
       {!caps.vision && (
         <Alert tone="info" title={t('Screen explanations are not available right now', 'স্ক্রিন বোঝানো এখন চালু নেই', 'स्क्रीन समझाना अभी उपलब्ध नहीं है', 'Hiện chưa thể giải thích màn hình')}
-          actions={<><Button size="sm" variant="secondary" icon={MessageCircle} to="/app/ask">{t('Describe it to Guidia', 'Guidia-কে লিখে বলুন', 'Guidia को लिखकर बताएं', 'Mô tả cho Guidia')}</Button><Button size="sm" variant="ghost" icon={ShieldCheck} to="/app/safety">{t('Check a message', 'মেসেজ যাচাই', 'संदेश जांचें', 'Kiểm tra tin nhắn')}</Button></>}>
-          {t('You can still describe what you see in words, or paste a message into the safety checker.', 'আপনি যা দেখছেন তা লিখে বলতে পারেন, বা নিরাপত্তা যাচাইয়ে মেসেজ পেস্ট করতে পারেন।', 'आप जो देख रहे हैं वह लिखकर बता सकते हैं, या सुरक्षा जांच में संदेश डाल सकते हैं।', 'Bạn vẫn có thể mô tả bằng lời, hoặc dán tin nhắn vào công cụ kiểm tra an toàn.')}
+          actions={<><Button size="sm" variant="secondary" icon={MessageCircle} to="/app/ask">{t('Describe it to Guidia', 'Guidia-কে লিখে বলুন', 'Guidia को लिखकर बताएं', 'Mô tả cho Guidia')}</Button><Button size="sm" variant="ghost" icon={ShieldCheck} to="/app/safety">{t('Check a message', 'মেসেজ যাচাই', 'मैसेज जांचें', 'Kiểm tra tin nhắn')}</Button></>}>
+          {t('You can still describe what you see in words, or paste a message into the safety checker.', 'আপনি যা দেখছেন তা লিখে বলতে পারেন, বা নিরাপত্তা যাচাইয়ে মেসেজ পেস্ট করতে পারেন।', 'आप जो देख रहे हैं वह लिखकर बता सकते हैं, या सुरक्षा जांच में मैसेज डाल सकते हैं।', 'Bạn vẫn có thể mô tả bằng lời, hoặc dán tin nhắn vào công cụ kiểm tra an toàn.')}
         </Alert>
       )}
 
@@ -220,6 +220,7 @@ export function ScreenResultPage() {
   const { data: analysis, error, loading, reload } = useResource(`/vision/${id}`, { select: (d) => d.analysis });
   const [imageUrl, setImageUrl] = useState('');
   const [active, setActive] = useState(-1);
+  const [bubbles, setBubbles] = useState(true);
   const [zoom, setZoom] = useState(1);
   const [question, setQuestion] = useState('');
   const [answers, setAnswers] = useState([]);
@@ -326,18 +327,35 @@ export function ScreenResultPage() {
                 <span className="text-strong num" aria-live="polite">{Math.round(zoom * 100)}%</span>
                 <IconButton icon={Plus} size="sm" variant="quiet" label={t('Zoom in', 'বড় করুন', 'बड़ा करें', 'Phóng to')} onClick={() => setZoom((z) => Math.min(2.5, +(z + 0.25).toFixed(2)))} disabled={zoom >= 2.5} />
                 <Button variant="quiet" size="sm" icon={Maximize} onClick={() => setZoom(1)} disabled={zoom === 1}>{t('Fit', 'মানানসই', 'फ़िट', 'Vừa khung')}</Button>
+                {pinned.length > 0 && (
+                  <Button variant="quiet" size="sm" icon={bubbles ? EyeOff : MessageSquareText} aria-pressed={bubbles} onClick={() => setBubbles((b) => !b)}>
+                    {bubbles ? t('Hide labels', 'লেবেল লুকান', 'लेबल छिपाएं', 'Ẩn nhãn') : t('Show labels', 'লেবেল দেখান', 'लेबल दिखाएं', 'Hiện nhãn')}
+                  </Button>
+                )}
               </div>
               <div className="screen-canvas-scroll">
                 <div className="screen-canvas" style={{ width: `${zoom * 100}%` }}>
                   <img src={imageUrl} alt={t('Your screenshot with numbered markers', 'নম্বরসহ আপনার স্ক্রিনশট', 'नंबर वाले निशानों के साथ आपका स्क्रीनशॉट', 'Ảnh chụp màn hình có đánh số')} />
-                  {pinned.map((el) => (
-                    <button
-                      key={el.n} ref={(node) => { markerRefs.current[el.n - 1] = node; }} type="button"
-                      className={`screen-marker mk-${TYPE_TONE[el.type] || 'brand'}`} data-active={active === el.n - 1}
-                      style={{ left: `${el.x}%`, top: `${el.y}%` }} onClick={() => pick(el.n - 1, 'marker')}
-                      aria-label={`${el.n}. ${el.label}`} aria-pressed={active === el.n - 1}
-                    >{el.n}</button>
-                  ))}
+                  {pinned.map((el) => {
+                    const isActive = active === el.n - 1;
+                    const side = el.x > 58 ? 'left' : 'right';
+                    return (
+                      <div key={el.n} className="screen-pin" data-next={el.nextStep || undefined} style={{ left: `${el.x}%`, top: `${el.y}%` }}>
+                        <button
+                          ref={(node) => { markerRefs.current[el.n - 1] = node; }} type="button"
+                          className={`screen-marker mk-${el.nextStep ? 'next' : TYPE_TONE[el.type] || 'brand'}`} data-active={isActive}
+                          onClick={() => pick(el.n - 1, 'marker')} aria-label={`${el.n}. ${el.label}${el.nextStep ? ` — ${t('press this next', 'এরপর এটি চাপুন', 'अगला यह दबाएं', 'bấm nút này tiếp theo')}` : ''}`} aria-pressed={isActive}
+                        >{el.n}</button>
+                        {(bubbles || isActive) && (
+                          <span className={`screen-bubble side-${side}`} data-active={isActive} aria-hidden="true">
+                            {el.nextStep && <span className="screen-bubble-next">{t('Press this next', 'এরপর এটি চাপুন', 'अगला यह दबाएं', 'Bấm nút này tiếp theo')}</span>}
+                            <span className="screen-bubble-label">{el.label}</span>
+                            {isActive && el.description && <span className="screen-bubble-desc">{el.description}</span>}
+                          </span>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </>
@@ -391,8 +409,9 @@ export function ScreenResultPage() {
                 {r.elements.map((el, i) => (
                   <li key={i}>
                     <button ref={(node) => { itemRefs.current[i] = node; }} type="button" className="element-item" data-active={active === i} aria-pressed={active === i} onClick={() => pick(i, 'list')}>
-                      <span className={`element-num mk-${TYPE_TONE[el.type] || 'brand'}`} aria-hidden="true">{i + 1}</span>
+                      <span className={`element-num mk-${el.nextStep ? 'next' : TYPE_TONE[el.type] || 'brand'}`} aria-hidden="true">{i + 1}</span>
                       <span className="stack" style={{ '--gap': '2px', textAlign: 'left' }}>
+                        {el.nextStep && <span className="badge badge-ok self-start">{t('Press this next', 'এরপর এটি চাপুন', 'अगला यह दबाएं', 'Bấm nút này tiếp theo')}</span>}
                         <span className="list-item-title">{el.label}</span>
                         <span className="text-muted text-sm">{el.description}</span>
                       </span>

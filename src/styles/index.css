@@ -14,6 +14,7 @@
 @import './pages/memory.css';
 @import './pages/progress.css';
 @import './pages/people.css';
+@import './pages/family.css';
 @import './pages/help.css';
 @import './pages/notifications.css';
 @import './pages/settings.css';
@@ -24,4 +25,6 @@
 @import './showcase.css';
 @import './admin.css';
 @import './simulators.css';
+@import './sim-kit.css';
+@import './sims/index.css';
 @import './accessibility.css';

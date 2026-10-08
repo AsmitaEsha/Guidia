@@ -29,6 +29,14 @@ router.use(requireAuth, limits.guardian);
 
 router.get('/', handler(async (req, res) => ok(res, await guardianService.list(req.user.id))));
 
+// Family codes: the learner shares one; a family member enters it to connect.
+router.get('/family-code', handler(async (req, res) => ok(res, await guardianService.familyCode(req.user.id))));
+router.post('/family-code', handler(async (req, res) => ok(res, await guardianService.familyCode(req.user.id, { renew: true }))));
+router.post('/link', handler(async (req, res) => {
+  const { code } = parse(z.object({ code: z.string().trim().min(4, 'Please enter the family code.').max(12) }), req.body);
+  created(res, { relationship: await guardianService.linkWithCode(req.user.id, code, { requestId: req.id }) });
+}));
+
 router.post('/invite', handler(async (req, res) => {
   const body = parse(inviteSchema, req.body);
   const relationship = await guardianService.invite(req.user.id, {

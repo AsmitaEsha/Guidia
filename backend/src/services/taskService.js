@@ -22,7 +22,7 @@ function toPublic(task) {
     application: task.application,
     lesson: task.lesson,
     scenario: task.scenario ? { slug: task.scenario.slug, title: task.scenario.title, skillKey: task.scenario.skillKey } : null,
-    steps: steps.map((s) => ({ order: s.order, instruction: s.instruction, hint: s.hint, riskLevel: s.riskLevel })),
+    steps: steps.map((s) => ({ order: s.order, instruction: s.instruction, hint: s.hint, riskLevel: s.riskLevel, expectedAction: s.expectedAction ?? null })),
     currentStepOrder: task.currentStepOrder,
     totalSteps: steps.length,
     context: task.context,

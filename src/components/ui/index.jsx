@@ -32,7 +32,7 @@ export const Button = forwardRef(function Button({
   const cls = cx('btn', `btn-${variant}`, size && `btn-${size}`, block && 'btn-block', className);
   let content;
   if (state === 'loading') {
-    content = <span className="btn-status"><Loader2 className="spin" aria-hidden="true" /><span>{loadingLabel || t('Please wait…', 'একটু অপেক্ষা করুন…', 'कृपया रुकें…', 'Vui lòng chờ…')}</span></span>;
+    content = <span className="btn-status"><Loader2 className="spin" aria-hidden="true" /><span>{loadingLabel || t('Please wait…', 'একটু অপেক্ষা করুন…', 'थोड़ा रुकिए…', 'Vui lòng chờ…')}</span></span>;
   } else if (state === 'success') {
     content = <span className="btn-status pop"><Check aria-hidden="true" /><span>{successLabel || t('Done', 'হয়ে গেছে', 'हो गया', 'Xong')}</span></span>;
   } else {

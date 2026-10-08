@@ -20,7 +20,9 @@ const num = (fallback) =>
 const list = () =>
   z.preprocess((v) => String(v ?? '').split(',').map((s) => s.trim()).filter(Boolean), z.array(z.string()));
 
-const PROVIDER_NAMES = ['gemini', 'ollama', 'xai', 'mock', 'none'];
+const PROVIDER_NAMES = ['gemini', 'groq', 'openrouter', 'ollama', 'xai', 'mock', 'none'];
+// Comma-separated values: "a, b,,c" → ['a', 'b', 'c'].
+const csv = (v) => String(v || '').split(',').map((x) => x.trim()).filter(Boolean);
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isTest = nodeEnv === 'test';
 
@@ -45,7 +47,22 @@ const schema = z.object({
   AI_PROVIDER: z.preprocess((v) => (PROVIDER_NAMES.includes(v) ? v : v === undefined || v === '' ? 'gemini' : 'none'), z.enum(PROVIDER_NAMES)),
   // Used automatically when the main provider fails or hits its limit.
   AI_FALLBACK_PROVIDER: z.preprocess((v) => (PROVIDER_NAMES.includes(v) ? v : 'none'), z.enum(PROVIDER_NAMES)),
+  // Ordered list of providers to try, e.g. "gemini,groq,openrouter,ollama".
+  // When one runs out of free quota the next answers. Empty = AI_PROVIDER
+  // then AI_FALLBACK_PROVIDER.
+  AI_CHAIN: z.string().default(''),
   GEMINI_API_KEY: z.string().default(''),
+  // More free Gemini keys (from different Google accounts), comma separated.
+  // Guidia rotates to the next key when one hits its daily limit.
+  GEMINI_API_KEYS: z.string().default(''),
+  GROQ_API_KEYS: z.string().default(''),
+  GROQ_MODEL: z.string().default('llama-3.3-70b-versatile'),
+  GROQ_VISION_MODEL: z.string().default('meta-llama/llama-4-scout-17b-16e-instruct'),
+  GROQ_BASE_URL: z.string().default('https://api.groq.com/openai/v1'),
+  OPENROUTER_API_KEYS: z.string().default(''),
+  OPENROUTER_MODEL: z.string().default('meta-llama/llama-3.3-70b-instruct:free'),
+  OPENROUTER_VISION_MODEL: z.string().default('google/gemma-3-27b-it:free'),
+  OPENROUTER_BASE_URL: z.string().default('https://openrouter.ai/api/v1'),
   GEMINI_MODEL: z.string().default('gemini-flash-latest'),
   // Tried when the main model is busy (503), rate-limited (429) or retired (404).
   GEMINI_FALLBACK_MODEL: z.string().default('gemini-flash-lite-latest'),
@@ -54,20 +71,21 @@ const schema = z.object({
   GEMINI_TTS_VOICE: z.string().default('Kore'),
   // Spoken guidance: edge (free neural voices, default) · gemini · off
   SPEECH_PROVIDER: z.enum(['edge', 'gemini', 'off']).default('edge'),
-  SPEECH_VOICE_BN: z.string().default('bn-BD-NabanitaNeural'),
-  SPEECH_VOICE_HI: z.string().default('hi-IN-SwaraNeural'),
+  SPEECH_VOICE_BN: z.string().default('bn-IN-TanishaaNeural'),
+  SPEECH_VOICE_HI: z.string().default('hi-IN-MadhurNeural'),
   SPEECH_VOICE_VI: z.string().default('vi-VN-HoaiMyNeural'),
   SPEECH_VOICE_EN: z.string().default('en-US-AvaNeural'),
   OLLAMA_BASE_URL: z.string().default('http://localhost:11434/v1'),
   OLLAMA_MODEL: z.string().default('gemma3:4b'),
   OLLAMA_VISION_MODEL: z.string().default(''),
+  OLLAMA_TIMEOUT_MS: int(45000),
   XAI_API_KEY: z.string().default(''),
   XAI_BASE_URL: z.string().default('https://api.x.ai/v1'),
   XAI_MODEL: z.string().default('grok-4.7'),
   XAI_VISION_MODEL: z.string().default(''),
   XAI_TTS_VOICE: z.string().default(''),
   AI_TIMEOUT_MS: int(30000),
-  AI_MAX_RETRIES: int(1),
+  AI_MAX_RETRIES: int(0),
 
   ML_SERVICE_URL: z.string().default(''),
   ML_TIMEOUT_MS: int(3000),
@@ -135,8 +153,15 @@ export const env = {
   ai: {
     provider: e.AI_PROVIDER,
     fallbackProvider: e.AI_FALLBACK_PROVIDER === e.AI_PROVIDER ? 'none' : e.AI_FALLBACK_PROVIDER,
-    gemini: { apiKey: e.GEMINI_API_KEY, model: e.GEMINI_MODEL, fallbackModel: e.GEMINI_FALLBACK_MODEL, baseUrl: e.GEMINI_BASE_URL, ttsModel: e.GEMINI_TTS_MODEL, ttsVoice: e.GEMINI_TTS_VOICE },
-    ollama: { baseUrl: e.OLLAMA_BASE_URL, model: e.OLLAMA_MODEL, visionModel: e.OLLAMA_VISION_MODEL || e.OLLAMA_MODEL },
+    chain: (() => {
+      const listed = csv(e.AI_CHAIN).filter((n) => PROVIDER_NAMES.includes(n) && n !== 'none');
+      const base = listed.length ? listed : [e.AI_PROVIDER, e.AI_FALLBACK_PROVIDER];
+      return [...new Set(base.filter((n) => n && n !== 'none'))];
+    })(),
+    gemini: { apiKey: csv(e.GEMINI_API_KEY)[0] || csv(e.GEMINI_API_KEYS)[0] || '', apiKeys: [...new Set([...csv(e.GEMINI_API_KEY), ...csv(e.GEMINI_API_KEYS)])], model: e.GEMINI_MODEL, fallbackModel: e.GEMINI_FALLBACK_MODEL, baseUrl: e.GEMINI_BASE_URL, ttsModel: e.GEMINI_TTS_MODEL, ttsVoice: e.GEMINI_TTS_VOICE },
+    groq: { apiKeys: csv(e.GROQ_API_KEYS), model: e.GROQ_MODEL, visionModel: e.GROQ_VISION_MODEL, baseUrl: e.GROQ_BASE_URL },
+    openrouter: { apiKeys: csv(e.OPENROUTER_API_KEYS), model: e.OPENROUTER_MODEL, visionModel: e.OPENROUTER_VISION_MODEL, baseUrl: e.OPENROUTER_BASE_URL },
+    ollama: { baseUrl: e.OLLAMA_BASE_URL, model: e.OLLAMA_MODEL, visionModel: e.OLLAMA_VISION_MODEL || e.OLLAMA_MODEL, timeoutMs: e.OLLAMA_TIMEOUT_MS },
     apiKey: e.XAI_API_KEY,
     baseUrl: e.XAI_BASE_URL,
     model: e.XAI_MODEL,

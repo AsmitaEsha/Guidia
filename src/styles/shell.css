@@ -226,3 +226,5 @@
 [data-gx-theme='light'] img.guidia-mark { background: none; padding: 0; }
 .guidia-mark-tile img.guidia-mark { background: none; padding: 0; }
 .auth-brand .guidia-wordmark { -webkit-text-fill-color: #ffffff; background: none; color: #ffffff; }
+/* Long translations ("আমার সাহায্য দরকার") may wrap: let the button grow. */
+.sidebar-help { height: auto; min-height: var(--tap); padding-block: 10px; line-height: 1.25; text-align: center; }

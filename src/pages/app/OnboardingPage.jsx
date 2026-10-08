@@ -16,16 +16,30 @@ const STYLE_PREVIEW = {
   scared: { gap: 22, words: 3 },
 };
 
-// First-run setup, saved to the account (not the browser) so it follows the
-// user to any device. One decision per step.
-export default function OnboardingPage() {
+// First-run setup, one decision per step.
+//   guest:   the welcome flow shown before the landing page (language,
+//            guidance, reading). Choices are kept in this browser and copied
+//            to the account on sign-up.
+//   account: saved to the account so it follows the user to any device. If
+//            the welcome flow already ran, it opens on the last, optional step.
+const GUEST_AGE_KEY = 'guidia.guestAge';
+
+export default function OnboardingPage({ guest = false }) {
   const { user, updateProfile } = useAuth();
-  const { t, language, setLanguage, mode, setMode, prefs, setPreference, savePreferences } = usePreferences();
+  const { t, language, setLanguage, mode, setMode, prefs, setPreference, savePreferences, setupDone, markSetupDone } = usePreferences();
   const { speak } = useVoice();
   const voiceState = useVoiceState();
   const navigate = useNavigate();
-  const [step, setStep] = useState(0);
-  const [age, setAge] = useState('');
+  const startStep = !guest && setupDone ? 3 : 0;
+  const [step, setStep] = useState(startStep);
+  // The welcome flow asks for age too; it is kept on this device and filled
+  // in here after sign-up, then saved to the account.
+  const [age, setAge] = useState(() => {
+    if (user?.age) return String(user.age);
+    try { return localStorage.getItem(GUEST_AGE_KEY) || ''; } catch { return ''; }
+  });
+  const ageNumber = Number(age);
+  const ageInvalid = age !== '' && (ageNumber < 18 || ageNumber > 120);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
@@ -47,11 +61,21 @@ export default function OnboardingPage() {
   };
 
   const finish = async () => {
+    if (ageInvalid) return;
+    if (guest) {
+      try { if (age) localStorage.setItem(GUEST_AGE_KEY, age); else localStorage.removeItem(GUEST_AGE_KEY); } catch { /* private mode */ }
+      markSetupDone();
+      setDone(true);
+      speak(t('All set. Here is Guidia, made for you.', 'সব প্রস্তুত। এই যে Guidia, আপনার মতো করে সাজানো।', 'सब तैयार है। यह रहा Guidia, आपके हिसाब से।', 'Xong rồi. Đây là Guidia, dành riêng cho bạn.'));
+      setTimeout(() => navigate('/landing', { replace: true }), prefs.reducedMotion ? 400 : 1300);
+      return;
+    }
     setBusy(true);
     setError('');
     try {
-      if (age) await updateProfile({ age: Number(age) });
+      if (age && ageNumber !== user?.age) await updateProfile({ age: ageNumber });
       await savePreferences({ onboardingDone: true });
+      try { localStorage.removeItem(GUEST_AGE_KEY); } catch { /* private mode */ }
       setDone(true);
       speak(t('You are all set. Welcome to Guidia.', 'সব প্রস্তুত। Guidia-তে স্বাগতম।', 'सब तैयार है। Guidia में स्वागत है।', 'Mọi thứ đã sẵn sàng. Chào mừng bạn đến với Guidia.'));
       setTimeout(() => navigate('/app/home', { replace: true }), prefs.reducedMotion ? 600 : 1600);
@@ -64,7 +88,7 @@ export default function OnboardingPage() {
   const modes = [
     { value: 'calm', icon: Sparkles, title: t('Comfortable', 'স্বচ্ছন্দ', 'आरामदायक', 'Thoải mái'), body: t('I am fairly comfortable with phones.', 'ফোন মোটামুটি চালাতে পারি।', 'फोन ठीक-ठाक चला लेता हूँ।', 'Tôi khá quen dùng điện thoại.') },
     { value: 'unsure', icon: Accessibility, title: t('A little more help', 'একটু বেশি সাহায্য', 'थोड़ी ज़्यादा मदद', 'Thêm chút trợ giúp'), body: t('Please explain things a little more.', 'একটু বেশি বুঝিয়ে বলুন।', 'थोड़ा ज़्यादा समझाइए।', 'Hãy giải thích kỹ hơn một chút.') },
-    { value: 'scared', icon: ShieldCheck, title: t('Very gentle', 'খুব নরম', 'बहुत सहज', 'Rất nhẹ nhàng'), body: t('One small step at a time, please.', 'এক এক করে ছোট ধাপে বলুন।', 'एक-एक छोटा कदम, कृपया।', 'Từng bước nhỏ một thôi nhé.') },
+    { value: 'scared', icon: ShieldCheck, title: t('Very gentle', 'খুব নরম', 'बहुत सहज', 'Rất nhẹ nhàng'), body: t('One small step at a time, please.', 'এক এক করে ছোট ধাপে বলুন।', 'एक-एक छोटा कदम बताइए।', 'Từng bước nhỏ một thôi nhé.') },
   ];
   const preview = STYLE_PREVIEW[mode] || STYLE_PREVIEW.calm;
 
@@ -78,11 +102,13 @@ export default function OnboardingPage() {
           </span>
           <span className="text-subtle num">{t(`Step ${step + 1} of ${total}`, `ধাপ ${step + 1} / ${total}`, `चरण ${step + 1} / ${total}`, `Bước ${step + 1}/${total}`)}</span>
         </div>
-        <div className="onboarding-progress"><Stepper total={total} current={done ? total : step} labels={labels} /></div>
+        <div className="onboarding-progress"><Stepper total={total} current={done ? total : step} labels={labels.slice(0, total)} /></div>
 
         {done ? (
           <SuccessState title={t('You are all set', 'সব প্রস্তুত', 'सब तैयार है', 'Mọi thứ đã sẵn sàng')}>
-            <p className="text-muted">{t('Opening your home page…', 'আপনার হোম পেজ খুলছি…', 'आपका होम पेज खुल रहा है…', 'Đang mở trang chủ của bạn…')}</p>
+            <p className="text-muted">{guest
+              ? t('Opening Guidia, set up your way…', 'আপনার মতো করে সাজানো Guidia খুলছি…', 'आपके हिसाब से सजा Guidia खुल रहा है…', 'Đang mở Guidia theo cách của bạn…')
+              : t('Opening your home page…', 'আপনার হোম পেজ খুলছি…', 'आपका होम पेज खुल रहा है…', 'Đang mở trang chủ của bạn…')}</p>
           </SuccessState>
         ) : (
           <div key={step} className="onboarding-step step-in">
@@ -90,6 +116,7 @@ export default function OnboardingPage() {
               <section className="stack" style={{ '--gap': 'var(--s-5)' }}>
                 <div className="stack" style={{ '--gap': 'var(--s-2)' }}>
                   <p className="eyebrow"><Globe size={16} aria-hidden="true" /> {labels[0]}</p>
+                  {guest && <p className="ob-hello" aria-hidden="true">Welcome · স্বাগতম · स्वागत है · Chào mừng</p>}
                   <h1 id="ob-title" className="onboarding-title">{t(`Welcome${firstName ? `, ${firstName}` : ''}. Which language feels most natural?`, `স্বাগতম${firstName ? `, ${firstName}` : ''}। কোন ভাষা সবচেয়ে স্বাভাবিক লাগে?`, `स्वागत है${firstName ? `, ${firstName}` : ''}। कौन सी भाषा सबसे सहज लगती है?`, `Chào mừng${firstName ? ` ${firstName}` : ''}. Bạn thấy ngôn ngữ nào tự nhiên nhất?`)}</h1>
                   <p className="lead">{t('The whole app changes as soon as you choose.', 'বেছে নেওয়ার সঙ্গে সঙ্গে পুরো অ্যাপ বদলে যাবে।', 'चुनते ही पूरा ऐप बदल जाएगा।', 'Cả ứng dụng sẽ đổi ngay khi bạn chọn.')}</p>
                 </div>
@@ -170,12 +197,14 @@ export default function OnboardingPage() {
               <section className="stack" style={{ '--gap': 'var(--s-5)' }}>
                 <div className="stack" style={{ '--gap': 'var(--s-2)' }}>
                   <p className="eyebrow"><User size={16} aria-hidden="true" /> {labels[3]}</p>
+                  {startStep === 3 && <Alert tone="ok" icon={Check}>{t('We kept the language, guidance and reading choices you made earlier. You can change them any time in Settings.', 'আগে যে ভাষা, নির্দেশনা ও পড়ার ধরন বেছেছিলেন সেগুলো রাখা হয়েছে। সেটিংসে যেকোনো সময় বদলাতে পারবেন।', 'आपने पहले जो भाषा, मार्गदर्शन और पढ़ने का तरीका चुना था, वह रख लिया गया है। सेटिंग्स में कभी भी बदल सकते हैं।', 'Chúng tôi đã giữ ngôn ngữ, cách hướng dẫn và cỡ chữ bạn chọn trước đó. Bạn có thể đổi bất cứ lúc nào trong Cài đặt.')}</Alert>}
                   <h1 id="ob-title" className="onboarding-title">{t('One last, optional question', 'শেষ একটি ঐচ্ছিক প্রশ্ন', 'आखिरी, वैकल्पिक सवाल', 'Câu hỏi cuối, không bắt buộc')}</h1>
                   <p className="lead">{t('Your age helps Guidia suggest relevant lessons. It is never used to decide what you can do, and only you can see it.', 'আপনার বয়স Guidia-কে প্রাসঙ্গিক পাঠ সুপারিশ করতে সাহায্য করে। এটি দিয়ে কখনো ঠিক করা হয় না আপনি কী পারবেন, আর শুধু আপনি দেখতে পান।', 'आपकी उम्र Guidia को सही पाठ सुझाने में मदद करती है। इससे कभी तय नहीं होता कि आप क्या कर सकते हैं, और इसे सिर्फ़ आप देख सकते हैं।', 'Tuổi giúp Guidia gợi ý bài học phù hợp. Không bao giờ dùng để quyết định bạn làm được gì, và chỉ bạn thấy.')}</p>
                 </div>
                 <Field label={t('Your age', 'আপনার বয়স', 'आपकी उम्र', 'Tuổi của bạn')} optional={t('optional', 'ঐচ্ছিক', 'वैकल्पिक', 'không bắt buộc')}>
-                  {(p) => <input {...p} className="input input-lg" inputMode="numeric" value={age} onChange={(e) => setAge(e.target.value.replace(/\D/g, '').slice(0, 3))} style={{ maxWidth: 180 }} />}
+                  {(p) => <input {...p} className="input input-lg" inputMode="numeric" autoComplete="off" value={age} aria-invalid={ageInvalid || undefined} onChange={(e) => setAge(e.target.value.replace(/\D/g, '').slice(0, 3))} onKeyDown={(e) => { if (e.key === 'Enter') finish(); }} style={{ maxWidth: 180 }} />}
                 </Field>
+                {ageInvalid && age.length >= 2 && <Alert tone="warn">{t('Please enter an age between 18 and 120, or leave it empty.', '১৮ থেকে ১২০-এর মধ্যে বয়স লিখুন, অথবা ফাঁকা রাখুন।', '18 से 120 के बीच उम्र लिखें, या खाली छोड़ दें।', 'Hãy nhập tuổi từ 18 đến 120, hoặc để trống.')}</Alert>}
               </section>
             )}
           </div>
@@ -185,11 +214,15 @@ export default function OnboardingPage() {
 
         {!done && (
           <div className="onboarding-nav">
-            <Button variant="ghost" icon={ArrowLeft} onClick={() => go(step - 1)} disabled={step === 0}>{t('Back', 'আগে', 'पीछे', 'Quay lại')}</Button>
+            {step === startStep && guest ? (
+              <Button variant="ghost" onClick={() => { markSetupDone(); navigate('/landing', { replace: true }); }}>{t('Skip for now', 'এখন থাক', 'अभी छोड़ें', 'Để sau')}</Button>
+            ) : (
+              <Button variant="ghost" icon={ArrowLeft} onClick={() => go(step - 1)} disabled={step === startStep}>{t('Back', 'পেছনে', 'पीछे', 'Quay lại')}</Button>
+            )}
             {step < total - 1 ? (
               <Button size="lg" arrow onClick={() => go(step + 1)}>{t('Continue', 'এগিয়ে যান', 'आगे बढ़ें', 'Tiếp tục')}</Button>
             ) : (
-              <Button size="lg" icon={Check} onClick={finish} state={busy ? 'loading' : 'idle'}>{t('Start using Guidia', 'Guidia শুরু করুন', 'Guidia शुरू करें', 'Bắt đầu dùng Guidia')}</Button>
+              <Button size="lg" icon={Check} onClick={finish} disabled={ageInvalid} state={busy ? 'loading' : 'idle'}>{guest ? t('Show me Guidia', 'Guidia দেখান', 'Guidia दिखाएं', 'Xem Guidia') : t('Start using Guidia', 'Guidia শুরু করুন', 'Guidia शुरू करें', 'Bắt đầu dùng Guidia')}</Button>
             )}
           </div>
         )}

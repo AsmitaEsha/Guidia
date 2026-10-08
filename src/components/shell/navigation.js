@@ -1,4 +1,4 @@
-import { Bell, BookMarked, BookOpen, Hand, Home, LifeBuoy, MessageCircle, ScanSearch, Settings, ShieldCheck, TrendingUp, Users } from 'lucide-react';
+import { Bell, BookMarked, BookOpen, Hand, HeartHandshake, Home, LifeBuoy, MessageCircle, ScanSearch, Settings, ShieldCheck, TrendingUp, Users } from 'lucide-react';
 
 // Senior navigation. Labels are [en, bn, hi, vi] for t().
 export const NAV_GROUPS = [
@@ -49,7 +49,42 @@ export const BOTTOM_NAV = ['home', 'learn', 'ask', 'safety'];
 // Everything else goes in the "More" sheet, in this order.
 export const MORE_NAV = ['practice', 'screen', 'memory', 'progress', 'people', 'notifications', 'settings', 'help'];
 
-export const ALL_NAV = [...NAV_GROUPS.flatMap((g) => g.items.map((i) => ({ ...i, group: g }))), ...UTILITY_NAV, HELP_ITEM];
+// Family accounts (a son, daughter or carer): their dashboard first, plus
+// the lessons and safety pages so they can explain things the same way.
+export const FAMILY_NAV_GROUPS = [
+  {
+    id: 'family',
+    label: ['My family', 'আমার পরিবার', 'मेरा परिवार', 'Gia đình tôi'],
+    items: [
+      { to: 'family', icon: HeartHandshake, label: ['Family dashboard', 'পরিবারের ড্যাশবোর্ড', 'परिवार डैशबोर्ड', 'Bảng gia đình'], short: ['Family', 'পরিবার', 'परिवार', 'Gia đình'] },
+    ],
+  },
+  {
+    id: 'help-them',
+    label: ['Help them learn', 'শিখতে সাহায্য', 'सीखने में मदद', 'Giúp họ học'],
+    items: [
+      { to: 'learn', icon: BookOpen, label: ['Lessons', 'পাঠ', 'पाठ', 'Bài học'] },
+      { to: 'practice', icon: Hand, label: ['Practice apps', 'অনুশীলন অ্যাপ', 'अभ्यास ऐप', 'Ứng dụng luyện tập'] },
+      { to: 'safety', icon: ShieldCheck, label: ['Safety', 'নিরাপত্তা', 'सुरक्षा', 'An toàn'] },
+    ],
+  },
+];
+export const FAMILY_BOTTOM_NAV = ['family', 'learn', 'safety', 'notifications'];
+export const FAMILY_MORE_NAV = ['practice', 'settings'];
+
+/** Navigation for the signed-in role. */
+export function navFor(role) {
+  if (role === 'GUARDIAN') {
+    return { groups: FAMILY_NAV_GROUPS, utility: UTILITY_NAV, help: null, bottom: FAMILY_BOTTOM_NAV, more: FAMILY_MORE_NAV, home: 'family' };
+  }
+  return { groups: NAV_GROUPS, utility: UTILITY_NAV, help: HELP_ITEM, bottom: BOTTOM_NAV, more: MORE_NAV, home: 'home' };
+}
+
+export const ALL_NAV = [
+  ...NAV_GROUPS.flatMap((g) => g.items.map((i) => ({ ...i, group: g }))),
+  ...FAMILY_NAV_GROUPS[0].items.map((i) => ({ ...i, group: FAMILY_NAV_GROUPS[0] })),
+  ...UTILITY_NAV, HELP_ITEM,
+];
 
 /** The nav entry (and its group) for a pathname like /app/learn/abc. */
 export function navForPath(pathname) {

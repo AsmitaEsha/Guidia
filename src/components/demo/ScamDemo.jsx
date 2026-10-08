@@ -33,7 +33,7 @@ export default function ScamDemo() {
           <p className="phone-msg-body">{t("Abba it's me, my phone broke so this is my new number. I'm in trouble — please send 15,000 taka right now. Don't tell anyone, I'll explain later.", 'আব্বা আমি, আমার ফোন নষ্ট তাই এটা নতুন নম্বর। আমি বিপদে আছি — এখনই ১৫,০০০ টাকা পাঠাও। কাউকে বোলো না, পরে বুঝিয়ে বলব।', 'पापा मैं हूँ, मेरा फोन टूट गया, यह नया नंबर है। मैं मुसीबत में हूँ — अभी 15,000 भेज दो। किसी को मत बताना, बाद में समझाऊंगा।', 'Bố ơi con đây, điện thoại con hỏng nên đây là số mới. Con đang gặp chuyện — bố chuyển ngay 5 triệu nhé. Đừng nói với ai, con giải thích sau.')}</p>
         </div>
 
-        {stage === 'message' && <Button icon={Search} onClick={check} className="self-start">{t('Check this message', 'মেসেজটি যাচাই করুন', 'यह संदेश जांचें', 'Kiểm tra tin nhắn này')}</Button>}
+        {stage === 'message' && <Button icon={Search} onClick={check} className="self-start">{t('Check this message', 'মেসেজটি যাচাই করুন', 'यह मैसेज जांचें', 'Kiểm tra tin nhắn này')}</Button>}
         {stage === 'analyzing' && (
           <div className="demo-analyzing fade" role="status">
             <span className="thinking-dots" aria-hidden="true"><span /><span /><span /></span>

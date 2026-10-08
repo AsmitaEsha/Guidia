@@ -23,7 +23,7 @@ const SCRIPTS = [
     a: ['No — please do not share it. No real company ever asks for your OTP.', 'না — দয়া করে দেবেন না। কোনো আসল প্রতিষ্ঠান কখনো ওটিপি চায় না।', 'नहीं — कृपया न बताएं। कोई असली कंपनी कभी ओटीपी नहीं मांगती।', 'Không — xin đừng đưa. Không công ty thật nào hỏi mã OTP.'],
     steps: [
       ['Do not reply or call back the number.', 'উত্তর দেবেন না বা ওই নম্বরে ফোন করবেন না।', 'जवाब न दें, उस नंबर पर फोन न करें।', 'Đừng trả lời hay gọi lại số đó.'],
-      ['Delete the message.', 'মেসেজটি মুছে দিন।', 'संदेश मिटा दें।', 'Xóa tin nhắn.'],
+      ['Delete the message.', 'মেসেজটি মুছে দিন।', 'मैसेज मिटा दें।', 'Xóa tin nhắn.'],
       ['Tell someone you trust.', 'বিশ্বস্ত কাউকে জানান।', 'किसी भरोसेमंद को बताएं।', 'Báo cho người bạn tin.'],
     ],
   },

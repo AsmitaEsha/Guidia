@@ -4,20 +4,21 @@ import { ApiError } from '../middleware/errorHandler.js';
 import { logger } from '../lib/logger.js';
 import { xaiProvider } from './providers/xaiProvider.js';
 import { mockProvider } from './providers/mockProvider.js';
-import { geminiProvider, ollamaProvider } from './providers/openaiCompatibleProvider.js';
+import { geminiProvider, groqProvider, ollamaProvider, openrouterProvider } from './providers/openaiCompatibleProvider.js';
 
 // Provider-neutral entry point for every AI feature. Business code never
 // sees provider response formats: it gets text, a validated object, or
 // audio. Keys stay server-side; nothing here is reachable from the browser.
 //
-// AI_PROVIDER picks the main provider; AI_FALLBACK_PROVIDER (optional) is
-// tried automatically when the main one fails — e.g. Gemini's free daily
-// limit runs out and local Ollama takes over.
+// AI_CHAIN lists providers in order (default: AI_PROVIDER, then
+// AI_FALLBACK_PROVIDER). Each is tried in turn when the one before it fails
+// or runs out of free quota — e.g. Gemini's daily limit runs out, Groq
+// answers, then OpenRouter, then local Ollama.
 
-const PROVIDERS = { xai: xaiProvider, gemini: geminiProvider, ollama: ollamaProvider, mock: mockProvider };
+const PROVIDERS = { xai: xaiProvider, gemini: geminiProvider, groq: groqProvider, openrouter: openrouterProvider, ollama: ollamaProvider, mock: mockProvider };
 
 function candidates({ voice = false } = {}) {
-  return [env.ai.provider, env.ai.fallbackProvider]
+  return env.ai.chain
     .map((n) => PROVIDERS[n])
     .filter((p) => p && p.isAvailable() && (!voice || p.supportsVoice !== false));
 }
@@ -51,19 +52,29 @@ function logRequest(meta, providerName, startedAt, status, extra = {}) {
     .catch(() => {});
 }
 
-async function call(meta, fn, { voice = false } = {}) {
+// `validate` (optional) checks a provider's answer; if it can't be used,
+// the next provider is asked instead of failing the whole request.
+async function call(meta, fn, { voice = false, validate } = {}) {
   const list = candidates({ voice });
   if (!list.length) throw voice ? VOICE_UNAVAILABLE() : UNAVAILABLE();
 
+  let badOutput = null;
   for (let i = 0; i < list.length; i += 1) {
     const p = list[i];
     const fallback = i > 0;
     const startedAt = Date.now();
     try {
       const result = await fn(p);
+      const data = validate ? validate(result) : undefined;
       logRequest(meta, p.name, startedAt, 'ok', { ...result, fallback });
-      return { ...result, provider: p.name, fallback };
+      return { ...result, ...(validate ? { data } : {}), provider: p.name, fallback };
     } catch (err) {
+      if (err instanceof ApiError && err.code === 'AI_BAD_OUTPUT' && i + 1 < list.length) {
+        badOutput = err;
+        logRequest(meta, p.name, startedAt, 'error', { errorCode: err.code, fallback });
+        logger.warn('AI answer unusable, asking the next provider', { provider: p.name, feature: meta.feature });
+        continue;
+      }
       if (err instanceof ApiError) {
         logRequest(meta, p.name, startedAt, 'error', { errorCode: err.code, fallback });
         throw err;
@@ -72,7 +83,7 @@ async function call(meta, fn, { voice = false } = {}) {
       logger.warn('AI provider call failed', { provider: p.name, feature: meta.feature, status: err?.status, code: err?.code, requestId: meta.requestId, willFallback: i + 1 < list.length });
     }
   }
-  throw UPSTREAM();
+  throw badOutput || UPSTREAM();
 }
 
 function parseValidated(raw, zodSchema) {
@@ -113,13 +124,13 @@ export const aiGateway = {
    * result is validated again with `zodSchema` — model output is untrusted.
    */
   async generateStructured({ system, messages, name, jsonSchema, zodSchema, meta = {} }) {
-    const result = await call(meta, (p) => p.structured({ system, messages, name, jsonSchema }));
-    return { data: parseValidated(result.raw, zodSchema), model: result.model, provider: result.provider };
+    const result = await call(meta, (p) => p.structured({ system, messages, name, jsonSchema }), { validate: (r) => parseValidated(r.raw, zodSchema) });
+    return { data: result.data, model: result.model, provider: result.provider };
   },
 
   async analyzeImage({ system, prompt, imageBase64, mimeType, name, jsonSchema, zodSchema, meta = {} }) {
-    const result = await call(meta, (p) => p.vision({ system, prompt, imageBase64, mimeType, name, jsonSchema }));
-    return { data: parseValidated(result.raw, zodSchema), model: result.model, provider: result.provider };
+    const result = await call(meta, (p) => p.vision({ system, prompt, imageBase64, mimeType, name, jsonSchema }), { validate: (r) => parseValidated(r.raw, zodSchema) });
+    return { data: result.data, model: result.model, provider: result.provider };
   },
 
   synthesizeSpeech({ text, voice, speed, language, meta = {} }) {

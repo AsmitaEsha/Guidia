@@ -5,11 +5,14 @@
 // - On an expired access token, refreshes once (single flight) and retries.
 // - Never talks to an AI provider: every AI feature goes through the API.
 
+import { localizeError } from './errorText';
+
 const BASE_URL = (import.meta.env.VITE_API_URL || '/api/v1').replace(/\/$/, '');
 
 export class ApiError extends Error {
   constructor(status, code, message, requestId) {
-    super(message);
+    super(localizeError(message, code));
+    this.serverMessage = message;
     this.status = status;
     this.code = code;
     this.requestId = requestId;

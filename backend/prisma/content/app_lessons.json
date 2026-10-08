@@ -153,7 +153,7 @@
       {
         "en": "Do not reply, click links or send money, even if the message looks urgent.",
         "bn": "উত্তর দেবেন না, লিংকে চাপবেন না বা টাকা পাঠাবেন না — মেসেজ যতই জরুরি মনে হোক।",
-        "hi": "जवाब न दें, लिंक पर न दबाएं और पैसे न भेजें — चाहे संदेश कितना भी ज़रूरी लगे।",
+        "hi": "जवाब न दें, लिंक पर न दबाएं और पैसे न भेजें — चाहे मैसेज कितना भी ज़रूरी लगे।",
         "vi": "Không trả lời, không bấm đường link và không chuyển tiền, dù tin nhắn có vẻ gấp đến đâu."
       },
       {
@@ -171,7 +171,7 @@
       {
         "en": "Tap Block as well, so this account can no longer message you.",
         "bn": "Block-ও চাপুন, যাতে এই অ্যাকাউন্ট আর আপনাকে মেসেজ করতে না পারে।",
-        "hi": "Block भी दबाएं, ताकि यह अकाउंट आपको फिर संदेश न भेज सके।",
+        "hi": "Block भी दबाएं, ताकि यह अकाउंट आपको फिर मैसेज न भेज सके।",
         "vi": "Chạm thêm Chặn để tài khoản này không nhắn tin cho bạn được nữa."
       },
       {
@@ -206,7 +206,7 @@
       {
         "en": "Nagad will never call or message you to ask for your PIN or a code.",
         "bn": "নগদ কখনো ফোন বা মেসেজ করে আপনার পিন বা কোনো কোড চাইবে না।",
-        "hi": "Nagad कभी फोन या संदेश करके आपका पिन या कोई कोड नहीं मांगेगा।",
+        "hi": "Nagad कभी फोन या मैसेज करके आपका पिन या कोई कोड नहीं मांगेगा।",
         "vi": "Nagad không bao giờ gọi điện hay nhắn tin để hỏi mã PIN hoặc mã xác thực của bạn."
       }
     ],
@@ -244,7 +244,7 @@
       {
         "en": "Wait for the success message and keep the transaction ID. You can show it if there is ever a problem.",
         "bn": "সফল হওয়ার মেসেজের জন্য অপেক্ষা করুন এবং ট্রানজ্যাকশন আইডি রেখে দিন। কোনো সমস্যা হলে এটি দেখাতে পারবেন।",
-        "hi": "सफलता संदेश का इंतज़ार करें और ट्रांज़ैक्शन आईडी संभालकर रखें। कभी समस्या हो तो इसे दिखा सकते हैं।",
+        "hi": "सफलता मैसेज का इंतज़ार करें और ट्रांज़ैक्शन आईडी संभालकर रखें। कभी समस्या हो तो इसे दिखा सकते हैं।",
         "vi": "Chờ thông báo thành công và giữ lại mã giao dịch. Nếu có trục trặc, bạn có thể đưa mã này ra."
       }
     ]
@@ -328,7 +328,7 @@
       {
         "en": "Remember the rule: Nagad, banks and Guidia never ask for your PIN or OTP — not by phone, SMS or message.",
         "bn": "নিয়মটি মনে রাখুন: নগদ, ব্যাংক বা Guidia কখনো আপনার পিন বা ওটিপি চায় না — ফোনে, এসএমএসে বা মেসেজে কোনোভাবেই না।",
-        "hi": "नियम याद रखें: Nagad, बैंक या Guidia कभी आपका पिन या ओटीपी नहीं मांगते — न फोन पर, न SMS में, न संदेश में।",
+        "hi": "नियम याद रखें: Nagad, बैंक या Guidia कभी आपका पिन या ओटीपी नहीं मांगते — न फोन पर, न SMS में, न मैसेज में।",
         "vi": "Nhớ quy tắc: Nagad, ngân hàng và Guidia không bao giờ hỏi mã PIN hay OTP của bạn — qua điện thoại, tin nhắn hay bất cứ cách nào."
       },
       {
@@ -398,8 +398,8 @@
       },
       {
         "en": "Type your message. Gmail keeps the original email below, so the other person knows what you are answering.",
-        "bn": "আপনার বার্তা লিখুন। জিমেইল আসল ইমেইলটি নিচে রেখে দেয়, তাই অন্যজন বুঝবেন আপনি কোনটার উত্তর দিচ্ছেন।",
-        "hi": "अपना संदेश लिखें। Gmail मूल ईमेल नीचे रखता है, इसलिए दूसरे व्यक्ति को पता रहता है कि आप किसका जवाब दे रहे हैं।",
+        "bn": "আপনার মেসেজ লিখুন। জিমেইল আসল ইমেইলটি নিচে রেখে দেয়, তাই অন্যজন বুঝবেন আপনি কোনটার উত্তর দিচ্ছেন।",
+        "hi": "अपना मैसेज लिखें। Gmail मूल ईमेल नीचे रखता है, इसलिए दूसरे व्यक्ति को पता रहता है कि आप किसका जवाब दे रहे हैं।",
         "vi": "Gõ nội dung. Gmail giữ email gốc ở dưới để người kia biết bạn đang trả lời thư nào."
       },
       {
@@ -457,8 +457,8 @@
       },
       {
         "en": "Check that the right file appears in the email, add a short message, and tap Send.",
-        "bn": "ইমেইলে ঠিক ফাইলটি এসেছে কি না দেখুন, ছোট একটি বার্তা লিখুন এবং Send চাপুন।",
-        "hi": "देखें कि ईमेल में सही फ़ाइल आई है, छोटा संदेश जोड़ें और Send दबाएं।",
+        "bn": "ইমেইলে ঠিক ফাইলটি এসেছে কি না দেখুন, ছোট একটা মেসেজ লিখুন এবং Send চাপুন।",
+        "hi": "देखें कि ईमेल में सही फ़ाइल आई है, छोटा मैसेज जोड़ें और Send दबाएं।",
         "vi": "Kiểm tra đúng tệp đã hiện trong thư, thêm vài lời nhắn và chạm Gửi."
       }
     ]
@@ -613,7 +613,7 @@
       {
         "en": "Let go when you finish. The message is sent straight away.",
         "bn": "কথা শেষ হলে আঙুল ছেড়ে দিন। মেসেজটি সঙ্গে সঙ্গে চলে যাবে।",
-        "hi": "बात पूरी होने पर उंगली छोड़ दें। संदेश तुरंत चला जाएगा।",
+        "hi": "बात पूरी होने पर उंगली छोड़ दें। मैसेज तुरंत चला जाएगा।",
         "vi": "Nói xong thì thả tay ra. Tin nhắn được gửi ngay."
       },
       {

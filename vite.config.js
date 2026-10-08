@@ -7,8 +7,12 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   server: {
+    // Listen on IPv4 and IPv6, so http://localhost:5173 and
+    // http://127.0.0.1:5173 both work on every machine and browser.
+    host: true,
     proxy: {
-      '/api': { target: 'http://localhost:8000', changeOrigin: false },
+      // 127.0.0.1, not "localhost": Node may resolve localhost to IPv6 only.
+      '/api': { target: 'http://127.0.0.1:8000', changeOrigin: false },
     },
   },
 });

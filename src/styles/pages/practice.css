@@ -50,7 +50,7 @@
   width: min(100%, 440px); padding: 12px; border-radius: 44px; background: #1b2429;
   box-shadow: 0 0 0 2px #34444d, 0 30px 70px -24px rgb(12 20 24 / 0.55), inset 0 0 0 2px #2a363c;
 }
-.device-screen { position: relative; height: min(76vh, 780px); min-height: 560px; border-radius: 32px; overflow: hidden; background: #fff; color: #18252c; font-size: 16px; line-height: 1.45; }
+.device-screen { position: relative; height: clamp(520px, calc(100dvh - 250px), 780px); min-height: 520px; border-radius: 32px; overflow: hidden; background: #fff; color: #18252c; font-size: 16px; line-height: 1.45; }
 .device-screen > * { height: 100%; }
 @media (max-width: 640px) {
   .device-stage { padding: 0; border: 0; background: transparent; }

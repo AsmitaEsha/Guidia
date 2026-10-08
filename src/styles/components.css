@@ -482,3 +482,8 @@
 .waveform-live span { width: 3px; height: 100%; background: currentColor; border-radius: 2px; transform-origin: center; animation: gx-wave 0.9s var(--ease) infinite; }
 .waveform-live span:nth-child(2) { animation-delay: 0.12s; } .waveform-live span:nth-child(3) { animation-delay: 0.24s; } .waveform-live span:nth-child(4) { animation-delay: 0.36s; }
 :root[data-reduced-motion='true'] .waveform-live span { animation: none; transform: scaleY(0.7); }
+
+/* An inline text button (looks like a link, behaves like a button). */
+.link-button { display: inline; padding: 0; margin-left: 4px; border: 0; background: none; color: var(--primary); font: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.link-button:disabled { opacity: 0.6; cursor: progress; }
+.link-button:focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: 4px; }

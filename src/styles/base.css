@@ -12,6 +12,8 @@ html {
   scroll-padding-top: calc(var(--shell-topbar) + 16px);
 }
 :root[data-scale='user'] { font-size: var(--user-font-size); }
+/* Public pages scale with the visitor's chosen size (20px choice = 16px base). */
+:root[data-scale='landing'] { font-size: calc(var(--user-font-size) * 0.8); }
 
 body {
   margin: 0;

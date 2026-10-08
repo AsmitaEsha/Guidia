@@ -70,7 +70,7 @@ function ScamChecker({ inputRef }) {
     <section className="card card-pad-lg checker" id="check" aria-labelledby="checker-h">
       <div className="stack" style={{ '--gap': 'var(--s-3)' }}>
         <div className="row-between">
-          <h2 id="checker-h" className="h-section">{t('Check a message or link', 'মেসেজ বা লিংক যাচাই করুন', 'संदेश या लिंक जांचें', 'Kiểm tra tin nhắn hoặc đường link')}</h2>
+          <h2 id="checker-h" className="h-section">{t('Check a message or link', 'মেসেজ বা লিংক যাচাই করুন', 'मैसेज या लिंक जांचें', 'Kiểm tra tin nhắn hoặc đường link')}</h2>
           <StageTrack stage={stage} t={t} />
         </div>
         <p className="text-muted">{t('Paste what you received. Guidia explains what looks wrong — and what looks fine.', 'যা পেয়েছেন তা পেস্ট করুন। Guidia বলবে কী সন্দেহজনক — আর কী ঠিক আছে।', 'जो मिला उसे चिपकाएं। Guidia बताएगा क्या गड़बड़ है — और क्या ठीक है।', 'Dán nội dung bạn nhận được. Guidia sẽ giải thích điều gì đáng ngờ — và điều gì ổn.')}</p>
@@ -79,14 +79,14 @@ function ScamChecker({ inputRef }) {
       {!result && (
         <form className="stack" style={{ '--gap': 'var(--s-3)' }} onSubmit={check}>
           <Segmented label={t('What did you receive?', 'কী পেয়েছেন?', 'आपको क्या मिला?', 'Bạn nhận được gì?')} value={type} onChange={setType} options={[
-            { value: 'MESSAGE', label: t('Message', 'মেসেজ', 'संदेश', 'Tin nhắn'), icon: MessageSquare },
+            { value: 'MESSAGE', label: t('Message', 'মেসেজ', 'मैसेज', 'Tin nhắn'), icon: MessageSquare },
             { value: 'SMS', label: 'SMS', icon: Smartphone },
             { value: 'URL', label: t('Link', 'লিংক', 'लिंक', 'Đường link'), icon: Link2 },
           ]} />
-          <label htmlFor="scam-input" className="sr-only">{t('Message to check', 'যাচাইয়ের মেসেজ', 'जांचने वाला संदेश', 'Nội dung cần kiểm tra')}</label>
+          <label htmlFor="scam-input" className="sr-only">{t('Message to check', 'যাচাইয়ের মেসেজ', 'जांचने वाला मैसेज', 'Nội dung cần kiểm tra')}</label>
           <textarea
             id="scam-input" ref={inputRef} className="textarea checker-input" value={content} onChange={(e) => setContent(e.target.value)} maxLength={5000}
-            placeholder={type === 'URL' ? 'https://…' : t('Paste the message here…', 'এখানে মেসেজটি পেস্ট করুন…', 'यहाँ संदेश चिपकाएं…', 'Dán tin nhắn vào đây…')}
+            placeholder={type === 'URL' ? 'https://…' : t('Paste the message here…', 'এখানে মেসেজটি পেস্ট করুন…', 'यहाँ मैसेज चिपकाएं…', 'Dán tin nhắn vào đây…')}
           />
           <p className="text-subtle row row-top" style={{ '--gap': '6px', flexWrap: 'nowrap' }}>
             <ShieldCheck size={16} aria-hidden="true" style={{ marginTop: 3 }} />
@@ -257,17 +257,17 @@ export default function SafetyPage() {
       <PageHeader
         eyebrow={t('Safety Center', 'নিরাপত্তা কেন্দ্র', 'सुरक्षा केंद्र', 'Trung tâm an toàn')}
         title={t('Calm checks before you act', 'কিছু করার আগে শান্তভাবে যাচাই', 'कुछ करने से पहले शांत जांच', 'Bình tĩnh kiểm tra trước khi làm')}
-        description={t('Check a message, practise spotting tricks, and know exactly what to do if something already went wrong.', 'মেসেজ যাচাই করুন, প্রতারণা চেনার অনুশীলন করুন, আর ভুল হয়ে গেলে ঠিক কী করবেন জেনে নিন।', 'संदेश जांचें, चालें पहचानने का अभ्यास करें, और गलती हो जाए तो ठीक क्या करें जानें।', 'Kiểm tra tin nhắn, luyện nhận biết thủ đoạn, và biết chính xác cần làm gì nếu đã lỡ có chuyện.')}
+        description={t('Check a message, practise spotting tricks, and know exactly what to do if something already went wrong.', 'মেসেজ যাচাই করুন, প্রতারণা চেনার অনুশীলন করুন, আর ভুল হয়ে গেলে ঠিক কী করবেন জেনে নিন।', 'मैसेज जांचें, चालें पहचानने का अभ्यास करें, और गलती हो जाए तो ठीक क्या करें जानें।', 'Kiểm tra tin nhắn, luyện nhận biết thủ đoạn, và biết chính xác cần làm gì nếu đã lỡ có chuyện.')}
       />
 
       <div className="safety-actions rise" style={{ '--i': 1 }}>
         <button type="button" className="safety-action is-primary" onClick={() => { inputRef.current?.focus(); inputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }); }}>
           <span className="safety-action-icon" aria-hidden="true"><Search /></span>
-          <span className="stack" style={{ '--gap': '2px' }}><span className="h-card">{t('Check a message or link', 'মেসেজ বা লিংক যাচাই', 'संदेश या लिंक जांचें', 'Kiểm tra tin nhắn hoặc link')}</span><span className="text-sm">{t('Get a clear, calm answer', 'পরিষ্কার, শান্ত উত্তর পান', 'साफ़, शांत जवाब पाएं', 'Nhận câu trả lời rõ ràng')}</span></span>
+          <span className="stack" style={{ '--gap': '2px' }}><span className="h-card">{t('Check a message or link', 'মেসেজ বা লিংক যাচাই', 'मैसेज या लिंक जांचें', 'Kiểm tra tin nhắn hoặc link')}</span><span className="text-sm">{t('Get a clear, calm answer', 'পরিষ্কার, শান্ত উত্তর পান', 'साफ़, शांत जवाब पाएं', 'Nhận câu trả lời rõ ràng')}</span></span>
         </button>
         <button type="button" className="safety-action" onClick={() => gymRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>
           <span className="safety-action-icon" aria-hidden="true"><Sparkles /></span>
-          <span className="stack" style={{ '--gap': '2px' }}><span className="h-card">{t('Practise spotting scams', 'প্রতারণা চেনার অনুশীলন', 'धोखा पहचानने का अभ्यास', 'Luyện nhận biết lừa đảo')}</span><span className="text-sm text-muted">{t('Pretend messages, real clues', 'নকল মেসেজ, আসল সূত্র', 'नकली संदेश, असली सुराग', 'Tin giả, dấu hiệu thật')}</span></span>
+          <span className="stack" style={{ '--gap': '2px' }}><span className="h-card">{t('Practise spotting scams', 'প্রতারণা চেনার অনুশীলন', 'धोखा पहचानने का अभ्यास', 'Luyện nhận biết lừa đảo')}</span><span className="text-sm text-muted">{t('Pretend messages, real clues', 'নকল মেসেজ, আসল সূত্র', 'नकली मैसेज, असली सुराग', 'Tin giả, dấu hiệu thật')}</span></span>
         </button>
         <a className="safety-action" href="#safety-lessons">
           <span className="safety-action-icon" aria-hidden="true"><BookOpen /></span>

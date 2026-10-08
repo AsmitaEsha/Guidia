@@ -11,6 +11,7 @@ import { formatDate, formatRelative } from '../../i18n';
 import { announce } from '../../utils/announce';
 import { REASONS } from '../../data/emergencyReasons';
 import { Alert, Button, ChoiceCard, ConfirmDialog, EmptyState, Field, Skeleton, Timeline } from '../../components/ui';
+import EmergencyContacts from '../../components/help/EmergencyContacts';
 
 const REASON_ICON = {
   I_AM_CONFUSED: CircleHelp, I_THINK_THIS_IS_UNSAFE: ShieldAlert, I_MAY_HAVE_MADE_A_MISTAKE: AlertTriangle,
@@ -150,7 +151,10 @@ export default function HelpPage() {
       </div>
 
       {history.loading && !history.data ? <Skeleton variant="card" height={320} /> : open ? (
-        <HelpStatus open={open} t={t} language={language} onCancel={() => setConfirmCancel(true)} />
+        <>
+          <HelpStatus open={open} t={t} language={language} onCancel={() => setConfirmCancel(true)} />
+          <EmergencyContacts urgent />
+        </>
       ) : (
         <section className="card card-pad-lg stack help-form rise" style={{ '--gap': 'var(--s-5)', '--i': 1 }}>
           <fieldset className="stack" style={{ '--gap': 'var(--s-3)' }}>
@@ -178,6 +182,8 @@ export default function HelpPage() {
           <Button variant="ghost" icon={Sparkles} to="/app/ask" className="self-start">{t('Or ask Guidia first', 'অথবা আগে Guidia-কে জিজ্ঞাসা করুন', 'या पहले Guidia से पूछें', 'Hoặc hỏi Guidia trước')}</Button>
         </section>
       )}
+
+      {!open && <EmergencyContacts />}
 
       {past.length > 0 && (
         <details className="card past-requests">

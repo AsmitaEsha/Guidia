@@ -110,6 +110,7 @@ export default function SettingsPage() {
   const sessions = useResource('/auth/sessions', { select: (d) => d.sessions });
   const [name, setName] = useState(user?.fullName || '');
   const [age, setAge] = useState(user?.age ? String(user.age) : '');
+  const [phone, setPhone] = useState(user?.phone || '');
   const profile = useAsyncAction();
   const exporting = useAsyncAction();
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -149,7 +150,7 @@ export default function SettingsPage() {
 
   const saveProfile = async (e) => {
     e.preventDefault();
-    try { await profile.run(() => updateProfile({ fullName: name.trim(), age: age ? Number(age) : null })); } catch { /* shown inline */ }
+    try { await profile.run(() => updateProfile({ fullName: name.trim(), ...(user?.role === 'GUARDIAN' ? {} : { age: age ? Number(age) : null }), phone: phone.trim() || null })); } catch { /* shown inline */ }
   };
 
   const exportData = async () => {
@@ -211,12 +212,18 @@ export default function SettingsPage() {
               <Field label={t('Name', 'নাম', 'नाम', 'Tên')}>
                 {(p) => <input {...p} className="input" value={name} onChange={(e) => setName(e.target.value)} maxLength={120} required autoComplete="name" />}
               </Field>
-              <Field label={t('Age', 'বয়স', 'उम्र', 'Tuổi')} optional={t('optional', 'ঐচ্ছিক', 'वैकल्पिक', 'không bắt buộc')} hint={t('Only you see this. Guidia never uses age to decide what you can do.', 'শুধু আপনি এটি দেখেন। Guidia বয়স দেখে কখনো ঠিক করে না আপনি কী পারবেন।', 'यह केवल आप देखते हैं। Guidia उम्र से कभी तय नहीं करता कि आप क्या कर सकते हैं।', 'Chỉ bạn thấy thông tin này. Guidia không dùng tuổi để quyết định bạn làm được gì.')}>
-                {(p) => <input {...p} className="input" inputMode="numeric" value={age} onChange={(e) => setAge(e.target.value.replace(/\D/g, '').slice(0, 3))} style={{ maxWidth: 160 }} />}
+              <Field label={t('My phone number', 'আমার ফোন নম্বর', 'मेरा फोन नंबर', 'Số điện thoại của tôi')} optional={t('optional', 'ঐচ্ছিক', 'वैकल्पिक', 'không bắt buộc')}
+                hint={user?.role === 'GUARDIAN'
+                  ? t('Lets your family call you straight from their help screen.', 'এতে পরিবার তাদের সাহায্যের স্ক্রিন থেকেই আপনাকে ফোন করতে পারবে।', 'इससे परिवार अपनी मदद स्क्रीन से सीधे आपको फोन कर सकेगा।', 'Để gia đình gọi bạn ngay từ màn hình trợ giúp.')
+                  : t('Only your connected family sees it, so they can call you back when you ask for help.', 'শুধু যুক্ত পরিবার এটি দেখবে, যাতে সাহায্য চাইলে আপনাকে ফোন করতে পারে।', 'इसे सिर्फ़ जुड़ा परिवार देखेगा, ताकि मदद मांगने पर आपको फोन कर सके।', 'Chỉ gia đình đã kết nối thấy số này, để gọi lại khi bạn nhờ giúp.')}>
+                {(p) => <input {...p} className="input" type="tel" inputMode="tel" autoComplete="tel" value={phone} onChange={(e) => setPhone(e.target.value)} maxLength={24} style={{ maxWidth: 280 }} placeholder="+880 17…" />}
               </Field>
+              {user?.role !== 'GUARDIAN' && <Field label={t('Age', 'বয়স', 'उम्र', 'Tuổi')} optional={t('optional', 'ঐচ্ছিক', 'वैकल्पिक', 'không bắt buộc')} hint={t('Only you see this. Guidia never uses age to decide what you can do.', 'শুধু আপনি এটি দেখেন। Guidia বয়স দেখে কখনো ঠিক করে না আপনি কী পারবেন।', 'यह केवल आप देखते हैं। Guidia उम्र से कभी तय नहीं करता कि आप क्या कर सकते हैं।', 'Chỉ bạn thấy thông tin này. Guidia không dùng tuổi để quyết định bạn làm được gì.')}>
+                {(p) => <input {...p} className="input" inputMode="numeric" value={age} onChange={(e) => setAge(e.target.value.replace(/\D/g, '').slice(0, 3))} style={{ maxWidth: 160 }} />}
+              </Field>}
               <p className="text-subtle">{t('Email', 'ইমেইল', 'ईमेल', 'Email')}: {user?.email}</p>
               {profile.state === 'error' && <Alert tone="warn">{profile.error?.message}</Alert>}
-              <Button type="submit" icon={Save} className="self-start" state={profile.state} loadingLabel={t('Saving…', 'রাখা হচ্ছে…', 'सहेजा जा रहा है…', 'Đang lưu…')} successLabel={t('Profile saved', 'প্রোফাইল রাখা হয়েছে', 'प्रोफ़ाइल सहेजी गई', 'Đã lưu hồ sơ')}>{t('Save', 'রাখুন', 'सहेजें', 'Lưu')}</Button>
+              <Button type="submit" icon={Save} className="self-start" state={profile.state} loadingLabel={t('Saving…', 'রাখা হচ্ছে…', 'सहेजा जा रहा है…', 'Đang lưu…')} successLabel={t('Profile saved', 'প্রোফাইল রাখা হয়েছে', 'प्रोफ़ाइल सहेजी गई', 'Đã lưu hồ sơ')}>{t('Save', 'রাখুন', 'सेव करें', 'Lưu')}</Button>
             </form>
           </Section>
 

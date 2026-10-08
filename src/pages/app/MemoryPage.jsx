@@ -15,7 +15,7 @@ const SIMULATED = ['whatsapp', 'facebook', 'messenger', 'gmail', 'bkash', 'nagad
 
 const CATEGORIES = [
   ['ALL', ['All topics', 'সব বিষয়', 'सभी विषय', 'Mọi chủ đề']],
-  ['MESSAGING', ['Messages', 'মেসেজ', 'संदेश', 'Tin nhắn']],
+  ['MESSAGING', ['Messages', 'মেসেজ', 'मैसेज', 'Tin nhắn']],
   ['SOCIAL', ['Social', 'সামাজিক', 'सोशल', 'Xã hội']],
   ['BANKING', ['Money', 'টাকা', 'पैसे', 'Tiền']],
   ['SAFETY', ['Safety', 'নিরাপত্তা', 'सुरक्षा', 'An toàn']],
@@ -65,6 +65,7 @@ export default function MemoryPage() {
   if (category !== 'ALL') params.set('category', category);
   if (query) params.set('q', query);
   if (view === 'starred') params.set('starred', 'true');
+  params.set('lang', language);
   const { data, loading, error, reload, mutate } = useResource(`/memory?${params}`, { select: (d) => d.entries });
   const lessons = useResource('/learning/lessons', { select: (d) => d.lessons });
   const lessonById = useMemo(() => Object.fromEntries((lessons.data || []).map((l) => [l.id, l])), [lessons.data]);

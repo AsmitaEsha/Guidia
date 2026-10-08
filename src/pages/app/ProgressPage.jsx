@@ -63,7 +63,7 @@ export default function ProgressPage() {
         <Indicator icon={BookOpen} value={p.lessonsCompleted} label={t('Lessons finished', 'শেষ করা পাঠ', 'पूरे पाठ', 'Bài học đã xong')} />
         <Indicator icon={Hand} tone="ok" value={p.practiceSuccesses} label={t('Practices completed', 'সম্পন্ন অনুশীলন', 'पूरे अभ्यास', 'Lần luyện tập xong')} />
         <Indicator icon={Award} tone="gold" highlight value={p.independentCompletionRate == null ? '—' : `${p.independentCompletionRate}%`} label={t('Done without help', 'সাহায্য ছাড়া করা', 'बिना मदद के किया', 'Tự làm không cần giúp')} note={independentSkills.length ? t(`${independentSkills.length} skills on your own`, `${independentSkills.length}টি দক্ষতা নিজে পারেন`, `${independentSkills.length} कौशल खुद से`, `${independentSkills.length} kỹ năng tự làm được`) : null} />
-        <Indicator icon={ShieldCheck} tone="coral" value={p.scamsRecognized} label={t('Risky messages caught', 'ধরা পড়া ঝুঁকিপূর্ণ মেসেজ', 'पकड़े गए खतरनाक संदेश', 'Tin rủi ro đã phát hiện')} />
+        <Indicator icon={ShieldCheck} tone="coral" value={p.scamsRecognized} label={t('Risky messages caught', 'ধরা পড়া ঝুঁকিপূর্ণ মেসেজ', 'पकड़े गए खतरनाक मैसेज', 'Tin rủi ro đã phát hiện')} />
       </div>
 
       <section className="two-stories rise" style={{ '--i': 2 }} aria-label={t('Ability and comfort', 'দক্ষতা ও স্বাচ্ছন্দ্য', 'क्षमता और सहजता', 'Khả năng và sự thoải mái')}>

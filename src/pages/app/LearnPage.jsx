@@ -54,8 +54,8 @@ function FeaturedApps({ t, language, lessons, done, partials }) {
     <section className="featured-band rise" style={{ '--i': 2 }} aria-labelledby="featured-h">
       <div className="featured-head">
         <div className="stack" style={{ '--gap': '6px' }}>
-          <p className="eyebrow"><Sparkles size={16} aria-hidden="true" /> {t('New everyday app lessons', 'নতুন: প্রতিদিনের অ্যাপের পাঠ', 'नए: रोज़ के ऐप के पाठ', 'Mới: bài học ứng dụng hằng ngày')}</p>
-          <h2 id="featured-h" className="h-section">{t('Facebook, Nagad, Gmail and imo — step by step', 'ফেসবুক, নগদ, জিমেইল ও imo — ধাপে ধাপে', 'फेसबुक, Nagad, Gmail और imo — कदम-दर-कदम', 'Facebook, Nagad, Gmail và imo — từng bước một')}</h2>
+          <p className="eyebrow"><Sparkles size={16} aria-hidden="true" /> {t('Everyday app lessons', 'প্রতিদিনের অ্যাপের পাঠ', 'रोज़ के ऐप के पाठ', 'Bài học ứng dụng hằng ngày')}</p>
+          <h2 id="featured-h" className="h-section">{t(`Every app you use — step by step (${available.length} apps)`, `আপনার ব্যবহারের সব অ্যাপ — ধাপে ধাপে (${available.length}টি অ্যাপ)`, `आपके सारे ऐप — कदम-दर-कदम (${available.length} ऐप)`, `Mọi ứng dụng bạn dùng — từng bước một (${available.length} ứng dụng)`)}</h2>
         </div>
         <div className="featured-apps" role="tablist" aria-label={t('Choose an app', 'অ্যাপ বেছে নিন', 'ऐप चुनें', 'Chọn ứng dụng')}>
           {available.map((a) => {

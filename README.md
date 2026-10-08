@@ -107,6 +107,6 @@ docs/                architecture, security, deployment and more
 
 ## Documentation
 
-[Free AI setup](docs/FREE_AI_SETUP.md) · [Architecture](docs/ARCHITECTURE.md) · [Database](docs/DATABASE.md) · [AI](docs/AI.md) · [Voice](docs/VOICE.md) · [ML](docs/ML.md) · [Security](docs/SECURITY.md) · [Guardian](docs/GUARDIAN.md) · [Extension](docs/EXTENSION.md) · [Data lifecycle](docs/DATA_LIFECYCLE.md) · [Deployment](docs/DEPLOYMENT.md) · [Testing](docs/TESTING.md) · [Rebuild audit](docs/REBUILD_AUDIT.md) · [UI design system](docs/UI_DESIGN_SYSTEM.md) · [UI rebuild audit](docs/UI_REBUILD_AUDIT.md) · [Investor showcase](docs/INVESTOR_SHOWCASE.md) · [Implementation plan](docs/IMPLEMENTATION_PLAN.md)
+[Free AI setup](docs/FREE_AI_SETUP.md) · [Architecture](docs/ARCHITECTURE.md) · [Database](docs/DATABASE.md) · [AI](docs/AI.md) · [Voice](docs/VOICE.md) · [ML](docs/ML.md) · [Security](docs/SECURITY.md) · [Guardian](docs/GUARDIAN.md) · [Extension](docs/EXTENSION.md) · [Data lifecycle](docs/DATA_LIFECYCLE.md) · [Deployment](docs/DEPLOYMENT.md) · [Testing](docs/TESTING.md) · [Rebuild audit](docs/REBUILD_AUDIT.md) · [UI design system](docs/UI_DESIGN_SYSTEM.md) · [UI rebuild audit](docs/UI_REBUILD_AUDIT.md) · [Investor showcase](docs/INVESTOR_SHOWCASE.md)
 
 Guidia does not give medical, legal or investment advice, and it never moves real money.

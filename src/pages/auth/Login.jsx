@@ -35,7 +35,7 @@ export default function Login() {
       const user = await login({ email: email.trim(), password, rememberMe });
       setState('success');
       const needsOnboarding = !user?.preference?.onboardingDone;
-      const to = user?.role === 'ADMIN' ? '/admin' : needsOnboarding ? '/onboarding' : (location.state?.from?.pathname || '/app/home');
+      const to = user?.role === 'ADMIN' ? '/admin' : user?.role === 'GUARDIAN' ? (location.state?.from?.pathname || '/app/family') : needsOnboarding ? '/onboarding' : (location.state?.from?.pathname || '/app/home');
       setTimeout(() => navigate(to, { replace: true }), 350);
     } catch (err) {
       // Server messages are already human-friendly (never raw status text).

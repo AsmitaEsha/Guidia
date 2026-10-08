@@ -312,6 +312,9 @@ model User {
   // Optional and self-reported. Never used as a proxy for ability.
   age               Int?
   countryCode       String?
+  // Optional; shown only to the family members a learner has connected, so
+  // they can call straight back when a help request arrives.
+  phone             String?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
@@ -332,6 +335,8 @@ model User {
   emergencyEvents                 EmergencyEvent[]       @relation("EmergencySenior")
   acknowledgedEmergencies         EmergencyEvent[]       @relation("EmergencyAcknowledger")
   notifications                   Notification[]
+  familyLinkCodes                 FamilyLinkCode[]
+  emergencyContacts               EmergencyContact[]
   consents                        ConsentRecord[]        @relation("ConsentOwner")
   simulationAccounts              SimulationAccount[]
   extensionPairings               ExtensionPairing[]
@@ -1088,4 +1093,38 @@ model MlModelVersion {
 
   @@unique([role, version])
   @@map("ml_model_versions")
+}
+
+// A short code a learner shares with a son, daughter or carer. Entering it
+// (at sign-up or later) connects their family account straight away —
+// sharing the code is the learner's consent. Expires after 7 days.
+model FamilyLinkCode {
+  id           String   @id @default(cuid())
+  code         String   @unique
+  seniorUserId String
+  senior       User     @relation(fields: [seniorUserId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  expiresAt    DateTime
+
+  @@index([seniorUserId])
+  @@map("family_link_codes")
+}
+
+// People a learner wants to reach when they press "I need help": name,
+// relationship and phone, so the help screen can offer one-tap call buttons
+// even for people who don't use Guidia.
+model EmergencyContact {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name         String
+  relationship String?
+  phone        String?
+  email        String?
+  isPrimary    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([userId])
+  @@map("emergency_contacts")
 }

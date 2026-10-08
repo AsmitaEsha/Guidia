@@ -3,6 +3,8 @@ import { z } from 'zod';
 import { requireAuth } from '../middleware/auth.js';
 import { handler, ok, created, parse } from '../lib/http.js';
 import { memoryService } from '../services/memoryService.js';
+import { prisma } from '../config/prisma.js';
+import { LANGUAGE_CODES } from '../config/languages.js';
 
 const router = Router();
 const category = z.enum(['MESSAGING', 'SAFETY', 'BANKING', 'LEARNING', 'SOCIAL', 'PRIVACY']);
@@ -19,13 +21,16 @@ const querySchema = z.object({
   q: z.string().trim().max(100).optional(),
   category: category.optional(),
   starred: z.enum(['true', 'false']).optional(),
+  lang: z.enum(LANGUAGE_CODES).optional(),
 });
 
 router.use(requireAuth);
 
 router.get('/', handler(async (req, res) => {
-  const { q, category: cat, starred } = parse(querySchema, req.query);
-  ok(res, { entries: await memoryService.list(req.user.id, { q, category: cat, starred: starred === 'true' }) });
+  const { q, category: cat, starred, lang } = parse(querySchema, req.query);
+  // The screen's language wins; otherwise the account's saved language.
+  const language = lang || (await prisma.user.findUnique({ where: { id: req.user.id }, select: { preferredLanguage: true } }))?.preferredLanguage;
+  ok(res, { entries: await memoryService.list(req.user.id, { q, category: cat, starred: starred === 'true', language }) });
 }));
 
 router.post('/', handler(async (req, res) => {

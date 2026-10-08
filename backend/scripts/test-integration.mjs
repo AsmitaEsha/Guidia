@@ -14,6 +14,8 @@ const env = {
   DATABASE_URL: url,
   AI_PROVIDER: 'mock',
   AI_FALLBACK_PROVIDER: 'none',
+  AI_CHAIN: 'mock',
+  SPEECH_PROVIDER: 'off',
   ML_SERVICE_URL: '',
   WORKER_ENABLED: 'false',
   CORS_ORIGIN: 'http://localhost:5173',

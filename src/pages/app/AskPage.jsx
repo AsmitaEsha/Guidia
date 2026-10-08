@@ -119,6 +119,24 @@ function AssistantMessage({ m, t, language, onListen, onFocusInput, userText }) 
   );
 }
 
+// Suggested questions. A conversation started from one is titled with its
+// words; showing them through this list keeps the title in today's
+// language even if it was asked in another one.
+const SUGGESTIONS = [
+  ['How do I send a photo?', 'কীভাবে ছবি পাঠাব?', 'फोटो कैसे भेजूं?', 'Làm sao để gửi ảnh?'],
+  ['Is this message safe?', 'এই মেসেজটি কি নিরাপদ?', 'क्या यह मैसेज सुरक्षित है?', 'Tin nhắn này có an toàn không?'],
+  ['How do I book an appointment?', 'কীভাবে অ্যাপয়েন্টমেন্ট বুক করব?', 'अपॉइंटमेंट कैसे बुक करूं?', 'Làm sao để đặt lịch hẹn?'],
+  ['Where do I press?', 'কোথায় চাপব?', 'कहाँ दबाऊं?', 'Tôi nên bấm vào đâu?'],
+  ['Can you explain this?', 'এটা কি বুঝিয়ে বলবেন?', 'क्या आप यह समझा सकते हैं?', 'Bạn giải thích giúp được không?'],
+];
+const SUGGESTION_BY_TEXT = new Map(SUGGESTIONS.flatMap((q) => q.map((text) => [text, q])));
+
+/** A suggested question in the current language; anything typed stays as typed. */
+function inLanguage(text, t) {
+  const q = SUGGESTION_BY_TEXT.get((text || '').trim());
+  return q ? t(...q) : text;
+}
+
 function HistoryList({ t, language, list, activeId, onOpen, onDelete, onNew }) {
   return (
     <div className="stack" style={{ '--gap': 'var(--s-3)' }}>
@@ -129,7 +147,7 @@ function HistoryList({ t, language, list, activeId, onOpen, onDelete, onNew }) {
         {(list.data || []).map((c) => (
           <li key={c.id} className="history-item" data-active={c.id === activeId}>
             <button type="button" className="history-open" onClick={() => onOpen(c.id)} aria-current={c.id === activeId ? 'true' : undefined}>
-              <span className="truncate text-strong">{c.title || t('Conversation', 'কথোপকথন', 'बातचीत', 'Cuộc trò chuyện')}</span>
+              <span className="truncate text-strong">{inLanguage(c.title, t) || t('Conversation', 'কথোপকথন', 'बातचीत', 'Cuộc trò chuyện')}</span>
               <span className="text-subtle">{formatRelative(c.lastMessageAt || c.createdAt, language)}</span>
             </button>
             <IconButton icon={Trash2} size="sm" label={t('Delete conversation', 'কথোপকথন মুছুন', 'बातचीत मिटाएं', 'Xóa cuộc trò chuyện')} onClick={() => onDelete(c)} />
@@ -287,13 +305,7 @@ export default function AskPage() {
     }
   };
 
-  const suggestions = [
-    t('How do I send a photo?', 'কীভাবে ছবি পাঠাব?', 'फोटो कैसे भेजूं?', 'Làm sao để gửi ảnh?'),
-    t('Is this message safe?', 'এই মেসেজটি কি নিরাপদ?', 'क्या यह संदेश सुरक्षित है?', 'Tin nhắn này có an toàn không?'),
-    t('How do I book an appointment?', 'কীভাবে অ্যাপয়েন্টমেন্ট বুক করব?', 'अपॉइंटमेंट कैसे बुक करूं?', 'Làm sao để đặt lịch hẹn?'),
-    t('Where do I press?', 'কোথায় চাপব?', 'कहाँ दबाऊं?', 'Tôi nên bấm vào đâu?'),
-    t('Can you explain this?', 'এটা কি বুঝিয়ে বলবেন?', 'क्या आप यह समझा सकते हैं?', 'Bạn giải thích giúp được không?'),
-  ];
+  const suggestions = SUGGESTIONS.map((q) => t(...q));
 
   const lastUserText = (i) => messages.slice(0, i).reverse().find((x) => x.role === 'user')?.text || '';
   const composerState = listening ? 'listening' : busy ? 'processing' : 'ready';
@@ -351,9 +363,9 @@ export default function AskPage() {
             {messages.map((m, i) => (m.role === 'user' ? (
               <div key={m.id} className="msg msg-user rise">
                 <div className="msg-bubble">
-                  <p>{m.text}</p>
+                  <p>{inLanguage(m.text, t)}</p>
                   {m.secretRemoved && (
-                    <p className="msg-secret"><ShieldCheck aria-hidden="true" /> {t('Guidia removed a secret code from this message. Please never share it with anyone.', 'Guidia এই মেসেজ থেকে একটি গোপন কোড সরিয়ে দিয়েছে। কখনো কাউকে দেবেন না।', 'Guidia ने इस संदेश से एक गुप्त कोड हटा दिया। इसे कभी किसी को न दें।', 'Guidia đã xóa một mã bí mật khỏi tin nhắn. Đừng bao giờ chia sẻ nó với ai.')}</p>
+                    <p className="msg-secret"><ShieldCheck aria-hidden="true" /> {t('Guidia removed a secret code from this message. Please never share it with anyone.', 'Guidia এই মেসেজ থেকে একটি গোপন কোড সরিয়ে দিয়েছে। কখনো কাউকে দেবেন না।', 'Guidia ने इस मैसेज से एक गुप्त कोड हटा दिया। इसे कभी किसी को न दें।', 'Guidia đã xóa một mã bí mật khỏi tin nhắn. Đừng bao giờ chia sẻ nó với ai.')}</p>
                   )}
                 </div>
               </div>
@@ -420,8 +432,8 @@ export default function AskPage() {
       <ConfirmDialog
         open={Boolean(toDelete)} onClose={() => setToDelete(null)} onConfirm={confirmDelete} state={deleting ? 'loading' : 'idle'}
         title={t('Delete this conversation?', 'এই কথোপকথন মুছবেন?', 'यह बातचीत मिटाएं?', 'Xóa cuộc trò chuyện này?')}
-        description={toDelete?.title}
-        consequences={[t('Its messages are removed from your account for good.', 'এর মেসেজগুলো আপনার অ্যাকাউন্ট থেকে স্থায়ীভাবে মুছে যাবে।', 'इसके संदेश आपके अकाउंट से हमेशा के लिए हट जाएंगे।', 'Các tin nhắn sẽ bị xóa vĩnh viễn khỏi tài khoản.'), t('Your Memory Book and lessons are not affected.', 'স্মৃতির খাতা ও পাঠ অপরিবর্তিত থাকবে।', 'याद की किताब और पाठ पर असर नहीं होगा।', 'Sổ ghi nhớ và bài học không bị ảnh hưởng.')]}
+        description={inLanguage(toDelete?.title, t)}
+        consequences={[t('Its messages are removed from your account for good.', 'এর মেসেজগুলো আপনার অ্যাকাউন্ট থেকে স্থায়ীভাবে মুছে যাবে।', 'इसके मैसेज आपके अकाउंट से हमेशा के लिए हट जाएंगे।', 'Các tin nhắn sẽ bị xóa vĩnh viễn khỏi tài khoản.'), t('Your Memory Book and lessons are not affected.', 'স্মৃতির খাতা ও পাঠ অপরিবর্তিত থাকবে।', 'याद की किताब और पाठ पर असर नहीं होगा।', 'Sổ ghi nhớ và bài học không bị ảnh hưởng.')]}
         confirmLabel={t('Delete', 'মুছুন', 'मिटाएं', 'Xóa')}
       />
     </div>

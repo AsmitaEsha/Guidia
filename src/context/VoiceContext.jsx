@@ -35,7 +35,7 @@ function findBrowserVoice(language, voices) {
 
 // Read each sentence with a voice for the language it is actually written
 // in (some practice-app lines exist only in English or Bengali).
-const VI_MARKS = /[ăâđêôơưạảấầẩẫậắằẳẵặẹẻẽếềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ]/i;
+const VI_MARKS = /[àáảãạăằắẳẵặâầấẩẫậđèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵ]/i;
 function spokenLanguage(text, fallback) {
   const bn = (text.match(/[ঀ-৿]/g) || []).length;
   const hi = (text.match(/[ऀ-ॿ]/g) || []).length;
@@ -108,7 +108,9 @@ export function VoiceProvider({ children }) {
     const voice = findBrowserVoice(lang, await loadBrowserVoices());
     if (token !== tokenRef.current) return true;
     if (!voice && lang !== 'en') return false;
-    const u = new SpeechSynthesisUtterance(text);
+    // Said "guide-ee-uh": English and Vietnamese voices otherwise say "gwee-dia".
+    const spoken = lang === 'en' ? text.replace(/\bGuidia\b/g, 'Guydia') : lang === 'vi' ? text.replace(/\bGuidia\b/g, 'Gai đi a') : text;
+    const u = new SpeechSynthesisUtterance(spoken);
     u.lang = voice?.lang || getLanguage(lang).speech.bcp47;
     if (voice) u.voice = voice;
     u.rate = rate;

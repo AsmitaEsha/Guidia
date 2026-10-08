@@ -1,7 +1,7 @@
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import {
-  ArrowLeft, Award, BookOpen, Check, ChevronRight, CircleAlert, Hand, HeartHandshake, Lightbulb, ListChecks,
+  ArrowLeft, Award, Info, BookOpen, Check, ChevronRight, CircleAlert, Hand, HeartHandshake, Lightbulb, ListChecks,
   MessageCircle, RotateCcw, ShieldCheck, Sparkles, Volume2, X,
 } from 'lucide-react';
 import { usePreferences } from '../../context/PreferencesContext';
@@ -15,6 +15,8 @@ import { APP_CATEGORIES, APP_CATEGORY_ORDER, skillName } from '../../data/catalo
 import { Alert, Badge, Button, EmptyState, ErrorState, IconButton, ModeLabel, PageHeader, ProgressBar, SectionHeader, Skeleton, Stepper, SuccessState } from '../../components/ui';
 import AppLogo from '../../components/AppLogo';
 import { SIMULATORS } from '../../components/sims/registry';
+import SimBoundary from '../../components/sims/SimBoundary';
+import { SimRoot } from '../../components/sims/kit/SimKit';
 
 const RISK_NOTE = {
   HIGH: ['Includes money — extra safety checks', 'টাকা আছে — বাড়তি নিরাপত্তা যাচাই', 'पैसे शामिल — अतिरिक्त सुरक्षा जांच', 'Có liên quan đến tiền — kiểm tra kỹ hơn'],
@@ -28,7 +30,7 @@ function PracticeNotice({ t }) {
       <span className="practice-notice-icon" aria-hidden="true"><ShieldCheck /></span>
       <div className="stack" style={{ '--gap': '2px' }}>
         <p className="text-strong">{t('Practice mode · Safe to explore', 'অনুশীলন মোড · নিশ্চিন্তে ঘুরে দেখুন', 'अभ्यास मोड · बेझिझक देखें', 'Chế độ luyện tập · Cứ thoải mái khám phá')}</p>
-        <p className="text-muted">{t('Nothing here reaches the real world: no real messages, no real money, no real bookings.', 'এখান থেকে আসল কিছু হয় না: আসল মেসেজ, টাকা বা বুকিং যায় না।', 'यहाँ से असल में कुछ नहीं होता: न असली संदेश, न पैसे, न बुकिंग।', 'Không có gì ở đây ảnh hưởng đến đời thật: không tin nhắn thật, không tiền thật, không đặt chỗ thật.')}</p>
+        <p className="text-muted">{t('Nothing here reaches the real world: no real messages, no real money, no real bookings.', 'এখান থেকে আসল কিছু হয় না: আসল মেসেজ, টাকা বা বুকিং যায় না।', 'यहाँ से असल में कुछ नहीं होता: न असली मैसेज, न पैसे, न बुकिंग।', 'Không có gì ở đây ảnh hưởng đến đời thật: không tin nhắn thật, không tiền thật, không đặt chỗ thật.')}</p>
       </div>
     </div>
   );
@@ -123,7 +125,8 @@ function TaskPanel({ task, onChange, onClose, onRestart, t, language }) {
   };
 
   const done = () => call(async () => {
-    const res = await post(`/tasks/${task.id}/actions`, { action: 'STEP_DONE', version: task.version });
+    const expected = steps[Math.min(idx, steps.length - 1)]?.expectedAction;
+    const res = await post(`/tasks/${task.id}/actions`, { action: expected || 'STEP_DONE', version: task.version });
     setHint(null);
     if (res.correct === false) {
       setRecovery(localize(res.recovery, language) || t('Try the step again, slowly.', 'ধাপটি আবার ধীরে চেষ্টা করুন।', 'यह चरण फिर से धीरे करें।', 'Hãy thử lại bước này, từ từ thôi.'));
@@ -234,6 +237,9 @@ export function PracticeAppPage() {
   const [dismissed, setDismissed] = useState(false);
   const [simKey, setSimKey] = useState(0);
   const [starting, setStarting] = useState(null);
+  const [explain, setExplain] = useState(false);
+  const [cheer, setCheer] = useState(0);
+  const reporting = useRef(false);
   const Sim = SIMULATORS[slug];
   const app = apps.data?.find((a) => a.slug === slug);
   const appName = app?.displayName || slug;
@@ -241,6 +247,24 @@ export function PracticeAppPage() {
   // Resume an unfinished practice for this app after a refresh.
   const resumable = !dismissed && active.data?.application?.slug === slug && active.data?.scenario ? active.data : null;
   const task = started ?? resumable;
+
+  // The simulator reports what the learner did; when it is the current
+  // step's expected action, the step completes on the server by itself.
+  const currentStep = task && task.currentStepOrder < (task.steps?.length || 0) ? task.steps[task.currentStepOrder] : null;
+  const expected = currentStep?.expectedAction || null;
+  const onSimAction = useCallback(async (action) => {
+    if (!task || !expected || action !== expected || reporting.current) return;
+    reporting.current = true;
+    try {
+      const res = await post(`/tasks/${task.id}/actions`, { action, version: task.version });
+      if (res.correct) { setTask(res.task); setCheer((n) => n + 1); }
+    } catch (err) {
+      showToast(err.message, 'danger');
+    } finally {
+      reporting.current = false;
+    }
+  }, [task, expected, showToast]);
+
 
   if (!Sim) {
     return (
@@ -311,19 +335,30 @@ export function PracticeAppPage() {
               </div>
             </div>
           )}
-          <Alert tone="ok" icon={ShieldCheck}>{t('Pretend money and messages only. Mistakes are safe here.', 'শুধু নকল টাকা ও মেসেজ। এখানে ভুল করলেও ক্ষতি নেই।', 'केवल नकली पैसे और संदेश। यहाँ गलती से कोई नुकसान नहीं।', 'Chỉ có tiền và tin nhắn giả. Sai ở đây không sao cả.')}</Alert>
+          <Alert tone="ok" icon={ShieldCheck}>{t('Pretend money and messages only. Mistakes are safe here.', 'শুধু নকল টাকা ও মেসেজ। এখানে ভুল করলেও ক্ষতি নেই।', 'केवल नकली पैसे और मैसेज। यहाँ गलती से कोई नुकसान नहीं।', 'Chỉ có tiền và tin nhắn giả. Sai ở đây không sao cả.')}</Alert>
         </aside>
 
         <section className="device-stage" aria-label={t(`${appName} practice app`, `${appName} অনুশীলন অ্যাপ`, `${appName} अभ्यास ऐप`, `Ứng dụng luyện tập ${appName}`)}>
           <div className="device-toolbar">
             <span className="text-subtle row" style={{ '--gap': '6px' }}><Hand size={16} aria-hidden="true" /> {t('Simulated app — tap anything', 'নকল অ্যাপ — যেকোনো কিছুতে চাপুন', 'नकली ऐप — कुछ भी दबाएं', 'Ứng dụng mô phỏng — chạm thoải mái')}</span>
-            <Button variant="ghost" size="sm" icon={RotateCcw} onClick={() => setSimKey((k) => k + 1)}>{t('Start the app again', 'অ্যাপটি আবার শুরু করুন', 'ऐप फिर से शुरू करें', 'Mở lại ứng dụng')}</Button>
+            <span className="row" style={{ '--gap': 'var(--s-2)' }}>
+              <Button variant={explain ? 'primary' : 'secondary'} size="sm" icon={Info} aria-pressed={explain} onClick={() => setExplain((v) => !v)}>
+                {explain ? t('Explaining — tap any button', 'ব্যাখ্যা চালু — যেকোনো বোতামে চাপুন', 'समझा रहे हैं — कोई भी बटन दबाएं', 'Đang giải thích — chạm nút bất kỳ') : t("What's this?", 'এটা কী?', 'यह क्या है?', 'Đây là gì?')}
+              </Button>
+              <Button variant="ghost" size="sm" icon={RotateCcw} onClick={() => setSimKey((k) => k + 1)}>{t('Start the app again', 'অ্যাপটি আবার শুরু করুন', 'ऐप फिर से शुरू करें', 'Mở lại ứng dụng')}</Button>
+            </span>
           </div>
+          {explain && <p className="sim-explain-hint">{t(`"What's this?" is on: tapping a button explains it instead of pressing it. Turn it off to use the app.`, '"এটা কী?" চালু: কোনো বোতামে চাপলে সেটা কাজ না করে ব্যাখ্যা দেখাবে। অ্যাপ ব্যবহার করতে এটি বন্ধ করুন।', '"यह क्या है?" चालू: बटन दबाने पर वह काम नहीं करेगा, बल्कि समझाएगा। ऐप चलाने के लिए इसे बंद करें।', '"Đây là gì?" đang bật: chạm nút sẽ giải thích thay vì bấm. Tắt đi để dùng ứng dụng.')}</p>}
           <div className="device-frame">
             <div className="device-screen legacy-scope">
               <Suspense fallback={<div className="state"><Skeleton variant="card" height={420} /></div>}>
-                <Sim key={simKey} onClose={() => setSimKey((k) => k + 1)} />
+                <SimRoot t={t} language={language} expect={explain ? null : expected} coach={currentStep ? localize(currentStep.instruction, language) : null} onAction={onSimAction} explainMode={explain}>
+                  <SimBoundary key={simKey} t={t} onRestart={() => setSimKey((k) => k + 1)}>
+                    <Sim onClose={() => setSimKey((k) => k + 1)} />
+                  </SimBoundary>
+                </SimRoot>
               </Suspense>
+              {cheer > 0 && <span key={cheer} className="sim-cheer" aria-hidden="true">✓</span>}
             </div>
           </div>
         </section>

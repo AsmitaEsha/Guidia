@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {
-  AlertTriangle, BellRing, BookMarked, Check, ChevronDown, ChevronUp, Clock, Eye, EyeOff, HandHelping, HeartHandshake,
-  ListChecks, Mail, MessageSquare, Settings2, ShieldCheck, TrendingUp, UserMinus, UserPlus, X,
+  AlertTriangle, BellRing, BookMarked, Check, ChevronDown, ChevronUp, Clock, Copy, Eye, EyeOff, HandHelping, HeartHandshake,
+  KeyRound, ListChecks, Mail, MessageSquare, Settings2, ShieldCheck, TrendingUp, UserMinus, UserPlus, Volume2, X,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { usePreferences } from '../../context/PreferencesContext';
@@ -9,7 +9,8 @@ import { useToast } from '../../context/ToastContext';
 import { useResource } from '../../hooks/useResource';
 import { useAsyncAction } from '../../hooks/useAsyncAction';
 import { post, put } from '../../services/apiClient';
-import { formatMoney, formatRelative, localize } from '../../i18n';
+import { formatDate, formatMoney, formatRelative, localize } from '../../i18n';
+import { useVoice } from '../../context/VoiceContext';
 import { getLanguage } from '../../config/languages';
 import { REASONS } from '../../data/emergencyReasons';
 import {
@@ -21,7 +22,7 @@ import {
 const SCOPES = [
   { key: 'EMERGENCY_ALERTS', icon: HandHelping, label: ['Help when I ask', 'আমি চাইলে সাহায্য', 'मेरे मांगने पर मदद', 'Giúp khi tôi nhờ'], desc: ['They are told when you press "I need help".', '"আমার সাহায্য দরকার" চাপলে তাঁরা জানবেন।', '"मुझे मदद चाहिए" दबाने पर उन्हें पता चलेगा।', 'Họ được báo khi bạn bấm "Tôi cần giúp đỡ".'], why: ['So a real person can reach you quickly.', 'যাতে একজন মানুষ দ্রুত আপনার কাছে পৌঁছাতে পারেন।', 'ताकि कोई व्यक्ति जल्दी आप तक पहुँच सके।', 'Để có người thật liên lạc với bạn nhanh chóng.'] },
   { key: 'APPROVAL_REQUESTS', icon: ShieldCheck, label: ['Help with sensitive actions', 'সংবেদনশীল কাজে সাহায্য', 'संवेदनशील कामों में मदद', 'Giúp với việc nhạy cảm'], desc: ['Asked to approve larger practice payments before they go through.', 'বড় অনুশীলন পেমেন্টের আগে অনুমোদন চাওয়া হবে।', 'बड़े अभ्यास भुगतान से पहले मंज़ूरी मांगी जाएगी।', 'Được hỏi duyệt các khoản thanh toán luyện tập lớn.'], why: ['A second pair of eyes before money moves.', 'টাকা যাওয়ার আগে আরেকজনের চোখ।', 'पैसे जाने से पहले एक और नज़र।', 'Thêm một người kiểm tra trước khi tiền đi.'] },
-  { key: 'SAFETY_ALERTS', icon: BellRing, label: ['Receive safety alerts', 'নিরাপত্তা সতর্কবার্তা', 'सुरक्षा अलर्ट पाएं', 'Nhận cảnh báo an toàn'], desc: ['How many risky messages you checked — never the messages themselves.', 'কতগুলো ঝুঁকিপূর্ণ মেসেজ যাচাই করেছেন — মেসেজগুলো নয়।', 'कितने खतरनाक संदेश जांचे — संदेश नहीं।', 'Số tin rủi ro bạn đã kiểm tra — không phải nội dung.'], why: ['They can notice if scammers are targeting you.', 'প্রতারকেরা আপনাকে নিশানা করছে কি না তাঁরা বুঝতে পারবেন।', 'वे देख सकेंगे कि धोखेबाज़ आपको निशाना तो नहीं बना रहे।', 'Họ có thể nhận ra nếu kẻ gian đang nhắm vào bạn.'] },
+  { key: 'SAFETY_ALERTS', icon: BellRing, label: ['Receive safety alerts', 'নিরাপত্তা সতর্কবার্তা', 'सुरक्षा अलर्ट पाएं', 'Nhận cảnh báo an toàn'], desc: ['How many risky messages you checked — never the messages themselves.', 'কতগুলো ঝুঁকিপূর্ণ মেসেজ যাচাই করেছেন — মেসেজগুলো নয়।', 'कितने खतरनाक मैसेज जांचे — मैसेज नहीं।', 'Số tin rủi ro bạn đã kiểm tra — không phải nội dung.'], why: ['They can notice if scammers are targeting you.', 'প্রতারকেরা আপনাকে নিশানা করছে কি না তাঁরা বুঝতে পারবেন।', 'वे देख सकेंगे कि धोखेबाज़ आपको निशाना तो नहीं बना रहे।', 'Họ có thể nhận ra nếu kẻ gian đang nhắm vào bạn.'] },
   { key: 'LEARNING_PROGRESS', icon: TrendingUp, label: ['See learning progress', 'শেখার অগ্রগতি দেখা', 'सीखने की प्रगति देखें', 'Xem tiến độ học'], desc: ['Which skills you are learning and how far you have come.', 'কোন দক্ষতা শিখছেন আর কতদূর এগিয়েছেন।', 'कौन से कौशल सीख रहे हैं और कितना आगे आए।', 'Bạn đang học kỹ năng nào và đã tiến bộ ra sao.'], why: ['So they can cheer you on and practise with you.', 'যাতে তাঁরা উৎসাহ দিতে ও সাথে অনুশীলন করতে পারেন।', 'ताकि वे हौसला बढ़ा सकें और साथ अभ्यास करें।', 'Để họ động viên và luyện cùng bạn.'] },
   { key: 'TASK_ACTIVITY', icon: ListChecks, label: ["See what I'm working on", 'আমি কী করছি দেখা', 'मैं क्या कर रहा हूँ देखें', 'Xem việc tôi đang làm'], desc: ['The lesson or practice you are in the middle of.', 'যে পাঠ বা অনুশীলনের মাঝে আছেন।', 'जिस पाठ या अभ्यास के बीच में हैं।', 'Bài học hoặc bài luyện bạn đang làm dở.'], why: ['Helpful when they guide you over the phone.', 'ফোনে দেখিয়ে দেওয়ার সময় কাজে লাগে।', 'फोन पर मार्गदर्शन करते समय उपयोगी।', 'Hữu ích khi họ hướng dẫn bạn qua điện thoại.'] },
   { key: 'MEMORY_BOOK', icon: BookMarked, label: ['See Memory Book titles', 'স্মৃতির খাতার শিরোনাম দেখা', 'याद की किताब के शीर्षक देखें', 'Xem tiêu đề Sổ ghi nhớ'], desc: ['Titles of things you saved — not your notes.', 'আপনার রাখা জিনিসের শিরোনাম — আপনার নোট নয়।', 'आपकी सहेजी चीज़ों के शीर्षक — आपके नोट नहीं।', 'Tiêu đề những điều bạn lưu — không phải ghi chú.'], why: ['So they know what you have already learned.', 'যাতে তাঁরা জানেন আপনি কী শিখে ফেলেছেন।', 'ताकि उन्हें पता हो आपने क्या सीख लिया।', 'Để họ biết bạn đã học được gì.'] },
@@ -174,7 +175,7 @@ function PersonCard({ rel, t, language, currency, onChanged }) {
       </div>
 
       <Dialog open={managing} onClose={() => setManaging(false)} size="lg" icon={Settings2} title={t(`What ${name} can help with`, `${name} কীসে সাহায্য করতে পারবেন`, `${name} किसमें मदद कर सकते हैं`, `${name} có thể giúp gì`)}
-        actions={<><Button variant="quiet" onClick={() => setManaging(false)}>{t('Cancel', 'বাতিল', 'रद्द करें', 'Hủy')}</Button><Button icon={Check} onClick={doSave} state={save.state} loadingLabel={t('Saving…', 'রাখা হচ্ছে…', 'सहेजा जा रहा है…', 'Đang lưu…')} successLabel={t('Saved', 'রাখা হয়েছে', 'सहेजा गया', 'Đã lưu')}>{t('Save', 'রাখুন', 'सहेजें', 'Lưu')}</Button></>}>
+        actions={<><Button variant="quiet" onClick={() => setManaging(false)}>{t('Cancel', 'বাতিল', 'रद्द करें', 'Hủy')}</Button><Button icon={Check} onClick={doSave} state={save.state} loadingLabel={t('Saving…', 'রাখা হচ্ছে…', 'सहेजा जा रहा है…', 'Đang lưu…')} successLabel={t('Saved', 'রাখা হয়েছে', 'सहेजा गया', 'Đã lưu')}>{t('Save', 'রাখুন', 'सेव करें', 'Lưu')}</Button></>}>
         {save.state === 'error' && <Alert tone="warn">{save.error?.message}</Alert>}
         <PermissionEditor scopes={scopes} setScopes={setScopes} threshold={threshold} setThreshold={setThreshold} t={t} currency={currency} idPrefix={`m-${rel.id}`} />
       </Dialog>
@@ -194,6 +195,55 @@ function PersonCard({ rel, t, language, currency, onChanged }) {
   );
 }
 
+// The code a learner reads out or sends to their family. Entering it on
+// the family member's side connects them straight away.
+function FamilyCodeCard({ t, language }) {
+  const { showToast } = useToast();
+  const { speak } = useVoice();
+  const { data, loading, reload, mutate } = useResource('/guardian/family-code');
+  const [renewing, setRenewing] = useState(false);
+  const code = data?.code;
+  const spaced = code ? `${code.slice(0, 3)} ${code.slice(3)}` : '';
+  const joinUrl = code ? `${window.location.origin}/register?as=family&code=${code}` : '';
+  const message = t(
+    `I'm learning with Guidia. Please join as my family so you can see my progress and help when I ask: ${joinUrl} — my family code is ${spaced}`,
+    `আমি Guidia দিয়ে শিখছি। আমার পরিবার হিসেবে যুক্ত হও, তাহলে আমার অগ্রগতি দেখতে পাবে আর দরকারে সাহায্য করতে পারবে: ${joinUrl} — আমার ফ্যামিলি কোড ${spaced}`,
+    `मैं Guidia से सीख रहा हूँ। मेरे परिवार के रूप में जुड़ो, ताकि मेरी प्रगति देख सको और ज़रूरत पर मदद कर सको: ${joinUrl} — मेरा फैमिली कोड ${spaced}`,
+    `Mình đang học với Guidia. Hãy tham gia với tư cách gia đình để xem tiến độ và giúp khi mình cần: ${joinUrl} — mã gia đình của mình là ${spaced}`,
+  );
+  const copy = async () => {
+    try { await navigator.clipboard.writeText(message); showToast(t('Copied. Paste it in a message to your family.', 'কপি হয়েছে। পরিবারকে মেসেজে পেস্ট করে পাঠান।', 'कॉपी हो गया। परिवार को मैसेज में पेस्ट करें।', 'Đã sao chép. Dán vào tin nhắn gửi gia đình.'), 'success'); } catch { showToast(spaced, 'info'); }
+  };
+  const renew = async () => {
+    setRenewing(true);
+    try { mutate(await post('/guardian/family-code')); } catch (err) { showToast(err.message, 'danger'); } finally { setRenewing(false); }
+  };
+  return (
+    <section className="card card-pad-lg stack rise" style={{ '--gap': 'var(--s-3)' }} aria-labelledby="famcode-h">
+      <p className="eyebrow"><KeyRound size={16} aria-hidden="true" /> {t('Share my family code', 'আমার ফ্যামিলি কোড শেয়ার করুন', 'मेरा फैमिली कोड शेयर करें', 'Chia sẻ mã gia đình')}</p>
+      <h2 id="famcode-h" className="h-section">{t('Connect your son, daughter or carer in one step', 'এক ধাপেই ছেলে, মেয়ে বা দেখাশোনাকারীকে যুক্ত করুন', 'एक कदम में बेटे, बेटी या देखभाल करने वाले को जोड़ें', 'Kết nối con hoặc người chăm sóc chỉ trong một bước')}</h2>
+      <p className="text-muted">{t('Send them this code. When they create a Guidia family account with it, they will see your progress and be alerted when you press "I need help".', 'কোডটি তাঁদের পাঠান। এই কোড দিয়ে Guidia ফ্যামিলি অ্যাকাউন্ট খুললে তাঁরা আপনার অগ্রগতি দেখবেন, আর "আমার সাহায্য দরকার" চাপলে সঙ্গে সঙ্গে জানবেন।', 'यह कोड उन्हें भेजें। इस कोड से Guidia फैमिली खाता बनाने पर वे आपकी प्रगति देखेंगे और "मुझे मदद चाहिए" दबाते ही उन्हें पता चलेगा।', 'Gửi mã này cho họ. Khi họ tạo tài khoản gia đình Guidia bằng mã này, họ sẽ thấy tiến độ của bạn và được báo khi bạn bấm "Tôi cần giúp đỡ".')}</p>
+      {loading && !data ? <Skeleton height={64} /> : code && (
+        <div className="family-code-card">
+          <span className="family-code-value" aria-label={code.split('').join(' ')}>{spaced}</span>
+          <div className="btn-group">
+            <Button icon={MessageSquare} href={`https://wa.me/?text=${encodeURIComponent(message)}`} target="_blank" rel="noreferrer">{t('Send on WhatsApp', 'হোয়াটসঅ্যাপে পাঠান', 'व्हाट्सऐप पर भेजें', 'Gửi qua WhatsApp')}</Button>
+            <Button variant="secondary" icon={Copy} onClick={copy}>{t('Copy message', 'মেসেজ কপি করুন', 'मैसेज कॉपी करें', 'Sao chép tin nhắn')}</Button>
+            <Button variant="quiet" icon={Volume2} onClick={() => speak(t(`Your family code is ${code.split('').join(', ')}`, `আপনার ফ্যামিলি কোড ${code.split('').join(', ')}`, `आपका फैमिली कोड है ${code.split('').join(', ')}`, `Mã gia đình của bạn là ${code.split('').join(', ')}`))}>{t('Read it to me', 'পড়ে শোনান', 'पढ़कर सुनाएं', 'Đọc cho tôi')}</Button>
+          </div>
+        </div>
+      )}
+      {data?.expiresAt && (
+        <p className="hint row" style={{ '--gap': '6px' }}><Clock size={16} aria-hidden="true" />
+          {t(`Works until ${formatDate(data.expiresAt, language, { dateStyle: 'medium' })}.`, `${formatDate(data.expiresAt, language, { dateStyle: 'medium' })} পর্যন্ত কাজ করবে।`, `${formatDate(data.expiresAt, language, { dateStyle: 'medium' })} तक चलेगा।`, `Dùng được đến ${formatDate(data.expiresAt, language, { dateStyle: 'medium' })}.`)}
+          <button type="button" className="link-button" onClick={renew} disabled={renewing}>{t('Make a new code', 'নতুন কোড বানান', 'नया कोड बनाएं', 'Tạo mã mới')}</button>
+        </p>
+      )}
+      {!data && !loading && <Button variant="secondary" className="self-start" onClick={reload}>{t('Show my code', 'আমার কোড দেখান', 'मेरा कोड दिखाएं', 'Hiện mã của tôi')}</Button>}
+    </section>
+  );
+}
+
 function MyCircle({ data, reload, t, language, currency }) {
   const [inviting, setInviting] = useState(false);
   const list = data.myTrustedPeople.filter((r) => r.status !== 'REVOKED');
@@ -210,6 +260,8 @@ function MyCircle({ data, reload, t, language, currency }) {
         </div>
         <Button size="lg" icon={UserPlus} onClick={() => setInviting(true)}>{t('Add a trusted person', 'বিশ্বস্ত মানুষ যোগ করুন', 'भरोसेमंद व्यक्ति जोड़ें', 'Thêm người tin cậy')}</Button>
       </section>
+
+      <FamilyCodeCard t={t} language={language} />
 
       <section className="section" aria-labelledby="circle-list-h">
         <SectionHeader id="circle-list-h" title={t('Your trusted people', 'আপনার বিশ্বস্ত মানুষ', 'आपके भरोसेमंद लोग', 'Người tin cậy của bạn')} />
@@ -258,7 +310,7 @@ function SeniorOverview({ senior, t, language }) {
       <KeyValue items={[
         data.progress && [t('Skills practised', 'অনুশীলিত দক্ষতা', 'अभ्यास किए कौशल', 'Kỹ năng đã luyện'), data.progress.skills.length],
         data.progress && [t('Lessons finished', 'শেষ করা পাঠ', 'पूरे पाठ', 'Bài học đã xong'), data.progress.lessonsCompleted],
-        data.safety && [t('Risky messages checked (30 days)', 'যাচাই করা ঝুঁকিপূর্ণ মেসেজ (৩০ দিন)', 'जांचे गए खतरनाक संदेश (30 दिन)', 'Tin rủi ro đã kiểm tra (30 ngày)'), (data.safety.last30Days.HIGH_RISK || 0) + (data.safety.last30Days.CRITICAL || 0)],
+        data.safety && [t('Risky messages checked (30 days)', 'যাচাই করা ঝুঁকিপূর্ণ মেসেজ (৩০ দিন)', 'जांचे गए खतरनाक मैसेज (30 दिन)', 'Tin rủi ro đã kiểm tra (30 ngày)'), (data.safety.last30Days.HIGH_RISK || 0) + (data.safety.last30Days.CRITICAL || 0)],
         data.currentTask && [t('Working on', 'এখন করছেন', 'अभी कर रहे हैं', 'Đang làm'), localize(data.currentTask.scenario?.title || data.currentTask.lesson?.title, language) || data.currentTask.goal],
         data.recentMemories && [t('Recently saved', 'সম্প্রতি রাখা', 'हाल में सहेजा', 'Mới lưu'), data.recentMemories.map((m) => m.title).join(', ') || '—'],
       ]} />

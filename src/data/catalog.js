@@ -13,7 +13,7 @@ export const MASTERY = {
 export const MASTERY_ORDER = Object.keys(MASTERY);
 
 const SKILL_NAMES = {
-  'messaging.send_message': ['Sending a message', 'মেসেজ পাঠানো', 'संदेश भेजना', 'Gửi tin nhắn'],
+  'messaging.send_message': ['Sending a message', 'মেসেজ পাঠানো', 'मैसेज भेजना', 'Gửi tin nhắn'],
   'messaging.share_photo': ['Sharing a photo', 'ছবি পাঠানো', 'फोटो भेजना', 'Gửi ảnh'],
   'messaging.video_call': ['Video calls', 'ভিডিও কল', 'वीडियो कॉल', 'Gọi video'],
   'messaging.voice_message': ['Voice messages', 'ভয়েস মেসেজ', 'वॉइस मैसेज', 'Tin nhắn thoại'],
@@ -41,6 +41,12 @@ const SKILL_NAMES = {
   'health.book_appointment': ['Booking a doctor', 'ডাক্তার বুক করা', 'डॉक्टर बुक करना', 'Đặt lịch bác sĩ'],
   'shopping.order_safely': ['Ordering online safely', 'নিরাপদে অনলাইন অর্ডার', 'सुरक्षित ऑनलाइन ऑर्डर', 'Mua hàng trực tuyến an toàn'],
   'travel.book_hotel': ['Finding a hotel', 'হোটেল খোঁজা', 'होटल ढूंढना', 'Tìm khách sạn'],
+  'travel.cancel_booking': ['Cancelling a booking', 'বুকিং বাতিল করা', 'बुकिंग रद्द करना', 'Hủy đặt phòng'],
+  'shopping.track_order': ['Tracking an order', 'অর্ডার কোথায় আছে দেখা', 'ऑर्डर ट्रैक करना', 'Theo dõi đơn hàng'],
+  'shopping.return_item': ['Returning an item', 'জিনিস ফেরত দেওয়া', 'सामान लौटाना', 'Trả lại hàng'],
+  'health.video_consult': ['Seeing a doctor on video', 'ভিডিওতে ডাক্তার দেখানো', 'वीडियो पर डॉक्टर को दिखाना', 'Khám bác sĩ qua video'],
+  'health.cancel_appointment': ['Changing an appointment', 'অ্যাপয়েন্টমেন্ট বদলানো', 'अपॉइंटमेंट बदलना', 'Đổi lịch khám'],
+  'social.save_post': ['Saving a post', 'পোস্ট সেভ করা', 'पोस्ट सेव करना', 'Lưu bài viết'],
 };
 
 export function skillName(key, t) {
@@ -75,18 +81,28 @@ export const DIFFICULTY = {
   ADVANCED: ['Advanced', 'উন্নত', 'उन्नत', 'Nâng cao'],
 };
 
-// Lessons shown first on Learn, grouped by everyday app.
+// Step-by-step lessons for every everyday app, shown on Learn as one
+// tab per app (and used by Home to suggest a first lesson).
 export const FEATURED_APPS = [
-  { slug: 'facebook', lessons: ['facebook-share-photo', 'facebook-friend-request-safely', 'facebook-report-scam'] },
-  { slug: 'nagad', lessons: ['nagad-send-money-safely', 'nagad-check-balance', 'nagad-otp-call-scam'] },
-  { slug: 'gmail', lessons: ['gmail-read-reply', 'gmail-send-photo', 'gmail-spot-fake-email'] },
+  { slug: 'whatsapp', lessons: ['whatsapp-send-message', 'whatsapp-send-photo', 'whatsapp-video-call', 'whatsapp-voice-message', 'group-chat-basics'] },
+  { slug: 'facebook', lessons: ['facebook-share-photo', 'facebook-friend-request-safely', 'facebook-report-scam', 'who-can-see-my-post'] },
+  { slug: 'messenger', lessons: ['messenger-send-message', 'messenger-video-call', 'messenger-spot-fake-friend'] },
   { slug: 'imo', lessons: ['imo-video-call', 'imo-voice-message', 'imo-protect-account'] },
+  { slug: 'gmail', lessons: ['gmail-read-reply', 'gmail-send-photo', 'gmail-spot-fake-email'] },
+  { slug: 'bkash', lessons: ['bkash-send-money', 'bkash-check-balance', 'bkash-mobile-recharge'] },
+  { slug: 'nagad', lessons: ['nagad-send-money-safely', 'nagad-check-balance', 'nagad-otp-call-scam'] },
+  { slug: 'momo', lessons: ['momo-transfer-money', 'momo-pay-bill', 'momo-check-balance'] },
+  { slug: 'googlepay', lessons: ['googlepay-pay', 'googlepay-send-to-contact', 'googlepay-check-balance'] },
+  { slug: 'paypal', lessons: ['paypal-send-money', 'paypal-check-activity', 'paypal-spot-fake-email'] },
+  { slug: 'amazon', lessons: ['amazon-order-safely', 'amazon-track-order', 'amazon-return-item'] },
+  { slug: 'booking', lessons: ['booking-find-hotel', 'booking-cancel-free', 'booking-fake-payment-message'] },
+  { slug: 'practo', lessons: ['practo-book-doctor', 'practo-video-consult', 'practo-cancel-appointment'] },
 ];
 
 export const SAFETY_TIPS = [
   ['Guidia, your bank, bKash and Nagad will never ask for your PIN or OTP.', 'Guidia, আপনার ব্যাংক, বিকাশ বা নগদ কখনো আপনার পিন বা ওটিপি চাইবে না।', 'Guidia, आपका बैंक या कोई भी भुगतान ऐप कभी आपका पिन या ओटीपी नहीं मांगेगा।', 'Guidia, ngân hàng hay ví điện tử sẽ không bao giờ hỏi mã PIN hoặc OTP của bạn.'],
-  ['A name or photo in a message is not proof of who sent it. Call back on a number you already trust.', 'মেসেজে নাম বা ছবি থাকলেই প্রমাণ হয় না কে পাঠিয়েছে। আগে থেকে জানা নম্বরে ফোন করে নিন।', 'संदेश में नाम या फोटो होना सबूत नहीं है। पहले से भरोसेमंद नंबर पर फोन करें।', 'Tên hay ảnh trong tin nhắn không chứng minh ai đã gửi. Hãy gọi lại số bạn đã tin tưởng.'],
-  ['When a message says "urgent", slow down. Real organisations give you time.', 'মেসেজে "জরুরি" লেখা থাকলে ধীরে চলুন। আসল প্রতিষ্ঠান সময় দেয়।', 'जब संदेश "जरूरी" कहे, तो धीरे चलें। असली संस्थाएं समय देती हैं।', 'Khi tin nhắn ghi "khẩn cấp", hãy chậm lại. Tổ chức thật luôn cho bạn thời gian.'],
+  ['A name or photo in a message is not proof of who sent it. Call back on a number you already trust.', 'মেসেজে নাম বা ছবি থাকলেই প্রমাণ হয় না কে পাঠিয়েছে। আগে থেকে জানা নম্বরে ফোন করে নিন।', 'मैसेज में नाम या फोटो होना सबूत नहीं है। पहले से भरोसेमंद नंबर पर फोन करें।', 'Tên hay ảnh trong tin nhắn không chứng minh ai đã gửi. Hãy gọi lại số bạn đã tin tưởng.'],
+  ['When a message says "urgent", slow down. Real organisations give you time.', 'মেসেজে "জরুরি" লেখা থাকলে ধীরে চলুন। আসল প্রতিষ্ঠান সময় দেয়।', 'जब मैसेज "जरूरी" कहे, तो धीरे चलें। असली संस्थाएं समय देती हैं।', 'Khi tin nhắn ghi "khẩn cấp", hãy chậm lại. Tổ chức thật luôn cho bạn thời gian.'],
   ['If a friend sends a new friend request, call them first. Their account may have been copied.', 'কোনো বন্ধু নতুন ফ্রেন্ড রিকোয়েস্ট পাঠালে আগে ফোন করুন। তাঁর অ্যাকাউন্ট নকল হতে পারে।', 'कोई दोस्त नई फ्रेंड रिक्वेस्ट भेजे तो पहले फोन करें। उसका अकाउंट नकल हो सकता है।', 'Nếu bạn bè gửi lời mời kết bạn mới, hãy gọi hỏi trước. Tài khoản của họ có thể bị giả mạo.'],
   ['Never type a code you received by SMS into a page someone else sent you.', 'এসএমএসে পাওয়া কোড কখনো অন্য কারও পাঠানো পেজে লিখবেন না।', 'SMS में मिला कोड कभी किसी और के भेजे पेज पर न लिखें।', 'Không bao giờ nhập mã nhận qua tin nhắn vào trang do người khác gửi.'],
 ];

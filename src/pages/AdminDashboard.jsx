@@ -168,7 +168,7 @@ export default function AdminDashboard() {
       <main className="admin-main" id="main">
         <div className="stack" style={{ '--gap': 'var(--s-2)' }}>
           <h1 className="h-page">{t('Overview', 'সারসংক্ষেপ', 'सारांश', 'Tổng quan')}</h1>
-          <p className="text-muted">{t("Live aggregate figures from this deployment's own database. No message content or per-user activity is shown.", 'এই ডিপ্লয়মেন্টের নিজস্ব ডেটাবেসের সমষ্টিগত সংখ্যা। কোনো মেসেজ বা ব্যক্তিগত কার্যকলাপ দেখানো হয় না।', 'इस डिप्लॉयमेंट के अपने डेटाबेस के कुल आंकड़े। कोई संदेश या व्यक्तिगत गतिविधि नहीं दिखाई जाती।', 'Số liệu tổng hợp trực tiếp từ cơ sở dữ liệu của hệ thống. Không hiển thị nội dung tin nhắn hay hoạt động cá nhân.')}</p>
+          <p className="text-muted">{t("Live aggregate figures from this deployment's own database. No message content or per-user activity is shown.", 'এই ডিপ্লয়মেন্টের নিজস্ব ডেটাবেসের সমষ্টিগত সংখ্যা। কোনো মেসেজ বা ব্যক্তিগত কার্যকলাপ দেখানো হয় না।', 'इस डिप्लॉयमेंट के अपने डेटाबेस के कुल आंकड़े। कोई मैसेज या व्यक्तिगत गतिविधि नहीं दिखाई जाती।', 'Số liệu tổng hợp trực tiếp từ cơ sở dữ liệu của hệ thống. Không hiển thị nội dung tin nhắn hay hoạt động cá nhân.')}</p>
         </div>
 
         {state === 'loading' && (
@@ -208,7 +208,7 @@ export default function AdminDashboard() {
                     <Metric icon={BookOpen} value={a.lessonsCompleted} label={t('Lessons completed', 'সম্পন্ন পাঠ', 'पूरे पाठ', 'Bài học đã xong')} />
                     <Metric icon={Hand} value={a.practiceAttempts} label={t('Practice attempts', 'অনুশীলনের চেষ্টা', 'अभ्यास प्रयास', 'Lượt luyện tập')} />
                     <Metric icon={Activity} value={a.independentCompletionRate == null ? '—' : `${a.independentCompletionRate}%`} label={t('Done without help', 'সাহায্য ছাড়া করা', 'बिना मदद के किया', 'Tự làm không cần giúp')} />
-                    <Metric icon={ShieldAlert} tone="warn" value={(a.riskBySeverity.WARNING || 0) + (a.riskBySeverity.HIGH_RISK || 0) + (a.riskBySeverity.CRITICAL || 0)} label={t('Risky messages flagged', 'চিহ্নিত ঝুঁকিপূর্ণ মেসেজ', 'चिह्नित खतरनाक संदेश', 'Tin rủi ro được gắn cờ')} />
+                    <Metric icon={ShieldAlert} tone="warn" value={(a.riskBySeverity.WARNING || 0) + (a.riskBySeverity.HIGH_RISK || 0) + (a.riskBySeverity.CRITICAL || 0)} label={t('Risky messages flagged', 'চিহ্নিত ঝুঁকিপূর্ণ মেসেজ', 'चिह्नित खतरनाक मैसेज', 'Tin rủi ro được gắn cờ')} />
                   </div>
                 </>
               )}

@@ -30,6 +30,11 @@ const registerSchema = z.object({
   password: z.string().max(200),
   confirmPassword: z.string().max(200),
   preferredLanguage: languageEnum.optional(),
+  // LEARNER: learns with Guidia. FAMILY: a son, daughter or carer who
+  // follows a learner's progress and answers their help requests.
+  accountType: z.enum(['LEARNER', 'FAMILY']).optional(),
+  // FAMILY only: the code a learner shared, to connect straight away.
+  familyCode: z.string().trim().toUpperCase().regex(/^[A-Z0-9-]{4,12}$/, 'That family code does not look right.').optional().or(z.literal('')),
 });
 
 const loginSchema = z.object({

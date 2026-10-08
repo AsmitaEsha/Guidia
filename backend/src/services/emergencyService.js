@@ -39,7 +39,7 @@ function toPublic(e) {
     resolvedAt: e.resolvedAt,
     cancelledAt: e.cancelledAt,
     acknowledgedBy: e.acknowledgedBy?.fullName ?? null,
-    senior: e.senior ? { id: e.senior.id, fullName: e.senior.fullName } : undefined,
+    senior: e.senior ? { id: e.senior.id, fullName: e.senior.fullName, phone: e.senior.phone ?? null } : undefined,
     guardiansNotified: e.guardiansNotified,
     version: e.version,
   };
@@ -73,6 +73,7 @@ export const emergencyService = {
           severity: 'CRITICAL',
           title: `${senior.fullName} asked for help`,
           body: REASON_LABEL[reason],
+          i18n: { key: 'emergency', vars: { name: senior.fullName, reason } },
           data: { emergencyId: event.id, seniorId },
           dedupeKey: `emergency:${event.id}`,
           email: { template: 'emergency_alert', data: { seniorName: senior.fullName, reasonLabel: REASON_LABEL[reason], message: cleanMessage } },
@@ -101,7 +102,7 @@ export const emergencyService = {
       where: { senior: { guardianRelationshipsAsSenior: { some: { guardianUserId, status: 'ACTIVE', permissions: { some: { scope: 'EMERGENCY_ALERTS', revokedAt: null } } } } } },
       orderBy: { createdAt: 'desc' },
       take: 30,
-      include: { senior: { select: { id: true, fullName: true } }, acknowledgedBy: { select: { fullName: true } } },
+      include: { senior: { select: { id: true, fullName: true, phone: true } }, acknowledgedBy: { select: { fullName: true } } },
     });
     return rows.map(toPublic);
   },
@@ -137,6 +138,7 @@ export const emergencyService = {
           severity: 'HIGH',
           title: `${guardian.fullName} ${words[action]}`,
           body: action === 'acknowledge' ? 'Help is on the way. Stay where you are and take a slow breath.' : '',
+          i18n: { key: 'emergency_update', vars: { name: guardian.fullName, action } },
           dedupeKey: `emergency:${id}:${action}`,
         });
       }

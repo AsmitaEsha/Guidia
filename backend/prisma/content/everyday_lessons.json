@@ -1,0 +1,1675 @@
+[
+ {
+  "slug": "whatsapp-send-message",
+  "applicationSlug": "whatsapp",
+  "domain": "SOCIAL_COMMUNICATION",
+  "category": "messaging",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 3,
+  "skillKey": "messaging.send_message",
+  "title": {
+   "en": "Send a WhatsApp message",
+   "bn": "হোয়াটসঅ্যাপে মেসেজ পাঠান",
+   "hi": "व्हाट्सऐप पर मैसेज भेजें",
+   "vi": "Gửi tin nhắn WhatsApp"
+  },
+  "description": {
+   "en": "Open a chat, type a few words and send them — the most-used thing on any phone.",
+   "bn": "চ্যাট খুলুন, কয়েকটা কথা লিখে পাঠিয়ে দিন — ফোনে সবচেয়ে বেশি এটাই করা হয়।",
+   "hi": "चैट खोलें, कुछ शब्द लिखें और भेज दें — फोन पर सबसे ज़्यादा यही काम होता है।",
+   "vi": "Mở cuộc trò chuyện, gõ vài chữ rồi gửi — việc làm nhiều nhất trên điện thoại."
+  },
+  "safetyTips": [
+   {
+    "en": "A message from a new number saying \"Hi Mum, I lost my phone\" is a common scam. Call your child on their old number first.",
+    "bn": "অচেনা নম্বর থেকে \"মা, আমার ফোন হারিয়ে গেছে\" ধরনের মেসেজ একটি পরিচিত প্রতারণা। আগে পুরোনো নম্বরে সন্তানকে ফোন করুন।",
+    "hi": "नए नंबर से \"मम्मी, मेरा फोन खो गया\" जैसा मैसेज आम धोखा है। पहले बच्चे के पुराने नंबर पर फोन करें।",
+    "vi": "Tin nhắn từ số lạ kiểu \"Mẹ ơi, con mất điện thoại\" là trò lừa phổ biến. Hãy gọi số cũ của con trước."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open WhatsApp — the green icon with a white phone inside a speech bubble.",
+    "bn": "হোয়াটসঅ্যাপ খুলুন — সবুজ আইকন, ভেতরে কথার বুদবুদের মধ্যে সাদা ফোন।",
+    "hi": "व्हाट्सऐप खोलें — हरा आइकन, जिसमें बात के बुलबुले के अंदर सफ़ेद फोन है।",
+    "vi": "Mở WhatsApp — biểu tượng màu xanh lá có hình điện thoại trắng trong bong bóng."
+   },
+   {
+    "en": "On the Chats screen, tap the name of the person you want to write to.",
+    "bn": "চ্যাটস স্ক্রিনে যাঁকে লিখতে চান, তাঁর নামে চাপুন।",
+    "hi": "चैट्स स्क्रीन पर जिसे लिखना है, उसके नाम पर टैप करें।",
+    "vi": "Ở màn hình Đoạn chat, chạm vào tên người bạn muốn nhắn."
+   },
+   {
+    "en": "Tap the long white box at the bottom that says \"Message\". The keyboard opens.",
+    "bn": "নিচে \"Message\" লেখা লম্বা সাদা ঘরে চাপুন। কিবোর্ড খুলে যাবে।",
+    "hi": "नीचे \"Message\" लिखे लंबे सफ़ेद बॉक्स पर टैप करें। कीबोर्ड खुल जाएगा।",
+    "vi": "Chạm vào ô trắng dài ở dưới có chữ \"Tin nhắn\". Bàn phím sẽ hiện lên."
+   },
+   {
+    "en": "Type your message. Take your time — nothing is sent until you press send.",
+    "bn": "আপনার মেসেজ লিখুন। তাড়াহুড়োর কিছু নেই — পাঠানোর বোতাম না চাপলে কিছুই যায় না।",
+    "hi": "अपना मैसेज लिखें। आराम से — भेजने का बटन दबाए बिना कुछ नहीं जाता।",
+    "vi": "Gõ tin nhắn. Cứ từ từ — chưa bấm gửi thì chưa có gì được gửi đi."
+   },
+   {
+    "en": "Tap the green round button with the white arrow. One grey tick means sent; two blue ticks mean they have read it.",
+    "bn": "সাদা তীর-ওয়ালা সবুজ গোল বোতামে চাপুন। একটা ধূসর টিক মানে পাঠানো হয়েছে; দুটো নীল টিক মানে তিনি পড়েছেন।",
+    "hi": "सफ़ेद तीर वाले हरे गोल बटन पर टैप करें। एक धूसर टिक मतलब भेज दिया; दो नीले टिक मतलब उन्होंने पढ़ लिया।",
+    "vi": "Chạm nút tròn xanh có mũi tên trắng. Một dấu tích xám là đã gửi; hai dấu tích xanh là họ đã đọc."
+   }
+  ]
+ },
+ {
+  "slug": "whatsapp-send-photo",
+  "applicationSlug": "whatsapp",
+  "domain": "SOCIAL_COMMUNICATION",
+  "category": "messaging",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 4,
+  "skillKey": "messaging.share_photo",
+  "title": {
+   "en": "Send a photo on WhatsApp",
+   "bn": "হোয়াটসঅ্যাপে ছবি পাঠান",
+   "hi": "व्हाट्सऐप पर फोटो भेजें",
+   "vi": "Gửi ảnh trên WhatsApp"
+  },
+  "description": {
+   "en": "Share a picture from your gallery with family, and add a few words if you like.",
+   "bn": "গ্যালারি থেকে পরিবারকে ছবি পাঠান, চাইলে সাথে কয়েকটা কথাও লিখুন।",
+   "hi": "गैलरी से परिवार को फोटो भेजें, चाहें तो साथ में कुछ लिख भी दें।",
+   "vi": "Gửi ảnh từ thư viện cho gia đình, có thể kèm vài dòng."
+  },
+  "safetyTips": [
+   {
+    "en": "Before sending, look at the whole picture: an ID card, bank card or letter in the background can be read by others.",
+    "bn": "পাঠানোর আগে পুরো ছবিটা দেখে নিন: পেছনে পরিচয়পত্র, ব্যাংক কার্ড বা চিঠি থাকলে অন্যরা পড়ে ফেলতে পারে।",
+    "hi": "भेजने से पहले पूरी फोटो देख लें: पीछे पहचान पत्र, बैंक कार्ड या चिट्ठी हो तो दूसरे पढ़ सकते हैं।",
+    "vi": "Trước khi gửi, xem kỹ cả bức ảnh: thẻ căn cước, thẻ ngân hàng hay giấy tờ phía sau có thể bị người khác đọc được."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open the chat with the person you want to send the photo to.",
+    "bn": "যাঁকে ছবি পাঠাবেন, তাঁর চ্যাট খুলুন।",
+    "hi": "जिसे फोटो भेजनी है, उसकी चैट खोलें।",
+    "vi": "Mở cuộc trò chuyện với người bạn muốn gửi ảnh."
+   },
+   {
+    "en": "Tap the paperclip icon inside the message box (on iPhone, tap the + on the left).",
+    "bn": "মেসেজের ঘরের ভেতরে পেপারক্লিপ চিহ্নে চাপুন (আইফোনে বাঁদিকের + চিহ্নে চাপুন)।",
+    "hi": "मैसेज बॉक्स के अंदर पेपरक्लिप वाले निशान पर टैप करें (आईफ़ोन में बाईं तरफ़ + पर)।",
+    "vi": "Chạm biểu tượng kẹp giấy trong ô tin nhắn (trên iPhone, chạm dấu + bên trái)."
+   },
+   {
+    "en": "Tap Gallery (or Photos) and choose the picture. A blue tick shows it is selected.",
+    "bn": "গ্যালারি (বা Photos) চাপুন, তারপর ছবিটি বেছে নিন। নীল টিক মানে বাছাই হয়েছে।",
+    "hi": "गैलरी (या Photos) पर टैप करें और फोटो चुनें। नीला टिक मतलब चुन ली गई।",
+    "vi": "Chạm Thư viện (hoặc Ảnh) rồi chọn ảnh. Dấu tích xanh nghĩa là đã chọn."
+   },
+   {
+    "en": "If you like, type a few words in the \"Add a caption\" box under the photo.",
+    "bn": "চাইলে ছবির নিচে \"Add a caption\" ঘরে কয়েকটা কথা লিখুন।",
+    "hi": "चाहें तो फोटो के नीचे \"Add a caption\" बॉक्स में कुछ लिखें।",
+    "vi": "Nếu muốn, gõ vài chữ vào ô \"Thêm chú thích\" bên dưới ảnh."
+   },
+   {
+    "en": "Tap the green send arrow. The photo appears in the chat once it has gone.",
+    "bn": "সবুজ সেন্ড তীরে চাপুন। ছবি চলে গেলে চ্যাটে দেখা যাবে।",
+    "hi": "हरे भेजें वाले तीर पर टैप करें। फोटो जाते ही चैट में दिखेगी।",
+    "vi": "Chạm mũi tên gửi màu xanh. Ảnh sẽ hiện trong cuộc trò chuyện khi đã gửi xong."
+   }
+  ]
+ },
+ {
+  "slug": "whatsapp-video-call",
+  "applicationSlug": "whatsapp",
+  "domain": "SOCIAL_COMMUNICATION",
+  "category": "messaging",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 3,
+  "skillKey": "messaging.video_call",
+  "title": {
+   "en": "Make a WhatsApp video call",
+   "bn": "হোয়াটসঅ্যাপে ভিডিও কল করুন",
+   "hi": "व्हाट्सऐप पर वीडियो कॉल करें",
+   "vi": "Gọi video qua WhatsApp"
+  },
+  "description": {
+   "en": "See your family's faces while you talk — free over Wi-Fi.",
+   "bn": "কথা বলতে বলতে পরিবারের মুখ দেখুন — ওয়াইফাইয়ে একদম ফ্রি।",
+   "hi": "बात करते हुए परिवार का चेहरा देखें — वाईफ़ाई पर बिल्कुल मुफ़्त।",
+   "vi": "Vừa nói chuyện vừa thấy mặt người thân — miễn phí khi dùng Wi-Fi."
+  },
+  "safetyTips": [
+   {
+    "en": "Video calls use a lot of mobile data. Use Wi-Fi when you can.",
+    "bn": "ভিডিও কলে অনেক মোবাইল ডেটা খরচ হয়। সম্ভব হলে ওয়াইফাই ব্যবহার করুন।",
+    "hi": "वीडियो कॉल में बहुत मोबाइल डेटा लगता है। हो सके तो वाईफ़ाई इस्तेमाल करें।",
+    "vi": "Gọi video tốn nhiều dữ liệu di động. Hãy dùng Wi-Fi khi có thể."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open the chat with the person you want to see.",
+    "bn": "যাঁকে দেখতে চান, তাঁর চ্যাট খুলুন।",
+    "hi": "जिसे देखना है, उसकी चैट खोलें।",
+    "vi": "Mở cuộc trò chuyện với người bạn muốn gọi."
+   },
+   {
+    "en": "At the top right, tap the video camera icon.",
+    "bn": "ওপরে ডানদিকে ভিডিও ক্যামেরার চিহ্নে চাপুন।",
+    "hi": "ऊपर दाईं ओर वीडियो कैमरे के निशान पर टैप करें।",
+    "vi": "Ở góc trên bên phải, chạm biểu tượng máy quay video."
+   },
+   {
+    "en": "Hold the phone in front of your face and wait for them to answer.",
+    "bn": "ফোনটা মুখের সামনে ধরে উত্তর দেওয়ার জন্য অপেক্ষা করুন।",
+    "hi": "फोन को चेहरे के सामने रखें और उनके उठाने का इंतज़ार करें।",
+    "vi": "Cầm điện thoại trước mặt và chờ họ nhấc máy."
+   },
+   {
+    "en": "During the call: the microphone button mutes you, the camera button turns your video off, and the round arrows switch to the back camera.",
+    "bn": "কলের সময়: মাইক্রোফোন বোতামে আপনার আওয়াজ বন্ধ হয়, ক্যামেরা বোতামে ভিডিও বন্ধ হয়, আর গোল তীরে পেছনের ক্যামেরা চালু হয়।",
+    "hi": "कॉल के दौरान: माइक बटन से आपकी आवाज़ बंद होती है, कैमरा बटन से वीडियो बंद होता है, और गोल तीरों से पीछे का कैमरा चलता है।",
+    "vi": "Trong cuộc gọi: nút micro để tắt tiếng, nút máy quay để tắt hình, còn mũi tên tròn để đổi sang camera sau."
+   },
+   {
+    "en": "To finish, tap the red button with the phone on it.",
+    "bn": "শেষ করতে ফোন আঁকা লাল বোতামে চাপুন।",
+    "hi": "खत्म करने के लिए फोन बने लाल बटन पर टैप करें।",
+    "vi": "Để kết thúc, chạm nút đỏ có hình điện thoại."
+   }
+  ]
+ },
+ {
+  "slug": "whatsapp-voice-message",
+  "applicationSlug": "whatsapp",
+  "domain": "SOCIAL_COMMUNICATION",
+  "category": "messaging",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 3,
+  "skillKey": "messaging.voice_message",
+  "title": {
+   "en": "Send a voice message on WhatsApp",
+   "bn": "হোয়াটসঅ্যাপে ভয়েস মেসেজ পাঠান",
+   "hi": "व्हाट्सऐप पर वॉइस मैसेज भेजें",
+   "vi": "Gửi tin nhắn thoại trên WhatsApp"
+  },
+  "description": {
+   "en": "No typing needed — just hold a button and speak.",
+   "bn": "লিখতে হবে না — শুধু বোতাম চেপে ধরে কথা বলুন।",
+   "hi": "लिखने की ज़रूरत नहीं — बस बटन दबाकर बोलें।",
+   "vi": "Không cần gõ — chỉ cần giữ nút và nói."
+  },
+  "safetyTips": [
+   {
+    "en": "A voice message can be forwarded. Never say a PIN, OTP or password in one.",
+    "bn": "ভয়েস মেসেজ অন্যকে ফরোয়ার্ড করা যায়। এতে কখনো পিন, ওটিপি বা পাসওয়ার্ড বলবেন না।",
+    "hi": "वॉइस मैसेज आगे भेजा जा सकता है। उसमें कभी पिन, ओटीपी या पासवर्ड न बोलें।",
+    "vi": "Tin nhắn thoại có thể bị chuyển tiếp. Đừng bao giờ đọc PIN, OTP hay mật khẩu trong đó."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open the chat with the person.",
+    "bn": "মানুষটির চ্যাট খুলুন।",
+    "hi": "उस व्यक्ति की चैट खोलें।",
+    "vi": "Mở cuộc trò chuyện với người đó."
+   },
+   {
+    "en": "Find the green round microphone button at the bottom right.",
+    "bn": "নিচে ডানদিকে সবুজ গোল মাইক্রোফোন বোতামটা খুঁজুন।",
+    "hi": "नीचे दाईं ओर हरा गोल माइक बटन ढूंढें।",
+    "vi": "Tìm nút micro tròn màu xanh ở góc dưới bên phải."
+   },
+   {
+    "en": "Press and hold it, then speak clearly. Keep your finger down while you talk.",
+    "bn": "চেপে ধরে রাখুন, তারপর পরিষ্কার করে কথা বলুন। কথা শেষ না হওয়া পর্যন্ত আঙুল তুলবেন না।",
+    "hi": "उसे दबाकर रखें और साफ़ बोलें। बोलते समय उंगली दबाए रखें।",
+    "vi": "Nhấn giữ nút rồi nói rõ ràng. Giữ ngón tay trong lúc nói."
+   },
+   {
+    "en": "Lift your finger to send. To cancel instead, slide your finger to the left before lifting it.",
+    "bn": "আঙুল তুললেই চলে যাবে। বাতিল করতে চাইলে আঙুল তোলার আগে বাঁদিকে টেনে দিন।",
+    "hi": "उंगली उठाते ही भेज दिया जाएगा। रद्द करना हो तो उठाने से पहले उंगली बाईं ओर खिसकाएं।",
+    "vi": "Nhấc ngón tay lên là gửi. Muốn hủy thì vuốt sang trái trước khi nhấc tay."
+   }
+  ]
+ },
+ {
+  "slug": "messenger-send-message",
+  "applicationSlug": "messenger",
+  "domain": "SOCIAL_COMMUNICATION",
+  "category": "messaging",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 3,
+  "skillKey": "messaging.send_message",
+  "title": {
+   "en": "Send a message on Messenger",
+   "bn": "মেসেঞ্জারে মেসেজ পাঠান",
+   "hi": "मैसेंजर पर मैसेज भेजें",
+   "vi": "Gửi tin nhắn trên Messenger"
+  },
+  "description": {
+   "en": "Chat with your Facebook friends in Messenger, the blue-and-purple bubble app.",
+   "bn": "নীল-বেগুনি বুদবুদের অ্যাপ মেসেঞ্জারে ফেসবুকের বন্ধুদের সাথে চ্যাট করুন।",
+   "hi": "नीले-बैंगनी बुलबुले वाले ऐप मैसेंजर में फेसबुक दोस्तों से चैट करें।",
+   "vi": "Trò chuyện với bạn bè Facebook trong Messenger, ứng dụng bong bóng xanh tím."
+  },
+  "safetyTips": [
+   {
+    "en": "Messages from strangers wait under \"Message requests\". You don't have to open or answer them.",
+    "bn": "অচেনা মানুষের মেসেজ \"Message requests\"-এ আলাদা থাকে। খোলা বা উত্তর দেওয়ার দরকার নেই।",
+    "hi": "अनजान लोगों के मैसेज \"Message requests\" में अलग रहते हैं। उन्हें खोलना या जवाब देना ज़रूरी नहीं।",
+    "vi": "Tin nhắn của người lạ nằm riêng trong \"Tin nhắn chờ\". Bạn không cần mở hay trả lời."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open Messenger — the bubble with a lightning bolt inside.",
+    "bn": "মেসেঞ্জার খুলুন — ভেতরে বিদ্যুতের চিহ্ন দেওয়া বুদবুদ।",
+    "hi": "मैसेंजर खोलें — बुलबुला जिसके अंदर बिजली का निशान है।",
+    "vi": "Mở Messenger — bong bóng có hình tia chớp bên trong."
+   },
+   {
+    "en": "Tap the person's name in your chats, or tap the pencil icon and search for their name.",
+    "bn": "চ্যাটের তালিকায় মানুষটির নামে চাপুন, অথবা পেন্সিল চিহ্নে চেপে নাম খুঁজুন।",
+    "hi": "चैट की सूची में व्यक्ति के नाम पर टैप करें, या पेंसिल पर टैप करके नाम खोजें।",
+    "vi": "Chạm tên người đó trong danh sách, hoặc chạm biểu tượng bút chì rồi tìm tên."
+   },
+   {
+    "en": "Tap the \"Aa\" box at the bottom and type your message.",
+    "bn": "নিচে \"Aa\" লেখা ঘরে চেপে মেসেজ লিখুন।",
+    "hi": "नीचे \"Aa\" वाले बॉक्स पर टैप करके मैसेज लिखें।",
+    "vi": "Chạm vào ô \"Aa\" ở dưới và gõ tin nhắn."
+   },
+   {
+    "en": "Tap the blue paper-plane button to send. The thumbs-up button sends a quick \"like\" instead.",
+    "bn": "পাঠাতে নীল কাগজের প্লেনের বোতামে চাপুন। বুড়ো আঙুলের বোতামে চাপলে দ্রুত একটা \"লাইক\" যায়।",
+    "hi": "भेजने के लिए नीले कागज़ के हवाई जहाज़ वाले बटन पर टैप करें। अंगूठे वाला बटन झटपट एक \"लाइक\" भेजता है।",
+    "vi": "Chạm nút máy bay giấy màu xanh để gửi. Nút ngón cái sẽ gửi nhanh một lượt \"thích\"."
+   }
+  ]
+ },
+ {
+  "slug": "messenger-video-call",
+  "applicationSlug": "messenger",
+  "domain": "SOCIAL_COMMUNICATION",
+  "category": "messaging",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 3,
+  "skillKey": "messaging.video_call",
+  "title": {
+   "en": "Video call on Messenger",
+   "bn": "মেসেঞ্জারে ভিডিও কল",
+   "hi": "मैसेंजर पर वीडियो कॉल",
+   "vi": "Gọi video trên Messenger"
+  },
+  "description": {
+   "en": "Call a Facebook friend with video, straight from the chat.",
+   "bn": "চ্যাট থেকেই ফেসবুকের বন্ধুকে ভিডিও কল করুন।",
+   "hi": "चैट से ही फेसबुक दोस्त को वीडियो कॉल करें।",
+   "vi": "Gọi video cho bạn Facebook ngay từ cuộc trò chuyện."
+  },
+  "safetyTips": [
+   {
+    "en": "Only answer video calls from people you know. Scammers sometimes record video calls to blackmail people.",
+    "bn": "শুধু চেনা মানুষের ভিডিও কল ধরুন। প্রতারকেরা কখনো ভিডিও কল রেকর্ড করে ব্ল্যাকমেইল করে।",
+    "hi": "सिर्फ़ जान-पहचान वालों की वीडियो कॉल उठाएं। धोखेबाज़ कभी-कभी वीडियो कॉल रिकॉर्ड करके ब्लैकमेल करते हैं।",
+    "vi": "Chỉ nhận cuộc gọi video từ người quen. Kẻ gian đôi khi ghi lại cuộc gọi để tống tiền."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open the chat with the person.",
+    "bn": "মানুষটির চ্যাট খুলুন।",
+    "hi": "उस व्यक्ति की चैट खोलें।",
+    "vi": "Mở cuộc trò chuyện với người đó."
+   },
+   {
+    "en": "Tap the video camera icon at the top right.",
+    "bn": "ওপরে ডানদিকে ভিডিও ক্যামেরার চিহ্নে চাপুন।",
+    "hi": "ऊपर दाईं ओर वीडियो कैमरे पर टैप करें।",
+    "vi": "Chạm biểu tượng máy quay ở góc trên bên phải."
+   },
+   {
+    "en": "When they answer, you will see each other. If the buttons disappear, tap the screen once.",
+    "bn": "তিনি ধরলে দুজন দুজনকে দেখতে পাবেন। বোতামগুলো লুকিয়ে গেলে স্ক্রিনে একবার চাপুন।",
+    "hi": "उनके उठाते ही आप एक-दूसरे को देखेंगे। बटन छिप जाएं तो स्क्रीन पर एक बार टैप करें।",
+    "vi": "Khi họ nghe máy, hai bên sẽ thấy nhau. Nếu các nút biến mất, chạm màn hình một lần."
+   },
+   {
+    "en": "Tap the red phone button to end the call.",
+    "bn": "কল শেষ করতে লাল ফোনের বোতামে চাপুন।",
+    "hi": "कॉल खत्म करने के लिए लाल फोन बटन पर टैप करें।",
+    "vi": "Chạm nút điện thoại đỏ để kết thúc."
+   }
+  ]
+ },
+ {
+  "slug": "messenger-spot-fake-friend",
+  "applicationSlug": "messenger",
+  "domain": "DIGITAL_SAFETY",
+  "category": "safety",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 4,
+  "skillKey": "safety.verify_identity",
+  "title": {
+   "en": "When a \"friend\" asks for money",
+   "bn": "\"বন্ধু\" যখন টাকা চায়",
+   "hi": "जब कोई \"दोस्त\" पैसे मांगे",
+   "vi": "Khi \"bạn bè\" hỏi vay tiền"
+  },
+  "description": {
+   "en": "A friend's account can be stolen. Learn how to check before you send anything.",
+   "bn": "বন্ধুর অ্যাকাউন্টও চুরি হতে পারে। কিছু পাঠানোর আগে কীভাবে যাচাই করবেন শিখুন।",
+   "hi": "दोस्त का अकाउंट भी चोरी हो सकता है। कुछ भी भेजने से पहले कैसे जांचें, सीखें।",
+   "vi": "Tài khoản bạn bè có thể bị đánh cắp. Học cách kiểm tra trước khi gửi bất cứ thứ gì."
+  },
+  "safetyTips": [
+   {
+    "en": "Real friends understand when you say \"I'll call you first\". Scammers get angry or pushy.",
+    "bn": "সত্যিকারের বন্ধু \"আগে ফোন করে নিই\" বললে বোঝেন। প্রতারকেরা রেগে যায় বা জোর করে।",
+    "hi": "सच्चे दोस्त \"पहले फोन कर लूं\" कहने पर समझते हैं। धोखेबाज़ गुस्सा होते हैं या दबाव डालते हैं।",
+    "vi": "Bạn thật sẽ hiểu khi bạn nói \"để mình gọi trước\". Kẻ gian sẽ nổi nóng hoặc hối thúc."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Notice the warning signs: they need money urgently, they can't talk on the phone, and they ask for a code or a payment to a new number.",
+    "bn": "সতর্ক সংকেত খেয়াল করুন: খুব জরুরি টাকা লাগবে, ফোনে কথা বলতে পারছেন না, আর কোড বা নতুন নম্বরে টাকা চাইছেন।",
+    "hi": "चेतावनी के संकेत देखें: तुरंत पैसे चाहिए, फोन पर बात नहीं कर सकते, और कोड या नए नंबर पर पैसे मांग रहे हैं।",
+    "vi": "Để ý dấu hiệu: cần tiền gấp, không thể nghe điện thoại, và đòi mã hoặc chuyển tiền vào số mới."
+   },
+   {
+    "en": "Don't reply with money or codes. Close Messenger.",
+    "bn": "টাকা বা কোড দিয়ে উত্তর দেবেন না। মেসেঞ্জার বন্ধ করুন।",
+    "hi": "पैसे या कोड से जवाब न दें। मैसेंजर बंद करें।",
+    "vi": "Đừng gửi tiền hay mã. Hãy đóng Messenger."
+   },
+   {
+    "en": "Call your friend on the phone number you already have saved — not a number from the message.",
+    "bn": "আগে থেকে সেভ করা নম্বরে বন্ধুকে ফোন করুন — মেসেজে দেওয়া নম্বরে নয়।",
+    "hi": "पहले से सेव नंबर पर दोस्त को फोन करें — मैसेज में दिए नंबर पर नहीं।",
+    "vi": "Gọi cho bạn bằng số đã lưu sẵn — không dùng số trong tin nhắn."
+   },
+   {
+    "en": "If it wasn't them, open the chat, tap their name and choose \"Report\". Then warn your other friends.",
+    "bn": "তিনি না হলে চ্যাট খুলে নামে চাপুন, \"Report\" বেছে নিন। তারপর অন্য বন্ধুদের সাবধান করে দিন।",
+    "hi": "अगर वह नहीं थे, तो चैट खोलकर नाम पर टैप करें और \"Report\" चुनें। फिर बाकी दोस्तों को सावधान कर दें।",
+    "vi": "Nếu không phải họ, mở cuộc trò chuyện, chạm tên và chọn \"Báo cáo\". Rồi cảnh báo bạn bè khác."
+   }
+  ]
+ },
+ {
+  "slug": "bkash-send-money",
+  "applicationSlug": "bkash",
+  "domain": "DIGITAL_OPERATIONS",
+  "category": "payments",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 5,
+  "skillKey": "payments.send_money",
+  "title": {
+   "en": "Send money with bKash safely",
+   "bn": "বিকাশে নিরাপদে সেন্ড মানি করুন",
+   "hi": "bKash से सुरक्षित पैसे भेजें",
+   "vi": "Chuyển tiền an toàn bằng bKash"
+  },
+  "description": {
+   "en": "Send money to family, and check every detail before you enter your PIN.",
+   "bn": "পরিবারকে টাকা পাঠান, আর পিন দেওয়ার আগে প্রতিটি তথ্য মিলিয়ে নিন।",
+   "hi": "परिवार को पैसे भेजें, और पिन डालने से पहले हर जानकारी जांच लें।",
+   "vi": "Chuyển tiền cho gia đình, và kiểm tra mọi thông tin trước khi nhập PIN."
+  },
+  "safetyTips": [
+   {
+    "en": "bKash will never call you to ask for your PIN or OTP. Anyone who asks is a scammer — hang up.",
+    "bn": "বিকাশ কখনো ফোন করে আপনার পিন বা ওটিপি চায় না। যে চায় সে প্রতারক — ফোন কেটে দিন।",
+    "hi": "bKash कभी फोन करके आपका पिन या ओटीपी नहीं मांगता। जो मांगे वह धोखेबाज़ है — फोन काट दें।",
+    "vi": "bKash không bao giờ gọi điện hỏi PIN hay OTP. Ai hỏi là kẻ lừa đảo — hãy cúp máy."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open the bKash app and tap \"Send Money\" on the home screen.",
+    "bn": "বিকাশ অ্যাপ খুলে হোম স্ক্রিনে \"সেন্ড মানি\" চাপুন।",
+    "hi": "bKash ऐप खोलें और होम स्क्रीन पर \"Send Money\" दबाएं।",
+    "vi": "Mở ứng dụng bKash và chạm \"Send Money\" ở màn hình chính."
+   },
+   {
+    "en": "Type the number, or pick the person from your contacts. Read the number twice.",
+    "bn": "নম্বরটি লিখুন, বা কন্টাক্ট থেকে মানুষটিকে বেছে নিন। নম্বরটা দুবার পড়ে দেখুন।",
+    "hi": "नंबर लिखें, या कॉन्टैक्ट से व्यक्ति चुनें। नंबर दो बार पढ़ लें।",
+    "vi": "Nhập số điện thoại hoặc chọn người trong danh bạ. Đọc lại số hai lần."
+   },
+   {
+    "en": "Enter the amount and add a short note, like \"medicine\".",
+    "bn": "টাকার পরিমাণ লিখুন, আর ছোট একটা নোট দিন, যেমন \"ওষুধ\"।",
+    "hi": "रकम लिखें और छोटा सा नोट डालें, जैसे \"दवाई\"।",
+    "vi": "Nhập số tiền và thêm ghi chú ngắn, ví dụ \"tiền thuốc\"."
+   },
+   {
+    "en": "On the confirmation screen, check the name, number and amount. If anything looks wrong, tap back.",
+    "bn": "নিশ্চিত করার স্ক্রিনে নাম, নম্বর আর টাকার পরিমাণ মিলিয়ে নিন। কিছু ভুল লাগলে পেছনে যান।",
+    "hi": "पुष्टि वाली स्क्रीन पर नाम, नंबर और रकम जांचें। कुछ गलत लगे तो पीछे जाएं।",
+    "vi": "Ở màn hình xác nhận, kiểm tra tên, số và số tiền. Thấy sai thì chạm quay lại."
+   },
+   {
+    "en": "Enter your PIN yourself, with nobody watching, then tap and hold the pink button to confirm.",
+    "bn": "কেউ না দেখে এমনভাবে নিজে পিন দিন, তারপর গোলাপি বোতাম চেপে ধরে নিশ্চিত করুন।",
+    "hi": "कोई न देखे, इस तरह खुद पिन डालें, फिर गुलाबी बटन दबाकर रखें और पुष्टि करें।",
+    "vi": "Tự nhập PIN, không để ai nhìn, rồi nhấn giữ nút hồng để xác nhận."
+   },
+   {
+    "en": "You will get an SMS with a transaction ID. Keep it until the person says the money arrived.",
+    "bn": "লেনদেন আইডিসহ একটি এসএমএস আসবে। টাকা পৌঁছানো পর্যন্ত এটা রেখে দিন।",
+    "hi": "ट्रांज़ैक्शन आईडी वाला एक एसएमएस आएगा। पैसे पहुंचने तक इसे संभाल कर रखें।",
+    "vi": "Bạn sẽ nhận SMS có mã giao dịch. Giữ lại cho đến khi người nhận báo đã nhận tiền."
+   }
+  ]
+ },
+ {
+  "slug": "bkash-check-balance",
+  "applicationSlug": "bkash",
+  "domain": "DIGITAL_OPERATIONS",
+  "category": "payments",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 2,
+  "skillKey": "payments.check_balance",
+  "title": {
+   "en": "Check your bKash balance",
+   "bn": "বিকাশের ব্যালেন্স দেখুন",
+   "hi": "bKash बैलेंस देखें",
+   "vi": "Xem số dư bKash"
+  },
+  "description": {
+   "en": "See how much money you have — it takes one tap.",
+   "bn": "আপনার কত টাকা আছে দেখুন — মাত্র একটা চাপেই।",
+   "hi": "देखें आपके पास कितने पैसे हैं — बस एक टैप में।",
+   "vi": "Xem bạn còn bao nhiêu tiền — chỉ một lần chạm."
+  },
+  "safetyTips": [
+   {
+    "en": "Check your balance in private. Someone looking over your shoulder learns how much you have.",
+    "bn": "একা একা ব্যালেন্স দেখুন। কাঁধের ওপর দিয়ে কেউ দেখলে জেনে যাবে আপনার কত টাকা আছে।",
+    "hi": "अकेले में बैलेंस देखें। कंधे के ऊपर से कोई देखे तो जान जाएगा आपके पास कितने हैं।",
+    "vi": "Hãy xem số dư ở nơi kín đáo. Người nhìn trộm sẽ biết bạn có bao nhiêu tiền."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open the bKash app.",
+    "bn": "বিকাশ অ্যাপ খুলুন।",
+    "hi": "bKash ऐप खोलें।",
+    "vi": "Mở ứng dụng bKash."
+   },
+   {
+    "en": "At the top, tap \"Tap for Balance\".",
+    "bn": "ওপরে \"ট্যাপ ফর ব্যালেন্স\" লেখায় চাপুন।",
+    "hi": "ऊपर \"Tap for Balance\" पर टैप करें।",
+    "vi": "Ở trên cùng, chạm \"Tap for Balance\"."
+   },
+   {
+    "en": "Your balance shows for a few seconds, then hides again by itself.",
+    "bn": "কয়েক সেকেন্ড ব্যালেন্স দেখাবে, তারপর নিজে থেকেই লুকিয়ে যাবে।",
+    "hi": "कुछ सेकंड बैलेंस दिखेगा, फिर अपने आप छिप जाएगा।",
+    "vi": "Số dư hiện vài giây rồi tự ẩn đi."
+   },
+   {
+    "en": "To see past payments, tap \"Statement\" (or the clock icon).",
+    "bn": "আগের লেনদেন দেখতে \"স্টেটমেন্ট\" (বা ঘড়ির চিহ্নে) চাপুন।",
+    "hi": "पुराने लेन-देन देखने के लिए \"Statement\" (या घड़ी वाले निशान) पर टैप करें।",
+    "vi": "Muốn xem các giao dịch trước, chạm \"Statement\" (hoặc biểu tượng đồng hồ)."
+   }
+  ]
+ },
+ {
+  "slug": "bkash-mobile-recharge",
+  "applicationSlug": "bkash",
+  "domain": "DIGITAL_OPERATIONS",
+  "category": "payments",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 3,
+  "skillKey": "payments.recharge",
+  "title": {
+   "en": "Recharge a phone with bKash",
+   "bn": "বিকাশ দিয়ে মোবাইল রিচার্জ করুন",
+   "hi": "bKash से मोबाइल रिचार्ज करें",
+   "vi": "Nạp tiền điện thoại bằng bKash"
+  },
+  "description": {
+   "en": "Top up your own phone, or a family member's, in under a minute.",
+   "bn": "নিজের বা পরিবারের কারও ফোনে এক মিনিটেই রিচার্জ করুন।",
+   "hi": "अपने या परिवार के किसी के फोन में एक मिनट में रिचार्ज करें।",
+   "vi": "Nạp tiền cho điện thoại của bạn hoặc người thân trong chưa đầy một phút."
+  },
+  "safetyTips": [
+   {
+    "en": "If someone calls saying they recharged your number \"by mistake\" and asks you to send it back, it's a scam. Check your balance first.",
+    "bn": "কেউ ফোন করে বলে \"ভুল করে\" আপনার নম্বরে রিচার্জ হয়েছে, ফেরত দিন — এটা প্রতারণা। আগে ব্যালেন্স দেখে নিন।",
+    "hi": "कोई फोन करके कहे \"गलती से\" आपके नंबर पर रिचार्ज हो गया, लौटा दो — यह धोखा है। पहले बैलेंस देखें।",
+    "vi": "Nếu ai gọi nói đã \"nạp nhầm\" vào số bạn và xin trả lại, đó là lừa đảo. Hãy xem số dư trước."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open bKash and tap \"Mobile Recharge\".",
+    "bn": "বিকাশ খুলে \"মোবাইল রিচার্জ\" চাপুন।",
+    "hi": "bKash खोलें और \"Mobile Recharge\" दबाएं।",
+    "vi": "Mở bKash và chạm \"Mobile Recharge\"."
+   },
+   {
+    "en": "Choose your own number, or type the number you want to recharge.",
+    "bn": "নিজের নম্বর বেছে নিন, বা যে নম্বরে রিচার্জ করবেন সেটা লিখুন।",
+    "hi": "अपना नंबर चुनें, या जिस नंबर पर रिचार्ज करना है वह लिखें।",
+    "vi": "Chọn số của bạn, hoặc nhập số muốn nạp."
+   },
+   {
+    "en": "Check the operator (Grameenphone, Robi, Banglalink, Teletalk) and whether it is prepaid or postpaid.",
+    "bn": "অপারেটর (গ্রামীণফোন, রবি, বাংলালিংক, টেলিটক) আর প্রিপেইড না পোস্টপেইড, মিলিয়ে নিন।",
+    "hi": "ऑपरेटर (ग्रामीणफ़ोन, रॉबी, बांग्लालिंक, टेलीटॉक) और प्रीपेड या पोस्टपेड, जांच लें।",
+    "vi": "Kiểm tra nhà mạng (Grameenphone, Robi, Banglalink, Teletalk) và loại trả trước hay trả sau."
+   },
+   {
+    "en": "Type the amount, check it once more, then enter your PIN and hold the button to confirm.",
+    "bn": "টাকার পরিমাণ লিখে আরেকবার মিলিয়ে নিন, তারপর পিন দিয়ে বোতাম চেপে ধরে নিশ্চিত করুন।",
+    "hi": "रकम लिखें, एक बार फिर जांचें, फिर पिन डालकर बटन दबाए रखें और पुष्टि करें।",
+    "vi": "Nhập số tiền, kiểm tra lại, rồi nhập PIN và giữ nút để xác nhận."
+   }
+  ]
+ },
+ {
+  "slug": "momo-transfer-money",
+  "applicationSlug": "momo",
+  "domain": "DIGITAL_OPERATIONS",
+  "category": "payments",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 4,
+  "skillKey": "payments.send_money",
+  "title": {
+   "en": "Transfer money with MoMo",
+   "bn": "মোমো দিয়ে টাকা পাঠান",
+   "hi": "MoMo से पैसे भेजें",
+   "vi": "Chuyển tiền bằng MoMo"
+  },
+  "description": {
+   "en": "Send money to a family member's MoMo wallet, checking the name before you confirm.",
+   "bn": "পরিবারের কারও মোমো ওয়ালেটে টাকা পাঠান, নিশ্চিত করার আগে নাম মিলিয়ে নিন।",
+   "hi": "परिवार के किसी के MoMo वॉलेट में पैसे भेजें, पुष्टि से पहले नाम जांच लें।",
+   "vi": "Chuyển tiền vào ví MoMo của người thân, kiểm tra tên trước khi xác nhận."
+  },
+  "safetyTips": [
+   {
+    "en": "A transfer cannot be undone. If a stranger \"sent money by mistake\", let MoMo support handle it — never send it back yourself.",
+    "bn": "একবার পাঠানো টাকা ফেরানো যায় না। অচেনা কেউ \"ভুল করে টাকা পাঠালে\" মোমো সাপোর্টকে জানান — নিজে ফেরত পাঠাবেন না।",
+    "hi": "भेजे पैसे वापस नहीं होते। कोई अनजान \"गलती से पैसे भेज दे\" तो MoMo सपोर्ट को बताएं — खुद वापस न भेजें।",
+    "vi": "Tiền đã chuyển không thể lấy lại. Nếu người lạ \"chuyển nhầm\", hãy để tổng đài MoMo xử lý — đừng tự chuyển trả."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open the pink MoMo app and tap \"Transfer\" (Chuyển tiền).",
+    "bn": "গোলাপি মোমো অ্যাপ খুলে \"Transfer\" (Chuyển tiền) চাপুন।",
+    "hi": "गुलाबी MoMo ऐप खोलें और \"Transfer\" (Chuyển tiền) दबाएं।",
+    "vi": "Mở ứng dụng MoMo màu hồng và chạm \"Chuyển tiền\"."
+   },
+   {
+    "en": "Type the phone number, or choose from your contacts.",
+    "bn": "ফোন নম্বর লিখুন, বা কন্টাক্ট থেকে বেছে নিন।",
+    "hi": "फोन नंबर लिखें, या कॉन्टैक्ट से चुनें।",
+    "vi": "Nhập số điện thoại hoặc chọn từ danh bạ."
+   },
+   {
+    "en": "MoMo shows the account owner's name. Make sure it is the person you expect.",
+    "bn": "মোমো অ্যাকাউন্টের মালিকের নাম দেখায়। মিলিয়ে নিন এটা ঠিক সেই মানুষ কি না।",
+    "hi": "MoMo खाते के मालिक का नाम दिखाता है। पक्का करें कि यह वही व्यक्ति है।",
+    "vi": "MoMo hiện tên chủ tài khoản. Hãy chắc chắn đúng người bạn muốn chuyển."
+   },
+   {
+    "en": "Enter the amount and a message, then tap Continue.",
+    "bn": "টাকার পরিমাণ আর একটা মেসেজ লিখে Continue চাপুন।",
+    "hi": "रकम और एक मैसेज लिखें, फिर Continue दबाएं।",
+    "vi": "Nhập số tiền và lời nhắn, rồi chạm Tiếp tục."
+   },
+   {
+    "en": "Confirm with your PIN or fingerprint. A green tick means the money has gone.",
+    "bn": "পিন বা আঙুলের ছাপ দিয়ে নিশ্চিত করুন। সবুজ টিক মানে টাকা চলে গেছে।",
+    "hi": "पिन या फिंगरप्रिंट से पुष्टि करें। हरा टिक मतलब पैसे चले गए।",
+    "vi": "Xác nhận bằng mã PIN hoặc vân tay. Dấu tích xanh nghĩa là tiền đã chuyển."
+   }
+  ]
+ },
+ {
+  "slug": "momo-pay-bill",
+  "applicationSlug": "momo",
+  "domain": "DIGITAL_OPERATIONS",
+  "category": "payments",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 4,
+  "skillKey": "payments.pay_bill",
+  "title": {
+   "en": "Pay an electricity bill with MoMo",
+   "bn": "মোমো দিয়ে বিদ্যুৎ বিল দিন",
+   "hi": "MoMo से बिजली का बिल भरें",
+   "vi": "Thanh toán tiền điện bằng MoMo"
+  },
+  "description": {
+   "en": "Pay a household bill from home using the customer code on your paper bill.",
+   "bn": "কাগজের বিলে থাকা গ্রাহক কোড দিয়ে বাড়ি থেকেই বিল দিন।",
+   "hi": "कागज़ के बिल पर लिखे ग्राहक कोड से घर बैठे बिल भरें।",
+   "vi": "Thanh toán hóa đơn tại nhà bằng mã khách hàng in trên hóa đơn giấy."
+  },
+  "safetyTips": [
+   {
+    "en": "Electricity companies don't send links asking you to pay \"today or be cut off\". Pay only inside the MoMo app.",
+    "bn": "বিদ্যুৎ কোম্পানি \"আজই না দিলে লাইন কাটা হবে\" বলে লিংক পাঠায় না। শুধু মোমো অ্যাপের ভেতরেই বিল দিন।",
+    "hi": "बिजली कंपनियां \"आज न भरा तो कनेक्शन कटेगा\" वाले लिंक नहीं भेजतीं। सिर्फ़ MoMo ऐप के अंदर ही भुगतान करें।",
+    "vi": "Điện lực không gửi đường link dọa \"trả hôm nay kẻo bị cắt điện\". Chỉ thanh toán trong ứng dụng MoMo."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open MoMo and tap \"Pay bills\" (Thanh toán hóa đơn).",
+    "bn": "মোমো খুলে \"Pay bills\" (Thanh toán hóa đơn) চাপুন।",
+    "hi": "MoMo खोलें और \"Pay bills\" (Thanh toán hóa đơn) दबाएं।",
+    "vi": "Mở MoMo và chạm \"Thanh toán hóa đơn\"."
+   },
+   {
+    "en": "Choose \"Electricity\" and pick your power company.",
+    "bn": "\"Electricity\" বেছে নিয়ে আপনার বিদ্যুৎ কোম্পানি বাছুন।",
+    "hi": "\"Electricity\" चुनें और अपनी बिजली कंपनी चुनें।",
+    "vi": "Chọn \"Điện\" rồi chọn công ty điện lực của bạn."
+   },
+   {
+    "en": "Type the customer code from your paper bill. MoMo shows the name and the amount due.",
+    "bn": "কাগজের বিল থেকে গ্রাহক কোড লিখুন। মোমো নাম আর বকেয়া টাকা দেখাবে।",
+    "hi": "कागज़ के बिल से ग्राहक कोड लिखें। MoMo नाम और बकाया रकम दिखाएगा।",
+    "vi": "Nhập mã khách hàng trên hóa đơn giấy. MoMo sẽ hiện tên và số tiền phải trả."
+   },
+   {
+    "en": "If the name and amount match your bill, tap Pay and confirm with your PIN.",
+    "bn": "নাম আর টাকা বিলের সাথে মিললে Pay চেপে পিন দিয়ে নিশ্চিত করুন।",
+    "hi": "नाम और रकम बिल से मिलें तो Pay दबाएं और पिन से पुष्टि करें।",
+    "vi": "Nếu tên và số tiền khớp với hóa đơn, chạm Thanh toán và xác nhận bằng PIN."
+   }
+  ]
+ },
+ {
+  "slug": "momo-check-balance",
+  "applicationSlug": "momo",
+  "domain": "DIGITAL_OPERATIONS",
+  "category": "payments",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 2,
+  "skillKey": "payments.check_balance",
+  "title": {
+   "en": "Check your MoMo balance and history",
+   "bn": "মোমোর ব্যালেন্স ও লেনদেন দেখুন",
+   "hi": "MoMo बैलेंस और लेन-देन देखें",
+   "vi": "Xem số dư và lịch sử MoMo"
+  },
+  "description": {
+   "en": "See your money and every payment you made.",
+   "bn": "আপনার টাকা আর প্রতিটি লেনদেন দেখুন।",
+   "hi": "अपने पैसे और हर भुगतान देखें।",
+   "vi": "Xem tiền trong ví và mọi giao dịch bạn đã làm."
+  },
+  "safetyTips": [
+   {
+    "en": "Tap the eye icon again to hide your balance before you hand your phone to anyone.",
+    "bn": "কারও হাতে ফোন দেওয়ার আগে আবার চোখের চিহ্নে চেপে ব্যালেন্স লুকিয়ে দিন।",
+    "hi": "किसी को फोन देने से पहले आंख वाले निशान को फिर दबाकर बैलेंस छिपा दें।",
+    "vi": "Chạm lại biểu tượng con mắt để ẩn số dư trước khi đưa điện thoại cho người khác."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open MoMo. Your balance is hidden behind dots at the top.",
+    "bn": "মোমো খুলুন। ওপরে ব্যালেন্স কয়েকটা ডটের আড়ালে লুকানো থাকে।",
+    "hi": "MoMo खोलें। ऊपर बैलेंस बिंदुओं के पीछे छिपा रहता है।",
+    "vi": "Mở MoMo. Số dư được che bằng dấu chấm ở trên cùng."
+   },
+   {
+    "en": "Tap the eye icon next to it to show the amount.",
+    "bn": "পাশের চোখের চিহ্নে চাপলে টাকার পরিমাণ দেখা যাবে।",
+    "hi": "पास वाले आंख के निशान पर टैप करें, रकम दिख जाएगी।",
+    "vi": "Chạm biểu tượng con mắt bên cạnh để hiện số tiền."
+   },
+   {
+    "en": "Tap \"History\" (Lịch sử) at the bottom to see each payment, with date and time.",
+    "bn": "নিচে \"History\" (Lịch sử) চাপলে তারিখ-সময়সহ প্রতিটি লেনদেন দেখবেন।",
+    "hi": "नीचे \"History\" (Lịch sử) दबाएं, हर भुगतान तारीख और समय के साथ दिखेगा।",
+    "vi": "Chạm \"Lịch sử\" ở dưới để xem từng giao dịch kèm ngày giờ."
+   },
+   {
+    "en": "If you see a payment you don't recognise, call MoMo using the number inside the app.",
+    "bn": "অচেনা কোনো লেনদেন দেখলে অ্যাপের ভেতরে দেওয়া নম্বরে মোমোকে ফোন করুন।",
+    "hi": "कोई अनजान भुगतान दिखे तो ऐप के अंदर दिए नंबर पर MoMo को फोन करें।",
+    "vi": "Thấy giao dịch lạ, hãy gọi MoMo theo số trong ứng dụng."
+   }
+  ]
+ },
+ {
+  "slug": "googlepay-pay",
+  "applicationSlug": "googlepay",
+  "domain": "DIGITAL_OPERATIONS",
+  "category": "payments",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 4,
+  "skillKey": "payments.pay_merchant",
+  "title": {
+   "en": "Pay a shop with Google Pay",
+   "bn": "গুগল পে দিয়ে দোকানে পেমেন্ট করুন",
+   "hi": "Google Pay से दुकान पर भुगतान करें",
+   "vi": "Thanh toán tại cửa hàng bằng Google Pay"
+  },
+  "description": {
+   "en": "Scan the shop's QR code, check the name, and pay with your UPI PIN.",
+   "bn": "দোকানের কিউআর কোড স্ক্যান করুন, নাম মিলিয়ে নিন, তারপর ইউপিআই পিন দিয়ে পেমেন্ট করুন।",
+   "hi": "दुकान का QR कोड स्कैन करें, नाम जांचें, फिर UPI पिन से भुगतान करें।",
+   "vi": "Quét mã QR của cửa hàng, kiểm tra tên rồi trả bằng mã PIN UPI."
+  },
+  "safetyTips": [
+   {
+    "en": "You never need your UPI PIN to RECEIVE money. If someone says \"enter your PIN to get the money\", it's a scam.",
+    "bn": "টাকা নেওয়ার জন্য কখনো ইউপিআই পিন লাগে না। কেউ \"টাকা পেতে পিন দিন\" বললে সেটা প্রতারণা।",
+    "hi": "पैसे पाने के लिए कभी UPI पिन नहीं लगता। कोई कहे \"पैसे पाने के लिए पिन डालो\" तो यह धोखा है।",
+    "vi": "Bạn không bao giờ cần mã PIN để NHẬN tiền. Ai bảo \"nhập PIN để nhận tiền\" là lừa đảo."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open Google Pay and tap \"Scan any QR code\".",
+    "bn": "গুগল পে খুলে \"Scan any QR code\" চাপুন।",
+    "hi": "Google Pay खोलें और \"Scan any QR code\" दबाएं।",
+    "vi": "Mở Google Pay và chạm \"Quét mã QR bất kỳ\"."
+   },
+   {
+    "en": "Point the camera at the shop's QR code until it beeps.",
+    "bn": "ক্যামেরা দোকানের কিউআর কোডের দিকে ধরুন, যতক্ষণ না বিপ শব্দ হয়।",
+    "hi": "कैमरा दुकान के QR कोड की ओर रखें, जब तक बीप न हो।",
+    "vi": "Hướng camera vào mã QR của cửa hàng cho đến khi có tiếng bíp."
+   },
+   {
+    "en": "Check the shop name on the screen matches the shop you are standing in.",
+    "bn": "স্ক্রিনে দোকানের নাম আর আপনি যে দোকানে আছেন, মিলিয়ে নিন।",
+    "hi": "स्क्रीन पर दुकान का नाम और जिस दुकान में खड़े हैं, मिलान करें।",
+    "vi": "Kiểm tra tên cửa hàng trên màn hình đúng với cửa hàng bạn đang đứng."
+   },
+   {
+    "en": "Type the amount and tap the arrow.",
+    "bn": "টাকার পরিমাণ লিখে তীর চিহ্নে চাপুন।",
+    "hi": "रकम लिखें और तीर पर टैप करें।",
+    "vi": "Nhập số tiền và chạm mũi tên."
+   },
+   {
+    "en": "Enter your UPI PIN yourself. You'll see a big tick — show it to the shopkeeper.",
+    "bn": "নিজে ইউপিআই পিন দিন। বড় একটা টিক দেখাবে — দোকানদারকে দেখান।",
+    "hi": "खुद UPI पिन डालें। बड़ा सा टिक दिखेगा — दुकानदार को दिखा दें।",
+    "vi": "Tự nhập mã PIN UPI. Bạn sẽ thấy dấu tích lớn — hãy cho chủ cửa hàng xem."
+   }
+  ]
+ },
+ {
+  "slug": "googlepay-send-to-contact",
+  "applicationSlug": "googlepay",
+  "domain": "DIGITAL_OPERATIONS",
+  "category": "payments",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 4,
+  "skillKey": "payments.send_money",
+  "title": {
+   "en": "Send money to family with Google Pay",
+   "bn": "গুগল পে দিয়ে পরিবারকে টাকা পাঠান",
+   "hi": "Google Pay से परिवार को पैसे भेजें",
+   "vi": "Chuyển tiền cho người thân bằng Google Pay"
+  },
+  "description": {
+   "en": "Pay someone in your contacts, the same way you send a message.",
+   "bn": "কন্টাক্টের কাউকে টাকা পাঠান, ঠিক মেসেজ পাঠানোর মতো করে।",
+   "hi": "कॉन्टैक्ट में किसी को पैसे भेजें, बिल्कुल मैसेज भेजने की तरह।",
+   "vi": "Chuyển tiền cho người trong danh bạ, giống như gửi tin nhắn."
+  },
+  "safetyTips": [
+   {
+    "en": "A \"Request money\" from a stranger is not a gift — approving it SENDS your money. Decline anything you didn't expect.",
+    "bn": "অচেনা কারও \"Request money\" কোনো উপহার নয় — অনুমোদন দিলে আপনার টাকাই চলে যায়। অপ্রত্যাশিত কিছু হলে Decline করুন।",
+    "hi": "किसी अनजान का \"Request money\" कोई तोहफ़ा नहीं — मंज़ूरी देते ही आपके पैसे चले जाते हैं। अनचाहा अनुरोध Decline करें।",
+    "vi": "\"Yêu cầu tiền\" từ người lạ không phải quà — đồng ý là bạn GỬI tiền đi. Hãy từ chối những gì bạn không chờ đợi."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open Google Pay and tap \"Pay contacts\".",
+    "bn": "গুগল পে খুলে \"Pay contacts\" চাপুন।",
+    "hi": "Google Pay खोलें और \"Pay contacts\" दबाएं।",
+    "vi": "Mở Google Pay và chạm \"Thanh toán cho người liên hệ\"."
+   },
+   {
+    "en": "Search for the person's name and tap it.",
+    "bn": "মানুষটির নাম খুঁজে তাতে চাপুন।",
+    "hi": "व्यक्ति का नाम खोजें और उस पर टैप करें।",
+    "vi": "Tìm tên người đó và chạm vào."
+   },
+   {
+    "en": "Tap \"Pay\", type the amount and a note.",
+    "bn": "\"Pay\" চেপে টাকার পরিমাণ আর একটা নোট লিখুন।",
+    "hi": "\"Pay\" दबाएं, रकम और एक नोट लिखें।",
+    "vi": "Chạm \"Thanh toán\", nhập số tiền và ghi chú."
+   },
+   {
+    "en": "Check the name and bank shown, then enter your UPI PIN.",
+    "bn": "দেখানো নাম আর ব্যাংক মিলিয়ে নিন, তারপর ইউপিআই পিন দিন।",
+    "hi": "दिखाया गया नाम और बैंक जांचें, फिर UPI पिन डालें।",
+    "vi": "Kiểm tra tên và ngân hàng hiển thị, rồi nhập mã PIN UPI."
+   },
+   {
+    "en": "The payment appears in your chat with them, marked \"Paid\".",
+    "bn": "পেমেন্টটি তাঁর সাথে আপনার চ্যাটে \"Paid\" লেখা অবস্থায় দেখা যাবে।",
+    "hi": "भुगतान उनके साथ आपकी चैट में \"Paid\" लिखा हुआ दिखेगा।",
+    "vi": "Khoản thanh toán sẽ hiện trong cuộc trò chuyện với họ, ghi \"Đã thanh toán\"."
+   }
+  ]
+ },
+ {
+  "slug": "googlepay-check-balance",
+  "applicationSlug": "googlepay",
+  "domain": "DIGITAL_OPERATIONS",
+  "category": "payments",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 3,
+  "skillKey": "payments.check_balance",
+  "title": {
+   "en": "Check your bank balance in Google Pay",
+   "bn": "গুগল পে-তে ব্যাংক ব্যালেন্স দেখুন",
+   "hi": "Google Pay में बैंक बैलेंस देखें",
+   "vi": "Xem số dư ngân hàng trong Google Pay"
+  },
+  "description": {
+   "en": "See how much is in your bank account without going to the bank.",
+   "bn": "ব্যাংকে না গিয়েই আপনার অ্যাকাউন্টে কত টাকা আছে দেখুন।",
+   "hi": "बैंक गए बिना देखें आपके खाते में कितने पैसे हैं।",
+   "vi": "Xem tài khoản ngân hàng còn bao nhiêu mà không cần ra ngân hàng."
+  },
+  "safetyTips": [
+   {
+    "en": "Google Pay customer care never calls you. Find help only inside the app, under your photo → Help.",
+    "bn": "গুগল পে কাস্টমার কেয়ার কখনো আপনাকে ফোন করে না। সাহায্য শুধু অ্যাপের ভেতরেই — নিজের ছবি → Help-এ খুঁজুন।",
+    "hi": "Google Pay कस्टमर केयर कभी आपको फोन नहीं करता। मदद सिर्फ़ ऐप के अंदर — अपनी फोटो → Help में ढूंढें।",
+    "vi": "Google Pay không bao giờ gọi cho bạn. Chỉ tìm trợ giúp trong ứng dụng: ảnh của bạn → Trợ giúp."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open Google Pay and scroll down to \"Check bank balance\".",
+    "bn": "গুগল পে খুলে নিচে \"Check bank balance\" পর্যন্ত যান।",
+    "hi": "Google Pay खोलें और नीचे \"Check bank balance\" तक जाएं।",
+    "vi": "Mở Google Pay và kéo xuống \"Kiểm tra số dư ngân hàng\"."
+   },
+   {
+    "en": "Choose your bank account.",
+    "bn": "আপনার ব্যাংক অ্যাকাউন্ট বেছে নিন।",
+    "hi": "अपना बैंक खाता चुनें।",
+    "vi": "Chọn tài khoản ngân hàng của bạn."
+   },
+   {
+    "en": "Enter your UPI PIN. Your balance appears on the screen.",
+    "bn": "ইউপিআই পিন দিন। স্ক্রিনে ব্যালেন্স দেখাবে।",
+    "hi": "UPI पिन डालें। स्क्रीन पर बैलेंस दिखेगा।",
+    "vi": "Nhập mã PIN UPI. Số dư sẽ hiện trên màn hình."
+   }
+  ]
+ },
+ {
+  "slug": "paypal-send-money",
+  "applicationSlug": "paypal",
+  "domain": "DIGITAL_OPERATIONS",
+  "category": "payments",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 4,
+  "skillKey": "payments.send_money",
+  "title": {
+   "en": "Send money with PayPal",
+   "bn": "পেপ্যাল দিয়ে টাকা পাঠান",
+   "hi": "PayPal से पैसे भेजें",
+   "vi": "Chuyển tiền bằng PayPal"
+  },
+  "description": {
+   "en": "Send money to friends and family abroad using their email address.",
+   "bn": "বিদেশে থাকা বন্ধু ও পরিবারকে তাঁদের ইমেইল দিয়ে টাকা পাঠান।",
+   "hi": "विदेश में रहने वाले दोस्तों और परिवार को उनके ईमेल से पैसे भेजें।",
+   "vi": "Chuyển tiền cho bạn bè và người thân ở nước ngoài bằng địa chỉ email của họ."
+  },
+  "safetyTips": [
+   {
+    "en": "Only use \"Sending to a friend\" for people you know. If you're buying from a seller, use \"Paying for an item\" so you are protected.",
+    "bn": "\"Sending to a friend\" শুধু চেনা মানুষের জন্য। বিক্রেতার কাছ থেকে কিনলে \"Paying for an item\" ব্যবহার করুন, তাতে সুরক্ষা পাবেন।",
+    "hi": "\"Sending to a friend\" सिर्फ़ जानने वालों के लिए। किसी विक्रेता से खरीदें तो \"Paying for an item\" चुनें, ताकि सुरक्षा मिले।",
+    "vi": "Chỉ dùng \"Gửi cho bạn bè\" với người quen. Mua hàng của người bán thì chọn \"Thanh toán hàng hóa\" để được bảo vệ."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open PayPal and tap \"Send\".",
+    "bn": "পেপ্যাল খুলে \"Send\" চাপুন।",
+    "hi": "PayPal खोलें और \"Send\" दबाएं।",
+    "vi": "Mở PayPal và chạm \"Gửi\"."
+   },
+   {
+    "en": "Type the person's email address or phone number, exactly as they gave it to you.",
+    "bn": "মানুষটির ইমেইল বা ফোন নম্বর লিখুন, ঠিক যেভাবে তিনি দিয়েছেন।",
+    "hi": "व्यक्ति का ईमेल या फोन नंबर लिखें, ठीक वैसा ही जैसा उन्होंने दिया है।",
+    "vi": "Nhập email hoặc số điện thoại của người đó, đúng như họ đã đưa."
+   },
+   {
+    "en": "Enter the amount and choose \"Sending to a friend\" for family.",
+    "bn": "টাকার পরিমাণ লিখুন, আর পরিবারের জন্য \"Sending to a friend\" বেছে নিন।",
+    "hi": "रकम लिखें और परिवार के लिए \"Sending to a friend\" चुनें।",
+    "vi": "Nhập số tiền và chọn \"Gửi cho bạn bè\" khi gửi người thân."
+   },
+   {
+    "en": "Check the name, amount and any fee on the review screen, then tap \"Send Now\".",
+    "bn": "রিভিউ স্ক্রিনে নাম, টাকা আর কোনো ফি থাকলে মিলিয়ে নিন, তারপর \"Send Now\" চাপুন।",
+    "hi": "समीक्षा स्क्रीन पर नाम, रकम और कोई शुल्क जांचें, फिर \"Send Now\" दबाएं।",
+    "vi": "Kiểm tra tên, số tiền và phí ở màn hình xem lại, rồi chạm \"Gửi ngay\"."
+   }
+  ]
+ },
+ {
+  "slug": "paypal-check-activity",
+  "applicationSlug": "paypal",
+  "domain": "DIGITAL_OPERATIONS",
+  "category": "payments",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 3,
+  "skillKey": "payments.check_balance",
+  "title": {
+   "en": "Check your PayPal activity",
+   "bn": "পেপ্যালে লেনদেন দেখুন",
+   "hi": "PayPal में लेन-देन देखें",
+   "vi": "Xem hoạt động PayPal"
+  },
+  "description": {
+   "en": "Make sure every payment in your account is one you made.",
+   "bn": "অ্যাকাউন্টের প্রতিটি লেনদেন আপনিই করেছেন কি না মিলিয়ে নিন।",
+   "hi": "पक्का करें कि खाते का हर लेन-देन आपने ही किया है।",
+   "vi": "Đảm bảo mọi khoản thanh toán trong tài khoản đều do bạn thực hiện."
+  },
+  "safetyTips": [
+   {
+    "en": "Look at your activity once a week. Small unknown payments are often a test before a bigger theft.",
+    "bn": "সপ্তাহে একবার লেনদেন দেখুন। ছোট ছোট অচেনা পেমেন্ট প্রায়ই বড় চুরির আগে পরীক্ষা।",
+    "hi": "हफ़्ते में एक बार लेन-देन देखें। छोटे अनजान भुगतान अक्सर बड़ी चोरी से पहले की जांच होते हैं।",
+    "vi": "Mỗi tuần xem hoạt động một lần. Các khoản nhỏ lạ thường là bước thử trước một vụ lấy cắp lớn."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open PayPal. Your balance is on the home screen.",
+    "bn": "পেপ্যাল খুলুন। হোম স্ক্রিনে ব্যালেন্স দেখা যাবে।",
+    "hi": "PayPal खोलें। होम स्क्रीन पर बैलेंस दिखेगा।",
+    "vi": "Mở PayPal. Số dư hiện ở màn hình chính."
+   },
+   {
+    "en": "Tap \"Activity\" to see the list of payments.",
+    "bn": "লেনদেনের তালিকা দেখতে \"Activity\" চাপুন।",
+    "hi": "भुगतानों की सूची देखने के लिए \"Activity\" दबाएं।",
+    "vi": "Chạm \"Hoạt động\" để xem danh sách thanh toán."
+   },
+   {
+    "en": "Tap any payment to see who it went to and when.",
+    "bn": "যেকোনো লেনদেনে চাপলে দেখবেন কাকে, কবে গেছে।",
+    "hi": "किसी भी भुगतान पर टैप करें, दिखेगा किसे और कब गया।",
+    "vi": "Chạm vào khoản nào để xem gửi cho ai và lúc nào."
+   },
+   {
+    "en": "If you don't recognise one, tap \"Report a problem\" on that payment.",
+    "bn": "অচেনা কোনোটা দেখলে সেই লেনদেনে \"Report a problem\" চাপুন।",
+    "hi": "कोई अनजान दिखे तो उस भुगतान पर \"Report a problem\" दबाएं।",
+    "vi": "Nếu thấy khoản lạ, chạm \"Báo cáo sự cố\" ở khoản đó."
+   }
+  ]
+ },
+ {
+  "slug": "paypal-spot-fake-email",
+  "applicationSlug": "paypal",
+  "domain": "DIGITAL_SAFETY",
+  "category": "safety",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 4,
+  "skillKey": "safety.recognise_phishing",
+  "title": {
+   "en": "Spot a fake PayPal email",
+   "bn": "ভুয়া পেপ্যাল ইমেইল চিনুন",
+   "hi": "नकली PayPal ईमेल पहचानें",
+   "vi": "Nhận ra email PayPal giả"
+  },
+  "description": {
+   "en": "Fake \"your account is limited\" emails try to steal your password. Learn the signs.",
+   "bn": "\"আপনার অ্যাকাউন্ট সীমিত করা হয়েছে\" ধরনের ভুয়া ইমেইল পাসওয়ার্ড চুরি করতে চায়। লক্ষণগুলো শিখুন।",
+   "hi": "\"आपका खाता सीमित कर दिया गया\" जैसे नकली ईमेल पासवर्ड चुराना चाहते हैं। संकेत सीखें।",
+   "vi": "Email giả kiểu \"tài khoản của bạn bị giới hạn\" muốn lấy cắp mật khẩu. Hãy học các dấu hiệu."
+  },
+  "safetyTips": [
+   {
+    "en": "Urgency (\"within 24 hours\") is the scammer's favourite tool. Real companies give you time.",
+    "bn": "জরুরি ভাব (\"২৪ ঘণ্টার মধ্যে\") প্রতারকের সবচেয়ে প্রিয় কৌশল। আসল প্রতিষ্ঠান সময় দেয়।",
+    "hi": "जल्दबाज़ी (\"24 घंटे के अंदर\") धोखेबाज़ों का सबसे पसंदीदा तरीका है। असली कंपनियां समय देती हैं।",
+    "vi": "Sự gấp gáp (\"trong 24 giờ\") là chiêu quen của kẻ gian. Công ty thật luôn cho bạn thời gian."
+   }
+  ],
+  "steps": [
+   {
+    "en": "A real PayPal email uses your full name, not \"Dear customer\".",
+    "bn": "আসল পেপ্যাল ইমেইলে আপনার পুরো নাম থাকে, \"Dear customer\" নয়।",
+    "hi": "असली PayPal ईमेल में आपका पूरा नाम होता है, \"Dear customer\" नहीं।",
+    "vi": "Email PayPal thật gọi đúng họ tên bạn, không phải \"Kính gửi khách hàng\"."
+   },
+   {
+    "en": "Look at who sent it. If the address isn't exactly @paypal.com, it is fake.",
+    "bn": "কে পাঠিয়েছে দেখুন। ঠিকানা হুবহু @paypal.com না হলে সেটা ভুয়া।",
+    "hi": "भेजने वाले को देखें। पता बिल्कुल @paypal.com न हो तो यह नकली है।",
+    "vi": "Xem người gửi. Nếu địa chỉ không đúng chính xác @paypal.com thì đó là giả."
+   },
+   {
+    "en": "Don't tap the button in the email. Close it.",
+    "bn": "ইমেইলের ভেতরের বোতামে চাপবেন না। বন্ধ করে দিন।",
+    "hi": "ईमेल के अंदर के बटन पर टैप न करें। बंद कर दें।",
+    "vi": "Đừng chạm nút trong email. Hãy đóng lại."
+   },
+   {
+    "en": "Open the PayPal app yourself. If there were a real problem, you would see it there.",
+    "bn": "নিজে পেপ্যাল অ্যাপ খুলুন। সত্যি সমস্যা থাকলে সেখানেই দেখতে পাবেন।",
+    "hi": "खुद PayPal ऐप खोलें। सच में कोई दिक्कत होगी तो वहीं दिखेगी।",
+    "vi": "Tự mở ứng dụng PayPal. Nếu có vấn đề thật, bạn sẽ thấy ở đó."
+   },
+   {
+    "en": "Forward the fake email to phishing@paypal.com, then delete it.",
+    "bn": "ভুয়া ইমেইলটি phishing@paypal.com-এ ফরোয়ার্ড করে মুছে দিন।",
+    "hi": "नकली ईमेल phishing@paypal.com पर फॉरवर्ड करें, फिर डिलीट कर दें।",
+    "vi": "Chuyển tiếp email giả tới phishing@paypal.com rồi xóa đi."
+   }
+  ]
+ },
+ {
+  "slug": "amazon-order-safely",
+  "applicationSlug": "amazon",
+  "domain": "DIGITAL_OPERATIONS",
+  "category": "shopping",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 5,
+  "skillKey": "shopping.order_safely",
+  "title": {
+   "en": "Order safely on Amazon",
+   "bn": "অ্যামাজনে নিরাপদে অর্ডার করুন",
+   "hi": "Amazon पर सुरक्षित ऑर्डर करें",
+   "vi": "Đặt hàng an toàn trên Amazon"
+  },
+  "description": {
+   "en": "Find what you need, check the seller and reviews, and choose cash on delivery if you prefer.",
+   "bn": "যা দরকার খুঁজুন, বিক্রেতা আর রিভিউ দেখুন, চাইলে ক্যাশ অন ডেলিভারি বেছে নিন।",
+   "hi": "जो चाहिए वह ढूंढें, विक्रेता और रिव्यू देखें, चाहें तो कैश ऑन डिलीवरी चुनें।",
+   "vi": "Tìm món cần mua, xem người bán và đánh giá, có thể chọn thanh toán khi nhận hàng."
+  },
+  "safetyTips": [
+   {
+    "en": "If a price looks far too low, it is often a fake listing. Real bargains still come from real sellers.",
+    "bn": "দাম অবিশ্বাস্য রকম কম মনে হলে প্রায়ই সেটা ভুয়া। সত্যিকারের ছাড়ও আসল বিক্রেতাই দেয়।",
+    "hi": "दाम बहुत ही कम लगे तो अक्सर लिस्टिंग नकली होती है। असली छूट भी असली विक्रेता ही देते हैं।",
+    "vi": "Giá rẻ bất thường thường là tin đăng giả. Hàng giảm giá thật vẫn đến từ người bán thật."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open Amazon and type what you want in the search box at the top.",
+    "bn": "অ্যামাজন খুলে ওপরের সার্চ বক্সে যা চান লিখুন।",
+    "hi": "Amazon खोलें और ऊपर के सर्च बॉक्स में जो चाहिए लिखें।",
+    "vi": "Mở Amazon và gõ món bạn muốn vào ô tìm kiếm ở trên."
+   },
+   {
+    "en": "Tap a product. Look at the star rating and read two or three reviews.",
+    "bn": "একটা পণ্যে চাপুন। তারার রেটিং দেখুন আর দু-তিনটা রিভিউ পড়ুন।",
+    "hi": "किसी प्रोडक्ट पर टैप करें। स्टार रेटिंग देखें और दो-तीन रिव्यू पढ़ें।",
+    "vi": "Chạm vào một sản phẩm. Xem số sao và đọc hai, ba đánh giá."
+   },
+   {
+    "en": "Check \"Sold by\" — a well-known seller with many ratings is safer.",
+    "bn": "\"Sold by\" দেখুন — অনেক রেটিং থাকা পরিচিত বিক্রেতা বেশি নিরাপদ।",
+    "hi": "\"Sold by\" देखें — बहुत रेटिंग वाला जाना-माना विक्रेता ज़्यादा सुरक्षित है।",
+    "vi": "Xem mục \"Người bán\" — người bán uy tín, nhiều đánh giá thì an toàn hơn."
+   },
+   {
+    "en": "Tap \"Add to Cart\", then the cart icon, then \"Proceed to Buy\".",
+    "bn": "\"Add to Cart\" চাপুন, তারপর কার্টের চিহ্নে, তারপর \"Proceed to Buy\"।",
+    "hi": "\"Add to Cart\" दबाएं, फिर कार्ट के निशान पर, फिर \"Proceed to Buy\"।",
+    "vi": "Chạm \"Thêm vào giỏ\", rồi biểu tượng giỏ hàng, rồi \"Tiến hành mua\"."
+   },
+   {
+    "en": "Choose your address and payment. \"Cash on Delivery\" lets you pay when it arrives.",
+    "bn": "ঠিকানা আর পেমেন্ট বেছে নিন। \"Cash on Delivery\" দিলে জিনিস হাতে পেয়ে টাকা দেবেন।",
+    "hi": "पता और भुगतान चुनें। \"Cash on Delivery\" में सामान मिलने पर पैसे देने होते हैं।",
+    "vi": "Chọn địa chỉ và cách trả tiền. \"Thanh toán khi nhận hàng\" cho phép trả tiền lúc hàng tới."
+   },
+   {
+    "en": "Check the total once more, then tap \"Place your order\".",
+    "bn": "মোট টাকা আরেকবার দেখে \"Place your order\" চাপুন।",
+    "hi": "कुल रकम एक बार और देखें, फिर \"Place your order\" दबाएं।",
+    "vi": "Kiểm tra tổng tiền lần nữa, rồi chạm \"Đặt hàng\"."
+   }
+  ]
+ },
+ {
+  "slug": "amazon-track-order",
+  "applicationSlug": "amazon",
+  "domain": "DIGITAL_OPERATIONS",
+  "category": "shopping",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 3,
+  "skillKey": "shopping.track_order",
+  "title": {
+   "en": "Track your Amazon order",
+   "bn": "অ্যামাজনের অর্ডার কোথায় আছে দেখুন",
+   "hi": "Amazon ऑर्डर कहां है, देखें",
+   "vi": "Theo dõi đơn hàng Amazon"
+  },
+  "description": {
+   "en": "See where your parcel is and when it will arrive.",
+   "bn": "আপনার পার্সেল কোথায় আছে আর কবে আসবে দেখুন।",
+   "hi": "देखें आपका पार्सल कहां है और कब पहुंचेगा।",
+   "vi": "Xem kiện hàng đang ở đâu và khi nào tới."
+  },
+  "safetyTips": [
+   {
+    "en": "Delivery messages that ask you to pay a small \"re-delivery fee\" through a link are scams. Amazon shows real updates inside the app.",
+    "bn": "লিংকের মাধ্যমে সামান্য \"রি-ডেলিভারি ফি\" চাওয়া মেসেজ প্রতারণা। আসল খবর অ্যামাজন অ্যাপের ভেতরেই দেখায়।",
+    "hi": "लिंक से थोड़ी सी \"री-डिलीवरी फ़ीस\" मांगने वाले मैसेज धोखा हैं। असली जानकारी Amazon ऐप के अंदर ही दिखती है।",
+    "vi": "Tin nhắn đòi trả \"phí giao lại\" nhỏ qua đường link là lừa đảo. Amazon chỉ hiện thông tin thật trong ứng dụng."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open Amazon and tap the person icon at the bottom.",
+    "bn": "অ্যামাজন খুলে নিচের মানুষের চিহ্নে চাপুন।",
+    "hi": "Amazon खोलें और नीचे व्यक्ति वाले निशान पर टैप करें।",
+    "vi": "Mở Amazon và chạm biểu tượng hình người ở dưới."
+   },
+   {
+    "en": "Tap \"Your Orders\".",
+    "bn": "\"Your Orders\" চাপুন।",
+    "hi": "\"Your Orders\" दबाएं।",
+    "vi": "Chạm \"Đơn hàng của bạn\"."
+   },
+   {
+    "en": "Tap the order, then \"Track package\" to see each step and the expected date.",
+    "bn": "অর্ডারে চেপে \"Track package\" চাপুন, প্রতিটি ধাপ আর সম্ভাব্য তারিখ দেখবেন।",
+    "hi": "ऑर्डर पर टैप करें, फिर \"Track package\" — हर चरण और संभावित तारीख दिखेगी।",
+    "vi": "Chạm vào đơn, rồi \"Theo dõi kiện hàng\" để xem từng bước và ngày dự kiến."
+   }
+  ]
+ },
+ {
+  "slug": "amazon-return-item",
+  "applicationSlug": "amazon",
+  "domain": "DIGITAL_OPERATIONS",
+  "category": "shopping",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 4,
+  "skillKey": "shopping.return_item",
+  "title": {
+   "en": "Return something on Amazon",
+   "bn": "অ্যামাজনে জিনিস ফেরত দিন",
+   "hi": "Amazon पर सामान लौटाएं",
+   "vi": "Trả lại hàng trên Amazon"
+  },
+  "description": {
+   "en": "If it's broken or not what you ordered, send it back for a refund.",
+   "bn": "ভাঙা বা অর্ডারের সাথে না মিললে ফেরত পাঠিয়ে টাকা ফেরত নিন।",
+   "hi": "टूटा हो या ऑर्डर से अलग हो, तो लौटाकर पैसे वापस लें।",
+   "vi": "Nếu hàng hỏng hoặc không đúng, gửi trả để được hoàn tiền."
+  },
+  "safetyTips": [
+   {
+    "en": "Amazon never asks for your bank PIN or OTP to give you a refund. Refunds go back automatically.",
+    "bn": "টাকা ফেরত দিতে অ্যামাজন কখনো ব্যাংকের পিন বা ওটিপি চায় না। টাকা নিজে থেকেই ফেরত আসে।",
+    "hi": "रिफ़ंड देने के लिए Amazon कभी बैंक पिन या ओटीपी नहीं मांगता। पैसे अपने आप लौटते हैं।",
+    "vi": "Amazon không bao giờ hỏi PIN hay OTP ngân hàng để hoàn tiền. Tiền tự động được trả lại."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Go to \"Your Orders\" and tap the item.",
+    "bn": "\"Your Orders\"-এ গিয়ে জিনিসটিতে চাপুন।",
+    "hi": "\"Your Orders\" में जाएं और सामान पर टैप करें।",
+    "vi": "Vào \"Đơn hàng của bạn\" và chạm vào món hàng."
+   },
+   {
+    "en": "Tap \"Return or replace items\".",
+    "bn": "\"Return or replace items\" চাপুন।",
+    "hi": "\"Return or replace items\" दबाएं।",
+    "vi": "Chạm \"Trả lại hoặc đổi hàng\"."
+   },
+   {
+    "en": "Choose the reason, for example \"Item arrived damaged\".",
+    "bn": "কারণ বেছে নিন, যেমন \"Item arrived damaged\"।",
+    "hi": "कारण चुनें, जैसे \"Item arrived damaged\"।",
+    "vi": "Chọn lý do, ví dụ \"Hàng đến bị hỏng\"."
+   },
+   {
+    "en": "Pick a pickup date. Keep the item in its box until the courier comes.",
+    "bn": "পিকআপের তারিখ বেছে নিন। কুরিয়ার না আসা পর্যন্ত জিনিসটি বাক্সেই রাখুন।",
+    "hi": "पिकअप की तारीख चुनें। कूरियर आने तक सामान डिब्बे में ही रखें।",
+    "vi": "Chọn ngày đến lấy hàng. Giữ món hàng trong hộp cho đến khi người giao hàng tới."
+   }
+  ]
+ },
+ {
+  "slug": "booking-find-hotel",
+  "applicationSlug": "booking",
+  "domain": "DIGITAL_OPERATIONS",
+  "category": "travel",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 5,
+  "skillKey": "travel.book_hotel",
+  "title": {
+   "en": "Find and book a safe hotel",
+   "bn": "নিরাপদ হোটেল খুঁজে বুক করুন",
+   "hi": "सुरक्षित होटल खोजें और बुक करें",
+   "vi": "Tìm và đặt khách sạn an toàn"
+  },
+  "description": {
+   "en": "Search by city and dates, compare reviews, and choose free cancellation.",
+   "bn": "শহর আর তারিখ দিয়ে খুঁজুন, রিভিউ তুলনা করুন, আর ফ্রি ক্যানসেলেশন বেছে নিন।",
+   "hi": "शहर और तारीख से खोजें, रिव्यू मिलाएं, और फ़्री कैंसलेशन चुनें।",
+   "vi": "Tìm theo thành phố và ngày, so sánh đánh giá, và chọn miễn phí hủy."
+  },
+  "safetyTips": [
+   {
+    "en": "Only pay inside the Booking.com app or website. A hotel that asks you to pay through a WhatsApp link is a scam.",
+    "bn": "শুধু বুকিং ডট কম অ্যাপ বা ওয়েবসাইটের ভেতরে টাকা দিন। হোয়াটসঅ্যাপের লিংকে টাকা চাইলে সেটা প্রতারণা।",
+    "hi": "भुगतान सिर्फ़ Booking.com ऐप या वेबसाइट के अंदर करें। व्हाट्सऐप लिंक से पैसे मांगे तो धोखा है।",
+    "vi": "Chỉ trả tiền trong ứng dụng hoặc trang Booking.com. Khách sạn đòi trả qua đường link WhatsApp là lừa đảo."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open Booking.com and type the city you are going to.",
+    "bn": "বুকিং ডট কম খুলে যে শহরে যাবেন সেটা লিখুন।",
+    "hi": "Booking.com खोलें और जिस शहर जाना है वह लिखें।",
+    "vi": "Mở Booking.com và nhập thành phố bạn sẽ đến."
+   },
+   {
+    "en": "Choose your check-in and check-out dates, and the number of guests. Tap Search.",
+    "bn": "চেক-ইন আর চেক-আউটের তারিখ, আর কতজন থাকবেন বেছে নিয়ে Search চাপুন।",
+    "hi": "चेक-इन और चेक-आउट की तारीख, और कितने लोग रहेंगे चुनें, फिर Search दबाएं।",
+    "vi": "Chọn ngày nhận phòng, trả phòng và số khách. Chạm Tìm."
+   },
+   {
+    "en": "Look for a review score of 8 or more, and read what recent guests said.",
+    "bn": "৮ বা তার বেশি রিভিউ স্কোর দেখুন, আর সাম্প্রতিক অতিথিরা কী বলেছেন পড়ুন।",
+    "hi": "8 या उससे ज़्यादा रिव्यू स्कोर देखें, और हाल के मेहमानों की बातें पढ़ें।",
+    "vi": "Tìm điểm đánh giá từ 8 trở lên và đọc nhận xét của khách gần đây."
+   },
+   {
+    "en": "Prefer rooms marked \"Free cancellation\" — plans can change.",
+    "bn": "\"Free cancellation\" লেখা রুম বেছে নিন — পরিকল্পনা বদলাতেই পারে।",
+    "hi": "\"Free cancellation\" वाले कमरे चुनें — योजना बदल भी सकती है।",
+    "vi": "Ưu tiên phòng ghi \"Miễn phí hủy\" — kế hoạch có thể thay đổi."
+   },
+   {
+    "en": "Tap \"Reserve\", fill in your name and email, and check the total price before you confirm.",
+    "bn": "\"Reserve\" চেপে নাম আর ইমেইল দিন, নিশ্চিত করার আগে মোট দাম দেখে নিন।",
+    "hi": "\"Reserve\" दबाकर नाम और ईमेल भरें, पुष्टि से पहले कुल दाम देख लें।",
+    "vi": "Chạm \"Đặt\", điền tên và email, và xem tổng giá trước khi xác nhận."
+   }
+  ]
+ },
+ {
+  "slug": "booking-cancel-free",
+  "applicationSlug": "booking",
+  "domain": "DIGITAL_OPERATIONS",
+  "category": "travel",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 3,
+  "skillKey": "travel.cancel_booking",
+  "title": {
+   "en": "Cancel a booking for free",
+   "bn": "বিনা খরচে বুকিং বাতিল করুন",
+   "hi": "मुफ़्त में बुकिंग रद्द करें",
+   "vi": "Hủy đặt phòng miễn phí"
+  },
+  "description": {
+   "en": "Plans changed? Cancel before the free-cancellation date and pay nothing.",
+   "bn": "পরিকল্পনা বদলেছে? ফ্রি ক্যানসেলেশনের তারিখের আগে বাতিল করলে কোনো টাকা লাগবে না।",
+   "hi": "योजना बदल गई? मुफ़्त रद्द करने की तारीख से पहले रद्द करें, कुछ नहीं लगेगा।",
+   "vi": "Kế hoạch thay đổi? Hủy trước hạn miễn phí là không mất tiền."
+  },
+  "safetyTips": [
+   {
+    "en": "Keep the cancellation email until any refund is back in your account.",
+    "bn": "টাকা ফেরত না আসা পর্যন্ত বাতিলের ইমেইলটা রেখে দিন।",
+    "hi": "पैसे वापस आने तक रद्द होने का ईमेल संभाल कर रखें।",
+    "vi": "Giữ email hủy cho đến khi tiền hoàn về tài khoản."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open Booking.com and tap \"Bookings\" at the bottom.",
+    "bn": "বুকিং ডট কম খুলে নিচে \"Bookings\" চাপুন।",
+    "hi": "Booking.com खोलें और नीचे \"Bookings\" दबाएं।",
+    "vi": "Mở Booking.com và chạm \"Đặt chỗ\" ở dưới."
+   },
+   {
+    "en": "Tap the stay you want to cancel.",
+    "bn": "যে বুকিং বাতিল করবেন, তাতে চাপুন।",
+    "hi": "जो बुकिंग रद्द करनी है, उस पर टैप करें।",
+    "vi": "Chạm vào chỗ ở bạn muốn hủy."
+   },
+   {
+    "en": "Look for the line \"Free cancellation until…\" and check today is before that date.",
+    "bn": "\"Free cancellation until…\" লাইনটি দেখে নিন আজ সেই তারিখের আগে কি না।",
+    "hi": "\"Free cancellation until…\" वाली लाइन देखें और जांचें कि आज उस तारीख से पहले है।",
+    "vi": "Tìm dòng \"Miễn phí hủy đến…\" và chắc chắn hôm nay vẫn trước ngày đó."
+   },
+   {
+    "en": "Tap \"Cancel booking\" and confirm. A cancellation email arrives in a few minutes.",
+    "bn": "\"Cancel booking\" চেপে নিশ্চিত করুন। কয়েক মিনিটে বাতিলের ইমেইল আসবে।",
+    "hi": "\"Cancel booking\" दबाकर पुष्टि करें। कुछ मिनट में रद्द होने का ईमेल आएगा।",
+    "vi": "Chạm \"Hủy đặt phòng\" và xác nhận. Email xác nhận hủy sẽ đến sau vài phút."
+   }
+  ]
+ },
+ {
+  "slug": "booking-fake-payment-message",
+  "applicationSlug": "booking",
+  "domain": "DIGITAL_SAFETY",
+  "category": "travel",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 4,
+  "skillKey": "safety.recognise_scam",
+  "title": {
+   "en": "A hotel message asks you to pay again",
+   "bn": "হোটেল আবার টাকা চাইছে — সাবধান",
+   "hi": "होटल दोबारा पैसे मांगे — सावधान",
+   "vi": "Khách sạn nhắn đòi trả tiền lần nữa"
+  },
+  "description": {
+   "en": "Scammers send messages that look like your hotel. Here is how to stay safe.",
+   "bn": "প্রতারকেরা হোটেলের মতো দেখতে মেসেজ পাঠায়। কীভাবে নিরাপদ থাকবেন দেখুন।",
+   "hi": "धोखेबाज़ आपके होटल जैसे दिखने वाले मैसेज भेजते हैं। सुरक्षित कैसे रहें, देखें।",
+   "vi": "Kẻ gian gửi tin nhắn giả làm khách sạn. Đây là cách giữ an toàn."
+  },
+  "safetyTips": [
+   {
+    "en": "When in doubt, phone the hotel on the number printed on its official website — never the number in the message.",
+    "bn": "সন্দেহ হলে হোটেলের অফিসিয়াল ওয়েবসাইটে দেওয়া নম্বরে ফোন করুন — মেসেজের নম্বরে কখনো নয়।",
+    "hi": "शक हो तो होटल की आधिकारिक वेबसाइट पर दिए नंबर पर फोन करें — मैसेज वाले नंबर पर कभी नहीं।",
+    "vi": "Khi nghi ngờ, gọi khách sạn theo số trên trang web chính thức — đừng gọi số trong tin nhắn."
+   }
+  ],
+  "steps": [
+   {
+    "en": "The message says your card \"failed\" and asks you to pay again through a link, often within 24 hours.",
+    "bn": "মেসেজে বলা হয় আপনার কার্ড \"ফেল\" করেছে, প্রায়ই ২৪ ঘণ্টার মধ্যে লিংকে আবার টাকা দিতে বলে।",
+    "hi": "मैसेज कहता है आपका कार्ड \"फ़ेल\" हो गया, और अक्सर 24 घंटे के अंदर लिंक से फिर पैसे देने को कहता है।",
+    "vi": "Tin nhắn nói thẻ của bạn \"bị lỗi\" và bảo trả lại qua đường link, thường trong 24 giờ."
+   },
+   {
+    "en": "Don't tap the link and don't enter card details.",
+    "bn": "লিংকে চাপবেন না, কার্ডের তথ্যও দেবেন না।",
+    "hi": "लिंक पर टैप न करें और कार्ड की जानकारी न डालें।",
+    "vi": "Đừng chạm vào link và đừng nhập thông tin thẻ."
+   },
+   {
+    "en": "Open the Booking.com app yourself and look at the booking. If it says \"confirmed\", you don't owe anything.",
+    "bn": "নিজে বুকিং ডট কম অ্যাপ খুলে বুকিংটা দেখুন। \"confirmed\" লেখা থাকলে আপনার কোনো টাকা বাকি নেই।",
+    "hi": "खुद Booking.com ऐप खोलकर बुकिंग देखें। \"confirmed\" लिखा हो तो आपका कुछ बकाया नहीं।",
+    "vi": "Tự mở ứng dụng Booking.com và xem đặt phòng. Nếu ghi \"đã xác nhận\" thì bạn không nợ gì."
+   },
+   {
+    "en": "Report the message to Booking.com from the app's Help section.",
+    "bn": "অ্যাপের Help অংশ থেকে মেসেজটি বুকিং ডট কমকে জানান।",
+    "hi": "ऐप के Help हिस्से से मैसेज की रिपोर्ट Booking.com को करें।",
+    "vi": "Báo cáo tin nhắn với Booking.com qua mục Trợ giúp trong ứng dụng."
+   }
+  ]
+ },
+ {
+  "slug": "practo-book-doctor",
+  "applicationSlug": "practo",
+  "domain": "DIGITAL_OPERATIONS",
+  "category": "health",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 5,
+  "skillKey": "health.book_appointment",
+  "title": {
+   "en": "Book a doctor's appointment",
+   "bn": "ডাক্তারের অ্যাপয়েন্টমেন্ট নিন",
+   "hi": "डॉक्टर का अपॉइंटमेंट लें",
+   "vi": "Đặt lịch khám bác sĩ"
+  },
+  "description": {
+   "en": "Find a doctor near you, check their experience and fees, and pick a time.",
+   "bn": "কাছাকাছি ডাক্তার খুঁজুন, অভিজ্ঞতা আর ফি দেখুন, তারপর সময় বেছে নিন।",
+   "hi": "पास में डॉक्टर ढूंढें, अनुभव और फ़ीस देखें, फिर समय चुनें।",
+   "vi": "Tìm bác sĩ gần bạn, xem kinh nghiệm và phí khám, rồi chọn giờ."
+  },
+  "safetyTips": [
+   {
+    "en": "In an emergency, don't wait for an online appointment — call your local emergency number.",
+    "bn": "জরুরি অবস্থায় অনলাইন অ্যাপয়েন্টমেন্টের অপেক্ষা করবেন না — স্থানীয় জরুরি নম্বরে ফোন করুন।",
+    "hi": "आपात स्थिति में ऑनलाइन अपॉइंटमेंट का इंतज़ार न करें — स्थानीय आपातकालीन नंबर पर फोन करें।",
+    "vi": "Khi cấp cứu, đừng chờ lịch khám trực tuyến — hãy gọi số khẩn cấp tại địa phương."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open Practo and search for the kind of doctor you need, like \"General physician\".",
+    "bn": "প্র্যাক্টো খুলে কেমন ডাক্তার দরকার খুঁজুন, যেমন \"General physician\"।",
+    "hi": "Practo खोलें और जैसा डॉक्टर चाहिए वह खोजें, जैसे \"General physician\"।",
+    "vi": "Mở Practo và tìm loại bác sĩ bạn cần, ví dụ \"Bác sĩ đa khoa\"."
+   },
+   {
+    "en": "Choose your area. You will see a list of doctors with ratings.",
+    "bn": "আপনার এলাকা বেছে নিন। রেটিংসহ ডাক্তারদের তালিকা দেখবেন।",
+    "hi": "अपना इलाका चुनें। रेटिंग के साथ डॉक्टरों की सूची दिखेगी।",
+    "vi": "Chọn khu vực. Bạn sẽ thấy danh sách bác sĩ kèm đánh giá."
+   },
+   {
+    "en": "Tap a doctor to see their years of experience, the clinic address and the fee.",
+    "bn": "ডাক্তারের নামে চাপলে অভিজ্ঞতা, ক্লিনিকের ঠিকানা আর ফি দেখবেন।",
+    "hi": "डॉक्टर पर टैप करें, अनुभव के साल, क्लिनिक का पता और फ़ीस दिखेगी।",
+    "vi": "Chạm vào bác sĩ để xem số năm kinh nghiệm, địa chỉ phòng khám và phí."
+   },
+   {
+    "en": "Tap \"Book Clinic Visit\" and choose a free time slot.",
+    "bn": "\"Book Clinic Visit\" চেপে খালি একটা সময় বেছে নিন।",
+    "hi": "\"Book Clinic Visit\" दबाएं और खाली समय चुनें।",
+    "vi": "Chạm \"Đặt lịch khám\" và chọn khung giờ còn trống."
+   },
+   {
+    "en": "Check your name and phone number, then confirm. Your booking details arrive by SMS.",
+    "bn": "নাম আর ফোন নম্বর মিলিয়ে নিশ্চিত করুন। বুকিংয়ের তথ্য এসএমএসে আসবে।",
+    "hi": "नाम और फोन नंबर जांचकर पुष्टि करें। बुकिंग की जानकारी एसएमएस से आएगी।",
+    "vi": "Kiểm tra tên và số điện thoại rồi xác nhận. Thông tin đặt lịch sẽ gửi qua SMS."
+   }
+  ]
+ },
+ {
+  "slug": "practo-video-consult",
+  "applicationSlug": "practo",
+  "domain": "DIGITAL_OPERATIONS",
+  "category": "health",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 4,
+  "skillKey": "health.video_consult",
+  "title": {
+   "en": "Talk to a doctor on video",
+   "bn": "ভিডিওতে ডাক্তারের সাথে কথা বলুন",
+   "hi": "वीडियो पर डॉक्टर से बात करें",
+   "vi": "Khám bác sĩ qua video"
+  },
+  "description": {
+   "en": "See a doctor from home for small problems and follow-ups.",
+   "bn": "ছোটখাটো সমস্যা বা ফলো-আপের জন্য বাড়ি থেকেই ডাক্তার দেখান।",
+   "hi": "छोटी-मोटी दिक्कत या फ़ॉलो-अप के लिए घर से ही डॉक्टर को दिखाएं।",
+   "vi": "Khám bác sĩ tại nhà cho các vấn đề nhỏ và tái khám."
+  },
+  "safetyTips": [
+   {
+    "en": "A real doctor never asks you to pay extra money by bank transfer or to share an OTP.",
+    "bn": "আসল ডাক্তার কখনো ব্যাংক ট্রান্সফারে বাড়তি টাকা বা ওটিপি চান না।",
+    "hi": "असली डॉक्टर कभी बैंक ट्रांसफ़र से अलग पैसे या ओटीपी नहीं मांगते।",
+    "vi": "Bác sĩ thật không bao giờ đòi chuyển khoản thêm hay xin mã OTP."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open Practo and tap \"Consult online\".",
+    "bn": "প্র্যাক্টো খুলে \"Consult online\" চাপুন।",
+    "hi": "Practo खोलें और \"Consult online\" दबाएं।",
+    "vi": "Mở Practo và chạm \"Tư vấn trực tuyến\"."
+   },
+   {
+    "en": "Choose your problem, for example \"Fever\" or \"Diabetes\".",
+    "bn": "আপনার সমস্যা বেছে নিন, যেমন \"Fever\" বা \"Diabetes\"।",
+    "hi": "अपनी समस्या चुनें, जैसे \"Fever\" या \"Diabetes\"।",
+    "vi": "Chọn vấn đề, ví dụ \"Sốt\" hoặc \"Tiểu đường\"."
+   },
+   {
+    "en": "Pay the fee shown inside the app. The doctor will call within the time shown.",
+    "bn": "অ্যাপের ভেতরে দেখানো ফি দিন। দেখানো সময়ের মধ্যে ডাক্তার ফোন করবেন।",
+    "hi": "ऐप के अंदर दिखाई फ़ीस भरें। दिखाए समय के भीतर डॉक्टर फोन करेंगे।",
+    "vi": "Trả phí hiển thị trong ứng dụng. Bác sĩ sẽ gọi trong khoảng thời gian đã ghi."
+   },
+   {
+    "en": "Sit somewhere quiet with good light, and keep your medicines or reports nearby.",
+    "bn": "আলো আছে এমন শান্ত জায়গায় বসুন, ওষুধ বা রিপোর্ট হাতের কাছে রাখুন।",
+    "hi": "अच्छी रोशनी वाली शांत जगह बैठें, दवाइयां या रिपोर्ट पास रखें।",
+    "vi": "Ngồi ở chỗ yên tĩnh, đủ sáng, và để thuốc hoặc kết quả xét nghiệm gần bên."
+   },
+   {
+    "en": "After the call, find your prescription under \"Consultations\" in the app.",
+    "bn": "কল শেষে অ্যাপের \"Consultations\"-এ আপনার প্রেসক্রিপশন পাবেন।",
+    "hi": "कॉल के बाद ऐप में \"Consultations\" में आपका पर्चा मिलेगा।",
+    "vi": "Sau cuộc gọi, đơn thuốc nằm trong mục \"Tư vấn\" của ứng dụng."
+   }
+  ]
+ },
+ {
+  "slug": "practo-cancel-appointment",
+  "applicationSlug": "practo",
+  "domain": "DIGITAL_OPERATIONS",
+  "category": "health",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 3,
+  "skillKey": "health.cancel_appointment",
+  "title": {
+   "en": "Change or cancel an appointment",
+   "bn": "অ্যাপয়েন্টমেন্ট বদলান বা বাতিল করুন",
+   "hi": "अपॉइंटमेंट बदलें या रद्द करें",
+   "vi": "Đổi hoặc hủy lịch khám"
+  },
+  "description": {
+   "en": "Can't make it? Free the slot so someone else can see the doctor.",
+   "bn": "যেতে পারছেন না? সময়টা ছেড়ে দিন, যাতে অন্য কেউ ডাক্তার দেখাতে পারেন।",
+   "hi": "नहीं जा पा रहे? समय छोड़ दें ताकि कोई और डॉक्टर को दिखा सके।",
+   "vi": "Không đến được? Hãy hủy để người khác có thể khám."
+  },
+  "safetyTips": [
+   {
+    "en": "Cancel at least a few hours before, so the clinic can give the time to another patient.",
+    "bn": "অন্তত কয়েক ঘণ্টা আগে বাতিল করুন, যাতে ক্লিনিক সময়টা অন্য রোগীকে দিতে পারে।",
+    "hi": "कम से कम कुछ घंटे पहले रद्द करें, ताकि क्लिनिक वह समय दूसरे मरीज़ को दे सके।",
+    "vi": "Hãy hủy trước ít nhất vài giờ để phòng khám xếp người khác."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Open Practo and tap \"Appointments\".",
+    "bn": "প্র্যাক্টো খুলে \"Appointments\" চাপুন।",
+    "hi": "Practo खोलें और \"Appointments\" दबाएं।",
+    "vi": "Mở Practo và chạm \"Lịch hẹn\"."
+   },
+   {
+    "en": "Tap the appointment.",
+    "bn": "অ্যাপয়েন্টমেন্টটিতে চাপুন।",
+    "hi": "अपॉइंटमेंट पर टैप करें।",
+    "vi": "Chạm vào lịch hẹn."
+   },
+   {
+    "en": "Tap \"Reschedule\" to pick a new time, or \"Cancel\" if you don't need it.",
+    "bn": "নতুন সময় নিতে \"Reschedule\" চাপুন, দরকার না হলে \"Cancel\"।",
+    "hi": "नया समय लेने के लिए \"Reschedule\" दबाएं, ज़रूरत न हो तो \"Cancel\"।",
+    "vi": "Chạm \"Đổi lịch\" để chọn giờ mới, hoặc \"Hủy\" nếu không cần nữa."
+   },
+   {
+    "en": "Wait for the SMS that confirms the change.",
+    "bn": "পরিবর্তন নিশ্চিত করার এসএমএসের জন্য অপেক্ষা করুন।",
+    "hi": "बदलाव की पुष्टि वाले एसएमएस का इंतज़ार करें।",
+    "vi": "Chờ tin nhắn SMS xác nhận thay đổi."
+   }
+  ]
+ },
+ {
+  "slug": "recognise-scam-messages",
+  "applicationSlug": null,
+  "domain": "DIGITAL_SAFETY",
+  "category": "safety",
+  "difficulty": "BEGINNER",
+  "estimatedMinutes": 5,
+  "skillKey": "safety.recognise_scam",
+  "title": {
+   "en": "Recognise a scam message",
+   "bn": "প্রতারণার মেসেজ চিনুন",
+   "hi": "धोखे वाला मैसेज पहचानें",
+   "vi": "Nhận biết tin nhắn lừa đảo"
+  },
+  "description": {
+   "en": "Four questions that catch almost every scam, whatever app it comes in.",
+   "bn": "চারটি প্রশ্ন, যা যেকোনো অ্যাপে আসা প্রায় সব প্রতারণা ধরে ফেলে।",
+   "hi": "चार सवाल, जो किसी भी ऐप में आए लगभग हर धोखे को पकड़ लेते हैं।",
+   "vi": "Bốn câu hỏi giúp nhận ra gần như mọi trò lừa, dù đến từ ứng dụng nào."
+  },
+  "safetyTips": [
+   {
+    "en": "It's never rude to hang up or ignore a message. Scammers count on people being polite.",
+    "bn": "ফোন কেটে দেওয়া বা মেসেজ উপেক্ষা করা কখনো অভদ্রতা নয়। প্রতারকেরা মানুষের ভদ্রতার সুযোগ নেয়।",
+    "hi": "फोन काटना या मैसेज अनदेखा करना कभी बदतमीज़ी नहीं है। धोखेबाज़ लोगों की शराफ़त का फ़ायदा उठाते हैं।",
+    "vi": "Cúp máy hay bỏ qua tin nhắn không bao giờ là bất lịch sự. Kẻ gian lợi dụng sự lịch sự của bạn."
+   }
+  ],
+  "steps": [
+   {
+    "en": "Is it urgent? \"Today\", \"within 1 hour\" or \"your account will be closed\" are pressure tricks.",
+    "bn": "এটা কি জরুরি বলছে? \"আজই\", \"১ ঘণ্টার মধ্যে\", \"অ্যাকাউন্ট বন্ধ হবে\" — এগুলো চাপ দেওয়ার কৌশল।",
+    "hi": "क्या यह जल्दी करने को कह रहा है? \"आज ही\", \"1 घंटे में\", \"खाता बंद हो जाएगा\" — ये दबाव के तरीके हैं।",
+    "vi": "Có gấp gáp không? \"Hôm nay\", \"trong 1 giờ\", \"tài khoản sẽ bị khóa\" là chiêu gây áp lực."
+   },
+   {
+    "en": "Does it ask for a PIN, OTP or password? No real bank, shop or app ever asks for these.",
+    "bn": "পিন, ওটিপি বা পাসওয়ার্ড চাইছে? কোনো আসল ব্যাংক, দোকান বা অ্যাপ কখনো এগুলো চায় না।",
+    "hi": "क्या पिन, ओटीपी या पासवर्ड मांग रहा है? कोई असली बैंक, दुकान या ऐप कभी ये नहीं मांगता।",
+    "vi": "Có hỏi PIN, OTP hay mật khẩu không? Ngân hàng, cửa hàng hay ứng dụng thật không bao giờ hỏi."
+   },
+   {
+    "en": "Is there a prize, a refund or a job you didn't ask for? If it sounds too good to be true, it is.",
+    "bn": "না চাইতেই পুরস্কার, টাকা ফেরত বা চাকরির কথা? বিশ্বাস করার মতো না হলে সেটা সত্যি নয়।",
+    "hi": "बिना मांगे इनाम, रिफ़ंड या नौकरी? जो बात सच होने के लिए बहुत अच्छी लगे, वह सच नहीं होती।",
+    "vi": "Có giải thưởng, hoàn tiền hay việc làm mà bạn không hề hỏi? Quá tốt để là thật thì không phải thật."
+   },
+   {
+    "en": "Does it come from a new number or a strange link? Check by calling the person or company on a number you already know.",
+    "bn": "নতুন নম্বর বা অদ্ভুত লিংক থেকে এসেছে? আগে থেকে জানা নম্বরে মানুষ বা প্রতিষ্ঠানকে ফোন করে যাচাই করুন।",
+    "hi": "नए नंबर या अजीब लिंक से आया है? पहले से पता नंबर पर व्यक्ति या कंपनी को फोन करके जांचें।",
+    "vi": "Đến từ số lạ hay đường link lạ? Hãy gọi người đó hoặc công ty bằng số bạn đã biết để kiểm tra."
+   },
+   {
+    "en": "If any answer is yes: stop, don't tap anything, and use Guidia's Safety check or ask your family.",
+    "bn": "কোনো একটার উত্তর \"হ্যাঁ\" হলে থামুন, কিছুতে চাপবেন না, আর Guidia-র নিরাপত্তা যাচাই ব্যবহার করুন বা পরিবারকে জিজ্ঞেস করুন।",
+    "hi": "किसी का भी जवाब \"हां\" हो तो रुकें, कुछ भी न दबाएं, और Guidia की सुरक्षा जांच इस्तेमाल करें या परिवार से पूछें।",
+    "vi": "Nếu có câu trả lời là \"có\": dừng lại, đừng chạm gì, và dùng mục Kiểm tra an toàn của Guidia hoặc hỏi người thân."
+   }
+  ]
+ }
+]

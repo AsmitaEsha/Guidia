@@ -62,6 +62,16 @@ export const assistantReply = {
 const ELEMENT_TYPES = ['navigation', 'action', 'input', 'info', 'warn', 'danger'];
 const SCREEN_RISK = ['SAFE', 'WARNING', 'HIGH_RISK', 'CRITICAL', 'UNKNOWN'];
 
+// Models differ in small ways (0–1 or 0–1000 coordinates, a label that runs
+// long). Normalise those instead of throwing a useful answer away.
+const clipped = (n) => z.preprocess((v) => (v == null ? '' : String(v)), z.string()).transform((s) => s.trim().slice(0, n));
+const percent = z.preprocess((v) => {
+  const num = typeof v === 'string' ? Number.parseFloat(v) : v;
+  if (typeof num !== 'number' || !Number.isFinite(num) || num < 0) return null;
+  const pct = num <= 1 ? num * 100 : num <= 100 ? num : num <= 1000 ? num / 10 : null;
+  return pct == null ? null : Math.min(100, Math.max(0, pct));
+}, z.number().nullable());
+
 export const screenAnalysis = {
   name: 'screen_analysis',
   jsonSchema: {
@@ -83,14 +93,15 @@ export const screenAnalysis = {
         items: {
           type: 'object',
           additionalProperties: false,
-          required: ['label', 'type', 'description', 'x', 'y', 'confidence'],
+          required: ['label', 'type', 'description', 'x', 'y', 'confidence', 'nextStep'],
           properties: {
-            label: { type: 'string' },
+            label: { type: 'string', description: 'The exact words or icon name on the element, e.g. "Send" or "Paperclip icon".' },
             type: { type: 'string', enum: ELEMENT_TYPES },
             description: { type: 'string' },
             x: { type: ['number', 'null'], description: 'Horizontal centre as % of width (0-100), or null if unsure.' },
             y: { type: ['number', 'null'], description: 'Vertical centre as % of height (0-100), or null if unsure.' },
             confidence: { type: 'string', enum: ['high', 'medium', 'low'] },
+            nextStep: { type: 'boolean', description: 'true only for the element the user should press next.' },
           },
         },
       },
@@ -101,18 +112,19 @@ export const screenAnalysis = {
     detectedApp: z.string().max(80),
     userGoal: z.enum(INTENTS),
     risk: z.enum(SCREEN_RISK),
-    summary: z.string().max(1500),
-    nextAction: z.string().max(500),
-    requiresConfirmation: z.boolean(),
-    warning: z.string().max(500),
+    summary: clipped(1500),
+    nextAction: clipped(500),
+    requiresConfirmation: z.preprocess((v) => v === true || v === 'true', z.boolean()),
+    warning: clipped(500),
     elements: z.array(z.object({
-      label: z.string().max(80),
-      type: z.enum(ELEMENT_TYPES),
-      description: z.string().max(400),
-      x: z.number().min(0).max(100).nullable(),
-      y: z.number().min(0).max(100).nullable(),
-      confidence: z.enum(['high', 'medium', 'low']),
-    })).max(8),
+      label: clipped(80),
+      type: z.preprocess((v) => (ELEMENT_TYPES.includes(v) ? v : 'info'), z.enum(ELEMENT_TYPES)),
+      description: clipped(400),
+      x: percent,
+      y: percent,
+      confidence: z.preprocess((v) => (['high', 'medium', 'low'].includes(v) ? v : 'medium'), z.enum(['high', 'medium', 'low'])),
+      nextStep: z.preprocess((v) => v === true || v === 'true', z.boolean()),
+    })).transform((list) => list.slice(0, 8)),
   }),
 };
 
