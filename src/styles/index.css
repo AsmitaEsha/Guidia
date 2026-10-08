@@ -1,0 +1,30 @@
+/* The one styling entry point (imported by src/main.jsx).
+   Order matters: tokens → base → motion → components → layouts → features. */
+@import './tokens.css';
+@import './base.css';
+@import './motion.css';
+@import './components.css';
+@import './shell.css';
+@import './app.css';
+@import './pages/ask.css';
+@import './pages/screen.css';
+@import './pages/learn.css';
+@import './pages/practice.css';
+@import './pages/safety.css';
+@import './pages/memory.css';
+@import './pages/progress.css';
+@import './pages/people.css';
+@import './pages/family.css';
+@import './pages/help.css';
+@import './pages/notifications.css';
+@import './pages/settings.css';
+@import './pages/onboarding.css';
+@import './demo.css';
+@import './landing.css';
+@import './auth.css';
+@import './showcase.css';
+@import './admin.css';
+@import './simulators.css';
+@import './sim-kit.css';
+@import './sims/index.css';
+@import './accessibility.css';

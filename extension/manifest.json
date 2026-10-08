@@ -1,22 +1,31 @@
 {
   "manifest_version": 3,
-  "name": "Guidia Anywhere Screenshot Assistant",
-  "version": "0.1.0",
-  "description": "Ask Guidia to explain the visible screen on supported websites.",
-  "permissions": ["activeTab", "tabs", "storage"],
-  "host_permissions": ["http://localhost:8000/*", "http://localhost:5173/*"],
-  "background": {
-    "service_worker": "background.js"
-  },
-  "content_scripts": [
-    {
-      "matches": ["http://*/*", "https://*/*"],
-      "js": ["content.js"],
-      "css": ["content.css"],
-      "run_at": "document_idle"
-    }
+  "name": "Guidia — Explain this page",
+  "version": "0.2.0",
+  "description": "Ask Guidia to explain what you see on a website. Captures the page only when you press the button.",
+  "permissions": [
+    "activeTab",
+    "storage"
   ],
+  "host_permissions": [
+    "http://localhost:5173/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
   "action": {
-    "default_title": "Ask Guidia about this page"
+    "default_title": "Ask Guidia about this page",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon-16.png",
+      "48": "icon-48.png",
+      "128": "icon.png"
+    }
+  },
+  "icons": {
+    "16": "icon-16.png",
+    "48": "icon-48.png",
+    "128": "icon.png"
   }
 }

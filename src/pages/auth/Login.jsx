@@ -1,121 +1,80 @@
 import { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { ArrowRight, ShieldCheck, GraduationCap, HeartHandshake } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { LogIn } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import GuidiaLogo from '../../components/GuidiaLogo';
+import { usePreferences } from '../../context/PreferencesContext';
+import AuthLayout from '../../components/auth/AuthLayout';
 import PasswordInput from '../../components/auth/PasswordInput';
+import { Alert, Button, Checkbox, Field } from '../../components/ui';
 
-const PANEL_POINTS = [
-  { icon: <GraduationCap size={17} />, label: 'Pick up right where you left off' },
-  { icon: <ShieldCheck size={17} />, label: 'Your safety checks and Guardian stay connected' },
-  { icon: <HeartHandshake size={17} />, label: 'Saved lessons are waiting in your Memory Book' },
-];
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function Login() {
   const { login } = useAuth();
+  const { t } = usePreferences();
   const navigate = useNavigate();
   const location = useLocation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(true);
+  const [touched, setTouched] = useState(false);
   const [error, setError] = useState('');
-  const [submitting, setSubmitting] = useState(false);
+  const [state, setState] = useState('idle');
+
+  const emailError = touched && email && !EMAIL_RE.test(email.trim())
+    ? t('Please check the email address — it looks incomplete.', 'ইমেইল ঠিকানাটি দেখে নিন — অসম্পূর্ণ মনে হচ্ছে।', 'ईमेल पता जांचें — अधूरा लग रहा है।', 'Hãy kiểm tra email — có vẻ chưa đầy đủ.')
+    : null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setTouched(true);
+    if (!EMAIL_RE.test(email.trim()) || !password) return;
     setError('');
-    setSubmitting(true);
+    setState('loading');
     try {
-      const loggedInUser = await login({ email, password, rememberMe });
-      const needsOnboarding = !loggedInUser?.preference?.onboardingDone;
-      const redirectTo = needsOnboarding ? '/onboarding' : (location.state?.from?.pathname || '/app/home');
-      navigate(redirectTo, { replace: true });
+      const user = await login({ email: email.trim(), password, rememberMe });
+      setState('success');
+      const needsOnboarding = !user?.preference?.onboardingDone;
+      const to = user?.role === 'ADMIN' ? '/admin' : user?.role === 'GUARDIAN' ? (location.state?.from?.pathname || '/app/family') : needsOnboarding ? '/onboarding' : (location.state?.from?.pathname || '/app/home');
+      setTimeout(() => navigate(to, { replace: true }), 350);
     } catch (err) {
-      // ApiError messages are already human-friendly (never raw
-      // "401 Unauthorized"/stack-trace text) — see apiClient.js/backend
-      // errorHandler.js, which strip technical detail before it reaches here.
-      setError(err.message || "We couldn't sign you in. Please check your email and password and try again.");
-    } finally {
-      setSubmitting(false);
+      // Server messages are already human-friendly (never raw status text).
+      setError(err.message || t("We couldn't sign you in. Please check your email and password and try again.", 'সাইন ইন করা যায়নি। ইমেইল ও পাসওয়ার্ড দেখে আবার চেষ্টা করুন।', 'साइन इन नहीं हो सका। ईमेल और पासवर्ड जांचकर फिर कोशिश करें।', 'Không đăng nhập được. Hãy kiểm tra email và mật khẩu rồi thử lại.'));
+      setState('idle');
     }
   };
 
   return (
-    <div data-theme="light" style={{ minHeight: '100vh', color: 'var(--text-1)', display: 'flex' }}>
-      {/* Brand panel — hidden on narrow viewports */}
-      <div className="lp-auth-panel" style={{ flex: 1, background: 'var(--gradient-brand)', color: '#fff', padding: '48px 56px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-        <Link to="/" className="flex items-center gap-12" style={{ color: '#fff' }}>
-          <GuidiaLogo size={38} />
-          <span style={{ fontWeight: 800, fontSize: 19 }}>Guidia</span>
-        </Link>
-        <div>
-          <p style={{ fontSize: 30, fontWeight: 800, lineHeight: 1.3, marginBottom: 16, maxWidth: 380 }}>
-            Technology should feel understandable.
-          </p>
-          <p style={{ fontSize: 16, opacity: 0.85, maxWidth: 360, marginBottom: 32 }}>
-            Sign in to continue learning, practicing, and navigating digital experiences with Guidia.
-          </p>
-          <div className="flex-col gap-14">
-            {PANEL_POINTS.map((p) => (
-              <div key={p.label} className="flex items-center gap-12">
-                <div style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{p.icon}</div>
-                <span style={{ fontSize: 14, opacity: 0.9 }}>{p.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div />
-      </div>
+    <AuthLayout>
+      <div className="auth-card">
+        <header className="stack" style={{ '--gap': 'var(--s-2)' }}>
+          <h1 className="auth-title">{t('Welcome back', 'আবার স্বাগতম', 'फिर से स्वागत है', 'Chào mừng trở lại')}</h1>
+          <p className="lead">{t('Sign in to continue where you left off.', 'যেখানে থেমেছিলেন সেখান থেকে চালিয়ে যেতে সাইন ইন করুন।', 'जहाँ छोड़ा था वहीं से जारी रखने के लिए साइन इन करें।', 'Đăng nhập để tiếp tục từ chỗ bạn dừng.')}</p>
+        </header>
 
-      {/* Form panel */}
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px 16px 48px', background: 'var(--warm-white)' }}>
-        <div style={{ maxWidth: 400, width: '100%' }}>
-          <Link to="/" className="lp-auth-mobile-logo flex items-center gap-12" style={{ marginBottom: 32, color: 'var(--text-1)' }}>
-            <GuidiaLogo size={38} />
-            <span style={{ fontWeight: 800, fontSize: 19 }}>Guidia</span>
-          </Link>
-
-          <div style={{ marginBottom: 32 }}>
-            <h1 className="t-title">Welcome back</h1>
-            <p className="t-sub" style={{ marginTop: 6 }}>Continue where you left off.</p>
-          </div>
-
-          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 20 }} noValidate>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <label htmlFor="email" style={{ fontWeight: 700 }}>Email</label>
-              <input
-                id="email" className="input-field" type="email" autoComplete="email" required
-                value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com"
-                aria-invalid={!!error} aria-describedby={error ? 'login-error' : undefined}
-              />
+        <form className="stack" style={{ '--gap': 'var(--s-4)' }} onSubmit={handleSubmit} noValidate>
+          <Field label={t('Email address', 'ইমেইল ঠিকানা', 'ईमेल पता', 'Địa chỉ email')} error={emailError}>
+            {(p) => <input {...p} className="input input-lg" type="email" autoComplete="email" inputMode="email" required value={email} onChange={(e) => setEmail(e.target.value)} onBlur={() => setTouched(true)} placeholder="you@example.com" />}
+          </Field>
+          <div className="field">
+            <div className="field-row">
+              <label htmlFor="password" className="label">{t('Password', 'পাসওয়ার্ড', 'पासवर्ड', 'Mật khẩu')}</label>
+              <Link to="/forgot-password" className="text-sm text-strong">{t('Forgot password?', 'পাসওয়ার্ড ভুলে গেছেন?', 'पासवर्ड भूल गए?', 'Quên mật khẩu?')}</Link>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" style={{ fontWeight: 700 }}>Password</label>
-                <Link to="/forgot-password" style={{ fontSize: 14, fontWeight: 600, color: 'var(--blue)' }}>Forgot password?</Link>
-              </div>
-              <PasswordInput id="password" autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" />
-            </div>
+            <PasswordInput id="password" autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} invalid={Boolean(error)} describedBy={error ? 'login-error' : undefined} />
+          </div>
+          <Checkbox id="remember" checked={rememberMe} onChange={setRememberMe}>{t('Keep me signed in on this device', 'এই ডিভাইসে সাইন ইন রাখুন', 'इस डिवाइस पर साइन इन रखें', 'Giữ đăng nhập trên thiết bị này')}</Checkbox>
 
-            <label className="flex items-center gap-8" style={{ fontSize: 15, color: 'var(--text-2)' }}>
-              <input type="checkbox" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />
-              Remember me
-            </label>
+          {error && <div id="login-error"><Alert tone="warn">{error}</Alert></div>}
 
-            {error && (
-              <p id="login-error" role="alert" style={{ color: 'var(--danger)', fontWeight: 600, fontSize: 15 }}>{error}</p>
-            )}
+          <Button type="submit" size="lg" block icon={state === 'idle' ? LogIn : undefined} disabled={!email || !password} state={state}
+            loadingLabel={t('Signing in…', 'সাইন ইন হচ্ছে…', 'साइन इन हो रहा है…', 'Đang đăng nhập…')} successLabel={t('Signed in', 'সাইন ইন হয়েছে', 'साइन इन हो गया', 'Đã đăng nhập')}>
+            {t('Sign in', 'সাইন ইন', 'साइन इन', 'Đăng nhập')}
+          </Button>
+        </form>
 
-            <button className="btn btn-primary btn-full btn-lg" type="submit" disabled={submitting || !email || !password}>
-              {submitting ? 'Signing in…' : (<>Sign In <ArrowRight size={22} /></>)}
-            </button>
-          </form>
-
-          <p style={{ textAlign: 'center', marginTop: 24, color: 'var(--text-3)' }}>
-            Don't have an account? <Link to="/register" style={{ fontWeight: 700 }}>Create one</Link>
-          </p>
-        </div>
+        <p className="auth-switch">{t("Don't have an account?", 'অ্যাকাউন্ট নেই?', 'खाता नहीं है?', 'Chưa có tài khoản?')} <Link to="/register" className="text-strong">{t('Create an account', 'অ্যাকাউন্ট খুলুন', 'खाता बनाएं', 'Tạo tài khoản')}</Link></p>
       </div>
-    </div>
+    </AuthLayout>
   );
 }

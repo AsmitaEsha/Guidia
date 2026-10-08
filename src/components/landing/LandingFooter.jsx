@@ -1,36 +1,36 @@
 import { Link } from 'react-router-dom';
-import GuidiaLogo from '../GuidiaLogo';
-import { FOOTER_LINKS } from '../../data/landingContent';
+import { usePreferences } from '../../context/PreferencesContext';
+import { LANDING_LINKS } from '../../data/landing';
+import { GuidiaMark } from '../GuidiaLogo';
+import { LanguagePicker } from './LandingNavbar';
 
 export default function LandingFooter() {
+  const { t } = usePreferences();
   return (
-    <footer style={{ borderTop: '1px solid var(--border)', paddingTop: 56, paddingBottom: 32 }}>
-      <div className="lp-container">
-        <div className="grid-3" style={{ gap: 32, marginBottom: 40 }}>
-          <div>
-            <div className="flex items-center gap-10" style={{ marginBottom: 10 }}>
-              <GuidiaLogo size={30} />
-              <span style={{ fontWeight: 800, fontSize: 16 }}>Guidia</span>
-            </div>
-            <p style={{ fontSize: 14, color: 'var(--text-secondary)' }}>Learn. Practice. Stay Safe.</p>
-          </div>
-
-          {Object.entries(FOOTER_LINKS).map(([section, links]) => (
-            <div key={section}>
-              <p style={{ fontWeight: 700, fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--text-secondary)', marginBottom: 14 }}>{section}</p>
-              <div className="flex-col gap-10">
-                {links.map((l) => (
-                  <a key={l.label} href={l.href} style={{ fontSize: 14, color: 'var(--text-primary)' }}>{l.label}</a>
-                ))}
-              </div>
-            </div>
-          ))}
+    <footer className="lp-footer">
+      <div className="lp-container lp-footer-grid">
+        <div className="stack" style={{ '--gap': 'var(--s-3)' }}>
+          <span className="brand"><GuidiaMark size={36} title="" /><span className="brand-name">Guidia</span></span>
+          <p className="text-muted">{t('Understand technology. Practise safely. Stay independent.', 'প্রযুক্তি বুঝুন। নিরাপদে অনুশীলন করুন। স্বাধীন থাকুন।', 'तकनीक समझें। सुरक्षित अभ्यास करें। आत्मनिर्भर रहें।', 'Hiểu công nghệ. Luyện tập an toàn. Sống tự lập.')}</p>
+          <LanguagePicker />
         </div>
-
-        <div style={{ borderTop: '1px solid var(--border)', paddingTop: 24, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
-          <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>© {new Date().getFullYear()} Guidia. All rights reserved.</p>
-          <Link to="/onboarding" style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Start Setup</Link>
-        </div>
+        <nav aria-label={t('Product', 'পণ্য', 'उत्पाद', 'Sản phẩm')}>
+          <p className="lp-footer-h">{t('Product', 'পণ্য', 'उत्पाद', 'Sản phẩm')}</p>
+          <ul>{LANDING_LINKS.map(([id, label]) => <li key={id}><a href={`#${id}`}>{t(...label)}</a></li>)}</ul>
+        </nav>
+        <nav aria-label={t('Get started', 'শুরু করুন', 'शुरू करें', 'Bắt đầu')}>
+          <p className="lp-footer-h">Guidia</p>
+          <ul>
+            <li><Link to="/register">{t('Get started', 'শুরু করুন', 'शुरू करें', 'Bắt đầu')}</Link></li>
+            <li><Link to="/login">{t('Sign in', 'সাইন ইন', 'साइन इन', 'Đăng nhập')}</Link></li>
+            <li><Link to="/showcase">{t('Product showcase', 'পণ্য প্রদর্শনী', 'उत्पाद प्रदर्शन', 'Trình diễn sản phẩm')}</Link></li>
+            <li><a href="#families">{t('Help for families', 'পরিবারের জন্য', 'परिवारों के लिए', 'Dành cho gia đình')}</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div className="lp-container lp-footer-base">
+        <p>© {new Date().getFullYear()} Guidia</p>
+        <p className="text-subtle">{t('Practice apps are simulations for learning and are not affiliated with the real apps.', 'অনুশীলন অ্যাপগুলো শেখার জন্য সিমুলেশন, আসল অ্যাপের সাথে যুক্ত নয়।', 'अभ्यास ऐप सीखने के लिए सिमुलेशन हैं, असली ऐप से जुड़े नहीं।', 'Ứng dụng luyện tập là mô phỏng để học, không liên kết với ứng dụng thật.')}</p>
       </div>
     </footer>
   );

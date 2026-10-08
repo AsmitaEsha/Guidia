@@ -1,0 +1,39 @@
+/* Motion: short, calm, purposeful. Every duration is a token, and the
+   tokens collapse to 0 under the user's "Reduce movement" setting or the
+   system preference — state changes still happen, just instantly. */
+
+@keyframes gx-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes gx-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes gx-scale-in { from { opacity: 0; transform: translateY(6px) scale(0.97); } to { opacity: 1; transform: none; } }
+@keyframes gx-sheet-in { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes gx-drawer-in { from { transform: translateX(-100%); } to { transform: none; } }
+@keyframes gx-spin { to { transform: rotate(360deg); } }
+@keyframes gx-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@keyframes gx-pop { 0% { transform: scale(0.6); opacity: 0; } 60% { transform: scale(1.08); opacity: 1; } 100% { transform: scale(1); } }
+@keyframes gx-draw { from { stroke-dashoffset: var(--len, 48); } to { stroke-dashoffset: 0; } }
+@keyframes gx-pulse-ring { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--pulse, var(--danger-700)) 45%, transparent); } 100% { box-shadow: 0 0 0 16px transparent; } }
+@keyframes gx-wave { 0%, 100% { transform: scaleY(0.35); } 50% { transform: scaleY(1); } }
+@keyframes gx-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes gx-step-in { from { opacity: 0; transform: translateX(8px); } to { opacity: 1; transform: none; } }
+@keyframes gx-badge { 0% { transform: scale(0.4); } 70% { transform: scale(1.15); } 100% { transform: scale(1); } }
+
+.rise { animation: gx-rise var(--t-slow) var(--ease-out) both; animation-delay: calc(var(--i, 0) * 45ms); }
+.fade { animation: gx-fade var(--t-base) var(--ease) both; }
+.pop { animation: gx-pop var(--t-slow) var(--ease-out) both; }
+.step-in { animation: gx-step-in var(--t-base) var(--ease-out) both; }
+.spin { animation: gx-spin 0.9s linear infinite; }
+
+/* Route transition: each page fades up 10px on entry. */
+.route-enter { animation: gx-rise var(--t-page) var(--ease-out) both; }
+
+/* Success tick that draws itself */
+.tick-draw path { stroke-dasharray: var(--len, 48); animation: gx-draw var(--t-slow) var(--ease-out) 120ms both; }
+
+/* Collapse decorative motion entirely when reduced. */
+:root[data-reduced-motion='true'] :is(.rise, .fade, .pop, .step-in, .route-enter, .tick-draw path) { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  :is(.rise, .fade, .pop, .step-in, .route-enter, .tick-draw path) { animation: none; }
+  * { scroll-behavior: auto !important; }
+}
+:root[data-reduced-motion='true'] * { scroll-behavior: auto !important; }
+:root[data-reduced-motion='true'] .spin { animation-duration: 2.4s; }

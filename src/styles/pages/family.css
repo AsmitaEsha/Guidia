@@ -1,0 +1,29 @@
+/* Family dashboard: a son, daughter or carer following a learner. */
+.family-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: var(--s-5); }
+.family-learner { border-top: 4px solid var(--coral-500); }
+.family-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: var(--s-3); }
+.family-stat { display: flex; flex-direction: column; gap: 2px; padding: var(--s-3) var(--s-4); border-radius: var(--r-lg); background: var(--card-2); }
+.family-stat svg { width: 20px; height: 20px; color: var(--primary); }
+.family-stat strong { font-size: var(--fs-xl); line-height: 1.1; }
+.family-stat span { color: var(--fg-muted); font-size: var(--fs-sm); }
+.family-skills { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.family-skills li { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); padding: 8px 12px; border-radius: var(--r-md); border: 1px solid var(--border); }
+.family-now { display: flex; align-items: center; gap: 8px; margin: 0; padding: var(--s-3) var(--s-4); border-radius: var(--r-lg); background: var(--primary-soft); }
+.family-now svg { width: 20px; height: 20px; color: var(--primary); flex-shrink: 0; }
+
+.family-alert { border: 2px solid var(--danger-700); background: color-mix(in srgb, var(--danger-100) 55%, var(--card)); animation: family-alert-in var(--t-slow) var(--ease-out); }
+.family-alert-icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--danger-700); color: #fff; flex-shrink: 0; }
+.family-alert-icon svg { width: 24px; height: 24px; }
+.family-alert-reason { font-size: var(--fs-md); font-weight: 650; margin: 0; }
+@keyframes family-alert-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+.family-empty { max-width: 640px; }
+.family-connect { border: 2px dashed var(--primary-soft-2); }
+.family-code-input { letter-spacing: 0.3em; font-weight: 800; font-family: var(--font-mono); text-transform: uppercase; max-width: 280px; }
+
+/* Learner side: the code they share with family. */
+.family-code-card { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-4); }
+.family-code-value { font-family: var(--font-mono); font-size: clamp(1.8rem, 1.4rem + 1.6vw, 2.4rem); font-weight: 800; letter-spacing: 0.25em; color: var(--primary); padding: 6px 16px; border-radius: var(--r-lg); background: var(--primary-soft); }
+
+/* Sign-up: who is this account for? */
+.account-type { display: grid; grid-template-columns: 1fr; gap: var(--s-3); }

@@ -1,0 +1,28 @@
+/* Gmail (Android, Material 3) */
+.gm { display: flex; flex-direction: column; height: 100%; background: #f6f8fc; color: #1f1f1f; }
+.gm .sim-screen { background: #f6f8fc; }
+.gm-search { display: flex; align-items: center; gap: 6px; margin: 4px 12px 6px; padding: 4px 8px 4px 4px; border-radius: 999px; background: #e9eef6; }
+.gm-search-text { display: flex; align-items: center; gap: 8px; flex: 1; color: #444746; font-size: 15px; }
+.gm-folder { margin: 10px 16px 4px; font-size: 13px; font-weight: 600; color: #444746; }
+.gm-row[data-unread='true'] .sim-row-title, .gm-row[data-unread='true'] .sim-row-sub:nth-child(2) { font-weight: 800; }
+.gm-compose { position: absolute; right: 16px; bottom: 18px; display: flex; align-items: center; gap: 10px; padding: 16px 20px; border-radius: 16px; background: #c2e7ff; color: #001d35; font-weight: 600; box-shadow: 0 2px 6px rgb(0 0 0 / 0.2); }
+.gm-readbar { display: flex; align-items: center; gap: 2px; padding: 4px 6px; background: #fff; flex-shrink: 0; }
+.gm-read { padding: 4px 16px 24px; }
+.gm-subject-row { display: flex; align-items: flex-start; gap: 8px; }
+.gm-subject-row h3 { flex: 1; margin: 6px 0; font-size: 21px; font-weight: 400; }
+.gm-warning { display: flex; gap: 10px; margin: 8px 0; padding: 12px; border-radius: 12px; background: #fce8e6; color: #a50e0e; }
+.gm-warning p { margin: 4px 0 8px; font-size: 13.5px; color: #5f1b17; }
+.gm-warn-btn { padding: 8px 14px; border-radius: 999px; background: #fff; border: 1px solid #a50e0e; color: #a50e0e; font-weight: 700; font-size: 13.5px; }
+.gm-from { display: flex; align-items: center; gap: 10px; margin: 10px 0; }
+.gm-body { margin: 0 0 12px; font-size: 15px; line-height: 1.55; }
+.gm-attach { display: flex; gap: 8px; margin-bottom: 14px; }
+.gm-att { display: grid; place-items: center; width: 110px; height: 84px; border-radius: 10px; background: #e8f0fe; font-size: 36px; border: 1px solid #dadce0; }
+.gm-fake-link { display: block; margin: 6px 0 16px; color: #0b57d0; text-decoration: underline; word-break: break-all; text-align: left; font-size: 14px; }
+.gm-reply-row { display: flex; gap: 8px; }
+.gm-pill { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px; border: 1px solid #c4c7c5; font-weight: 600; color: #444746; }
+.gm-drawer-row[aria-pressed='true'] { background: #d3e3fd; border-radius: 999px; }
+.gm-line { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid #e0e0e0; color: #5f6368; font-size: 15px; }
+.gm-line input { flex: 1; border: 0; outline: none; font-size: 16px; color: #1f1f1f; background: transparent; }
+.gm-textarea { width: 100%; min-height: 180px; padding: 14px 16px; border: 0; outline: none; resize: none; font-size: 16px; }
+.gm-file { display: flex; align-items: center; gap: 8px; margin: 8px 16px; padding: 6px 6px 6px 12px; border-radius: 8px; border: 1px solid #dadce0; font-size: 14px; }
+.gm-file .sim-icon-btn { margin-left: auto; width: 30px; height: 30px; }

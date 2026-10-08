@@ -1,17 +1,30 @@
-import { guardianRepository } from '../repositories/guardianRepository.js';
-import { userRepository } from '../repositories/userRepository.js';
+import { prisma } from '../config/prisma.js';
 import { ApiError } from '../middleware/errorHandler.js';
+import { notificationService } from '../notifications/notificationService.js';
+import { memoryService } from './memoryService.js';
+import { outbox } from '../notifications/outbox.js';
+import { audit, AUDIT } from './auditService.js';
+import { actionService } from './actionService.js';
+import { progressService } from './progressService.js';
+import { ALL_SCOPES, DEFAULT_SCOPES, guardianScopes, requireGuardianScope } from './guardianAccess.js';
+import { stableHash } from '../security/tokens.js';
+import crypto from 'node:crypto';
+import { env } from '../config/env.js';
+
+const person = { select: { id: true, fullName: true, email: true } };
 
 function toPublicRelationship(r) {
   return {
     id: r.id,
     status: r.status,
+    role: r.role,
     approvalThreshold: r.approvalThreshold,
     guardianEmail: r.guardianEmail,
     createdAt: r.createdAt,
     respondedAt: r.respondedAt,
-    senior: r.senior,
-    guardian: r.guardian,
+    senior: r.senior ?? null,
+    guardian: r.guardian ?? null,
+    permissions: (r.permissions ?? []).filter((p) => !p.revokedAt).map((p) => p.scope),
   };
 }
 
@@ -19,98 +32,316 @@ function toPublicApproval(a) {
   return {
     id: a.id,
     relationshipId: a.relationshipId,
+    actionProposalId: a.actionProposalId,
     actionType: a.actionType,
-    summary: JSON.parse(a.summary),
+    summary: a.summary,
     status: a.status,
+    version: a.version,
     createdAt: a.createdAt,
     resolvedAt: a.resolvedAt,
-    ...(a.relationship?.senior ? { senior: a.relationship.senior } : {}),
+    senior: a.relationship?.senior ?? null,
   };
 }
 
+// Family codes: 6 characters, no look-alikes (0/O, 1/I/L), easy to read
+// aloud over the phone.
+const CODE_ALPHABET = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+const CODE_TTL_MS = 7 * 24 * 60 * 60_000;
+// What a family member sees after connecting with a code. The learner can
+// change any of these later.
+const FAMILY_SCOPES = ['EMERGENCY_ALERTS', 'SAFETY_ALERTS', 'LEARNING_PROGRESS', 'TASK_ACTIVITY'];
+const normaliseCode = (code) => String(code || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+function newCode() {
+  return Array.from(crypto.randomBytes(6), (b) => CODE_ALPHABET[b % CODE_ALPHABET.length]).join('');
+}
+
+async function loadRelationship(id) {
+  return prisma.guardianRelationship.findUnique({ where: { id }, include: { senior: person, guardian: person, permissions: true } });
+}
+
 export const guardianService = {
-  async invite(seniorUserId, { guardianEmail, approvalThreshold }) {
-    const senior = await userRepository.findById(seniorUserId);
-    if (guardianEmail.toLowerCase() === senior.email.toLowerCase()) {
-      throw new ApiError(400, "You can't set yourself as your own guardian.", 'INVALID_GUARDIAN');
+  /** The learner's current family code, created (or renewed) on request. */
+  async familyCode(seniorUserId, { renew = false } = {}) {
+    const current = await prisma.familyLinkCode.findFirst({ where: { seniorUserId, expiresAt: { gt: new Date() } }, orderBy: { createdAt: 'desc' } });
+    if (current && !renew) return { code: current.code, expiresAt: current.expiresAt };
+    await prisma.familyLinkCode.deleteMany({ where: { seniorUserId } });
+    for (let attempt = 0; attempt < 5; attempt += 1) {
+      try {
+        const row = await prisma.familyLinkCode.create({ data: { code: newCode(), seniorUserId, expiresAt: new Date(Date.now() + CODE_TTL_MS) } });
+        return { code: row.code, expiresAt: row.expiresAt };
+      } catch (err) {
+        if (err?.code !== 'P2002') throw err; // unique clash: try another code
+      }
     }
-    const relationship = await guardianRepository.createInvite({
-      seniorUserId,
-      guardianEmail: guardianEmail.toLowerCase(),
-      approvalThreshold: approvalThreshold ?? 0,
+    throw new ApiError(503, 'Could not create a family code right now. Please try again.', 'CODE_UNAVAILABLE');
+  },
+
+  async findFamilyCode(code) {
+    const row = await prisma.familyLinkCode.findUnique({ where: { code: normaliseCode(code) }, include: { senior: { select: { id: true, fullName: true } } } });
+    if (!row || row.expiresAt <= new Date()) {
+      throw new ApiError(400, "That family code didn't work. Please check it, or ask for a new one.", 'INVALID_FAMILY_CODE');
+    }
+    return row;
+  },
+
+  // Entering a learner's family code connects straight away: sharing the
+  // code is the learner's consent. An existing invitation is activated.
+  async linkWithCode(guardianUserId, code, { requestId } = {}) {
+    const row = await this.findFamilyCode(code);
+    const seniorUserId = row.seniorUserId;
+    if (seniorUserId === guardianUserId) throw new ApiError(400, 'This is your own family code. Share it with your family instead.', 'INVALID_GUARDIAN');
+    const guardianUser = await prisma.user.findUnique({ where: { id: guardianUserId }, select: { fullName: true, email: true } });
+    const email = guardianUser.email.toLowerCase();
+
+    const relId = await prisma.$transaction(async (tx) => {
+      const existing = await tx.guardianRelationship.findFirst({
+        where: { seniorUserId, OR: [{ guardianUserId }, { guardianEmail: email }], status: { in: ['PENDING', 'ACTIVE'] } },
+        include: { permissions: true },
+      });
+      let id;
+      if (existing?.status === 'ACTIVE') return existing.id;
+      if (existing) {
+        await tx.guardianRelationship.update({ where: { id: existing.id }, data: { guardianUserId, status: 'ACTIVE', respondedAt: new Date() } });
+        const have = new Set(existing.permissions.filter((p) => !p.revokedAt).map((p) => p.scope));
+        const add = FAMILY_SCOPES.filter((sc) => !have.has(sc));
+        if (add.length) await tx.guardianPermission.createMany({ data: add.map((scope) => ({ relationshipId: existing.id, scope })) });
+        id = existing.id;
+      } else {
+        const rel = await tx.guardianRelationship.create({
+          data: { seniorUserId, guardianUserId, guardianEmail: email, status: 'ACTIVE', respondedAt: new Date(), role: 'PRIMARY', permissions: { create: FAMILY_SCOPES.map((scope) => ({ scope })) } },
+        });
+        id = rel.id;
+      }
+      await notificationService.notify(tx, {
+        userId: seniorUserId,
+        type: 'GUARDIAN_CONNECTED',
+        severity: 'MEDIUM',
+        title: `${guardianUser.fullName} is now connected as your family`,
+        body: 'They will be told when you press "I need help". You can change what they see in Trusted people.',
+        i18n: { key: 'family_connected', vars: { name: guardianUser.fullName } },
+        dedupeKey: `guardian_connected:${id}`,
+      });
+      await audit({ actorUserId: guardianUserId, actorType: 'GUARDIAN', action: AUDIT.GUARDIAN_CONNECTED, targetType: 'GuardianRelationship', targetId: id, requestId, metadata: { via: 'family_code' } }, tx);
+      return id;
     });
-    return toPublicRelationship({ ...relationship, senior: { id: senior.id, fullName: senior.fullName, email: senior.email }, guardian: null });
+    return toPublicRelationship(await loadRelationship(relId));
+  },
+
+  async invite(seniorUserId, { guardianEmail, approvalThreshold = 0, role = 'PRIMARY', permissions = DEFAULT_SCOPES }, { requestId } = {}) {
+    const senior = await prisma.user.findUnique({ where: { id: seniorUserId } });
+    const email = guardianEmail.toLowerCase();
+    if (email === senior.email.toLowerCase()) throw new ApiError(400, "You can't add yourself as your own trusted person.", 'INVALID_GUARDIAN');
+
+    const open = await prisma.guardianRelationship.findFirst({ where: { seniorUserId, guardianEmail: email, status: { in: ['PENDING', 'ACTIVE'] } } });
+    if (open) throw new ApiError(409, 'This person is already invited or connected.', 'ALREADY_INVITED');
+
+    const scopes = [...new Set(permissions)].filter((s) => ALL_SCOPES.includes(s));
+    const relationship = await prisma.$transaction(async (tx) => {
+      const rel = await tx.guardianRelationship.create({
+        data: { seniorUserId, guardianEmail: email, approvalThreshold, role, permissions: { create: scopes.map((scope) => ({ scope })) } },
+      });
+      const existingUser = await tx.user.findUnique({ where: { email }, select: { id: true } });
+      if (existingUser) {
+        await notificationService.notify(tx, {
+          userId: existingUser.id,
+          type: 'GUARDIAN_INVITE',
+          severity: 'HIGH',
+          title: `${senior.fullName} invited you to be a trusted person`,
+          body: 'Open Guardian to accept or decline.',
+          i18n: { key: 'guardian_invite', vars: { name: senior.fullName } },
+          data: { relationshipId: rel.id },
+          dedupeKey: `guardian_invite:${rel.id}`,
+          email: { template: 'guardian_invite', data: { seniorName: senior.fullName } },
+        });
+      } else {
+        await outbox.enqueueEmail({ to: email, template: 'guardian_invite', data: { seniorName: senior.fullName, appUrl: env.appUrl }, idempotencyKey: `guardian_invite:${rel.id}` }, tx);
+      }
+      await audit({ actorUserId: seniorUserId, action: AUDIT.GUARDIAN_INVITED, targetType: 'GuardianRelationship', targetId: rel.id, requestId, metadata: { scopes } }, tx);
+      return rel;
+    });
+    return toPublicRelationship(await loadRelationship(relationship.id));
   },
 
   async list(userId) {
-    const user = await userRepository.findById(userId);
-    const relationships = await guardianRepository.listForUser(userId, user.email);
-    return relationships.map(toPublicRelationship);
+    const user = await prisma.user.findUnique({ where: { id: userId }, select: { email: true } });
+    const rels = await prisma.guardianRelationship.findMany({
+      where: { OR: [{ seniorUserId: userId }, { guardianUserId: userId }, { guardianEmail: user.email.toLowerCase(), status: 'PENDING' }] },
+      include: { senior: person, guardian: person, permissions: true },
+      orderBy: { createdAt: 'desc' },
+    });
+    return {
+      myTrustedPeople: rels.filter((r) => r.seniorUserId === userId).map(toPublicRelationship),
+      peopleIHelp: rels.filter((r) => r.guardianUserId === userId && r.status === 'ACTIVE').map(toPublicRelationship),
+      invitationsForMe: rels.filter((r) => r.status === 'PENDING' && r.seniorUserId !== userId && r.guardianEmail === user.email.toLowerCase()).map(toPublicRelationship),
+    };
   },
 
-  async accept(relationshipId, guardianUserId) {
-    const relationship = await guardianRepository.findById(relationshipId);
-    if (!relationship) throw new ApiError(404, 'That invitation was not found.', 'NOT_FOUND');
-    if (relationship.status !== 'PENDING') {
-      throw new ApiError(409, 'That invitation is no longer pending.', 'INVALID_STATE');
-    }
-    const guardianUser = await userRepository.findById(guardianUserId);
-    if (relationship.guardianEmail.toLowerCase() !== guardianUser.email.toLowerCase()) {
-      throw new ApiError(403, 'This invitation was addressed to a different email address.', 'FORBIDDEN');
-    }
-    const updated = await guardianRepository.accept(relationshipId, guardianUser.id);
-    return toPublicRelationship(updated);
+  async accept(relationshipId, guardianUserId, { requestId } = {}) {
+    const guardianUser = await prisma.user.findUnique({ where: { id: guardianUserId } });
+    const rel = await prisma.guardianRelationship.findUnique({ where: { id: relationshipId } });
+    if (!rel) throw new ApiError(404, 'That invitation was not found.', 'NOT_FOUND');
+    if (rel.guardianEmail.toLowerCase() !== guardianUser.email.toLowerCase()) throw new ApiError(403, 'This invitation was sent to a different email address.', 'FORBIDDEN');
+
+    await prisma.$transaction(async (tx) => {
+      const { count } = await tx.guardianRelationship.updateMany({
+        where: { id: relationshipId, status: 'PENDING' },
+        data: { guardianUserId, status: 'ACTIVE', respondedAt: new Date() },
+      });
+      if (count !== 1) throw new ApiError(409, 'That invitation is no longer pending.', 'INVALID_STATE');
+      await notificationService.notify(tx, {
+        userId: rel.seniorUserId,
+        type: 'GUARDIAN_CONNECTED',
+        severity: 'MEDIUM',
+        title: `${guardianUser.fullName} is now one of your trusted people`,
+        body: 'You can change what they can see at any time in Guardian.',
+        i18n: { key: 'guardian_connected', vars: { name: guardianUser.fullName } },
+        dedupeKey: `guardian_connected:${relationshipId}`,
+      });
+      await audit({ actorUserId: guardianUserId, actorType: 'GUARDIAN', action: AUDIT.GUARDIAN_CONNECTED, targetType: 'GuardianRelationship', targetId: relationshipId, requestId }, tx);
+    });
+    return toPublicRelationship(await loadRelationship(relationshipId));
   },
 
-  async revoke(relationshipId, userId) {
-    const relationship = await guardianRepository.findById(relationshipId);
-    if (!relationship) throw new ApiError(404, 'That relationship was not found.', 'NOT_FOUND');
-    if (relationship.seniorUserId !== userId && relationship.guardianUserId !== userId) {
-      throw new ApiError(403, "You don't have access to that.", 'FORBIDDEN');
-    }
-    const updated = await guardianRepository.revoke(relationshipId);
-    return toPublicRelationship(updated);
+  // Either side may end the relationship; the invited person may decline.
+  async revoke(relationshipId, userId, { requestId } = {}) {
+    const user = await prisma.user.findUnique({ where: { id: userId }, select: { email: true, fullName: true } });
+    const rel = await prisma.guardianRelationship.findUnique({ where: { id: relationshipId } });
+    const isParty = rel && (rel.seniorUserId === userId || rel.guardianUserId === userId || (rel.status === 'PENDING' && rel.guardianEmail === user.email.toLowerCase()));
+    if (!isParty) throw new ApiError(404, 'That relationship was not found.', 'NOT_FOUND');
+    if (rel.status === 'REVOKED') return toPublicRelationship(await loadRelationship(relationshipId));
+
+    await prisma.$transaction(async (tx) => {
+      await tx.guardianRelationship.update({ where: { id: relationshipId }, data: { status: 'REVOKED', respondedAt: new Date() } });
+      await tx.guardianApproval.updateMany({ where: { relationshipId, status: 'PENDING' }, data: { status: 'EXPIRED', resolvedAt: new Date(), version: { increment: 1 } } });
+      const otherId = rel.seniorUserId === userId ? rel.guardianUserId : rel.seniorUserId;
+      if (otherId) {
+        await notificationService.notify(tx, {
+          userId: otherId,
+          type: 'GUARDIAN_REVOKED',
+          severity: 'MEDIUM',
+          title: 'A trusted-person connection ended',
+          body: `${user.fullName} ended the connection on Guidia.`,
+          i18n: { key: 'guardian_revoked', vars: { name: user.fullName } },
+          dedupeKey: `guardian_revoked:${relationshipId}`,
+        });
+      }
+      await audit({ actorUserId: userId, action: AUDIT.GUARDIAN_REVOKED, targetType: 'GuardianRelationship', targetId: relationshipId, requestId }, tx);
+    });
+    return toPublicRelationship(await loadRelationship(relationshipId));
   },
 
-  // Called from a Safe Practice sim's "Send for Guardian Approval" step.
-  // Requires an ACTIVE relationship — a senior cannot request approval from
-  // a guardian who hasn't consented yet.
-  async requestApproval(seniorUserId, { relationshipId, actionType, summary }) {
-    const relationship = await guardianRepository.findById(relationshipId);
-    if (!relationship || relationship.seniorUserId !== seniorUserId) {
-      throw new ApiError(404, 'That guardian relationship was not found.', 'NOT_FOUND');
-    }
-    if (relationship.status !== 'ACTIVE') {
-      throw new ApiError(409, 'This guardian has not accepted your invitation yet.', 'GUARDIAN_NOT_ACTIVE');
-    }
-    const approval = await guardianRepository.createApproval({ relationshipId, actionType, summary });
-    return toPublicApproval(approval);
-  },
+  // Only the senior sets what a guardian can see; every change is visible
+  // to the senior and the guardian is told.
+  async setPermissions(relationshipId, seniorUserId, scopes, { approvalThreshold, requestId } = {}) {
+    const rel = await prisma.guardianRelationship.findUnique({ where: { id: relationshipId }, include: { permissions: true, guardian: person } });
+    if (!rel || rel.seniorUserId !== seniorUserId) throw new ApiError(404, 'That relationship was not found.', 'NOT_FOUND');
+    if (rel.status === 'REVOKED') throw new ApiError(409, 'This connection has ended.', 'INVALID_STATE');
 
-  async resolveApproval(approvalId, guardianUserId, status) {
-    const approval = await guardianRepository.findApprovalById(approvalId);
-    if (!approval) throw new ApiError(404, 'That approval request was not found.', 'NOT_FOUND');
-    if (approval.relationship.guardianUserId !== guardianUserId) {
-      throw new ApiError(403, "You don't have access to that.", 'FORBIDDEN');
-    }
-    if (approval.status !== 'PENDING') {
-      throw new ApiError(409, 'That request has already been resolved.', 'INVALID_STATE');
-    }
-    const updated = await guardianRepository.resolveApproval(approvalId, status);
-    return toPublicApproval(updated);
-  },
+    const wanted = new Set(scopes.filter((s) => ALL_SCOPES.includes(s)));
+    const current = new Set(rel.permissions.filter((p) => !p.revokedAt).map((p) => p.scope));
+    const added = [...wanted].filter((s) => !current.has(s));
+    const removed = [...current].filter((s) => !wanted.has(s));
 
-  async listApprovals(relationshipId, userId) {
-    const relationship = await guardianRepository.findById(relationshipId);
-    if (!relationship || (relationship.seniorUserId !== userId && relationship.guardianUserId !== userId)) {
-      throw new ApiError(404, 'That guardian relationship was not found.', 'NOT_FOUND');
-    }
-    const approvals = await guardianRepository.listApprovalsForRelationship(relationshipId);
-    return approvals.map(toPublicApproval);
+    await prisma.$transaction(async (tx) => {
+      for (const scope of added) {
+        await tx.guardianPermission.upsert({
+          where: { relationshipId_scope: { relationshipId, scope } },
+          create: { relationshipId, scope },
+          update: { revokedAt: null, grantedAt: new Date() },
+        });
+      }
+      if (removed.length) {
+        await tx.guardianPermission.updateMany({ where: { relationshipId, scope: { in: removed } }, data: { revokedAt: new Date() } });
+      }
+      if (approvalThreshold != null) {
+        await tx.guardianRelationship.update({ where: { id: relationshipId }, data: { approvalThreshold } });
+      }
+      if (added.length || removed.length) {
+        const changeKey = stableHash({ added, removed, at: Date.now() }).slice(0, 16);
+        await notificationService.notify(tx, {
+          userId: seniorUserId,
+          type: 'PERMISSION_CHANGED',
+          severity: 'MEDIUM',
+          title: 'Your sharing settings changed',
+          body: `What ${rel.guardian?.fullName || rel.guardianEmail} can see was updated.`,
+          i18n: { key: 'sharing_changed', vars: { name: rel.guardian?.fullName || rel.guardianEmail } },
+          data: { added, removed },
+          dedupeKey: `perm:${relationshipId}:${changeKey}`,
+        });
+        if (rel.guardianUserId) {
+          await notificationService.notify(tx, {
+            userId: rel.guardianUserId,
+            type: 'PERMISSION_CHANGED',
+            severity: 'LOW',
+            title: 'Sharing settings changed',
+            body: 'The person you help updated what you can see.',
+            i18n: { key: 'sharing_changed_guardian', vars: {} },
+            dedupeKey: `perm_g:${relationshipId}:${changeKey}`,
+          });
+        }
+        await audit({ actorUserId: seniorUserId, action: AUDIT.PERMISSION_CHANGED, targetType: 'GuardianRelationship', targetId: relationshipId, requestId, metadata: { added, removed } }, tx);
+      }
+    });
+    return toPublicRelationship(await loadRelationship(relationshipId));
   },
 
   async listApprovalsForGuardian(guardianUserId) {
-    const approvals = await guardianRepository.listApprovalsForGuardian(guardianUserId);
+    const approvals = await prisma.guardianApproval.findMany({
+      where: { relationship: { guardianUserId, status: 'ACTIVE', permissions: { some: { scope: 'APPROVAL_REQUESTS', revokedAt: null } } } },
+      include: { relationship: { include: { senior: { select: { id: true, fullName: true } } } } },
+      orderBy: { createdAt: 'desc' },
+      take: 50,
+    });
     return approvals.map(toPublicApproval);
+  },
+
+  async resolveApproval(approvalId, guardianUserId, decision, { requestId } = {}) {
+    await prisma.$transaction(async (tx) => {
+      const approval = await tx.guardianApproval.findUnique({ where: { id: approvalId }, include: { relationship: true } });
+      if (!approval || approval.relationship.guardianUserId !== guardianUserId) throw new ApiError(404, 'That request was not found.', 'NOT_FOUND');
+      await requireGuardianScope(guardianUserId, approval.relationship.seniorUserId, 'APPROVAL_REQUESTS', tx);
+      if (approval.status !== 'PENDING') throw new ApiError(409, 'This request was already answered.', 'APPROVAL_ALREADY_RESOLVED');
+      await actionService.resolveGuardianApproval(tx, approval, decision, { guardianUserId, requestId });
+    });
+    const fresh = await prisma.guardianApproval.findUnique({ where: { id: approvalId }, include: { relationship: { include: { senior: { select: { id: true, fullName: true } } } } } });
+    return toPublicApproval(fresh);
+  },
+
+  // What a guardian may see about one senior — strictly by permission.
+  async seniorOverview(guardianUserId, seniorUserId) {
+    const access = await guardianScopes(guardianUserId, seniorUserId);
+    if (!access) throw new ApiError(404, 'That person was not found.', 'NOT_FOUND');
+    const { scopes, relationship } = access;
+    const senior = await prisma.user.findUnique({ where: { id: seniorUserId }, select: { id: true, fullName: true, phone: true, preferredLanguage: true } });
+    if (!scopes.has('EMERGENCY_ALERTS')) delete senior.phone;
+    const overview = { senior, permissions: [...scopes], connectedSince: relationship.respondedAt };
+
+    if (scopes.has('LEARNING_PROGRESS')) overview.progress = await progressService.summary(seniorUserId);
+    if (scopes.has('SAFETY_ALERTS')) {
+      const since = new Date(Date.now() - 30 * 24 * 60 * 60_000);
+      const rows = await prisma.riskAssessment.groupBy({ by: ['severity'], where: { userId: seniorUserId, createdAt: { gte: since } }, _count: true });
+      // Counts only — never the message content.
+      overview.safety = { last30Days: Object.fromEntries(rows.map((r) => [r.severity, r._count])) };
+    }
+    if (scopes.has('TASK_ACTIVITY')) {
+      const task = await prisma.guidedTaskSession.findFirst({
+        where: { userId: seniorUserId, status: { in: ['ACTIVE', 'PAUSED', 'WAITING_FOR_CONFIRMATION', 'WAITING_FOR_GUARDIAN'] } },
+        orderBy: { updatedAt: 'desc' },
+        select: { goal: true, status: true, currentStepOrder: true, updatedAt: true, scenario: { select: { title: true } }, lesson: { select: { title: true } } },
+      });
+      overview.currentTask = task;
+    }
+    if (scopes.has('EMERGENCY_ALERTS')) {
+      overview.openEmergencies = await prisma.emergencyEvent.findMany({
+        where: { seniorId: seniorUserId, status: { in: ['TRIGGERED', 'SENT', 'ACKNOWLEDGED', 'CONTACTED'] } },
+        select: { id: true, reason: true, status: true, createdAt: true },
+      });
+    }
+    if (scopes.has('MEMORY_BOOK')) {
+      const viewer = await prisma.user.findUnique({ where: { id: guardianUserId }, select: { preferredLanguage: true } });
+      const memories = await prisma.memoryBookEntry.findMany({ where: { userId: seniorUserId }, orderBy: { createdAt: 'desc' }, take: 5, select: { title: true, summary: true, lessonId: true, category: true, createdAt: true } });
+      overview.recentMemories = (await memoryService.localize(memories, viewer?.preferredLanguage)).map(({ title, category, createdAt }) => ({ title, category, createdAt }));
+    }
+    return overview;
   },
 };

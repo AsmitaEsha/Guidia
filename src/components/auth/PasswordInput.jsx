@@ -1,36 +1,25 @@
 import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
+import { usePreferences } from '../../context/PreferencesContext';
 
 // A password field with a visibility toggle that has a real accessible
 // label ("Show password" / "Hide password"), not just an icon.
-export default function PasswordInput({ id, value, onChange, placeholder, autoComplete, required }) {
+export default function PasswordInput({ id, value, onChange, placeholder, autoComplete, required, invalid, describedBy, onBlur }) {
+  const { t } = usePreferences();
   const [visible, setVisible] = useState(false);
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div className="input-action">
       <input
-        id={id}
-        className="input-field"
-        type={visible ? 'text' : 'password'}
-        autoComplete={autoComplete}
-        required={required}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        style={{ paddingRight: 48 }}
+        id={id} className="input input-lg" type={visible ? 'text' : 'password'} autoComplete={autoComplete} required={required}
+        value={value} onChange={onChange} onBlur={onBlur} placeholder={placeholder}
+        aria-invalid={invalid || undefined} aria-describedby={describedBy}
       />
       <button
-        type="button"
-        onClick={() => setVisible((v) => !v)}
-        aria-label={visible ? 'Hide password' : 'Show password'}
-        aria-pressed={visible}
-        style={{
-          position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)',
-          background: 'none', border: 'none', color: 'var(--text-3)', cursor: 'pointer',
-          padding: 6, display: 'flex', alignItems: 'center', justifyContent: 'center',
-        }}
+        type="button" className="btn btn-ghost btn-icon btn-sm" onClick={() => setVisible((v) => !v)} aria-pressed={visible}
+        aria-label={visible ? t('Hide password', 'পাসওয়ার্ড লুকান', 'पासवर्ड छिपाएं', 'Ẩn mật khẩu') : t('Show password', 'পাসওয়ার্ড দেখান', 'पासवर्ड दिखाएं', 'Hiện mật khẩu')}
       >
-        {visible ? <EyeOff size={19} /> : <Eye size={19} />}
+        {visible ? <EyeOff aria-hidden="true" /> : <Eye aria-hidden="true" />}
       </button>
     </div>
   );

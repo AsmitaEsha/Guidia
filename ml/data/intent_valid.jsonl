@@ -1,0 +1,38 @@
+{"text": "teach me how messenger works", "label": "LEARN_APP", "language": "en"}
+{"text": "imo kivabe use kore", "label": "LEARN_APP", "language": "bn-Latn"}
+{"text": "give me a lesson", "label": "START_LESSON", "language": "en"}
+{"text": "पाठ शुरू करें", "label": "START_LESSON", "language": "hi"}
+{"text": "continue the lesson from before", "label": "CONTINUE_LEARNING", "language": "en"}
+{"text": "আগের পাঠটা আবার চালাও", "label": "CONTINUE_LEARNING", "language": "bn"}
+{"text": "send 500 taka to rahim on nagad", "label": "SEND_MONEY", "language": "en"}
+{"text": "chuyển 200 nghìn qua momo", "label": "SEND_MONEY", "language": "vi"}
+{"text": "how will the money reach me", "label": "RECEIVE_MONEY", "language": "en"}
+{"text": "টাকা আসলে কোথায় দেখব", "label": "RECEIVE_MONEY", "language": "bn"}
+{"text": "i need a dentist appointment", "label": "BOOK_APPOINTMENT", "language": "en"}
+{"text": "bác sĩ tim mạch đặt lịch thế nào", "label": "BOOK_APPOINTMENT", "language": "vi"}
+{"text": "send a voice message to my brother", "label": "SEND_MESSAGE", "language": "en"}
+{"text": "भाई को फोटो भेजो", "label": "SEND_MESSAGE", "language": "hi"}
+{"text": "open the new message", "label": "READ_MESSAGE", "language": "en"}
+{"text": "notun message ta dekhao", "label": "READ_MESSAGE", "language": "bn-Latn"}
+{"text": "email my doctor", "label": "SEND_EMAIL", "language": "en"}
+{"text": "ইমেইলে চিঠি লিখব", "label": "SEND_EMAIL", "language": "bn"}
+{"text": "did i get any email", "label": "READ_EMAIL", "language": "en"}
+{"text": "kiểm tra email", "label": "READ_EMAIL", "language": "vi"}
+{"text": "order groceries on the app", "label": "SHOP_ONLINE", "language": "en"}
+{"text": "অনলাইনে ওষুধ কিনব", "label": "SHOP_ONLINE", "language": "bn"}
+{"text": "which button do i tap next", "label": "CHECK_SCREEN", "language": "en"}
+{"text": "अगला बटन कौन सा है", "label": "CHECK_SCREEN", "language": "hi"}
+{"text": "explain what i am looking at", "label": "EXPLAIN_SCREEN", "language": "en"}
+{"text": "eta kon screen", "label": "EXPLAIN_SCREEN", "language": "bn-Latn"}
+{"text": "should i allow this app to see my contacts", "label": "SAFETY_CHECK", "language": "en"}
+{"text": "লোকেশন চালু রাখা কি নিরাপদ", "label": "SAFETY_CHECK", "language": "bn"}
+{"text": "a bank called asking for my code is that a scam", "label": "SCAM_CHECK", "language": "en"}
+{"text": "cuộc gọi này có phải lừa không", "label": "SCAM_CHECK", "language": "vi"}
+{"text": "call my daughter for me", "label": "CONTACT_GUARDIAN", "language": "en"}
+{"text": "बेटी को खबर करो", "label": "CONTACT_GUARDIAN", "language": "hi"}
+{"text": "i made a mistake please help me", "label": "REQUEST_HELP", "language": "en"}
+{"text": "ami bhul kore felechi", "label": "REQUEST_HELP", "language": "bn-Latn"}
+{"text": "open settings", "label": "NAVIGATION", "language": "en"}
+{"text": "bước tiếp theo", "label": "NAVIGATION", "language": "vi"}
+{"text": "who won the match", "label": "UNKNOWN", "language": "en"}
+{"text": "আজ বাজারে কী দাম", "label": "UNKNOWN", "language": "bn"}

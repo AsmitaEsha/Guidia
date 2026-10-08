@@ -1,0 +1,3126 @@
+{
+ "messenger": [
+  {
+   "id": "ms1",
+   "skill": "messaging.send_message",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Send a message",
+    "bn": "মেসেজ পাঠান",
+    "hi": "मैसेज भेजें",
+    "vi": "Gửi tin nhắn"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Open Rupa's chat.",
+      "bn": "রূপার চ্যাট খুলুন।",
+      "hi": "रूपा की चैट खोलें।",
+      "vi": "Mở đoạn chat với Lan."
+     },
+     "expect": "open_chat_rupa",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the \"Aa\" box and type a few words.",
+      "bn": "\"Aa\" ঘরে চেপে কয়েকটা কথা লিখুন।",
+      "hi": "\"Aa\" बॉक्स पर टैप करके कुछ लिखें।",
+      "vi": "Chạm ô \"Aa\" và gõ vài chữ."
+     },
+     "expect": "type_message",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the blue paper plane to send.",
+      "bn": "পাঠাতে নীল কাগজের প্লেনে চাপুন।",
+      "hi": "भेजने के लिए नीले कागज़ के जहाज़ पर टैप करें।",
+      "vi": "Chạm máy bay giấy màu xanh để gửi."
+     },
+     "expect": "send_message",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "ms2",
+   "skill": "messaging.video_call",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Make a video call",
+    "bn": "ভিডিও কল করুন",
+    "hi": "वीडियो कॉल करें",
+    "vi": "Gọi video"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Open Rupa's chat.",
+      "bn": "রূপার চ্যাট খুলুন।",
+      "hi": "रूपा की चैट खोलें।",
+      "vi": "Mở đoạn chat với Lan."
+     },
+     "expect": "open_chat_rupa",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the video camera at the top to call.",
+      "bn": "কল করতে ওপরে ভিডিও ক্যামেরায় চাপুন।",
+      "hi": "कॉल करने के लिए ऊपर वीडियो कैमरे पर टैप करें।",
+      "vi": "Chạm biểu tượng máy quay ở trên để gọi."
+     },
+     "expect": "start_video_call",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "When you're done, tap the red button to hang up.",
+      "bn": "শেষ হলে ফোন রাখতে লাল বোতামে চাপুন।",
+      "hi": "हो जाए तो फोन रखने के लिए लाल बटन दबाएं।",
+      "vi": "Xong thì chạm nút đỏ để cúp máy."
+     },
+     "expect": "end_call",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "ms3",
+   "skill": "safety.verify_identity",
+   "level": "INTERMEDIATE",
+   "title": {
+    "en": "A \"son\" asks for money",
+    "bn": "\"ছেলে\" টাকা চাইছে",
+    "hi": "\"बेटा\" पैसे मांग रहा है",
+    "vi": "\"Con trai\" hỏi tiền"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Open the chat from \"Rahim (Son)\" that asks for money.",
+      "bn": "টাকা চাওয়া \"রহিম (ছেলে)\"-এর চ্যাটটা খুলুন।",
+      "hi": "पैसे मांगने वाली \"राहुल (बेटा)\" की चैट खोलें।",
+      "vi": "Mở đoạn chat của \"Minh (con trai)\" đang hỏi tiền."
+     },
+     "expect": "open_chat_fake",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Read it calmly. Then tap his name at the top to see who this really is.",
+      "bn": "শান্তভাবে পড়ুন। তারপর ওপরে নামে চেপে দেখুন আসলে কে।",
+      "hi": "आराम से पढ़ें। फिर ऊपर नाम पर टैप करके देखें असल में कौन है।",
+      "vi": "Đọc bình tĩnh. Rồi chạm vào tên ở trên để xem thật ra là ai."
+     },
+     "expect": "open_contact_info",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "This is a copied account. Tap Block — then call your son on his usual number.",
+      "bn": "এটা নকল অ্যাকাউন্ট। ব্লক চাপুন — তারপর ছেলেকে তার চেনা নম্বরে ফোন করুন।",
+      "hi": "यह नकली खाता है। ब्लॉक दबाएं — फिर बेटे को उसके पुराने नंबर पर फोन करें।",
+      "vi": "Đây là tài khoản giả. Chạm Chặn — rồi gọi con theo số quen thuộc."
+     },
+     "expect": "block_contact",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "ms4",
+   "skill": "safety.recognise_scam",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Delete a prize message",
+    "bn": "পুরস্কারের মেসেজ মুছুন",
+    "hi": "इनाम वाला मैसेज डिलीट करें",
+    "vi": "Xóa tin nhắn trúng thưởng"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Open \"Message requests\" at the bottom of your chats.",
+      "bn": "চ্যাটের নিচে \"মেসেজ রিকোয়েস্ট\" খুলুন।",
+      "hi": "चैट के नीचे \"मैसेज रिक्वेस्ट\" खोलें।",
+      "vi": "Mở \"Tin nhắn chờ\" ở cuối danh sách."
+     },
+     "expect": "open_requests",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "A stranger says you won a prize and asks for your PIN. Tap Delete.",
+      "bn": "একজন অচেনা বলছে আপনি পুরস্কার জিতেছেন আর পিন চাইছে। মুছুন চাপুন।",
+      "hi": "एक अनजान कहता है आपने इनाम जीता और पिन मांग रहा है। डिलीट दबाएं।",
+      "vi": "Người lạ nói bạn trúng thưởng và hỏi PIN. Chạm Xóa."
+     },
+     "expect": "delete_request",
+     "hint": null
+    }
+   ]
+  }
+ ],
+ "imo": [
+  {
+   "id": "im1",
+   "skill": "messaging.video_call",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Make a video call",
+    "bn": "ভিডিও কল করুন",
+    "hi": "वीडियो कॉल करें",
+    "vi": "Gọi video"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Open Rupa's chat.",
+      "bn": "রূপার চ্যাট খুলুন।",
+      "hi": "रूपा की चैट खोलें।",
+      "vi": "Mở đoạn chat với Lan."
+     },
+     "expect": "open_chat_rupa",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the video camera at the top to call.",
+      "bn": "কল করতে ওপরে ভিডিও ক্যামেরায় চাপুন।",
+      "hi": "कॉल करने के लिए ऊपर वीडियो कैमरे पर टैप करें।",
+      "vi": "Chạm biểu tượng máy quay ở trên để gọi."
+     },
+     "expect": "start_video_call",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "When you're done, tap the red button to hang up.",
+      "bn": "শেষ হলে ফোন রাখতে লাল বোতামে চাপুন।",
+      "hi": "हो जाए तो फोन रखने के लिए लाल बटन दबाएं।",
+      "vi": "Xong thì chạm nút đỏ để cúp máy."
+     },
+     "expect": "end_call",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "im2",
+   "skill": "messaging.voice_message",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Send a voice message",
+    "bn": "ভয়েস মেসেজ পাঠান",
+    "hi": "वॉइस मैसेज भेजें",
+    "vi": "Gửi tin nhắn thoại"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Open the chat with Rahim, who lives abroad.",
+      "bn": "বিদেশে থাকা রহিমের চ্যাট খুলুন।",
+      "hi": "विदेश में रहने वाले राहुल की चैट खोलें।",
+      "vi": "Mở đoạn chat với Minh đang ở nước ngoài."
+     },
+     "expect": "open_chat_abroad",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Press and HOLD the blue microphone, speak, then let go.",
+      "bn": "নীল মাইক্রোফোন চেপে ধরে কথা বলুন, তারপর ছেড়ে দিন।",
+      "hi": "नीले माइक को दबाकर बोलें, फिर छोड़ दें।",
+      "vi": "Nhấn GIỮ nút micro xanh, nói, rồi thả tay."
+     },
+     "expect": "voice_sent",
+     "hint": {
+      "en": "Keep holding for at least two seconds.",
+      "bn": "অন্তত দুই সেকেন্ড চেপে রাখুন।",
+      "hi": "कम से कम दो सेकंड दबाए रखें।",
+      "vi": "Giữ ít nhất hai giây."
+     }
+    }
+   ]
+  },
+  {
+   "id": "im3",
+   "skill": "safety.account_security",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Turn on the privacy lock",
+    "bn": "প্রাইভেসি লক চালু করুন",
+    "hi": "प्राइवेसी लॉक चालू करें",
+    "vi": "Bật khóa riêng tư"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap the gear (Settings) at the top.",
+      "bn": "ওপরে গিয়ার (সেটিংস) চিহ্নে চাপুন।",
+      "hi": "ऊपर गियर (सेटिंग्स) पर टैप करें।",
+      "vi": "Chạm biểu tượng bánh răng (Cài đặt) ở trên."
+     },
+     "expect": "open_settings",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap \"Privacy lock\".",
+      "bn": "\"প্রাইভেসি লক\" চাপুন।",
+      "hi": "\"प्राइवेसी लॉक\" दबाएं।",
+      "vi": "Chạm \"Khóa riêng tư\"."
+     },
+     "expect": "toggle_privacy_lock",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Choose a 4-digit code you'll remember.",
+      "bn": "মনে রাখতে পারবেন এমন ৪ সংখ্যার কোড দিন।",
+      "hi": "याद रहने वाला 4 अंकों का कोड डालें।",
+      "vi": "Chọn mã 4 số bạn nhớ được."
+     },
+     "expect": "set_lock_code",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "im4",
+   "skill": "messaging.send_message",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Send a message",
+    "bn": "মেসেজ পাঠান",
+    "hi": "मैसेज भेजें",
+    "vi": "Gửi tin nhắn"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Open Rupa's chat.",
+      "bn": "রূপার চ্যাট খুলুন।",
+      "hi": "रूपा की चैट खोलें।",
+      "vi": "Mở đoạn chat với Lan."
+     },
+     "expect": "open_chat_rupa",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the message box and type a few words.",
+      "bn": "মেসেজের ঘরে চেপে কয়েকটা কথা লিখুন।",
+      "hi": "मैसेज बॉक्स पर टैप करके कुछ लिखें।",
+      "vi": "Chạm ô tin nhắn và gõ vài chữ."
+     },
+     "expect": "type_message",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the send arrow.",
+      "bn": "পাঠানোর তীরে চাপুন।",
+      "hi": "भेजने वाले तीर पर टैप करें।",
+      "vi": "Chạm mũi tên gửi."
+     },
+     "expect": "send_message",
+     "hint": null
+    }
+   ]
+  }
+ ],
+ "facebook": [
+  {
+   "id": "fb1",
+   "skill": "social.react_post",
+   "level": "BEGINNER",
+   "title": {
+    "en": "React to a family photo",
+    "bn": "পরিবারের ছবিতে রিঅ্যাক্ট করুন",
+    "hi": "परिवार की फोटो पर रिएक्ट करें",
+    "vi": "Bày tỏ cảm xúc với ảnh gia đình"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "On Rupa's school photo, press and HOLD the Like button.",
+      "bn": "রূপার স্কুলের ছবিতে লাইক বোতাম চেপে ধরে রাখুন।",
+      "hi": "रूपा की स्कूल वाली फोटो पर लाइक बटन दबाकर रखें।",
+      "vi": "Trên ảnh đi học của Lan, nhấn GIỮ nút Thích."
+     },
+     "expect": "open_reactions",
+     "hint": {
+      "en": "Keep your finger on Like for a moment until the faces appear.",
+      "bn": "মুখগুলো দেখা না যাওয়া পর্যন্ত লাইকে আঙুল চেপে রাখুন।",
+      "hi": "चेहरे दिखने तक लाइक पर उंगली रखें।",
+      "vi": "Giữ ngón tay trên nút Thích đến khi hiện các biểu tượng."
+     }
+    },
+    {
+     "text": {
+      "en": "Choose the red heart (Love).",
+      "bn": "লাল হৃদয় (লাভ) বেছে নিন।",
+      "hi": "लाल दिल (लव) चुनें।",
+      "vi": "Chọn trái tim đỏ (Yêu thích)."
+     },
+     "expect": "react_love",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "fb2",
+   "skill": "privacy.post_audience",
+   "level": "INTERMEDIATE",
+   "title": {
+    "en": "Post a photo for friends only",
+    "bn": "শুধু বন্ধুদের জন্য ছবি পোস্ট",
+    "hi": "सिर्फ़ दोस्तों के लिए फोटो पोस्ट",
+    "vi": "Đăng ảnh chỉ cho bạn bè"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap \"What's on your mind?\" to start a post.",
+      "bn": "পোস্ট শুরু করতে \"আপনার মনে কী আছে?\" চাপুন।",
+      "hi": "पोस्ट शुरू करने के लिए \"आपके मन में क्या है?\" दबाएं।",
+      "vi": "Chạm \"Bạn đang nghĩ gì?\" để bắt đầu."
+     },
+     "expect": "open_composer",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap \"Photo/video\" to add a picture.",
+      "bn": "ছবি যোগ করতে \"ছবি/ভিডিও\" চাপুন।",
+      "hi": "फोटो जोड़ने के लिए \"फोटो/वीडियो\" दबाएं।",
+      "vi": "Chạm \"Ảnh/video\" để thêm ảnh."
+     },
+     "expect": "add_photo",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Now check who can see it: tap the \"Public\" button under your name.",
+      "bn": "এবার দেখুন কে দেখবে: আপনার নামের নিচে \"পাবলিক\" বোতামে চাপুন।",
+      "hi": "अब देखें कौन देखेगा: अपने नाम के नीचे \"पब्लिक\" बटन दबाएं।",
+      "vi": "Giờ kiểm tra ai xem được: chạm nút \"Công khai\" dưới tên bạn."
+     },
+     "expect": "open_audience",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Choose \"Friends\" — safer for family photos.",
+      "bn": "\"ফ্রেন্ডস\" বেছে নিন — পারিবারিক ছবির জন্য বেশি নিরাপদ।",
+      "hi": "\"फ्रेंड्स\" चुनें — पारिवारिक फोटो के लिए ज़्यादा सुरक्षित।",
+      "vi": "Chọn \"Bạn bè\" — an toàn hơn cho ảnh gia đình."
+     },
+     "expect": "choose_friends",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap \"Post\" at the top right.",
+      "bn": "ওপরে ডানদিকে \"পোস্ট\" চাপুন।",
+      "hi": "ऊपर दाईं ओर \"पोस्ट\" दबाएं।",
+      "vi": "Chạm \"Đăng\" ở góc trên phải."
+     },
+     "expect": "publish_post",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "fb3",
+   "skill": "social.save_post",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Save a useful post",
+    "bn": "দরকারি পোস্ট সেভ করুন",
+    "hi": "काम की पोस्ट सेव करें",
+    "vi": "Lưu bài viết hữu ích"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "On Rahim's soup recipe, tap the three dots at the top right.",
+      "bn": "রহিমের স্যুপের রেসিপিতে ওপরে ডানদিকের তিন ডটে চাপুন।",
+      "hi": "राहुल की सूप रेसिपी पर ऊपर दाईं ओर तीन बिंदु दबाएं।",
+      "vi": "Trên công thức súp của Minh, chạm ba chấm ở góc trên phải."
+     },
+     "expect": "open_post_menu_rahim",
+     "hint": {
+      "en": "Scroll down to the soup photo if you can't see it.",
+      "bn": "দেখা না গেলে স্যুপের ছবি পর্যন্ত নিচে যান।",
+      "hi": "न दिखे तो सूप की फोटो तक नीचे जाएं।",
+      "vi": "Kéo xuống đến ảnh súp nếu chưa thấy."
+     }
+    },
+    {
+     "text": {
+      "en": "Choose \"Save post\".",
+      "bn": "\"পোস্ট সেভ করুন\" বেছে নিন।",
+      "hi": "\"पोस्ट सेव करें\" चुनें।",
+      "vi": "Chọn \"Lưu bài viết\"."
+     },
+     "expect": "save_post",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "fb4",
+   "skill": "safety.report_scam",
+   "level": "INTERMEDIATE",
+   "title": {
+    "en": "Report a scam post",
+    "bn": "প্রতারণার পোস্ট রিপোর্ট করুন",
+    "hi": "धोखे वाली पोस्ट रिपोर्ट करें",
+    "vi": "Báo cáo bài viết lừa đảo"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "The \"Free iPhone\" post is a scam. Tap its three dots.",
+      "bn": "\"ফ্রি আইফোন\" পোস্টটি প্রতারণা। এর তিন ডটে চাপুন।",
+      "hi": "\"मुफ़्त आईफ़ोन\" वाली पोस्ट धोखा है। इसके तीन बिंदु दबाएं।",
+      "vi": "Bài \"iPhone miễn phí\" là lừa đảo. Chạm ba chấm của nó."
+     },
+     "expect": "open_post_menu_scam",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Choose \"Report post\".",
+      "bn": "\"পোস্ট রিপোর্ট করুন\" বেছে নিন।",
+      "hi": "\"पोस्ट रिपोर्ट करें\" चुनें।",
+      "vi": "Chọn \"Báo cáo bài viết\"."
+     },
+     "expect": "report_post",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Choose \"Scam, fraud or false information\".",
+      "bn": "\"প্রতারণা, জালিয়াতি বা মিথ্যা তথ্য\" বেছে নিন।",
+      "hi": "\"धोखा, जालसाज़ी या झूठी जानकारी\" चुनें।",
+      "vi": "Chọn \"Lừa đảo hoặc thông tin sai\"."
+     },
+     "expect": "choose_reason_scam",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap Submit.",
+      "bn": "\"জমা দিন\" চাপুন।",
+      "hi": "\"जमा करें\" दबाएं।",
+      "vi": "Chạm Gửi."
+     },
+     "expect": "submit_report",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "fb5",
+   "skill": "social.friend_requests",
+   "level": "INTERMEDIATE",
+   "title": {
+    "en": "Check a friend request",
+    "bn": "ফ্রেন্ড রিকোয়েস্ট যাচাই করুন",
+    "hi": "फ्रेंड रिक्वेस्ट जांचें",
+    "vi": "Kiểm tra lời mời kết bạn"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Open the Friends tab (two people icon).",
+      "bn": "ফ্রেন্ডস ট্যাব খুলুন (দুজন মানুষের চিহ্ন)।",
+      "hi": "फ्रेंड्स टैब खोलें (दो लोगों वाला निशान)।",
+      "vi": "Mở thẻ Bạn bè (biểu tượng hai người)."
+     },
+     "expect": "open_friends",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "A second \"Rahim (Son)\" wants to be friends. Tap his name to check the profile.",
+      "bn": "আরেকজন \"রহিম (ছেলে)\" বন্ধু হতে চায়। প্রোফাইল দেখতে নামে চাপুন।",
+      "hi": "एक और \"राहुल (बेटा)\" दोस्त बनना चाहता है। प्रोफ़ाइल देखने के लिए नाम पर टैप करें।",
+      "vi": "Một \"Minh (con trai)\" thứ hai muốn kết bạn. Chạm vào tên để xem trang cá nhân."
+     },
+     "expect": "open_request_profile",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "The warning signs show it's a copy. Tap \"Delete request\".",
+      "bn": "সতর্ক সংকেত দেখাচ্ছে এটা নকল। \"রিকোয়েস্ট ডিলিট করুন\" চাপুন।",
+      "hi": "चेतावनी संकेत बताते हैं कि यह नकल है। \"रिक्वेस्ट डिलीट करें\" दबाएं।",
+      "vi": "Các dấu hiệu cho thấy đây là bản giả. Chạm \"Xóa lời mời\"."
+     },
+     "expect": "delete_request",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "fb6",
+   "skill": "safety.account_security",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Make new posts friends-only",
+    "bn": "নতুন পোস্ট শুধু বন্ধুদের জন্য করুন",
+    "hi": "नई पोस्ट सिर्फ़ दोस्तों के लिए करें",
+    "vi": "Để bài mới chỉ bạn bè xem"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Open the Menu (three lines).",
+      "bn": "মেনু খুলুন (তিনটি দাগ)।",
+      "hi": "मेनू खोलें (तीन लाइनें)।",
+      "vi": "Mở Menu (ba gạch)."
+     },
+     "expect": "open_menu",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap \"Settings & privacy\".",
+      "bn": "\"সেটিংস ও প্রাইভেসি\" চাপুন।",
+      "hi": "\"सेटिंग्स और प्राइवेसी\" दबाएं।",
+      "vi": "Chạm \"Cài đặt & quyền riêng tư\"."
+     },
+     "expect": "open_privacy",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Under \"Who can see your future posts\", choose \"Friends\".",
+      "bn": "\"আপনার ভবিষ্যতের পোস্ট কে দেখবে\"-তে \"ফ্রেন্ডস\" বেছে নিন।",
+      "hi": "\"आपकी आगे की पोस्ट कौन देखेगा\" में \"फ्रेंड्स\" चुनें।",
+      "vi": "Ở \"Ai xem được bài viết sau này\", chọn \"Bạn bè\"."
+     },
+     "expect": "privacy_posts_friends",
+     "hint": null
+    }
+   ]
+  }
+ ],
+ "bkash": [
+  {
+   "id": "bk1",
+   "skill": "payments.check_balance",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Check your balance",
+    "bn": "ব্যালেন্স দেখুন",
+    "hi": "बैलेंस देखें",
+    "vi": "Xem số dư"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap \"Tap for Balance\" at the top.",
+      "bn": "ওপরে \"ব্যালেন্স জানতে ট্যাপ করুন\" লেখায় চাপুন।",
+      "hi": "ऊपर \"बैलेंस के लिए टैप करें\" पर टैप करें।",
+      "vi": "Chạm \"Chạm để xem số dư\" ở trên cùng."
+     },
+     "expect": "tap_balance",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Now see your past payments: tap \"See my statement\".",
+      "bn": "এবার আগের লেনদেন দেখুন: \"আমার স্টেটমেন্ট দেখুন\" চাপুন।",
+      "hi": "अब पुराने भुगतान देखें: \"मेरा स्टेटमेंट देखें\" दबाएं।",
+      "vi": "Giờ xem các giao dịch trước: chạm \"Xem sao kê của tôi\"."
+     },
+     "expect": "open_statement",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "bk6",
+   "skill": "payments.send_money",
+   "level": "INTERMEDIATE",
+   "title": {
+    "en": "Send money safely",
+    "bn": "নিরাপদে সেন্ড মানি",
+    "hi": "सुरक्षित पैसे भेजें",
+    "vi": "Chuyển tiền an toàn"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap \"Send Money\" on the home screen.",
+      "bn": "হোম স্ক্রিনে \"সেন্ড মানি\" চাপুন।",
+      "hi": "होम स्क्रीन पर \"सेंड मनी\" दबाएं।",
+      "vi": "Chạm \"Gửi tiền\" ở màn hình chính."
+     },
+     "expect": "open_send_money",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Choose Rupa from the saved people.",
+      "bn": "সেভ করা মানুষদের মধ্যে থেকে রূপা-কে বেছে নিন।",
+      "hi": "सेव किए लोगों में से रूपा को चुनें।",
+      "vi": "Chọn Lan trong danh sách đã lưu."
+     },
+     "expect": "choose_rupa",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Type the amount 500 on the keypad (or tap a quick amount).",
+      "bn": "কিপ্যাডে ৫০০ লিখুন (বা তৈরি থাকা পরিমাণে চাপুন)।",
+      "hi": "कीपैड पर 500 लिखें (या तैयार रकम पर टैप करें)।",
+      "vi": "Nhập số tiền 500 trên bàn phím (hoặc chạm số tiền gợi ý)."
+     },
+     "expect": "enter_amount",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap Next.",
+      "bn": "\"পরের ধাপ\" চাপুন।",
+      "hi": "\"आगे\" दबाएं।",
+      "vi": "Chạm Tiếp tục."
+     },
+     "expect": "amount_next",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Add a note if you like, then tap \"Review payment\".",
+      "bn": "চাইলে একটা নোট লিখুন, তারপর \"পেমেন্ট মিলিয়ে নিন\" চাপুন।",
+      "hi": "चाहें तो नोट लिखें, फिर \"भुगतान जांचें\" दबाएं।",
+      "vi": "Thêm lời nhắn nếu muốn, rồi chạm \"Xem lại giao dịch\"."
+     },
+     "expect": "review_payment",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Read the name, number and amount carefully. If all is right, tap \"Continue to PIN\".",
+      "bn": "নাম, নম্বর আর টাকার পরিমাণ ভালো করে পড়ুন। সব ঠিক থাকলে \"পিন দিতে এগিয়ে যান\" চাপুন।",
+      "hi": "नाम, नंबर और रकम ध्यान से पढ़ें। सब ठीक हो तो \"पिन के लिए आगे बढ़ें\" दबाएं।",
+      "vi": "Đọc kỹ tên, số và số tiền. Nếu đúng hết, chạm \"Tiếp tục nhập PIN\"."
+     },
+     "expect": "go_to_pin",
+     "hint": {
+      "en": "This is the most important moment: check before you pay.",
+      "bn": "এটাই সবচেয়ে জরুরি মুহূর্ত: টাকা দেওয়ার আগে মিলিয়ে নিন।",
+      "hi": "यही सबसे ज़रूरी पल है: भुगतान से पहले जांचें।",
+      "vi": "Đây là lúc quan trọng nhất: kiểm tra trước khi trả."
+     }
+    },
+    {
+     "text": {
+      "en": "Type any practice PIN (this is pretend — never your real PIN).",
+      "bn": "যেকোনো অনুশীলনের পিন দিন (এটা নকল — কখনো আসল পিন নয়)।",
+      "hi": "कोई भी अभ्यास पिन डालें (यह नकली है — असली पिन कभी नहीं)।",
+      "vi": "Nhập PIN luyện tập bất kỳ (đây là giả — đừng dùng PIN thật)."
+     },
+     "expect": "enter_pin",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Press and HOLD the pink button until the bar fills to send.",
+      "bn": "দাগ ভরে যাওয়া পর্যন্ত গোলাপি বোতাম চেপে ধরে রাখুন, তাহলে চলে যাবে।",
+      "hi": "पट्टी भरने तक गुलाबी बटन दबाकर रखें, तब भेजा जाएगा।",
+      "vi": "Nhấn GIỮ nút hồng đến khi thanh đầy để gửi."
+     },
+     "expect": "hold_confirm",
+     "hint": {
+      "en": "Holding on purpose stops accidental payments.",
+      "bn": "ইচ্ছে করে চেপে ধরতে হয়, তাই ভুল করে টাকা যায় না।",
+      "hi": "जानबूझकर दबाकर रखना होता है, इसलिए गलती से पैसे नहीं जाते।",
+      "vi": "Phải cố ý giữ nên không chuyển nhầm được."
+     }
+    }
+   ]
+  },
+  {
+   "id": "bk3",
+   "skill": "payments.recharge",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Recharge your phone",
+    "bn": "মোবাইল রিচার্জ করুন",
+    "hi": "मोबाइल रिचार्ज करें",
+    "vi": "Nạp tiền điện thoại"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap \"Mobile Recharge\".",
+      "bn": "\"মোবাইল রিচার্জ\" চাপুন।",
+      "hi": "\"मोबाइल रिचार्ज\" दबाएं।",
+      "vi": "Chạm \"Nạp tiền điện thoại\"."
+     },
+     "expect": "open_recharge",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Your number is already filled in. Choose your operator, e.g. Grameenphone.",
+      "bn": "আপনার নম্বর আগে থেকেই লেখা। অপারেটর বেছে নিন, যেমন গ্রামীণফোন।",
+      "hi": "आपका नंबर पहले से भरा है। ऑपरेटर चुनें, जैसे ग्रामीणफ़ोन।",
+      "vi": "Số của bạn đã điền sẵn. Chọn nhà mạng, ví dụ Grameenphone."
+     },
+     "expect": "choose_operator",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Choose an amount, like ৳50.",
+      "bn": "একটা পরিমাণ বেছে নিন, যেমন ৳৫০।",
+      "hi": "एक रकम चुनें, जैसे ৳50।",
+      "vi": "Chọn số tiền, ví dụ ৳50."
+     },
+     "expect": "enter_amount",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap Next.",
+      "bn": "\"পরের ধাপ\" চাপুন।",
+      "hi": "\"आगे\" दबाएं।",
+      "vi": "Chạm Tiếp tục."
+     },
+     "expect": "go_to_pin",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Type any practice PIN (this is pretend — never your real PIN).",
+      "bn": "যেকোনো অনুশীলনের পিন দিন (এটা নকল — কখনো আসল পিন নয়)।",
+      "hi": "कोई भी अभ्यास पिन डालें (यह नकली है — असली पिन कभी नहीं)।",
+      "vi": "Nhập PIN luyện tập bất kỳ (đây là giả — đừng dùng PIN thật)."
+     },
+     "expect": "enter_pin",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Press and HOLD the pink button until the bar fills to send.",
+      "bn": "দাগ ভরে যাওয়া পর্যন্ত গোলাপি বোতাম চেপে ধরে রাখুন, তাহলে চলে যাবে।",
+      "hi": "पट्टी भरने तक गुलाबी बटन दबाकर रखें, तब भेजा जाएगा।",
+      "vi": "Nhấn GIỮ nút hồng đến khi thanh đầy để gửi."
+     },
+     "expect": "hold_confirm",
+     "hint": {
+      "en": "Holding on purpose stops accidental payments.",
+      "bn": "ইচ্ছে করে চেপে ধরতে হয়, তাই ভুল করে টাকা যায় না।",
+      "hi": "जानबूझकर दबाकर रखना होता है, इसलिए गलती से पैसे नहीं जाते।",
+      "vi": "Phải cố ý giữ nên không chuyển nhầm được."
+     }
+    }
+   ]
+  },
+  {
+   "id": "bk4",
+   "skill": "payments.pay_bill",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Pay an electricity bill",
+    "bn": "বিদ্যুৎ বিল দিন",
+    "hi": "बिजली का बिल भरें",
+    "vi": "Thanh toán tiền điện"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap \"Pay Bill\".",
+      "bn": "\"পে বিল\" চাপুন।",
+      "hi": "\"बिल भुगतान\" दबाएं।",
+      "vi": "Chạm \"Thanh toán hóa đơn\"."
+     },
+     "expect": "open_pay_bill",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Choose DESCO (Electricity).",
+      "bn": "DESCO (বিদ্যুৎ) বেছে নিন।",
+      "hi": "DESCO (बिजली) चुनें।",
+      "vi": "Chọn DESCO (Điện)."
+     },
+     "expect": "choose_biller",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Type the customer number from your paper bill (any digits work here).",
+      "bn": "কাগজের বিল থেকে গ্রাহক নম্বর লিখুন (এখানে যেকোনো সংখ্যা চলবে)।",
+      "hi": "कागज़ के बिल से ग्राहक नंबर लिखें (यहां कोई भी अंक चलेगा)।",
+      "vi": "Nhập mã khách hàng trên hóa đơn giấy (ở đây số nào cũng được)."
+     },
+     "expect": "enter_bill_code",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap \"Check bill\".",
+      "bn": "\"বিল দেখুন\" চাপুন।",
+      "hi": "\"बिल देखें\" दबाएं।",
+      "vi": "Chạm \"Xem hóa đơn\"."
+     },
+     "expect": "check_bill",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Check the amount matches your bill, then tap \"Pay bill\".",
+      "bn": "টাকার পরিমাণ বিলের সাথে মিলিয়ে \"বিল দিন\" চাপুন।",
+      "hi": "रकम बिल से मिलाकर \"बिल भरें\" दबाएं।",
+      "vi": "Kiểm tra số tiền khớp hóa đơn, rồi chạm \"Thanh toán\"."
+     },
+     "expect": "go_to_pin",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Type any practice PIN (this is pretend — never your real PIN).",
+      "bn": "যেকোনো অনুশীলনের পিন দিন (এটা নকল — কখনো আসল পিন নয়)।",
+      "hi": "कोई भी अभ्यास पिन डालें (यह नकली है — असली पिन कभी नहीं)।",
+      "vi": "Nhập PIN luyện tập bất kỳ (đây là giả — đừng dùng PIN thật)."
+     },
+     "expect": "enter_pin",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Press and HOLD the pink button until the bar fills to send.",
+      "bn": "দাগ ভরে যাওয়া পর্যন্ত গোলাপি বোতাম চেপে ধরে রাখুন, তাহলে চলে যাবে।",
+      "hi": "पट्टी भरने तक गुलाबी बटन दबाकर रखें, तब भेजा जाएगा।",
+      "vi": "Nhấn GIỮ nút hồng đến khi thanh đầy để gửi."
+     },
+     "expect": "hold_confirm",
+     "hint": {
+      "en": "Holding on purpose stops accidental payments.",
+      "bn": "ইচ্ছে করে চেপে ধরতে হয়, তাই ভুল করে টাকা যায় না।",
+      "hi": "जानबूझकर दबाकर रखना होता है, इसलिए गलती से पैसे नहीं जाते।",
+      "vi": "Phải cố ý giữ nên không chuyển nhầm được."
+     }
+    }
+   ]
+  },
+  {
+   "id": "bk8",
+   "skill": "payments.pay_merchant",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Pay a shop with QR",
+    "bn": "কিউআর দিয়ে দোকানে পেমেন্ট",
+    "hi": "QR से दुकान पर भुगतान",
+    "vi": "Trả tiền cửa hàng bằng QR"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap the big pink QR button at the bottom.",
+      "bn": "নিচের বড় গোলাপি কিউআর বোতামে চাপুন।",
+      "hi": "नीचे बड़े गुलाबी QR बटन पर टैप करें।",
+      "vi": "Chạm nút QR lớn màu hồng ở dưới."
+     },
+     "expect": "open_scan",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Point at the shop's code — here, tap the square to scan it.",
+      "bn": "দোকানের কোডের দিকে ধরুন — এখানে স্ক্যান করতে বর্গে চাপুন।",
+      "hi": "दुकान के कोड की ओर रखें — यहां स्कैन के लिए चौकोर पर टैप करें।",
+      "vi": "Hướng vào mã của cửa hàng — ở đây, chạm khung vuông để quét."
+     },
+     "expect": "scan_qr",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Check the shop name, then type the amount the shopkeeper asks for.",
+      "bn": "দোকানের নাম মিলিয়ে নিন, তারপর দোকানদার যত টাকা বলেছেন লিখুন।",
+      "hi": "दुकान का नाम जांचें, फिर दुकानदार ने जितना कहा वह लिखें।",
+      "vi": "Kiểm tra tên cửa hàng, rồi nhập số tiền người bán yêu cầu."
+     },
+     "expect": "enter_amount",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap Pay.",
+      "bn": "\"পেমেন্ট করুন\" চাপুন।",
+      "hi": "\"भुगतान करें\" दबाएं।",
+      "vi": "Chạm Thanh toán."
+     },
+     "expect": "go_to_pin",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Type any practice PIN (this is pretend — never your real PIN).",
+      "bn": "যেকোনো অনুশীলনের পিন দিন (এটা নকল — কখনো আসল পিন নয়)।",
+      "hi": "कोई भी अभ्यास पिन डालें (यह नकली है — असली पिन कभी नहीं)।",
+      "vi": "Nhập PIN luyện tập bất kỳ (đây là giả — đừng dùng PIN thật)."
+     },
+     "expect": "enter_pin",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "bk7",
+   "skill": "safety.otp_scam",
+   "level": "INTERMEDIATE",
+   "title": {
+    "en": "A fake \"bKash\" call",
+    "bn": "ভুয়া \"বিকাশ\" কল",
+    "hi": "नकली \"bKash\" कॉल",
+    "vi": "Cuộc gọi \"bKash\" giả"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "A call says it is from the company and asks for your code. Don't share anything — decline the call or hang up.",
+      "bn": "একটা ফোন নিজেকে কোম্পানির লোক বলে কোড চাইছে। কিছুই বলবেন না — কল কেটে দিন।",
+      "hi": "एक कॉल खुद को कंपनी का बताकर कोड मांग रही है। कुछ न बताएं — कॉल काट दें।",
+      "vi": "Một cuộc gọi tự nhận là công ty và hỏi mã. Đừng nói gì — từ chối hoặc cúp máy."
+     },
+     "expect": "hang_up_scam",
+     "hint": {
+      "en": "The red button with the phone hangs up.",
+      "bn": "ফোন আঁকা লাল বোতামে ফোন কাটে।",
+      "hi": "फोन वाला लाल बटन कॉल काटता है।",
+      "vi": "Nút đỏ hình điện thoại để cúp máy."
+     }
+    }
+   ]
+  }
+ ],
+ "nagad": [
+  {
+   "id": "ng1",
+   "skill": "safety.otp_scam",
+   "level": "INTERMEDIATE",
+   "title": {
+    "en": "Spot an OTP scam call",
+    "bn": "ওটিপি প্রতারণার কল চিনুন",
+    "hi": "ओटीपी धोखे की कॉल पहचानें",
+    "vi": "Nhận ra cuộc gọi lừa OTP"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "A call says it is from the company and asks for your code. Don't share anything — decline the call or hang up.",
+      "bn": "একটা ফোন নিজেকে কোম্পানির লোক বলে কোড চাইছে। কিছুই বলবেন না — কল কেটে দিন।",
+      "hi": "एक कॉल खुद को कंपनी का बताकर कोड मांग रही है। कुछ न बताएं — कॉल काट दें।",
+      "vi": "Một cuộc gọi tự nhận là công ty và hỏi mã. Đừng nói gì — từ chối hoặc cúp máy."
+     },
+     "expect": "hang_up_scam",
+     "hint": {
+      "en": "The red button with the phone hangs up.",
+      "bn": "ফোন আঁকা লাল বোতামে ফোন কাটে।",
+      "hi": "फोन वाला लाल बटन कॉल काटता है।",
+      "vi": "Nút đỏ hình điện thoại để cúp máy."
+     }
+    }
+   ]
+  },
+  {
+   "id": "ng2",
+   "skill": "payments.send_money",
+   "level": "INTERMEDIATE",
+   "title": {
+    "en": "Send money safely",
+    "bn": "নিরাপদে সেন্ড মানি",
+    "hi": "सुरक्षित पैसे भेजें",
+    "vi": "Chuyển tiền an toàn"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap \"Send Money\" on the home screen.",
+      "bn": "হোম স্ক্রিনে \"সেন্ড মানি\" চাপুন।",
+      "hi": "होम स्क्रीन पर \"सेंड मनी\" दबाएं।",
+      "vi": "Chạm \"Gửi tiền\" ở màn hình chính."
+     },
+     "expect": "open_send_money",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Choose Rupa from the saved people.",
+      "bn": "সেভ করা মানুষদের মধ্যে থেকে রূপা-কে বেছে নিন।",
+      "hi": "सेव किए लोगों में से रूपा को चुनें।",
+      "vi": "Chọn Lan trong danh sách đã lưu."
+     },
+     "expect": "choose_rupa",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Type the amount 1000 on the keypad (or tap a quick amount).",
+      "bn": "কিপ্যাডে ১০০০ লিখুন (বা তৈরি থাকা পরিমাণে চাপুন)।",
+      "hi": "कीपैड पर 1000 लिखें (या तैयार रकम पर टैप करें)।",
+      "vi": "Nhập số tiền 1000 trên bàn phím (hoặc chạm số tiền gợi ý)."
+     },
+     "expect": "enter_amount",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap Next.",
+      "bn": "\"পরের ধাপ\" চাপুন।",
+      "hi": "\"आगे\" दबाएं।",
+      "vi": "Chạm Tiếp tục."
+     },
+     "expect": "amount_next",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Add a note if you like, then tap \"Review payment\".",
+      "bn": "চাইলে একটা নোট লিখুন, তারপর \"পেমেন্ট মিলিয়ে নিন\" চাপুন।",
+      "hi": "चाहें तो नोट लिखें, फिर \"भुगतान जांचें\" दबाएं।",
+      "vi": "Thêm lời nhắn nếu muốn, rồi chạm \"Xem lại giao dịch\"."
+     },
+     "expect": "review_payment",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Read the name, number and amount carefully. If all is right, tap \"Continue to PIN\".",
+      "bn": "নাম, নম্বর আর টাকার পরিমাণ ভালো করে পড়ুন। সব ঠিক থাকলে \"পিন দিতে এগিয়ে যান\" চাপুন।",
+      "hi": "नाम, नंबर और रकम ध्यान से पढ़ें। सब ठीक हो तो \"पिन के लिए आगे बढ़ें\" दबाएं।",
+      "vi": "Đọc kỹ tên, số và số tiền. Nếu đúng hết, chạm \"Tiếp tục nhập PIN\"."
+     },
+     "expect": "go_to_pin",
+     "hint": {
+      "en": "This is the most important moment: check before you pay.",
+      "bn": "এটাই সবচেয়ে জরুরি মুহূর্ত: টাকা দেওয়ার আগে মিলিয়ে নিন।",
+      "hi": "यही सबसे ज़रूरी पल है: भुगतान से पहले जांचें।",
+      "vi": "Đây là lúc quan trọng nhất: kiểm tra trước khi trả."
+     }
+    },
+    {
+     "text": {
+      "en": "Type any practice PIN (this is pretend — never your real PIN).",
+      "bn": "যেকোনো অনুশীলনের পিন দিন (এটা নকল — কখনো আসল পিন নয়)।",
+      "hi": "कोई भी अभ्यास पिन डालें (यह नकली है — असली पिन कभी नहीं)।",
+      "vi": "Nhập PIN luyện tập bất kỳ (đây là giả — đừng dùng PIN thật)."
+     },
+     "expect": "enter_pin",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Press and HOLD the red button until the bar fills.",
+      "bn": "দাগ ভরে যাওয়া পর্যন্ত লাল বোতাম চেপে ধরে রাখুন।",
+      "hi": "पट्टी भरने तक लाल बटन दबाकर रखें।",
+      "vi": "Nhấn GIỮ nút đỏ đến khi thanh đầy."
+     },
+     "expect": "hold_confirm",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "ng3",
+   "skill": "payments.check_balance",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Check your balance",
+    "bn": "ব্যালেন্স দেখুন",
+    "hi": "बैलेंस देखें",
+    "vi": "Xem số dư"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap \"Tap for Balance\" under your name.",
+      "bn": "আপনার নামের নিচে \"ব্যালেন্স দেখুন\" চাপুন।",
+      "hi": "अपने नाम के नीचे \"बैलेंस देखें\" दबाएं।",
+      "vi": "Chạm \"Chạm để xem số dư\" dưới tên bạn."
+     },
+     "expect": "tap_balance",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Open \"Transactions\" to see your past payments.",
+      "bn": "আগের লেনদেন দেখতে \"লেনদেন\" খুলুন।",
+      "hi": "पुराने भुगतान देखने के लिए \"लेन-देन\" खोलें।",
+      "vi": "Mở \"Giao dịch\" để xem các khoản trước."
+     },
+     "expect": "open_statement",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "ng4",
+   "skill": "payments.recharge",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Recharge your phone",
+    "bn": "মোবাইল রিচার্জ করুন",
+    "hi": "मोबाइल रिचार्ज करें",
+    "vi": "Nạp tiền điện thoại"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap \"Mobile Recharge\".",
+      "bn": "\"মোবাইল রিচার্জ\" চাপুন।",
+      "hi": "\"मोबाइल रिचार्ज\" दबाएं।",
+      "vi": "Chạm \"Nạp tiền điện thoại\"."
+     },
+     "expect": "open_recharge",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Choose your operator.",
+      "bn": "আপনার অপারেটর বেছে নিন।",
+      "hi": "अपना ऑपरेटर चुनें।",
+      "vi": "Chọn nhà mạng của bạn."
+     },
+     "expect": "choose_operator",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Choose an amount.",
+      "bn": "একটা পরিমাণ বেছে নিন।",
+      "hi": "एक रकम चुनें।",
+      "vi": "Chọn số tiền."
+     },
+     "expect": "enter_amount",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap Next.",
+      "bn": "\"পরের ধাপ\" চাপুন।",
+      "hi": "\"आगे\" दबाएं।",
+      "vi": "Chạm Tiếp tục."
+     },
+     "expect": "go_to_pin",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Type any practice PIN (this is pretend — never your real PIN).",
+      "bn": "যেকোনো অনুশীলনের পিন দিন (এটা নকল — কখনো আসল পিন নয়)।",
+      "hi": "कोई भी अभ्यास पिन डालें (यह नकली है — असली पिन कभी नहीं)।",
+      "vi": "Nhập PIN luyện tập bất kỳ (đây là giả — đừng dùng PIN thật)."
+     },
+     "expect": "enter_pin",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Press and HOLD the red button until the bar fills.",
+      "bn": "দাগ ভরে যাওয়া পর্যন্ত লাল বোতাম চেপে ধরে রাখুন।",
+      "hi": "पट्टी भरने तक लाल बटन दबाकर रखें।",
+      "vi": "Nhấn GIỮ nút đỏ đến khi thanh đầy."
+     },
+     "expect": "hold_confirm",
+     "hint": null
+    }
+   ]
+  }
+ ],
+ "momo": [
+  {
+   "id": "mm1",
+   "skill": "payments.pay_merchant",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Pay a shop with QR",
+    "bn": "কিউআর দিয়ে দোকানে পেমেন্ট",
+    "hi": "QR से दुकान पर भुगतान",
+    "vi": "Trả tiền cửa hàng bằng QR"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap the QR button at the bottom.",
+      "bn": "নিচের কিউআর বোতামে চাপুন।",
+      "hi": "नीचे QR बटन पर टैप करें।",
+      "vi": "Chạm nút QR ở dưới."
+     },
+     "expect": "open_scan",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the square to scan the shop's code.",
+      "bn": "দোকানের কোড স্ক্যান করতে বর্গে চাপুন।",
+      "hi": "दुकान का कोड स्कैन करने के लिए चौकोर पर टैप करें।",
+      "vi": "Chạm khung vuông để quét mã cửa hàng."
+     },
+     "expect": "scan_qr",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Check the shop name, then enter the amount.",
+      "bn": "দোকানের নাম মিলিয়ে টাকার পরিমাণ দিন।",
+      "hi": "दुकान का नाम जांचकर रकम डालें।",
+      "vi": "Kiểm tra tên cửa hàng rồi nhập số tiền."
+     },
+     "expect": "enter_amount",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap Pay.",
+      "bn": "\"পেমেন্ট করুন\" চাপুন।",
+      "hi": "\"भुगतान करें\" दबाएं।",
+      "vi": "Chạm Thanh toán."
+     },
+     "expect": "go_to_pin",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Type any practice PIN (this is pretend — never your real PIN).",
+      "bn": "যেকোনো অনুশীলনের পিন দিন (এটা নকল — কখনো আসল পিন নয়)।",
+      "hi": "कोई भी अभ्यास पिन डालें (यह नकली है — असली पिन कभी नहीं)।",
+      "vi": "Nhập PIN luyện tập bất kỳ (đây là giả — đừng dùng PIN thật)."
+     },
+     "expect": "enter_pin",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "mm2",
+   "skill": "safety.otp_scam",
+   "level": "INTERMEDIATE",
+   "title": {
+    "en": "Avoid MoMo OTP scams",
+    "bn": "মোমো ওটিপি প্রতারণা এড়ান",
+    "hi": "MoMo ओटीपी धोखे से बचें",
+    "vi": "Tránh lừa đảo OTP MoMo"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "A call says it is from the company and asks for your code. Don't share anything — decline the call or hang up.",
+      "bn": "একটা ফোন নিজেকে কোম্পানির লোক বলে কোড চাইছে। কিছুই বলবেন না — কল কেটে দিন।",
+      "hi": "एक कॉल खुद को कंपनी का बताकर कोड मांग रही है। कुछ न बताएं — कॉल काट दें।",
+      "vi": "Một cuộc gọi tự nhận là công ty và hỏi mã. Đừng nói gì — từ chối hoặc cúp máy."
+     },
+     "expect": "hang_up_scam",
+     "hint": {
+      "en": "The red button with the phone hangs up.",
+      "bn": "ফোন আঁকা লাল বোতামে ফোন কাটে।",
+      "hi": "फोन वाला लाल बटन कॉल काटता है।",
+      "vi": "Nút đỏ hình điện thoại để cúp máy."
+     }
+    }
+   ]
+  },
+  {
+   "id": "mm3",
+   "skill": "payments.send_money",
+   "level": "INTERMEDIATE",
+   "title": {
+    "en": "Transfer money to family",
+    "bn": "পরিবারকে টাকা পাঠান",
+    "hi": "परिवार को पैसे भेजें",
+    "vi": "Chuyển tiền cho người thân"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap \"Transfer\" on the home screen.",
+      "bn": "হোম স্ক্রিনে \"ট্রান্সফার\" চাপুন।",
+      "hi": "होम स्क्रीन पर \"ट्रांसफ़र\" दबाएं।",
+      "vi": "Chạm \"Chuyển tiền\" ở màn hình chính."
+     },
+     "expect": "open_send_money",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Choose Lan from the saved people.",
+      "bn": "সেভ করা মানুষদের মধ্যে থেকে লান-কে বেছে নিন।",
+      "hi": "सेव किए लोगों में से लान को चुनें।",
+      "vi": "Chọn Lan trong danh sách đã lưu."
+     },
+     "expect": "choose_rupa",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Type the amount 100,000 on the keypad (or tap a quick amount).",
+      "bn": "কিপ্যাডে ১,০০,০০০ লিখুন (বা তৈরি থাকা পরিমাণে চাপুন)।",
+      "hi": "कीपैड पर 1,00,000 लिखें (या तैयार रकम पर टैप करें)।",
+      "vi": "Nhập số tiền 100.000 trên bàn phím (hoặc chạm số tiền gợi ý)."
+     },
+     "expect": "enter_amount",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap Next.",
+      "bn": "\"পরের ধাপ\" চাপুন।",
+      "hi": "\"आगे\" दबाएं।",
+      "vi": "Chạm Tiếp tục."
+     },
+     "expect": "amount_next",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Add a note if you like, then tap \"Review payment\".",
+      "bn": "চাইলে একটা নোট লিখুন, তারপর \"পেমেন্ট মিলিয়ে নিন\" চাপুন।",
+      "hi": "चाहें तो नोट लिखें, फिर \"भुगतान जांचें\" दबाएं।",
+      "vi": "Thêm lời nhắn nếu muốn, rồi chạm \"Xem lại giao dịch\"."
+     },
+     "expect": "review_payment",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Read the name, number and amount carefully. If all is right, tap \"Continue to PIN\".",
+      "bn": "নাম, নম্বর আর টাকার পরিমাণ ভালো করে পড়ুন। সব ঠিক থাকলে \"পিন দিতে এগিয়ে যান\" চাপুন।",
+      "hi": "नाम, नंबर और रकम ध्यान से पढ़ें। सब ठीक हो तो \"पिन के लिए आगे बढ़ें\" दबाएं।",
+      "vi": "Đọc kỹ tên, số và số tiền. Nếu đúng hết, chạm \"Tiếp tục nhập PIN\"."
+     },
+     "expect": "go_to_pin",
+     "hint": {
+      "en": "This is the most important moment: check before you pay.",
+      "bn": "এটাই সবচেয়ে জরুরি মুহূর্ত: টাকা দেওয়ার আগে মিলিয়ে নিন।",
+      "hi": "यही सबसे ज़रूरी पल है: भुगतान से पहले जांचें।",
+      "vi": "Đây là lúc quan trọng nhất: kiểm tra trước khi trả."
+     }
+    },
+    {
+     "text": {
+      "en": "Type any practice PIN (this is pretend — never your real PIN).",
+      "bn": "যেকোনো অনুশীলনের পিন দিন (এটা নকল — কখনো আসল পিন নয়)।",
+      "hi": "कोई भी अभ्यास पिन डालें (यह नकली है — असली पिन कभी नहीं)।",
+      "vi": "Nhập PIN luyện tập bất kỳ (đây là giả — đừng dùng PIN thật)."
+     },
+     "expect": "enter_pin",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the confirm button to finish.",
+      "bn": "শেষ করতে নিশ্চিত করার বোতামে চাপুন।",
+      "hi": "पूरा करने के लिए पुष्टि वाला बटन दबाएं।",
+      "vi": "Chạm nút xác nhận để hoàn tất."
+     },
+     "expect": "confirm_payment",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "mm4",
+   "skill": "payments.pay_bill",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Pay an electricity bill",
+    "bn": "বিদ্যুৎ বিল দিন",
+    "hi": "बिजली का बिल भरें",
+    "vi": "Thanh toán tiền điện"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap \"Pay bills\".",
+      "bn": "\"বিল পরিশোধ\" চাপুন।",
+      "hi": "\"बिल भुगतान\" दबाएं।",
+      "vi": "Chạm \"Thanh toán hóa đơn\"."
+     },
+     "expect": "open_pay_bill",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Choose EVN (electricity).",
+      "bn": "EVN (বিদ্যুৎ) বেছে নিন।",
+      "hi": "EVN (बिजली) चुनें।",
+      "vi": "Chọn EVN (điện)."
+     },
+     "expect": "choose_biller",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Type the customer code from your paper bill.",
+      "bn": "কাগজের বিল থেকে গ্রাহক কোড লিখুন।",
+      "hi": "कागज़ के बिल से ग्राहक कोड लिखें।",
+      "vi": "Nhập mã khách hàng trên hóa đơn giấy."
+     },
+     "expect": "enter_bill_code",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap \"Check bill\".",
+      "bn": "\"বিল দেখুন\" চাপুন।",
+      "hi": "\"बिल देखें\" दबाएं।",
+      "vi": "Chạm \"Xem hóa đơn\"."
+     },
+     "expect": "check_bill",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Check the amount, then tap \"Pay bill\".",
+      "bn": "টাকার পরিমাণ দেখে \"বিল দিন\" চাপুন।",
+      "hi": "रकम देखकर \"बिल भरें\" दबाएं।",
+      "vi": "Kiểm tra số tiền rồi chạm \"Thanh toán\"."
+     },
+     "expect": "go_to_pin",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Type any practice PIN (this is pretend — never your real PIN).",
+      "bn": "যেকোনো অনুশীলনের পিন দিন (এটা নকল — কখনো আসল পিন নয়)।",
+      "hi": "कोई भी अभ्यास पिन डालें (यह नकली है — असली पिन कभी नहीं)।",
+      "vi": "Nhập PIN luyện tập bất kỳ (đây là giả — đừng dùng PIN thật)."
+     },
+     "expect": "enter_pin",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the confirm button to finish.",
+      "bn": "শেষ করতে নিশ্চিত করার বোতামে চাপুন।",
+      "hi": "पूरा करने के लिए पुष्टि वाला बटन दबाएं।",
+      "vi": "Chạm nút xác nhận để hoàn tất."
+     },
+     "expect": "confirm_payment",
+     "hint": null
+    }
+   ]
+  }
+ ],
+ "googlepay": [
+  {
+   "id": "gp1",
+   "skill": "payments.pay_merchant",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Pay a shop (scan QR)",
+    "bn": "দোকানে পেমেন্ট (কিউআর স্ক্যান)",
+    "hi": "दुकान पर भुगतान (QR स्कैन)",
+    "vi": "Trả tiền cửa hàng (quét QR)"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap \"Scan any QR code\".",
+      "bn": "\"যেকোনো কিউআর স্ক্যান\" চাপুন।",
+      "hi": "\"कोई भी QR स्कैन\" दबाएं।",
+      "vi": "Chạm \"Quét mã QR bất kỳ\"."
+     },
+     "expect": "open_scan",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the square to scan the shop's code.",
+      "bn": "দোকানের কোড স্ক্যান করতে বর্গে চাপুন।",
+      "hi": "दुकान का कोड स्कैन करने के लिए चौकोर पर टैप करें।",
+      "vi": "Chạm khung vuông để quét mã cửa hàng."
+     },
+     "expect": "scan_qr",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Check it says \"Sharma General Store\", then enter the amount.",
+      "bn": "\"শর্মা জেনারেল স্টোর\" লেখা আছে কি না দেখে টাকার পরিমাণ দিন।",
+      "hi": "\"शर्मा जनरल स्टोर\" लिखा है, जांचकर रकम डालें।",
+      "vi": "Kiểm tra đúng \"Sharma General Store\", rồi nhập số tiền."
+     },
+     "expect": "enter_amount",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap Pay.",
+      "bn": "\"পেমেন্ট করুন\" চাপুন।",
+      "hi": "\"भुगतान करें\" दबाएं।",
+      "vi": "Chạm Thanh toán."
+     },
+     "expect": "go_to_pin",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Enter a practice UPI PIN to pay.",
+      "bn": "পেমেন্ট করতে অনুশীলনের ইউপিআই পিন দিন।",
+      "hi": "भुगतान के लिए अभ्यास UPI पिन डालें।",
+      "vi": "Nhập mã PIN UPI luyện tập để trả."
+     },
+     "expect": "enter_pin",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "gp2",
+   "skill": "payments.send_money",
+   "level": "INTERMEDIATE",
+   "title": {
+    "en": "Pay a family member",
+    "bn": "পরিবারের কাউকে পেমেন্ট",
+    "hi": "परिवार में किसी को भुगतान",
+    "vi": "Trả tiền cho người thân"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap \"Pay contacts\".",
+      "bn": "\"কন্টাক্টকে পেমেন্ট\" চাপুন।",
+      "hi": "\"कॉन्टैक्ट को भुगतान\" दबाएं।",
+      "vi": "Chạm \"Thanh toán cho người liên hệ\"."
+     },
+     "expect": "open_send_money",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Choose Priya from the saved people.",
+      "bn": "সেভ করা মানুষদের মধ্যে থেকে প্রিয়া-কে বেছে নিন।",
+      "hi": "सेव किए लोगों में से प्रिया को चुनें।",
+      "vi": "Chọn Priya trong danh sách đã lưu."
+     },
+     "expect": "choose_rupa",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Type the amount ₹500 on the keypad (or tap a quick amount).",
+      "bn": "কিপ্যাডে ₹৫০০ লিখুন (বা তৈরি থাকা পরিমাণে চাপুন)।",
+      "hi": "कीपैड पर ₹500 लिखें (या तैयार रकम पर टैप करें)।",
+      "vi": "Nhập số tiền ₹500 trên bàn phím (hoặc chạm số tiền gợi ý)."
+     },
+     "expect": "enter_amount",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap Next.",
+      "bn": "\"পরের ধাপ\" চাপুন।",
+      "hi": "\"आगे\" दबाएं।",
+      "vi": "Chạm Tiếp tục."
+     },
+     "expect": "amount_next",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Add a note if you like, then tap \"Review payment\".",
+      "bn": "চাইলে একটা নোট লিখুন, তারপর \"পেমেন্ট মিলিয়ে নিন\" চাপুন।",
+      "hi": "चाहें तो नोट लिखें, फिर \"भुगतान जांचें\" दबाएं।",
+      "vi": "Thêm lời nhắn nếu muốn, rồi chạm \"Xem lại giao dịch\"."
+     },
+     "expect": "review_payment",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Read the name, number and amount carefully. If all is right, tap \"Continue to PIN\".",
+      "bn": "নাম, নম্বর আর টাকার পরিমাণ ভালো করে পড়ুন। সব ঠিক থাকলে \"পিন দিতে এগিয়ে যান\" চাপুন।",
+      "hi": "नाम, नंबर और रकम ध्यान से पढ़ें। सब ठीक हो तो \"पिन के लिए आगे बढ़ें\" दबाएं।",
+      "vi": "Đọc kỹ tên, số và số tiền. Nếu đúng hết, chạm \"Tiếp tục nhập PIN\"."
+     },
+     "expect": "go_to_pin",
+     "hint": {
+      "en": "This is the most important moment: check before you pay.",
+      "bn": "এটাই সবচেয়ে জরুরি মুহূর্ত: টাকা দেওয়ার আগে মিলিয়ে নিন।",
+      "hi": "यही सबसे ज़रूरी पल है: भुगतान से पहले जांचें।",
+      "vi": "Đây là lúc quan trọng nhất: kiểm tra trước khi trả."
+     }
+    },
+    {
+     "text": {
+      "en": "Enter a practice UPI PIN.",
+      "bn": "অনুশীলনের ইউপিআই পিন দিন।",
+      "hi": "अभ्यास UPI पिन डालें।",
+      "vi": "Nhập mã PIN UPI luyện tập."
+     },
+     "expect": "enter_pin",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the confirm button to finish.",
+      "bn": "শেষ করতে নিশ্চিত করার বোতামে চাপুন।",
+      "hi": "पूरा करने के लिए पुष्टि वाला बटन दबाएं।",
+      "vi": "Chạm nút xác nhận để hoàn tất."
+     },
+     "expect": "confirm_payment",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "gp3",
+   "skill": "safety.recognise_scam",
+   "level": "INTERMEDIATE",
+   "title": {
+    "en": "Decline a fake money request",
+    "bn": "ভুয়া টাকার অনুরোধ প্রত্যাখ্যান",
+    "hi": "नकली पैसे की रिक्वेस्ट अस्वीकार करें",
+    "vi": "Từ chối yêu cầu tiền giả"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "A \"prize\" request has arrived. Read it, then tap Decline — paying would SEND your money.",
+      "bn": "একটা \"পুরস্কারের\" অনুরোধ এসেছে। পড়ে নিয়ে প্রত্যাখ্যান চাপুন — পেমেন্ট করলে আপনার টাকাই চলে যাবে।",
+      "hi": "एक \"इनाम\" वाली रिक्वेस्ट आई है। पढ़कर अस्वीकार दबाएं — भुगतान करने पर आपके पैसे चले जाएंगे।",
+      "vi": "Có yêu cầu \"giải thưởng\". Đọc rồi chạm Từ chối — trả tiền là GỬI tiền của bạn đi."
+     },
+     "expect": "decline_request",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "gp4",
+   "skill": "payments.check_balance",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Check your bank balance",
+    "bn": "ব্যাংক ব্যালেন্স দেখুন",
+    "hi": "बैंक बैलेंस देखें",
+    "vi": "Kiểm tra số dư ngân hàng"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap \"Check bank balance\" near the bottom.",
+      "bn": "নিচের দিকে \"ব্যাংক ব্যালেন্স দেখুন\" চাপুন।",
+      "hi": "नीचे \"बैंक बैलेंस देखें\" दबाएं।",
+      "vi": "Chạm \"Kiểm tra số dư ngân hàng\" ở phía dưới."
+     },
+     "expect": "check_balance",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Enter a practice UPI PIN to see it. Nothing is paid.",
+      "bn": "দেখতে অনুশীলনের ইউপিআই পিন দিন। কোনো টাকা যাবে না।",
+      "hi": "देखने के लिए अभ्यास UPI पिन डालें। कोई भुगतान नहीं होगा।",
+      "vi": "Nhập PIN UPI luyện tập để xem. Không trả khoản nào."
+     },
+     "expect": "enter_pin",
+     "hint": null
+    }
+   ]
+  }
+ ],
+ "paypal": [
+  {
+   "id": "pp1",
+   "skill": "payments.send_money",
+   "level": "INTERMEDIATE",
+   "title": {
+    "en": "Send money to family",
+    "bn": "পরিবারকে টাকা পাঠান",
+    "hi": "परिवार को पैसे भेजें",
+    "vi": "Gửi tiền cho người thân"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap Send.",
+      "bn": "\"সেন্ড\" চাপুন।",
+      "hi": "\"भेजें\" दबाएं।",
+      "vi": "Chạm Gửi."
+     },
+     "expect": "open_send_money",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Choose \"Sending to a friend\" — this is family.",
+      "bn": "\"বন্ধুকে পাঠাচ্ছি\" বেছে নিন — এটা পরিবার।",
+      "hi": "\"दोस्त को भेज रहा हूं\" चुनें — यह परिवार है।",
+      "vi": "Chọn \"Gửi cho bạn bè\" — đây là người thân."
+     },
+     "expect": "choose_friend",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Choose Emma from the saved people.",
+      "bn": "সেভ করা মানুষদের মধ্যে থেকে এমা-কে বেছে নিন।",
+      "hi": "सेव किए लोगों में से एमा को चुनें।",
+      "vi": "Chọn Emma trong danh sách đã lưu."
+     },
+     "expect": "choose_rupa",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Type the amount $50 on the keypad (or tap a quick amount).",
+      "bn": "কিপ্যাডে $৫০ লিখুন (বা তৈরি থাকা পরিমাণে চাপুন)।",
+      "hi": "कीपैड पर $50 लिखें (या तैयार रकम पर टैप करें)।",
+      "vi": "Nhập số tiền $50 trên bàn phím (hoặc chạm số tiền gợi ý)."
+     },
+     "expect": "enter_amount",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap Next.",
+      "bn": "\"পরের ধাপ\" চাপুন।",
+      "hi": "\"आगे\" दबाएं।",
+      "vi": "Chạm Tiếp tục."
+     },
+     "expect": "amount_next",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Add a note if you like, then tap \"Review payment\".",
+      "bn": "চাইলে একটা নোট লিখুন, তারপর \"পেমেন্ট মিলিয়ে নিন\" চাপুন।",
+      "hi": "चाहें तो नोट लिखें, फिर \"भुगतान जांचें\" दबाएं।",
+      "vi": "Thêm lời nhắn nếu muốn, rồi chạm \"Xem lại giao dịch\"."
+     },
+     "expect": "review_payment",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Read the name, number and amount carefully. If all is right, tap \"Continue to PIN\".",
+      "bn": "নাম, নম্বর আর টাকার পরিমাণ ভালো করে পড়ুন। সব ঠিক থাকলে \"পিন দিতে এগিয়ে যান\" চাপুন।",
+      "hi": "नाम, नंबर और रकम ध्यान से पढ़ें। सब ठीक हो तो \"पिन के लिए आगे बढ़ें\" दबाएं।",
+      "vi": "Đọc kỹ tên, số và số tiền. Nếu đúng hết, chạm \"Tiếp tục nhập PIN\"."
+     },
+     "expect": "go_to_pin",
+     "hint": {
+      "en": "This is the most important moment: check before you pay.",
+      "bn": "এটাই সবচেয়ে জরুরি মুহূর্ত: টাকা দেওয়ার আগে মিলিয়ে নিন।",
+      "hi": "यही सबसे ज़रूरी पल है: भुगतान से पहले जांचें।",
+      "vi": "Đây là lúc quan trọng nhất: kiểm tra trước khi trả."
+     }
+    },
+    {
+     "text": {
+      "en": "Type any practice PIN (this is pretend — never your real PIN).",
+      "bn": "যেকোনো অনুশীলনের পিন দিন (এটা নকল — কখনো আসল পিন নয়)।",
+      "hi": "कोई भी अभ्यास पिन डालें (यह नकली है — असली पिन कभी नहीं)।",
+      "vi": "Nhập PIN luyện tập bất kỳ (đây là giả — đừng dùng PIN thật)."
+     },
+     "expect": "enter_pin",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the confirm button to finish.",
+      "bn": "শেষ করতে নিশ্চিত করার বোতামে চাপুন।",
+      "hi": "पूरा करने के लिए पुष्टि वाला बटन दबाएं।",
+      "vi": "Chạm nút xác nhận để hoàn tất."
+     },
+     "expect": "confirm_payment",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "pp2",
+   "skill": "safety.account_security",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Check your activity",
+    "bn": "লেনদেন যাচাই করুন",
+    "hi": "लेन-देन जांचें",
+    "vi": "Kiểm tra hoạt động"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap \"Show all\" next to Recent activity.",
+      "bn": "\"সাম্প্রতিক লেনদেন\"-এর পাশে \"সব দেখুন\" চাপুন।",
+      "hi": "\"हाल के लेन-देन\" के पास \"सब देखें\" दबाएं।",
+      "vi": "Chạm \"Xem tất cả\" cạnh Hoạt động gần đây."
+     },
+     "expect": "open_activity",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "One payment looks strange: \"QuickPrize Rewards\". Tap it.",
+      "bn": "একটা লেনদেন অদ্ভুত: \"QuickPrize Rewards\"। তাতে চাপুন।",
+      "hi": "एक भुगतान अजीब है: \"QuickPrize Rewards\"। उस पर टैप करें।",
+      "vi": "Có một khoản lạ: \"QuickPrize Rewards\". Chạm vào."
+     },
+     "expect": "open_odd_payment",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap \"Report a problem\".",
+      "bn": "\"সমস্যা জানান\" চাপুন।",
+      "hi": "\"समस्या बताएं\" दबाएं।",
+      "vi": "Chạm \"Báo cáo sự cố\"."
+     },
+     "expect": "report_problem",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "pp3",
+   "skill": "safety.recognise_phishing",
+   "level": "INTERMEDIATE",
+   "title": {
+    "en": "Spot a fake PayPal email",
+    "bn": "ভুয়া পেপ্যাল ইমেইল চিনুন",
+    "hi": "नकली PayPal ईमेल पहचानें",
+    "vi": "Nhận ra email PayPal giả"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap the envelope at the top to read your new email.",
+      "bn": "নতুন ইমেইল পড়তে ওপরে খামের চিহ্নে চাপুন।",
+      "hi": "नया ईमेल पढ़ने के लिए ऊपर लिफ़ाफ़े पर टैप करें।",
+      "vi": "Chạm biểu tượng phong bì ở trên để đọc email mới."
+     },
+     "expect": "open_mail",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Look at the sender and the threat. It's fake — tap \"Delete this email\".",
+      "bn": "প্রেরক আর হুমকিটা দেখুন। এটা ভুয়া — \"ইমেইলটি মুছুন\" চাপুন।",
+      "hi": "भेजने वाले और धमकी को देखें। यह नकली है — \"यह ईमेल डिलीट करें\" दबाएं।",
+      "vi": "Xem người gửi và lời đe dọa. Đây là giả — chạm \"Xóa email này\"."
+     },
+     "expect": "delete_phishing",
+     "hint": null
+    }
+   ]
+  }
+ ],
+ "gmail": [
+  {
+   "id": "gm1",
+   "skill": "email.read",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Write a new email",
+    "bn": "নতুন ইমেইল লিখুন",
+    "hi": "नया ईमेल लिखें",
+    "vi": "Viết email mới"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap the \"Compose\" pencil at the bottom right.",
+      "bn": "নিচে ডানদিকে \"কম্পোজ\" পেনসিলে চাপুন।",
+      "hi": "नीचे दाईं ओर \"कंपोज़\" पेंसिल पर टैप करें।",
+      "vi": "Chạm nút bút chì \"Soạn thư\" ở góc dưới bên phải."
+     },
+     "expect": "open_compose",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "In \"To\", type the email address: rupa.family@gmail.com",
+      "bn": "\"প্রাপক\"-এ ইমেইল ঠিকানা লিখুন: rupa.family@gmail.com",
+      "hi": "\"को\" में ईमेल पता लिखें: rupa.family@gmail.com",
+      "vi": "Ở ô \"Tới\", gõ địa chỉ: rupa.family@gmail.com"
+     },
+     "expect": "enter_to",
+     "hint": {
+      "en": "The address needs an @ sign and no spaces.",
+      "bn": "ঠিকানায় @ চিহ্ন থাকবে, কোনো ফাঁকা থাকবে না।",
+      "hi": "पते में @ होना चाहिए और कोई खाली जगह नहीं।",
+      "vi": "Địa chỉ cần có dấu @ và không có dấu cách."
+     }
+    },
+    {
+     "text": {
+      "en": "Tap the big box and write a few words.",
+      "bn": "বড় ঘরটায় চেপে কয়েকটা কথা লিখুন।",
+      "hi": "बड़े बॉक्स पर टैप करके कुछ लिखें।",
+      "vi": "Chạm ô lớn và viết vài chữ."
+     },
+     "expect": "type_email",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the send arrow at the top.",
+      "bn": "ওপরে পাঠানোর তীরে চাপুন।",
+      "hi": "ऊपर भेजने वाले तीर पर टैप करें।",
+      "vi": "Chạm mũi tên gửi ở trên."
+     },
+     "expect": "send_email",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "gm2",
+   "skill": "email.read",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Reply to your daughter",
+    "bn": "মেয়েকে উত্তর দিন",
+    "hi": "बेटी को जवाब दें",
+    "vi": "Trả lời con gái"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Open the email from Rupa.",
+      "bn": "রূপার ইমেইলটা খুলুন।",
+      "hi": "रूपा का ईमेल खोलें।",
+      "vi": "Mở email của Lan."
+     },
+     "expect": "open_email_rupa",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Scroll down and tap \"Reply\".",
+      "bn": "নিচে গিয়ে \"রিপ্লাই\" চাপুন।",
+      "hi": "नीचे जाकर \"रिप्लाई\" दबाएं।",
+      "vi": "Kéo xuống và chạm \"Trả lời\"."
+     },
+     "expect": "open_reply",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Write your answer in the big box.",
+      "bn": "বড় ঘরে আপনার উত্তর লিখুন।",
+      "hi": "बड़े बॉक्स में अपना जवाब लिखें।",
+      "vi": "Viết câu trả lời vào ô lớn."
+     },
+     "expect": "type_email",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the send arrow.",
+      "bn": "পাঠানোর তীরে চাপুন।",
+      "hi": "भेजने वाले तीर पर टैप करें।",
+      "vi": "Chạm mũi tên gửi."
+     },
+     "expect": "send_email",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "gm3",
+   "skill": "email.attach_file",
+   "level": "INTERMEDIATE",
+   "title": {
+    "en": "Send a photo by email",
+    "bn": "ইমেইলে ছবি পাঠান",
+    "hi": "ईमेल से फ़ोटो भेजें",
+    "vi": "Gửi ảnh qua email"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap \"Compose\".",
+      "bn": "\"কম্পোজ\" চাপুন।",
+      "hi": "\"कंपोज़\" दबाएं।",
+      "vi": "Chạm \"Soạn thư\"."
+     },
+     "expect": "open_compose",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "In \"To\", type: rupa.family@gmail.com",
+      "bn": "\"প্রাপক\"-এ লিখুন: rupa.family@gmail.com",
+      "hi": "\"को\" में लिखें: rupa.family@gmail.com",
+      "vi": "Ở ô \"Tới\", gõ: rupa.family@gmail.com"
+     },
+     "expect": "enter_to",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the paperclip at the top.",
+      "bn": "ওপরে পেপারক্লিপে চাপুন।",
+      "hi": "ऊपर पेपरक्लिप पर टैप करें।",
+      "vi": "Chạm biểu tượng kẹp giấy ở trên."
+     },
+     "expect": "open_attach",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Choose the photo garden_photo.jpg.",
+      "bn": "garden_photo.jpg ছবিটা বেছে নিন।",
+      "hi": "garden_photo.jpg फ़ोटो चुनें।",
+      "vi": "Chọn ảnh garden_photo.jpg."
+     },
+     "expect": "pick_file",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the send arrow.",
+      "bn": "পাঠানোর তীরে চাপুন।",
+      "hi": "भेजने वाले तीर पर टैप करें।",
+      "vi": "Chạm mũi tên gửi."
+     },
+     "expect": "send_email",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "gm4",
+   "skill": "safety.recognise_phishing",
+   "level": "INTERMEDIATE",
+   "title": {
+    "en": "Spot a fake bank email",
+    "bn": "ভুয়া ব্যাংক ইমেইল চিনুন",
+    "hi": "नकली बैंक ईमेल पहचानें",
+    "vi": "Nhận ra email ngân hàng giả"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Open the email from \"Bank Security Team\".",
+      "bn": "\"Bank Security Team\"-এর ইমেইলটা খুলুন।",
+      "hi": "\"Bank Security Team\" का ईमेल खोलें।",
+      "vi": "Mở email từ \"Bank Security Team\"."
+     },
+     "expect": "open_email_phish",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Look at the address under the name — it isn't your bank. Tap \"Report spam\" in the warning.",
+      "bn": "নামের নিচের ঠিকানাটা দেখুন — এটা আপনার ব্যাংক নয়। সতর্কবার্তায় \"স্প্যাম রিপোর্ট\" চাপুন।",
+      "hi": "नाम के नीचे का पता देखें — यह आपका बैंक नहीं है। चेतावनी में \"स्पैम रिपोर्ट\" दबाएं।",
+      "vi": "Nhìn địa chỉ dưới tên — đó không phải ngân hàng của bạn. Chạm \"Báo cáo thư rác\" trong cảnh báo."
+     },
+     "expect": "report_spam",
+     "hint": {
+      "en": "Never tap the link inside. Your bank never asks for your password by email.",
+      "bn": "ভেতরের লিংকে কখনো চাপবেন না। ব্যাংক কখনো ইমেইলে পাসওয়ার্ড চায় না।",
+      "hi": "अंदर के लिंक पर कभी टैप न करें। बैंक ईमेल पर कभी पासवर्ड नहीं मांगता।",
+      "vi": "Đừng bao giờ chạm vào link. Ngân hàng không hỏi mật khẩu qua email."
+     }
+    }
+   ]
+  },
+  {
+   "id": "gm5",
+   "skill": "email.read",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Keep an email for later",
+    "bn": "পরে দেখার জন্য ইমেইল রাখুন",
+    "hi": "बाद के लिए ईमेल संभालें",
+    "vi": "Giữ email để xem sau"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Open the email from City Clinic.",
+      "bn": "সিটি ক্লিনিকের ইমেইলটা খুলুন।",
+      "hi": "सिटी क्लिनिक का ईमेल खोलें।",
+      "vi": "Mở email của Phòng khám Thành phố."
+     },
+     "expect": "open_email_clinic",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the star next to the subject so you can find it later.",
+      "bn": "বিষয়ের পাশের তারায় চাপুন, পরে সহজে খুঁজে পাবেন।",
+      "hi": "विषय के पास वाले तारे पर टैप करें, ताकि बाद में आसानी से मिले।",
+      "vi": "Chạm ngôi sao cạnh tiêu đề để dễ tìm lại."
+     },
+     "expect": "star_email",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the box with a down arrow at the top to archive it.",
+      "bn": "আর্কাইভ করতে ওপরে নিচের-তীর দেওয়া বাক্সে চাপুন।",
+      "hi": "आर्काइव करने के लिए ऊपर नीचे-तीर वाले डिब्बे पर टैप करें।",
+      "vi": "Chạm hộp có mũi tên xuống ở trên để lưu trữ."
+     },
+     "expect": "archive_email",
+     "hint": null
+    }
+   ]
+  }
+ ],
+ "amazon": [
+  {
+   "id": "az1",
+   "skill": "shopping.order_safely",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Order something safely",
+    "bn": "নিরাপদে কিছু অর্ডার করুন",
+    "hi": "सुरक्षित तरीके से ऑर्डर करें",
+    "vi": "Đặt hàng an toàn"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap the search bar and type \"reading glasses\".",
+      "bn": "সার্চ বারে চেপে \"reading glasses\" লিখুন।",
+      "hi": "सर्च बार पर टैप करके \"reading glasses\" लिखें।",
+      "vi": "Chạm thanh tìm kiếm và gõ \"kính đọc sách\"."
+     },
+     "expect": "type_search",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the search button.",
+      "bn": "সার্চের বোতামে চাপুন।",
+      "hi": "सर्च बटन दबाएं।",
+      "vi": "Chạm nút tìm."
+     },
+     "expect": "run_search",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Open the reading glasses.",
+      "bn": "পড়ার চশমাটা খুলুন।",
+      "hi": "पढ़ने का चश्मा खोलें।",
+      "vi": "Mở kính đọc sách."
+     },
+     "expect": "open_product_glasses",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the stars to read what other buyers said.",
+      "bn": "অন্য ক্রেতারা কী বলেছেন পড়তে তারায় চাপুন।",
+      "hi": "दूसरे खरीदारों की राय पढ़ने के लिए तारों पर टैप करें।",
+      "vi": "Chạm vào sao để đọc nhận xét của người mua khác."
+     },
+     "expect": "read_reviews",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap \"Buy Now\".",
+      "bn": "\"বাই নাউ\" চাপুন।",
+      "hi": "\"अभी खरीदें\" दबाएं।",
+      "vi": "Chạm \"Mua ngay\"."
+     },
+     "expect": "buy_now",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Choose \"Cash on Delivery\" — you pay when it arrives.",
+      "bn": "\"ক্যাশ অন ডেলিভারি\" বেছে নিন — হাতে পেয়ে টাকা দেবেন।",
+      "hi": "\"कैश ऑन डिलीवरी\" चुनें — सामान आने पर पैसे देंगे।",
+      "vi": "Chọn \"Thanh toán khi nhận hàng\"."
+     },
+     "expect": "choose_cod",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Check the address and total, then tap \"Place your order\".",
+      "bn": "ঠিকানা আর মোট দাম দেখে \"অর্ডার দিন\" চাপুন।",
+      "hi": "पता और कुल रकम देखकर \"ऑर्डर करें\" दबाएं।",
+      "vi": "Kiểm tra địa chỉ và tổng tiền, rồi chạm \"Đặt hàng\"."
+     },
+     "expect": "place_order",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "az2",
+   "skill": "safety.recognise_scam",
+   "level": "INTERMEDIATE",
+   "title": {
+    "en": "Spot a fake deal",
+    "bn": "ভুয়া অফার চিনুন",
+    "hi": "नकली ऑफ़र पहचानें",
+    "vi": "Nhận ra ưu đãi giả"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Open the phone with \"95% OFF\".",
+      "bn": "\"৯৫% ছাড়\" লেখা ফোনটা খুলুন।",
+      "hi": "\"95% छूट\" वाला फ़ोन खोलें।",
+      "vi": "Mở chiếc điện thoại \"GIẢM 95%\"."
+     },
+     "expect": "open_product_fake",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the seller's name at the top to check them.",
+      "bn": "বিক্রেতাকে যাচাই করতে ওপরে তার নামে চাপুন।",
+      "hi": "विक्रेता को जांचने के लिए ऊपर उसके नाम पर टैप करें।",
+      "vi": "Chạm tên người bán ở trên để kiểm tra."
+     },
+     "expect": "check_seller",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Now tap the stars to read the reviews.",
+      "bn": "এবার রিভিউ পড়তে তারায় চাপুন।",
+      "hi": "अब रिव्यू पढ़ने के लिए तारों पर टैप करें।",
+      "vi": "Giờ chạm vào sao để đọc đánh giá."
+     },
+     "expect": "read_reviews",
+     "hint": {
+      "en": "New seller + huge discount + bad reviews = don't buy. Just go back.",
+      "bn": "নতুন বিক্রেতা + বিশাল ছাড় + খারাপ রিভিউ = কিনবেন না। শুধু পেছনে যান।",
+      "hi": "नया विक्रेता + भारी छूट + खराब रिव्यू = न खरीदें। बस पीछे जाएं।",
+      "vi": "Người bán mới + giảm giá lớn + đánh giá xấu = đừng mua."
+     }
+    }
+   ]
+  },
+  {
+   "id": "az3",
+   "skill": "shopping.order_safely",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Use the cart",
+    "bn": "কার্ট ব্যবহার করুন",
+    "hi": "कार्ट का इस्तेमाल करें",
+    "vi": "Dùng giỏ hàng"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Open the electric kettle.",
+      "bn": "ইলেকট্রিক কেটলিটা খুলুন।",
+      "hi": "इलेक्ट्रिक केतली खोलें।",
+      "vi": "Mở ấm đun nước điện."
+     },
+     "expect": "open_product_kettle",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap \"Add to Cart\". Nothing is paid yet.",
+      "bn": "\"অ্যাড টু কার্ট\" চাপুন। এখনো টাকা যাবে না।",
+      "hi": "\"कार्ट में डालें\" दबाएं। अभी पैसे नहीं कटेंगे।",
+      "vi": "Chạm \"Thêm vào giỏ\". Chưa trả tiền đâu."
+     },
+     "expect": "add_to_cart",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the cart at the bottom.",
+      "bn": "নিচে কার্টে চাপুন।",
+      "hi": "नीचे कार्ट पर टैप करें।",
+      "vi": "Chạm giỏ hàng ở dưới."
+     },
+     "expect": "open_cart",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Changed your mind? Tap \"Delete\" under the kettle.",
+      "bn": "মত বদলেছেন? কেটলির নিচে \"মুছুন\" চাপুন।",
+      "hi": "मन बदल गया? केतली के नीचे \"हटाएं\" दबाएं।",
+      "vi": "Đổi ý? Chạm \"Xóa\" dưới ấm đun."
+     },
+     "expect": "remove_from_cart",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "az4",
+   "skill": "shopping.return_item",
+   "level": "INTERMEDIATE",
+   "title": {
+    "en": "Track and return an order",
+    "bn": "অর্ডার দেখুন ও ফেরত দিন",
+    "hi": "ऑर्डर ट्रैक करें और लौटाएं",
+    "vi": "Theo dõi và trả hàng"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap \"Orders\" at the bottom.",
+      "bn": "নিচে \"অর্ডার\" চাপুন।",
+      "hi": "नीचे \"ऑर्डर\" दबाएं।",
+      "vi": "Chạm \"Đơn hàng\" ở dưới."
+     },
+     "expect": "open_orders",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Open the kettle order.",
+      "bn": "কেটলির অর্ডারটা খুলুন।",
+      "hi": "केतली का ऑर्डर खोलें।",
+      "vi": "Mở đơn hàng ấm đun."
+     },
+     "expect": "open_order_kettle",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap \"Track package\" to see where it is.",
+      "bn": "কোথায় আছে দেখতে \"প্যাকেজ ট্র্যাক\" চাপুন।",
+      "hi": "कहां है देखने के लिए \"पैकेज ट्रैक करें\" दबाएं।",
+      "vi": "Chạm \"Theo dõi gói hàng\" để xem đang ở đâu."
+     },
+     "expect": "track_package",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "It arrived broken. Tap \"Return or replace\".",
+      "bn": "এটা ভাঙা এসেছে। \"ফেরত বা বদল\" চাপুন।",
+      "hi": "यह टूटा आया है। \"लौटाएं या बदलें\" दबाएं।",
+      "vi": "Hàng bị vỡ. Chạm \"Trả hoặc đổi\"."
+     },
+     "expect": "return_item",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Choose \"Item arrived damaged\".",
+      "bn": "\"জিনিস ভাঙা অবস্থায় এসেছে\" বেছে নিন।",
+      "hi": "\"सामान टूटा हुआ आया\" चुनें।",
+      "vi": "Chọn \"Hàng đến bị hỏng\"."
+     },
+     "expect": "choose_damaged",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap \"Confirm return\".",
+      "bn": "\"ফেরত নিশ্চিত করুন\" চাপুন।",
+      "hi": "\"वापसी पक्की करें\" दबाएं।",
+      "vi": "Chạm \"Xác nhận trả hàng\"."
+     },
+     "expect": "confirm_return",
+     "hint": null
+    }
+   ]
+  }
+ ],
+ "booking": [
+  {
+   "id": "bk1",
+   "skill": "travel.book_hotel",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Book a hotel room",
+    "bn": "হোটেলের রুম বুক করুন",
+    "hi": "होटल का कमरा बुक करें",
+    "vi": "Đặt phòng khách sạn"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap \"Where are you going?\" and type a city, like Kolkata.",
+      "bn": "\"কোথায় যাচ্ছেন?\"-এ চেপে একটা শহরের নাম লিখুন, যেমন কলকাতা।",
+      "hi": "\"कहां जा रहे हैं?\" पर टैप करके शहर लिखें, जैसे कोलकाता।",
+      "vi": "Chạm \"Bạn muốn đi đâu?\" và gõ tên thành phố, ví dụ Đà Nẵng."
+     },
+     "expect": "enter_city",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the blue \"Search\" button.",
+      "bn": "নীল \"সার্চ\" বোতামে চাপুন।",
+      "hi": "नीला \"सर्च\" बटन दबाएं।",
+      "vi": "Chạm nút \"Tìm\" màu xanh."
+     },
+     "expect": "run_search",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Open \"Lakeview Residency\" — good score and free cancellation.",
+      "bn": "\"Lakeview Residency\" খুলুন — ভালো স্কোর, ফ্রি ক্যানসেলেশন।",
+      "hi": "\"Lakeview Residency\" खोलें — अच्छा स्कोर और फ़्री कैंसलेशन।",
+      "vi": "Mở \"Lakeview Residency\" — điểm cao, miễn phí hủy."
+     },
+     "expect": "open_hotel_lake",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap \"Reserve\".",
+      "bn": "\"রিজার্ভ করুন\" চাপুন।",
+      "hi": "\"रिज़र्व करें\" दबाएं।",
+      "vi": "Chạm \"Đặt ngay\"."
+     },
+     "expect": "reserve",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Check your name and the total, then tap \"Complete booking\".",
+      "bn": "নাম আর মোট দাম দেখে \"বুকিং শেষ করুন\" চাপুন।",
+      "hi": "नाम और कुल रकम देखकर \"बुकिंग पूरी करें\" दबाएं।",
+      "vi": "Kiểm tra tên và tổng tiền, rồi chạm \"Hoàn tất đặt phòng\"."
+     },
+     "expect": "complete_booking",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "bk2",
+   "skill": "safety.recognise_scam",
+   "level": "INTERMEDIATE",
+   "title": {
+    "en": "Spot a too-cheap hotel",
+    "bn": "অতিরিক্ত সস্তা হোটেল চিনুন",
+    "hi": "बहुत सस्ता होटल पहचानें",
+    "vi": "Nhận ra khách sạn rẻ bất thường"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap the blue \"Search\" button.",
+      "bn": "নীল \"সার্চ\" বোতামে চাপুন।",
+      "hi": "नीला \"सर्च\" बटन दबाएं।",
+      "vi": "Chạm nút \"Tìm\" màu xanh."
+     },
+     "expect": "run_search",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Open \"Luxury Palace (best price!!)\".",
+      "bn": "\"Luxury Palace (best price!!)\" খুলুন।",
+      "hi": "\"Luxury Palace (best price!!)\" खोलें।",
+      "vi": "Mở \"Luxury Palace (best price!!)\"."
+     },
+     "expect": "open_hotel_cheap",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the score to read what guests said.",
+      "bn": "অতিথিরা কী বলেছেন পড়তে স্কোরে চাপুন।",
+      "hi": "मेहमानों की राय पढ़ने के लिए स्कोर पर टैप करें।",
+      "vi": "Chạm vào điểm để đọc nhận xét của khách."
+     },
+     "expect": "read_reviews",
+     "hint": {
+      "en": "A low score, few reviews and no address are warning signs. Don't book it.",
+      "bn": "কম স্কোর, অল্প রিভিউ, ঠিকানা নেই — এগুলো বিপদের সংকেত। বুক করবেন না।",
+      "hi": "कम स्कोर, कम रिव्यू और पता नहीं — ये खतरे के संकेत हैं। बुक न करें।",
+      "vi": "Điểm thấp, ít đánh giá, không địa chỉ là dấu hiệu nguy hiểm."
+     }
+    }
+   ]
+  },
+  {
+   "id": "bk3",
+   "skill": "safety.recognise_scam",
+   "level": "INTERMEDIATE",
+   "title": {
+    "en": "A fake \"pay again\" message",
+    "bn": "ভুয়া \"আবার টাকা দিন\" মেসেজ",
+    "hi": "नकली \"दोबारा भुगतान\" मैसेज",
+    "vi": "Tin nhắn giả \"trả lại tiền\""
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap \"Messages\" at the bottom.",
+      "bn": "নিচে \"মেসেজ\" চাপুন।",
+      "hi": "नीचे \"मैसेज\" दबाएं।",
+      "vi": "Chạm \"Tin nhắn\" ở dưới."
+     },
+     "expect": "open_messages",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Someone says your payment failed. Don't open the link — tap \"Report this message\".",
+      "bn": "কেউ বলছে পেমেন্ট ব্যর্থ। লিংক খুলবেন না — \"মেসেজটি রিপোর্ট করুন\" চাপুন।",
+      "hi": "कोई कह रहा है भुगतान फ़ेल हुआ। लिंक न खोलें — \"इस मैसेज की रिपोर्ट करें\" दबाएं।",
+      "vi": "Có người nói thanh toán thất bại. Đừng mở link — chạm \"Báo cáo tin nhắn này\"."
+     },
+     "expect": "report_fake_message",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "bk4",
+   "skill": "travel.cancel_booking",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Cancel a booking for free",
+    "bn": "বিনা খরচে বুকিং বাতিল করুন",
+    "hi": "मुफ़्त में बुकिंग रद्द करें",
+    "vi": "Hủy đặt phòng miễn phí"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap the blue \"Search\" button.",
+      "bn": "নীল \"সার্চ\" বোতামে চাপুন।",
+      "hi": "नीला \"सर्च\" बटन दबाएं।",
+      "vi": "Chạm nút \"Tìm\" màu xanh."
+     },
+     "expect": "run_search",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Open \"Garden Inn\".",
+      "bn": "\"Garden Inn\" খুলুন।",
+      "hi": "\"Garden Inn\" खोलें।",
+      "vi": "Mở \"Garden Inn\"."
+     },
+     "expect": "open_hotel_garden",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap \"Reserve\".",
+      "bn": "\"রিজার্ভ করুন\" চাপুন।",
+      "hi": "\"रिज़र्व करें\" दबाएं।",
+      "vi": "Chạm \"Đặt ngay\"."
+     },
+     "expect": "reserve",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap \"Complete booking\".",
+      "bn": "\"বুকিং শেষ করুন\" চাপুন।",
+      "hi": "\"बुकिंग पूरी करें\" दबाएं।",
+      "vi": "Chạm \"Hoàn tất đặt phòng\"."
+     },
+     "expect": "complete_booking",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Plans changed. Tap \"See my bookings\".",
+      "bn": "পরিকল্পনা বদলেছে। \"আমার বুকিং দেখুন\" চাপুন।",
+      "hi": "योजना बदल गई। \"मेरी बुकिंग देखें\" दबाएं।",
+      "vi": "Kế hoạch thay đổi. Chạm \"Xem đặt chỗ của tôi\"."
+     },
+     "expect": "open_bookings",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Open the booking.",
+      "bn": "বুকিংটা খুলুন।",
+      "hi": "बुकिंग खोलें।",
+      "vi": "Mở đặt phòng."
+     },
+     "expect": "open_booking",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap \"Cancel booking\" — it's free before the date shown.",
+      "bn": "\"বুকিং বাতিল করুন\" চাপুন — দেখানো তারিখের আগে ফ্রি।",
+      "hi": "\"बुकिंग रद्द करें\" दबाएं — दी गई तारीख से पहले मुफ़्त है।",
+      "vi": "Chạm \"Hủy đặt phòng\" — miễn phí trước ngày ghi."
+     },
+     "expect": "cancel_booking",
+     "hint": null
+    }
+   ]
+  }
+ ],
+ "practo": [
+  {
+   "id": "pr1",
+   "skill": "health.book_appointment",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Book a doctor's visit",
+    "bn": "ডাক্তারের অ্যাপয়েন্টমেন্ট নিন",
+    "hi": "डॉक्टर की अपॉइंटमेंट लें",
+    "vi": "Đặt lịch khám bác sĩ"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap \"Book Clinic Visit\".",
+      "bn": "\"ক্লিনিক ভিজিট বুক\" চাপুন।",
+      "hi": "\"क्लिनिक विज़िट बुक\" दबाएं।",
+      "vi": "Chạm \"Đặt lịch khám\"."
+     },
+     "expect": "find_doctor",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Open Dr. Anjali Mehta.",
+      "bn": "ডা. অঞ্জলি মেহতাকে খুলুন।",
+      "hi": "डॉ. अंजलि मेहता को खोलें।",
+      "vi": "Mở hồ sơ BS. Anjali Mehta."
+     },
+     "expect": "open_doctor_mehta",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Pick a time that suits you.",
+      "bn": "আপনার সুবিধামতো একটা সময় বেছে নিন।",
+      "hi": "अपनी सुविधा का समय चुनें।",
+      "vi": "Chọn giờ phù hợp với bạn."
+     },
+     "expect": "choose_slot",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap \"Book Clinic Visit\".",
+      "bn": "\"ক্লিনিক ভিজিট বুক করুন\" চাপুন।",
+      "hi": "\"क्लिनिक विज़िट बुक करें\" दबाएं।",
+      "vi": "Chạm \"Đặt lịch khám\"."
+     },
+     "expect": "book_visit",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Check the details and tap \"Confirm\".",
+      "bn": "তথ্য দেখে \"নিশ্চিত করুন\" চাপুন।",
+      "hi": "जानकारी देखकर \"पक्का करें\" दबाएं।",
+      "vi": "Kiểm tra thông tin và chạm \"Xác nhận\"."
+     },
+     "expect": "confirm_booking",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "pr2",
+   "skill": "health.video_consult",
+   "level": "INTERMEDIATE",
+   "title": {
+    "en": "See a doctor on video",
+    "bn": "ভিডিওতে ডাক্তার দেখান",
+    "hi": "वीडियो पर डॉक्टर से बात करें",
+    "vi": "Khám bác sĩ qua video"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap \"Consult online\".",
+      "bn": "\"অনলাইনে পরামর্শ\" চাপুন।",
+      "hi": "\"ऑनलाइन सलाह\" दबाएं।",
+      "vi": "Chạm \"Tư vấn trực tuyến\"."
+     },
+     "expect": "consult_online",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Choose what you need help with.",
+      "bn": "কী নিয়ে সাহায্য দরকার বেছে নিন।",
+      "hi": "किस बारे में मदद चाहिए, चुनें।",
+      "vi": "Chọn vấn đề bạn cần giúp."
+     },
+     "expect": "choose_problem",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the button to pay and consult.",
+      "bn": "টাকা দিয়ে পরামর্শ নিতে বোতামে চাপুন।",
+      "hi": "भुगतान करके सलाह लेने के लिए बटन दबाएं।",
+      "vi": "Chạm nút để trả tiền và tư vấn."
+     },
+     "expect": "pay_consult",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap \"Join the call\".",
+      "bn": "\"কলে যোগ দিন\" চাপুন।",
+      "hi": "\"कॉल में जुड़ें\" दबाएं।",
+      "vi": "Chạm \"Vào cuộc gọi\"."
+     },
+     "expect": "join_call",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "When you're done, tap the red button to end.",
+      "bn": "শেষ হলে লাল বোতামে চেপে কল শেষ করুন।",
+      "hi": "हो जाए तो लाल बटन दबाकर कॉल खत्म करें।",
+      "vi": "Xong thì chạm nút đỏ để kết thúc."
+     },
+     "expect": "end_call",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "pr3",
+   "skill": "health.cancel_appointment",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Change or cancel an appointment",
+    "bn": "অ্যাপয়েন্টমেন্ট বদলান বা বাতিল করুন",
+    "hi": "अपॉइंटमेंट बदलें या रद्द करें",
+    "vi": "Đổi hoặc hủy lịch hẹn"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap \"Appointments\".",
+      "bn": "\"অ্যাপয়েন্টমেন্ট\" চাপুন।",
+      "hi": "\"अपॉइंटमेंट\" दबाएं।",
+      "vi": "Chạm \"Lịch hẹn\"."
+     },
+     "expect": "open_appointments",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap \"Reschedule\" to move it to another time.",
+      "bn": "অন্য সময়ে সরাতে \"সময় বদলান\" চাপুন।",
+      "hi": "दूसरे समय पर करने के लिए \"समय बदलें\" दबाएं।",
+      "vi": "Chạm \"Đổi lịch\" để dời sang giờ khác."
+     },
+     "expect": "reschedule",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Can't go at all? Tap \"Cancel\" so another patient gets the time.",
+      "bn": "একদম যেতে পারবেন না? \"বাতিল\" চাপুন, যাতে অন্য রোগী সময়টা পান।",
+      "hi": "बिल्कुल नहीं जा सकते? \"रद्द करें\" दबाएं ताकि दूसरे मरीज़ को समय मिले।",
+      "vi": "Không đi được? Chạm \"Hủy\" để người khác có giờ khám."
+     },
+     "expect": "cancel_appointment",
+     "hint": null
+    }
+   ]
+  }
+ ],
+ "whatsapp": [
+  {
+   "id": "wa1",
+   "skill": "messaging.send_message",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Send a message",
+    "bn": "মেসেজ পাঠান",
+    "hi": "मैसेज भेजें",
+    "vi": "Gửi tin nhắn"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap Rupa's chat to open it.",
+      "bn": "রূপার চ্যাটে চেপে খুলুন।",
+      "hi": "रूपा की चैट पर टैप करके खोलें।",
+      "vi": "Chạm vào đoạn chat của Lan để mở."
+     },
+     "expect": "open_chat_rupa",
+     "hint": {
+      "en": "Rupa's name is near the top of the chat list, with a red circle.",
+      "bn": "চ্যাটের তালিকায় ওপরের দিকে লাল বৃত্তসহ রূপার নাম।",
+      "hi": "चैट सूची में ऊपर लाल गोले के साथ रूपा का नाम है।",
+      "vi": "Tên Lan ở gần đầu danh sách, có vòng tròn màu đỏ."
+     }
+    },
+    {
+     "text": {
+      "en": "Tap the white \"Message\" box at the bottom and type a few words, like \"Good morning\".",
+      "bn": "নিচের সাদা \"মেসেজ\" ঘরে চেপে কয়েকটা কথা লিখুন, যেমন \"সুপ্রভাত\"।",
+      "hi": "नीचे सफ़ेद \"मैसेज\" बॉक्स पर टैप करके कुछ लिखें, जैसे \"सुप्रभात\"।",
+      "vi": "Chạm ô \"Tin nhắn\" màu trắng ở dưới và gõ vài chữ, ví dụ \"Chào buổi sáng\"."
+     },
+     "expect": "type_message",
+     "hint": {
+      "en": "The message box is the long white box at the very bottom.",
+      "bn": "মেসেজের ঘর একদম নিচে লম্বা সাদা ঘরটা।",
+      "hi": "मैसेज बॉक्स सबसे नीचे लंबा सफ़ेद बॉक्स है।",
+      "vi": "Ô tin nhắn là ô trắng dài ở dưới cùng."
+     }
+    },
+    {
+     "text": {
+      "en": "Tap the green round button with the arrow to send it.",
+      "bn": "পাঠাতে তীর-ওয়ালা সবুজ গোল বোতামে চাপুন।",
+      "hi": "भेजने के लिए तीर वाले हरे गोल बटन पर टैप करें।",
+      "vi": "Chạm nút tròn xanh có mũi tên để gửi."
+     },
+     "expect": "send_message",
+     "hint": {
+      "en": "The microphone turns into an arrow once you type.",
+      "bn": "লিখতে শুরু করলে মাইক্রোফোনটা তীর হয়ে যায়।",
+      "hi": "लिखना शुरू करते ही माइक तीर बन जाता है।",
+      "vi": "Khi bạn gõ, nút micro đổi thành mũi tên."
+     }
+    }
+   ]
+  },
+  {
+   "id": "wa2",
+   "skill": "messaging.video_call",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Make a video call",
+    "bn": "ভিডিও কল করুন",
+    "hi": "वीडियो कॉल करें",
+    "vi": "Gọi video"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap Rupa's chat to open it.",
+      "bn": "রূপার চ্যাটে চেপে খুলুন।",
+      "hi": "रूपा की चैट पर टैप करके खोलें।",
+      "vi": "Chạm vào đoạn chat của Lan để mở."
+     },
+     "expect": "open_chat_rupa",
+     "hint": {
+      "en": "Rupa's name is near the top of the chat list, with a red circle.",
+      "bn": "চ্যাটের তালিকায় ওপরের দিকে লাল বৃত্তসহ রূপার নাম।",
+      "hi": "चैट सूची में ऊपर लाल गोले के साथ रूपा का नाम है।",
+      "vi": "Tên Lan ở gần đầu danh sách, có vòng tròn màu đỏ."
+     }
+    },
+    {
+     "text": {
+      "en": "Tap the video camera at the top right to call her.",
+      "bn": "তাঁকে কল করতে ওপরে ডানদিকের ভিডিও ক্যামেরায় চাপুন।",
+      "hi": "उन्हें कॉल करने के लिए ऊपर दाईं ओर वीडियो कैमरे पर टैप करें।",
+      "vi": "Chạm biểu tượng máy quay ở góc trên phải để gọi."
+     },
+     "expect": "start_video_call",
+     "hint": {
+      "en": "It's the first icon in the green bar at the top.",
+      "bn": "ওপরের সবুজ বারে প্রথম চিহ্নটাই।",
+      "hi": "ऊपर की हरी पट्टी में पहला निशान।",
+      "vi": "Đó là biểu tượng đầu tiên trên thanh xanh."
+     }
+    },
+    {
+     "text": {
+      "en": "Say hello! When you're done, tap the red button to end the call.",
+      "bn": "হ্যালো বলুন! শেষ হলে কল কাটতে লাল বোতামে চাপুন।",
+      "hi": "हैलो कहें! हो जाए तो कॉल खत्म करने के लिए लाल बटन दबाएं।",
+      "vi": "Chào nhé! Xong thì chạm nút đỏ để kết thúc."
+     },
+     "expect": "end_call",
+     "hint": {
+      "en": "The red button with the phone is at the bottom.",
+      "bn": "ফোন আঁকা লাল বোতামটা নিচে।",
+      "hi": "फोन वाला लाल बटन नीचे है।",
+      "vi": "Nút đỏ hình điện thoại ở dưới cùng."
+     }
+    }
+   ]
+  },
+  {
+   "id": "wa3",
+   "skill": "messaging.share_photo",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Send a photo",
+    "bn": "ছবি পাঠান",
+    "hi": "फोटो भेजें",
+    "vi": "Gửi ảnh"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap Rupa's chat to open it.",
+      "bn": "রূপার চ্যাটে চেপে খুলুন।",
+      "hi": "रूपा की चैट पर टैप करके खोलें।",
+      "vi": "Chạm vào đoạn chat của Lan để mở."
+     },
+     "expect": "open_chat_rupa",
+     "hint": {
+      "en": "Rupa's name is near the top of the chat list, with a red circle.",
+      "bn": "চ্যাটের তালিকায় ওপরের দিকে লাল বৃত্তসহ রূপার নাম।",
+      "hi": "चैट सूची में ऊपर लाल गोले के साथ रूपा का नाम है।",
+      "vi": "Tên Lan ở gần đầu danh sách, có vòng tròn màu đỏ."
+     }
+    },
+    {
+     "text": {
+      "en": "Tap the paperclip inside the message box.",
+      "bn": "মেসেজের ঘরের ভেতরে পেপারক্লিপে চাপুন।",
+      "hi": "मैसेज बॉक्स के अंदर पेपरक्लिप पर टैप करें।",
+      "vi": "Chạm biểu tượng kẹp giấy trong ô tin nhắn."
+     },
+     "expect": "open_attach",
+     "hint": {
+      "en": "It's the slanted paperclip, just left of the camera.",
+      "bn": "ক্যামেরার ঠিক বাঁদিকে বাঁকা পেপারক্লিপ।",
+      "hi": "कैमरे के ठीक बाईं ओर तिरछा पेपरक्लिप।",
+      "vi": "Là kẹp giấy nghiêng, ngay bên trái máy ảnh."
+     }
+    },
+    {
+     "text": {
+      "en": "Choose \"Gallery\" — the purple circle.",
+      "bn": "\"গ্যালারি\" বেছে নিন — বেগুনি বৃত্ত।",
+      "hi": "\"गैलरी\" चुनें — बैंगनी गोला।",
+      "vi": "Chọn \"Thư viện\" — vòng tròn tím."
+     },
+     "expect": "open_gallery",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap the first photo (the birthday cake).",
+      "bn": "প্রথম ছবিতে চাপুন (জন্মদিনের কেক)।",
+      "hi": "पहली फोटो (जन्मदिन का केक) पर टैप करें।",
+      "vi": "Chạm ảnh đầu tiên (bánh sinh nhật)."
+     },
+     "expect": "pick_photo",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Check the photo, add a caption if you like, then tap the green send arrow.",
+      "bn": "ছবিটা দেখে নিন, চাইলে ক্যাপশন দিন, তারপর সবুজ তীরে চাপুন।",
+      "hi": "फोटो देखें, चाहें तो कैप्शन लिखें, फिर हरे तीर पर टैप करें।",
+      "vi": "Xem lại ảnh, thêm chú thích nếu muốn, rồi chạm mũi tên xanh."
+     },
+     "expect": "send_photo",
+     "hint": null
+    }
+   ]
+  },
+  {
+   "id": "wa4",
+   "skill": "messaging.voice_message",
+   "level": "BEGINNER",
+   "title": {
+    "en": "Send a voice message",
+    "bn": "ভয়েস মেসেজ পাঠান",
+    "hi": "वॉइस मैसेज भेजें",
+    "vi": "Gửi tin nhắn thoại"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "Tap Rupa's chat to open it.",
+      "bn": "রূপার চ্যাটে চেপে খুলুন।",
+      "hi": "रूपा की चैट पर टैप करके खोलें।",
+      "vi": "Chạm vào đoạn chat của Lan để mở."
+     },
+     "expect": "open_chat_rupa",
+     "hint": {
+      "en": "Rupa's name is near the top of the chat list, with a red circle.",
+      "bn": "চ্যাটের তালিকায় ওপরের দিকে লাল বৃত্তসহ রূপার নাম।",
+      "hi": "चैट सूची में ऊपर लाल गोले के साथ रूपा का नाम है।",
+      "vi": "Tên Lan ở gần đầu danh sách, có vòng tròn màu đỏ."
+     }
+    },
+    {
+     "text": {
+      "en": "Press and HOLD the green microphone, say something, then let go to send.",
+      "bn": "সবুজ মাইক্রোফোন চেপে ধরে রাখুন, কিছু বলুন, তারপর ছেড়ে দিলে চলে যাবে।",
+      "hi": "हरे माइक को दबाकर रखें, कुछ बोलें, फिर छोड़ते ही चला जाएगा।",
+      "vi": "Nhấn GIỮ nút micro xanh, nói gì đó, rồi thả tay để gửi."
+     },
+     "expect": "voice_sent",
+     "hint": {
+      "en": "Keep your finger down for at least two seconds before letting go.",
+      "bn": "ছাড়ার আগে অন্তত দুই সেকেন্ড আঙুল চেপে রাখুন।",
+      "hi": "छोड़ने से पहले कम से कम दो सेकंड उंगली दबाए रखें।",
+      "vi": "Giữ ngón tay ít nhất hai giây rồi mới thả."
+     }
+    }
+   ]
+  },
+  {
+   "id": "wa5",
+   "skill": "safety.verify_identity",
+   "level": "INTERMEDIATE",
+   "title": {
+    "en": "Block a scam message",
+    "bn": "প্রতারকের মেসেজ ব্লক করুন",
+    "hi": "धोखे वाला मैसेज ब्लॉक करें",
+    "vi": "Chặn tin nhắn lừa đảo"
+   },
+   "steps": [
+    {
+     "text": {
+      "en": "A new number says it's your child and asks for money. Open that chat (the number without a name).",
+      "bn": "একটা নতুন নম্বর নিজেকে আপনার সন্তান বলে টাকা চাইছে। নামহীন নম্বরের চ্যাটটা খুলুন।",
+      "hi": "एक नया नंबर खुद को आपका बच्चा बताकर पैसे मांग रहा है। बिना नाम वाले नंबर की चैट खोलें।",
+      "vi": "Một số lạ nhận là con bạn và hỏi tiền. Mở đoạn chat có số không tên."
+     },
+     "expect": "open_chat_unknown",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Read it calmly. Then tap the number at the top to open contact info.",
+      "bn": "শান্তভাবে পড়ুন। তারপর ওপরে নম্বরে চেপে কন্টাক্টের তথ্য খুলুন।",
+      "hi": "आराम से पढ़ें। फिर ऊपर नंबर पर टैप करके कॉन्टैक्ट जानकारी खोलें।",
+      "vi": "Đọc bình tĩnh. Rồi chạm vào số ở trên để mở thông tin."
+     },
+     "expect": "open_contact_info",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Tap \"Block\" so this number can't message you again.",
+      "bn": "\"ব্লক\" চাপুন, যাতে এই নম্বর আর মেসেজ করতে না পারে।",
+      "hi": "\"ब्लॉक\" दबाएं ताकि यह नंबर फिर मैसेज न कर सके।",
+      "vi": "Chạm \"Chặn\" để số này không nhắn cho bạn nữa."
+     },
+     "expect": "block_contact",
+     "hint": null
+    },
+    {
+     "text": {
+      "en": "Confirm by tapping the red \"Block\" button. Then call your child on their usual number.",
+      "bn": "লাল \"ব্লক\" বোতামে চেপে নিশ্চিত করুন। তারপর সন্তানের চেনা নম্বরে ফোন করুন।",
+      "hi": "लाल \"ब्लॉक\" बटन दबाकर पुष्टि करें। फिर बच्चे के पुराने नंबर पर फोन करें।",
+      "vi": "Xác nhận bằng nút \"Chặn\" màu đỏ. Rồi gọi con theo số quen thuộc."
+     },
+     "expect": "confirm_block",
+     "hint": null
+    }
+   ]
+  }
+ ]
+}

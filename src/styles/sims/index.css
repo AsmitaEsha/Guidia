@@ -1,0 +1,8 @@
+/* One stylesheet per practice app. */
+@import './whatsapp.css';
+@import './money.css';
+@import './wallets.css';
+@import './facebook.css';
+@import './messenger.css';
+@import './gmail.css';
+@import './shop.css';

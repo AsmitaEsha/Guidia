@@ -1,0 +1,688 @@
+[
+  {
+    "slug": "facebook-friend-request-safely",
+    "applicationSlug": "facebook",
+    "domain": "SOCIAL_COMMUNICATION",
+    "category": "social",
+    "difficulty": "BEGINNER",
+    "estimatedMinutes": 4,
+    "skillKey": "social.friend_requests",
+    "title": {
+      "en": "Accept a friend request safely",
+      "bn": "নিরাপদে ফ্রেন্ড রিকোয়েস্ট গ্রহণ করুন",
+      "hi": "फ्रेंड रिक्वेस्ट सुरक्षित रूप से स्वीकार करें",
+      "vi": "Chấp nhận lời mời kết bạn an toàn"
+    },
+    "description": {
+      "en": "Check who someone really is before you let them see your posts and photos.",
+      "bn": "কেউ আপনার পোস্ট ও ছবি দেখার আগে আসলে তিনি কে, তা যাচাই করুন।",
+      "hi": "किसी को अपनी पोस्ट और फोटो दिखाने से पहले जांचें कि वह असल में कौन है।",
+      "vi": "Kiểm tra người đó thật sự là ai trước khi cho họ xem bài đăng và ảnh của bạn."
+    },
+    "safetyTips": [
+      {
+        "en": "A second friend request from someone who is already your friend is a common sign of a copied account.",
+        "bn": "যিনি আগে থেকেই বন্ধু, তাঁর কাছ থেকে দ্বিতীয় রিকোয়েস্ট আসা নকল অ্যাকাউন্টের একটি সাধারণ লক্ষণ।",
+        "hi": "जो पहले से दोस्त है, उसकी ओर से दूसरी रिक्वेस्ट आना नकली अकाउंट का आम संकेत है।",
+        "vi": "Người vốn đã là bạn mà gửi lời mời lần thứ hai thường là dấu hiệu tài khoản bị giả mạo."
+      }
+    ],
+    "steps": [
+      {
+        "en": "Tap the Friends icon (two people) or the bell to see your friend requests.",
+        "bn": "ফ্রেন্ড রিকোয়েস্ট দেখতে ফ্রেন্ডস আইকন (দুজন মানুষ) বা ঘণ্টা চিহ্নে চাপুন।",
+        "hi": "फ्रेंड रिक्वेस्ट देखने के लिए फ्रेंड्स आइकन (दो लोग) या घंटी पर दबाएं।",
+        "vi": "Chạm vào biểu tượng Bạn bè (hai người) hoặc chuông để xem lời mời kết bạn."
+      },
+      {
+        "en": "Tap the person's name to open their profile before you decide.",
+        "bn": "সিদ্ধান্ত নেওয়ার আগে মানুষটির নামে চাপ দিয়ে তাঁর প্রোফাইল খুলুন।",
+        "hi": "फैसला करने से पहले व्यक्ति के नाम पर दबाकर उसकी प्रोफ़ाइल खोलें।",
+        "vi": "Chạm vào tên người đó để mở trang cá nhân trước khi quyết định."
+      },
+      {
+        "en": "Look for warning signs: a brand-new profile, very few photos, no mutual friends, or someone who is already your friend sending a second request.",
+        "bn": "সতর্কতার চিহ্ন দেখুন: একেবারে নতুন প্রোফাইল, খুব কম ছবি, কোনো মিউচুয়াল ফ্রেন্ড নেই, বা যিনি আগে থেকেই বন্ধু তিনি আবার রিকোয়েস্ট পাঠাচ্ছেন।",
+        "hi": "चेतावनी के संकेत देखें: बिल्कुल नई प्रोफ़ाइल, बहुत कम फोटो, कोई कॉमन दोस्त नहीं, या जो पहले से दोस्त है वह दोबारा रिक्वेस्ट भेज रहा है।",
+        "vi": "Để ý dấu hiệu đáng ngờ: trang mới lập, rất ít ảnh, không có bạn chung, hoặc một người vốn đã là bạn lại gửi lời mời lần nữa."
+      },
+      {
+        "en": "If you know the person and the profile looks real, tap Confirm. If you are not sure, tap Delete — they are not told.",
+        "bn": "মানুষটিকে চেনেন এবং প্রোফাইল আসল মনে হলে Confirm চাপুন। নিশ্চিত না হলে Delete চাপুন — তাঁকে জানানো হয় না।",
+        "hi": "अगर आप व्यक्ति को जानते हैं और प्रोफ़ाइल असली लगती है, तो Confirm दबाएं। पक्का न हो तो Delete दबाएं — उन्हें पता नहीं चलता।",
+        "vi": "Nếu bạn quen người đó và trang trông thật, chạm Xác nhận. Nếu không chắc, chạm Xóa — họ sẽ không được báo."
+      },
+      {
+        "en": "If a friend you already have sends a new request, call them on their saved number to check. Their account may have been copied.",
+        "bn": "যে বন্ধু আগে থেকেই আছেন তিনি নতুন রিকোয়েস্ট পাঠালে সেভ করা নম্বরে ফোন করে যাচাই করুন। তাঁর অ্যাকাউন্ট নকল করা হতে পারে।",
+        "hi": "अगर पहले से जुड़ा दोस्त नई रिक्वेस्ट भेजे, तो सेव नंबर पर फोन करके जांचें। हो सकता है उसका अकाउंट नकल किया गया हो।",
+        "vi": "Nếu một người vốn đã là bạn gửi lời mời mới, hãy gọi vào số đã lưu để hỏi. Tài khoản của họ có thể đã bị giả mạo."
+      }
+    ]
+  },
+  {
+    "slug": "facebook-share-photo",
+    "applicationSlug": "facebook",
+    "domain": "SOCIAL_COMMUNICATION",
+    "category": "social",
+    "difficulty": "BEGINNER",
+    "estimatedMinutes": 5,
+    "skillKey": "social.post_photo",
+    "title": {
+      "en": "Share a photo with your family on Facebook",
+      "bn": "ফেসবুকে পরিবারের সঙ্গে ছবি শেয়ার করুন",
+      "hi": "फेसबुक पर परिवार के साथ फोटो साझा करें",
+      "vi": "Chia sẻ ảnh với gia đình trên Facebook"
+    },
+    "description": {
+      "en": "Post a photo and choose exactly who can see it.",
+      "bn": "ছবি পোস্ট করুন এবং ঠিক কারা দেখবে তা বেছে নিন।",
+      "hi": "फोटो पोस्ट करें और चुनें कि उसे ठीक-ठीक कौन देख सकता है।",
+      "vi": "Đăng ảnh và chọn chính xác ai được xem."
+    },
+    "safetyTips": [
+      {
+        "en": "Choose Friends, not Public. Public posts can be seen and copied by anyone on the internet.",
+        "bn": "Public নয়, Friends বেছে নিন। Public পোস্ট ইন্টারনেটে যে কেউ দেখতে ও কপি করতে পারে।",
+        "hi": "Public नहीं, Friends चुनें। Public पोस्ट इंटरनेट पर कोई भी देख और कॉपी कर सकता है।",
+        "vi": "Hãy chọn Bạn bè, đừng chọn Công khai. Bài công khai ai trên Internet cũng xem và sao chép được."
+      }
+    ],
+    "steps": [
+      {
+        "en": "On your Facebook home page, tap 'What's on your mind?' at the top.",
+        "bn": "ফেসবুকের হোম পেজে ওপরে 'What's on your mind?' (আপনার মনে কী আছে?) লেখায় চাপুন।",
+        "hi": "फेसबुक होम पेज पर ऊपर 'What's on your mind?' (आपके मन में क्या है?) पर दबाएं।",
+        "vi": "Ở trang chủ Facebook, chạm vào ô 'Bạn đang nghĩ gì?' ở phía trên."
+      },
+      {
+        "en": "Tap Photo/video and choose the picture you want to share. Tap Done.",
+        "bn": "Photo/video চাপুন এবং যে ছবিটি শেয়ার করতে চান সেটি বেছে নিন। Done চাপুন।",
+        "hi": "Photo/video पर दबाएं और जो फोटो साझा करनी है उसे चुनें। Done दबाएं।",
+        "vi": "Chạm Ảnh/video và chọn bức ảnh muốn chia sẻ. Chạm Xong."
+      },
+      {
+        "en": "Write a few words if you like, for example 'Our garden today'.",
+        "bn": "চাইলে কয়েকটি কথা লিখুন, যেমন 'আজ আমাদের বাগান'।",
+        "hi": "चाहें तो कुछ शब्द लिखें, जैसे 'आज हमारा बगीचा'।",
+        "vi": "Nếu muốn, viết vài chữ, ví dụ 'Khu vườn nhà mình hôm nay'."
+      },
+      {
+        "en": "Under your name, tap the audience button and choose Friends — not Public — so strangers cannot see it.",
+        "bn": "আপনার নামের নিচে অডিয়েন্স বোতামে চাপুন এবং Public নয়, Friends বেছে নিন — যাতে অচেনা কেউ দেখতে না পায়।",
+        "hi": "अपने नाम के नीचे ऑडियंस बटन दबाएं और Public नहीं, Friends चुनें — ताकि अजनबी इसे न देख सकें।",
+        "vi": "Dưới tên bạn, chạm nút đối tượng và chọn Bạn bè — không chọn Công khai — để người lạ không xem được."
+      },
+      {
+        "en": "Check the photo once more for private things, like your address, ID card or a cheque. Then tap Post.",
+        "bn": "ছবিতে ঠিকানা, পরিচয়পত্র বা চেকের মতো ব্যক্তিগত কিছু আছে কি না আরেকবার দেখুন। তারপর Post চাপুন।",
+        "hi": "फोटो में पता, पहचान पत्र या चेक जैसी निजी चीज़ें तो नहीं, एक बार और देखें। फिर Post दबाएं।",
+        "vi": "Xem lại ảnh một lần nữa xem có thông tin riêng tư như địa chỉ, căn cước hay séc không. Rồi chạm Đăng."
+      }
+    ]
+  },
+  {
+    "slug": "facebook-report-scam",
+    "applicationSlug": "facebook",
+    "domain": "DIGITAL_SAFETY",
+    "category": "safety",
+    "difficulty": "BEGINNER",
+    "estimatedMinutes": 4,
+    "skillKey": "safety.report_scam",
+    "title": {
+      "en": "Report a fake account or scam on Facebook",
+      "bn": "ফেসবুকে ভুয়া অ্যাকাউন্ট বা প্রতারণা রিপোর্ট করুন",
+      "hi": "फेसबुक पर नकली अकाउंट या धोखे की रिपोर्ट करें",
+      "vi": "Báo cáo tài khoản giả hoặc lừa đảo trên Facebook"
+    },
+    "description": {
+      "en": "Stop a scammer from reaching you — and others — in a few taps.",
+      "bn": "কয়েকটি চাপেই প্রতারককে আপনার — এবং অন্যদের — কাছে পৌঁছানো থেকে আটকান।",
+      "hi": "कुछ ही टैप में धोखेबाज़ को अपने — और दूसरों के — पास पहुँचने से रोकें।",
+      "vi": "Chỉ vài lần chạm để ngăn kẻ lừa đảo tiếp cận bạn — và người khác."
+    },
+    "safetyTips": [
+      {
+        "en": "Reporting is private. The person you report is never told who reported them.",
+        "bn": "রিপোর্ট করা গোপন থাকে। কে রিপোর্ট করেছে, তা ওই মানুষটিকে কখনো জানানো হয় না।",
+        "hi": "रिपोर्ट करना निजी रहता है। जिसकी रिपोर्ट की गई, उसे कभी नहीं बताया जाता कि किसने की।",
+        "vi": "Việc báo cáo được giữ kín. Người bị báo cáo không bao giờ biết ai đã báo cáo họ."
+      }
+    ],
+    "steps": [
+      {
+        "en": "Do not reply, click links or send money, even if the message looks urgent.",
+        "bn": "উত্তর দেবেন না, লিংকে চাপবেন না বা টাকা পাঠাবেন না — মেসেজ যতই জরুরি মনে হোক।",
+        "hi": "जवाब न दें, लिंक पर न दबाएं और पैसे न भेजें — चाहे मैसेज कितना भी ज़रूरी लगे।",
+        "vi": "Không trả lời, không bấm đường link và không chuyển tiền, dù tin nhắn có vẻ gấp đến đâu."
+      },
+      {
+        "en": "Open the profile, then tap the three dots (…) next to their name.",
+        "bn": "প্রোফাইলটি খুলুন, তারপর নামের পাশে তিন ফোঁটা (…) চিহ্নে চাপুন।",
+        "hi": "प्रोफ़ाइल खोलें, फिर नाम के पास तीन बिंदु (…) पर दबाएं।",
+        "vi": "Mở trang cá nhân đó, rồi chạm vào dấu ba chấm (…) cạnh tên."
+      },
+      {
+        "en": "Tap Report, then choose the reason that fits, such as 'Fake account' or 'Scam'.",
+        "bn": "Report চাপুন, তারপর ঠিক কারণটি বেছে নিন, যেমন 'Fake account' বা 'Scam'।",
+        "hi": "Report दबाएं, फिर सही कारण चुनें, जैसे 'Fake account' या 'Scam'।",
+        "vi": "Chạm Báo cáo, rồi chọn lý do phù hợp, như 'Tài khoản giả' hoặc 'Lừa đảo'."
+      },
+      {
+        "en": "Tap Block as well, so this account can no longer message you.",
+        "bn": "Block-ও চাপুন, যাতে এই অ্যাকাউন্ট আর আপনাকে মেসেজ করতে না পারে।",
+        "hi": "Block भी दबाएं, ताकि यह अकाउंट आपको फिर मैसेज न भेज सके।",
+        "vi": "Chạm thêm Chặn để tài khoản này không nhắn tin cho bạn được nữa."
+      },
+      {
+        "en": "If they pretended to be someone you know, tell that person so they can warn their friends.",
+        "bn": "তারা যদি আপনার চেনা কারও নাম নিয়ে থাকে, তাঁকে জানান যাতে তিনি বন্ধুদের সতর্ক করতে পারেন।",
+        "hi": "अगर उन्होंने किसी जान-पहचान वाले का नाम लिया, तो उसे बताएं ताकि वह अपने दोस्तों को सावधान कर सके।",
+        "vi": "Nếu kẻ đó giả làm người bạn quen, hãy báo cho người ấy để họ cảnh báo bạn bè."
+      }
+    ]
+  },
+  {
+    "slug": "nagad-send-money-safely",
+    "applicationSlug": "nagad",
+    "domain": "DIGITAL_OPERATIONS",
+    "category": "banking",
+    "difficulty": "BEGINNER",
+    "estimatedMinutes": 5,
+    "skillKey": "payments.send_money",
+    "title": {
+      "en": "Send money safely with Nagad",
+      "bn": "নগদে নিরাপদে টাকা পাঠান",
+      "hi": "Nagad से सुरक्षित रूप से पैसे भेजें",
+      "vi": "Chuyển tiền an toàn bằng Nagad"
+    },
+    "description": {
+      "en": "Send money to family step by step, and check every detail before you enter your PIN.",
+      "bn": "ধাপে ধাপে পরিবারকে টাকা পাঠান, আর পিন দেওয়ার আগে প্রতিটি তথ্য যাচাই করুন।",
+      "hi": "कदम-दर-कदम परिवार को पैसे भेजें, और पिन डालने से पहले हर जानकारी जांचें।",
+      "vi": "Từng bước chuyển tiền cho gia đình, và kiểm tra mọi chi tiết trước khi nhập mã PIN."
+    },
+    "safetyTips": [
+      {
+        "en": "Nagad will never call or message you to ask for your PIN or a code.",
+        "bn": "নগদ কখনো ফোন বা মেসেজ করে আপনার পিন বা কোনো কোড চাইবে না।",
+        "hi": "Nagad कभी फोन या मैसेज करके आपका पिन या कोई कोड नहीं मांगेगा।",
+        "vi": "Nagad không bao giờ gọi điện hay nhắn tin để hỏi mã PIN hoặc mã xác thực của bạn."
+      }
+    ],
+    "steps": [
+      {
+        "en": "Open the Nagad app and tap Send Money.",
+        "bn": "নগদ অ্যাপ খুলুন এবং Send Money (সেন্ড মানি) চাপুন।",
+        "hi": "Nagad ऐप खोलें और Send Money दबाएं।",
+        "vi": "Mở ứng dụng Nagad và chạm Send Money (Chuyển tiền)."
+      },
+      {
+        "en": "Type the number, or choose it from your contacts. Read it digit by digit to be sure it is the right person.",
+        "bn": "নম্বরটি লিখুন বা কন্টাক্ট থেকে বেছে নিন। সঠিক মানুষ কি না নিশ্চিত হতে প্রতিটি সংখ্যা মিলিয়ে পড়ুন।",
+        "hi": "नंबर लिखें या कॉन्टैक्ट से चुनें। सही व्यक्ति है, यह पक्का करने के लिए हर अंक मिलाकर पढ़ें।",
+        "vi": "Nhập số điện thoại hoặc chọn từ danh bạ. Đọc từng chữ số để chắc đúng người."
+      },
+      {
+        "en": "Enter the amount. Check it twice — one extra zero turns 500 into 5000.",
+        "bn": "টাকার পরিমাণ লিখুন। দুবার মিলিয়ে নিন — একটা বাড়তি শূন্য ৫০০-কে ৫০০০ বানিয়ে দেয়।",
+        "hi": "रकम लिखें। दो बार जांचें — एक ज़्यादा शून्य 500 को 5000 बना देता है।",
+        "vi": "Nhập số tiền. Kiểm tra hai lần — thừa một số 0 là 500 thành 5000."
+      },
+      {
+        "en": "On the review screen, check the name, number and amount together. If anything looks wrong, go back.",
+        "bn": "রিভিউ স্ক্রিনে নাম, নম্বর ও টাকার পরিমাণ একসঙ্গে মিলিয়ে দেখুন। কিছু ভুল মনে হলে পেছনে যান।",
+        "hi": "रिव्यू स्क्रीन पर नाम, नंबर और रकम एक साथ जांचें। कुछ भी गलत लगे तो पीछे जाएं।",
+        "vi": "Ở màn hình xác nhận, kiểm tra cùng lúc tên, số và số tiền. Nếu có gì sai, hãy quay lại."
+      },
+      {
+        "en": "Enter your PIN only on this screen, with no one watching. Nagad will never call you to ask for it.",
+        "bn": "শুধু এই স্ক্রিনেই পিন দিন, কেউ যেন না দেখে। নগদ কখনো ফোন করে আপনার পিন চাইবে না।",
+        "hi": "पिन केवल इसी स्क्रीन पर डालें, कोई देख न रहा हो। Nagad कभी फोन करके आपका पिन नहीं मांगेगा।",
+        "vi": "Chỉ nhập mã PIN ở màn hình này, khi không có ai nhìn. Nagad sẽ không bao giờ gọi điện hỏi mã PIN."
+      },
+      {
+        "en": "Wait for the success message and keep the transaction ID. You can show it if there is ever a problem.",
+        "bn": "সফল হওয়ার মেসেজের জন্য অপেক্ষা করুন এবং ট্রানজ্যাকশন আইডি রেখে দিন। কোনো সমস্যা হলে এটি দেখাতে পারবেন।",
+        "hi": "सफलता मैसेज का इंतज़ार करें और ट्रांज़ैक्शन आईडी संभालकर रखें। कभी समस्या हो तो इसे दिखा सकते हैं।",
+        "vi": "Chờ thông báo thành công và giữ lại mã giao dịch. Nếu có trục trặc, bạn có thể đưa mã này ra."
+      }
+    ]
+  },
+  {
+    "slug": "nagad-check-balance",
+    "applicationSlug": "nagad",
+    "domain": "DIGITAL_OPERATIONS",
+    "category": "banking",
+    "difficulty": "BEGINNER",
+    "estimatedMinutes": 3,
+    "skillKey": "payments.check_balance",
+    "title": {
+      "en": "Check your Nagad balance and history",
+      "bn": "নগদে ব্যালেন্স ও লেনদেনের তালিকা দেখুন",
+      "hi": "Nagad में बैलेंस और लेन-देन का इतिहास देखें",
+      "vi": "Xem số dư và lịch sử giao dịch Nagad"
+    },
+    "description": {
+      "en": "See how much money you have and spot any payment you don't recognise.",
+      "bn": "কত টাকা আছে দেখুন, আর অচেনা কোনো লেনদেন আছে কি না খেয়াল করুন।",
+      "hi": "देखें कितने पैसे हैं, और कोई अनजान लेन-देन हो तो पहचानें।",
+      "vi": "Xem bạn còn bao nhiêu tiền và phát hiện giao dịch lạ."
+    },
+    "steps": [
+      {
+        "en": "Open the Nagad app. On the home screen, tap the balance area (Tap for Balance).",
+        "bn": "নগদ অ্যাপ খুলুন। হোম স্ক্রিনে ব্যালেন্সের জায়গায় (Tap for Balance) চাপুন।",
+        "hi": "Nagad ऐप खोलें। होम स्क्रीन पर बैलेंस वाली जगह (Tap for Balance) पर दबाएं।",
+        "vi": "Mở ứng dụng Nagad. Ở màn hình chính, chạm vào ô số dư (Tap for Balance)."
+      },
+      {
+        "en": "Your balance shows for a few seconds and then hides again, to keep it private.",
+        "bn": "ব্যালেন্স কয়েক সেকেন্ড দেখা যায়, তারপর গোপন রাখতে আবার লুকিয়ে যায়।",
+        "hi": "बैलेंस कुछ सेकंड दिखता है, फिर निजता के लिए छिप जाता है।",
+        "vi": "Số dư hiện vài giây rồi tự ẩn đi để giữ riêng tư."
+      },
+      {
+        "en": "To see past payments, tap Transactions (or Statement).",
+        "bn": "আগের লেনদেন দেখতে Transactions (বা Statement) চাপুন।",
+        "hi": "पिछले लेन-देन देखने के लिए Transactions (या Statement) दबाएं।",
+        "vi": "Để xem các giao dịch trước, chạm Giao dịch (hoặc Sao kê)."
+      },
+      {
+        "en": "Read each line: who, how much and when. If you see a payment you did not make, call Nagad straight away using the helpline number shown in the official app.",
+        "bn": "প্রতিটি লাইন পড়ুন: কাকে, কত টাকা, কখন। নিজে করেননি এমন লেনদেন দেখলে অফিসিয়াল অ্যাপে দেওয়া হেল্পলাইন নম্বরে সঙ্গে সঙ্গে নগদে ফোন করুন।",
+        "hi": "हर लाइन पढ़ें: किसे, कितना और कब। ऐसा भुगतान दिखे जो आपने नहीं किया, तो आधिकारिक ऐप में दिए हेल्पलाइन नंबर पर तुरंत Nagad को फोन करें।",
+        "vi": "Đọc từng dòng: cho ai, bao nhiêu, khi nào. Nếu thấy giao dịch bạn không thực hiện, hãy gọi ngay cho Nagad bằng số tổng đài ghi trong ứng dụng chính thức."
+      }
+    ]
+  },
+  {
+    "slug": "nagad-otp-call-scam",
+    "applicationSlug": "nagad",
+    "domain": "DIGITAL_SAFETY",
+    "category": "safety",
+    "difficulty": "BEGINNER",
+    "estimatedMinutes": 4,
+    "skillKey": "safety.otp_scam",
+    "title": {
+      "en": "A caller says they are from Nagad and asks for your code",
+      "bn": "কেউ ফোন করে নিজেকে নগদের লোক বলে কোড চাইছে",
+      "hi": "कोई फोन करके खुद को Nagad का बताता है और कोड मांगता है",
+      "vi": "Có người gọi tự xưng là Nagad và hỏi mã của bạn"
+    },
+    "description": {
+      "en": "Learn the trick scammers use most — and the one rule that stops it.",
+      "bn": "প্রতারকদের সবচেয়ে বেশি ব্যবহৃত কৌশল চিনুন — আর যে একটি নিয়ম এটি থামায়।",
+      "hi": "धोखेबाज़ों की सबसे आम चाल पहचानें — और वह एक नियम जो इसे रोकता है।",
+      "vi": "Nhận biết chiêu lừa phổ biến nhất — và một quy tắc giúp chặn nó."
+    },
+    "safetyTips": [
+      {
+        "en": "No real company needs your PIN or OTP. Anyone who asks for it is trying to take your money.",
+        "bn": "কোনো আসল প্রতিষ্ঠানের আপনার পিন বা ওটিপি লাগে না। যে চায়, সে আপনার টাকা নিতে চাইছে।",
+        "hi": "किसी असली कंपनी को आपका पिन या ओटीपी नहीं चाहिए। जो मांगता है, वह आपके पैसे लेना चाहता है।",
+        "vi": "Không công ty thật nào cần mã PIN hay OTP của bạn. Ai hỏi mã là đang tìm cách lấy tiền của bạn."
+      }
+    ],
+    "steps": [
+      {
+        "en": "Remember the rule: Nagad, banks and Guidia never ask for your PIN or OTP — not by phone, SMS or message.",
+        "bn": "নিয়মটি মনে রাখুন: নগদ, ব্যাংক বা Guidia কখনো আপনার পিন বা ওটিপি চায় না — ফোনে, এসএমএসে বা মেসেজে কোনোভাবেই না।",
+        "hi": "नियम याद रखें: Nagad, बैंक या Guidia कभी आपका पिन या ओटीपी नहीं मांगते — न फोन पर, न SMS में, न मैसेज में।",
+        "vi": "Nhớ quy tắc: Nagad, ngân hàng và Guidia không bao giờ hỏi mã PIN hay OTP của bạn — qua điện thoại, tin nhắn hay bất cứ cách nào."
+      },
+      {
+        "en": "Callers may say your account will be blocked, or that money was sent to you by mistake. This pressure is the trick.",
+        "bn": "ফোনকারী বলতে পারে আপনার অ্যাকাউন্ট বন্ধ হয়ে যাবে, বা ভুল করে আপনার কাছে টাকা চলে গেছে। এই চাপটাই হলো কৌশল।",
+        "hi": "फोन करने वाला कह सकता है कि आपका अकाउंट बंद हो जाएगा, या गलती से आपको पैसे चले गए। यही दबाव असली चाल है।",
+        "vi": "Kẻ gọi có thể nói tài khoản của bạn sắp bị khóa, hoặc có người chuyển nhầm tiền cho bạn. Chính sự hối thúc đó là chiêu lừa."
+      },
+      {
+        "en": "Say 'I will call Nagad myself' and hang up. You do not need to be polite to a stranger asking for codes.",
+        "bn": "বলুন 'আমি নিজেই নগদে ফোন করব' এবং ফোন কেটে দিন। কোড চাওয়া অচেনা মানুষের সঙ্গে ভদ্রতা রাখার দরকার নেই।",
+        "hi": "कहें 'मैं खुद Nagad को फोन करूँगा' और फोन रख दें। कोड मांगने वाले अजनबी से शिष्टता निभाने की ज़रूरत नहीं।",
+        "vi": "Hãy nói 'Tôi sẽ tự gọi cho Nagad' rồi cúp máy. Bạn không cần lịch sự với người lạ đòi mã."
+      },
+      {
+        "en": "If a code arrives by SMS that you did not ask for, do not share it with anyone. Just delete it.",
+        "bn": "না চাইতেই এসএমএসে কোনো কোড এলে কাউকে দেবেন না। শুধু মুছে ফেলুন।",
+        "hi": "अगर बिना मांगे SMS में कोई कोड आए, तो किसी को न बताएं। बस उसे मिटा दें।",
+        "vi": "Nếu nhận được mã qua tin nhắn mà bạn không yêu cầu, đừng đưa cho ai. Chỉ cần xóa đi."
+      },
+      {
+        "en": "If you already shared a code, call Nagad now using the number in the official app, and tell a trusted person.",
+        "bn": "যদি কোড দিয়ে ফেলে থাকেন, এখনই অফিসিয়াল অ্যাপে থাকা নম্বরে নগদে ফোন করুন এবং বিশ্বস্ত কাউকে জানান।",
+        "hi": "अगर कोड बता चुके हैं, तो अभी आधिकारिक ऐप में दिए नंबर पर Nagad को फोन करें और किसी भरोसेमंद व्यक्ति को बताएं।",
+        "vi": "Nếu bạn lỡ đưa mã, hãy gọi ngay cho Nagad bằng số trong ứng dụng chính thức, và báo cho người bạn tin cậy."
+      }
+    ]
+  },
+  {
+    "slug": "gmail-read-reply",
+    "applicationSlug": "gmail",
+    "domain": "SOCIAL_COMMUNICATION",
+    "category": "messaging",
+    "difficulty": "BEGINNER",
+    "estimatedMinutes": 4,
+    "skillKey": "email.read",
+    "title": {
+      "en": "Read and reply to an email in Gmail",
+      "bn": "জিমেইলে ইমেইল পড়ুন ও উত্তর দিন",
+      "hi": "Gmail में ईमेल पढ़ें और जवाब दें",
+      "vi": "Đọc và trả lời email trong Gmail"
+    },
+    "description": {
+      "en": "Open a new email, read it calmly and send a short reply.",
+      "bn": "নতুন ইমেইল খুলুন, ধীরে পড়ুন এবং ছোট একটি উত্তর পাঠান।",
+      "hi": "नया ईमेल खोलें, आराम से पढ़ें और छोटा-सा जवाब भेजें।",
+      "vi": "Mở email mới, đọc thong thả và gửi một câu trả lời ngắn."
+    },
+    "steps": [
+      {
+        "en": "Open the Gmail app. New emails are shown in bold at the top of your Inbox.",
+        "bn": "জিমেইল অ্যাপ খুলুন। নতুন ইমেইলগুলো ইনবক্সের ওপরে মোটা অক্ষরে দেখায়।",
+        "hi": "Gmail ऐप खोलें। नए ईमेल इनबॉक्स में सबसे ऊपर मोटे अक्षरों में दिखते हैं।",
+        "vi": "Mở ứng dụng Gmail. Email mới hiện chữ đậm ở đầu Hộp thư đến."
+      },
+      {
+        "en": "Tap an email to open it. Look at the sender's name and address first.",
+        "bn": "ইমেইল খুলতে সেটিতে চাপুন। আগে প্রেরকের নাম ও ঠিকানা দেখুন।",
+        "hi": "ईमेल खोलने के लिए उस पर दबाएं। पहले भेजने वाले का नाम और पता देखें।",
+        "vi": "Chạm vào email để mở. Xem tên và địa chỉ người gửi trước."
+      },
+      {
+        "en": "To answer, tap the Reply arrow at the bottom (or the curved arrow at the top).",
+        "bn": "উত্তর দিতে নিচে Reply তীর চিহ্নে (বা ওপরের বাঁকা তীরে) চাপুন।",
+        "hi": "जवाब देने के लिए नीचे Reply तीर (या ऊपर मुड़े तीर) पर दबाएं।",
+        "vi": "Để trả lời, chạm mũi tên Trả lời ở dưới (hoặc mũi tên cong ở trên)."
+      },
+      {
+        "en": "Type your message. Gmail keeps the original email below, so the other person knows what you are answering.",
+        "bn": "আপনার মেসেজ লিখুন। জিমেইল আসল ইমেইলটি নিচে রেখে দেয়, তাই অন্যজন বুঝবেন আপনি কোনটার উত্তর দিচ্ছেন।",
+        "hi": "अपना मैसेज लिखें। Gmail मूल ईमेल नीचे रखता है, इसलिए दूसरे व्यक्ति को पता रहता है कि आप किसका जवाब दे रहे हैं।",
+        "vi": "Gõ nội dung. Gmail giữ email gốc ở dưới để người kia biết bạn đang trả lời thư nào."
+      },
+      {
+        "en": "Tap the Send arrow at the top. Your reply moves to the Sent folder.",
+        "bn": "ওপরে Send তীর চিহ্নে চাপুন। আপনার উত্তর Sent ফোল্ডারে চলে যাবে।",
+        "hi": "ऊपर Send तीर पर दबाएं। आपका जवाब Sent फ़ोल्डर में चला जाएगा।",
+        "vi": "Chạm mũi tên Gửi ở trên. Thư trả lời sẽ chuyển vào mục Đã gửi."
+      }
+    ]
+  },
+  {
+    "slug": "gmail-send-photo",
+    "applicationSlug": "gmail",
+    "domain": "SOCIAL_COMMUNICATION",
+    "category": "messaging",
+    "difficulty": "BEGINNER",
+    "estimatedMinutes": 5,
+    "skillKey": "email.attach_file",
+    "title": {
+      "en": "Send a photo or document by email",
+      "bn": "ইমেইলে ছবি বা ডকুমেন্ট পাঠান",
+      "hi": "ईमेल से फोटो या दस्तावेज़ भेजें",
+      "vi": "Gửi ảnh hoặc tài liệu qua email"
+    },
+    "description": {
+      "en": "Attach a picture or a file — useful for doctors, offices and family.",
+      "bn": "ছবি বা ফাইল যুক্ত করে পাঠান — ডাক্তার, অফিস ও পরিবারের জন্য কাজে লাগে।",
+      "hi": "फोटो या फ़ाइल जोड़कर भेजें — डॉक्टर, दफ़्तर और परिवार के लिए उपयोगी।",
+      "vi": "Đính kèm ảnh hoặc tệp — tiện khi gửi cho bác sĩ, cơ quan và gia đình."
+    },
+    "steps": [
+      {
+        "en": "In Gmail, tap Compose (the pencil button) at the bottom right.",
+        "bn": "জিমেইলে নিচে ডানদিকে Compose (পেনসিল বোতাম) চাপুন।",
+        "hi": "Gmail में नीचे दाईं ओर Compose (पेंसिल बटन) दबाएं।",
+        "vi": "Trong Gmail, chạm Soạn thư (nút bút chì) ở góc dưới bên phải."
+      },
+      {
+        "en": "In To, type the person's email address. Check the spelling — one wrong letter sends it to someone else.",
+        "bn": "To ঘরে মানুষটির ইমেইল ঠিকানা লিখুন। বানান মিলিয়ে নিন — একটা অক্ষর ভুল হলে অন্য কারও কাছে চলে যাবে।",
+        "hi": "To में व्यक्ति का ईमेल पता लिखें। वर्तनी जांचें — एक अक्षर गलत हुआ तो किसी और के पास चला जाएगा।",
+        "vi": "Ở ô Tới, nhập địa chỉ email của người nhận. Kiểm tra chính tả — sai một chữ là thư đến người khác."
+      },
+      {
+        "en": "Write a short Subject, like 'Blood test report', so they know what it is.",
+        "bn": "ছোট একটি Subject লিখুন, যেমন 'রক্ত পরীক্ষার রিপোর্ট', যাতে তাঁরা বোঝেন এটা কী।",
+        "hi": "छोटा-सा Subject लिखें, जैसे 'खून जांच की रिपोर्ट', ताकि उन्हें पता चले यह क्या है।",
+        "vi": "Viết Tiêu đề ngắn, ví dụ 'Kết quả xét nghiệm máu', để họ biết thư về việc gì."
+      },
+      {
+        "en": "Tap the paperclip icon, then choose the photo or file from your phone.",
+        "bn": "পেপারক্লিপ আইকনে চাপুন, তারপর ফোন থেকে ছবি বা ফাইলটি বেছে নিন।",
+        "hi": "पेपरक्लिप आइकन पर दबाएं, फिर फोन से फोटो या फ़ाइल चुनें।",
+        "vi": "Chạm biểu tượng kẹp giấy, rồi chọn ảnh hoặc tệp trong điện thoại."
+      },
+      {
+        "en": "Check that the right file appears in the email, add a short message, and tap Send.",
+        "bn": "ইমেইলে ঠিক ফাইলটি এসেছে কি না দেখুন, ছোট একটা মেসেজ লিখুন এবং Send চাপুন।",
+        "hi": "देखें कि ईमेल में सही फ़ाइल आई है, छोटा मैसेज जोड़ें और Send दबाएं।",
+        "vi": "Kiểm tra đúng tệp đã hiện trong thư, thêm vài lời nhắn và chạm Gửi."
+      }
+    ]
+  },
+  {
+    "slug": "gmail-spot-fake-email",
+    "applicationSlug": "gmail",
+    "domain": "DIGITAL_SAFETY",
+    "category": "safety",
+    "difficulty": "BEGINNER",
+    "estimatedMinutes": 5,
+    "skillKey": "safety.recognise_phishing",
+    "title": {
+      "en": "Spot a fake email before you click",
+      "bn": "চাপ দেওয়ার আগে ভুয়া ইমেইল চিনুন",
+      "hi": "क्लिक करने से पहले नकली ईमेल पहचानें",
+      "vi": "Nhận ra email giả trước khi bấm"
+    },
+    "description": {
+      "en": "Fake emails copy banks and shops. Five quick checks keep you safe.",
+      "bn": "ভুয়া ইমেইল ব্যাংক ও দোকানের নকল করে। পাঁচটি ছোট যাচাই আপনাকে নিরাপদ রাখবে।",
+      "hi": "नकली ईमेल बैंक और दुकानों की नकल करते हैं। पाँच छोटी जांच आपको सुरक्षित रखेंगी।",
+      "vi": "Email giả hay bắt chước ngân hàng và cửa hàng. Năm bước kiểm tra nhanh giúp bạn an toàn."
+    },
+    "safetyTips": [
+      {
+        "en": "When in doubt, don't click. Open the official app or website yourself instead.",
+        "bn": "সন্দেহ হলে চাপ দেবেন না। তার বদলে নিজে অফিসিয়াল অ্যাপ বা ওয়েবসাইট খুলুন।",
+        "hi": "शक हो तो क्लिक न करें। इसके बजाय खुद आधिकारिक ऐप या वेबसाइट खोलें।",
+        "vi": "Khi nghi ngờ, đừng bấm. Hãy tự mở ứng dụng hoặc trang web chính thức."
+      }
+    ],
+    "steps": [
+      {
+        "en": "Tap the sender's name to see the full email address. A bank will not write from an address like 'bank-support123@gmail.com'.",
+        "bn": "প্রেরকের নামে চাপ দিয়ে পুরো ইমেইল ঠিকানা দেখুন। কোনো ব্যাংক 'bank-support123@gmail.com'-এর মতো ঠিকানা থেকে লেখে না।",
+        "hi": "भेजने वाले के नाम पर दबाकर पूरा ईमेल पता देखें। कोई बैंक 'bank-support123@gmail.com' जैसे पते से नहीं लिखता।",
+        "vi": "Chạm vào tên người gửi để xem đầy đủ địa chỉ email. Ngân hàng không gửi thư từ địa chỉ kiểu 'bank-support123@gmail.com'."
+      },
+      {
+        "en": "Watch for pressure: 'Your account will close today', 'You won a prize', 'Act now'. Real organisations give you time.",
+        "bn": "চাপ খেয়াল করুন: 'আজই অ্যাকাউন্ট বন্ধ হবে', 'আপনি পুরস্কার জিতেছেন', 'এখনই করুন'। আসল প্রতিষ্ঠান সময় দেয়।",
+        "hi": "दबाव पर ध्यान दें: 'आज अकाउंट बंद होगा', 'आपने इनाम जीता', 'अभी करें'। असली संस्थाएं समय देती हैं।",
+        "vi": "Để ý sự hối thúc: 'Tài khoản sẽ bị khóa hôm nay', 'Bạn đã trúng thưởng', 'Hành động ngay'. Tổ chức thật luôn cho bạn thời gian."
+      },
+      {
+        "en": "Never type your password, PIN or card number on a page you opened from an email link.",
+        "bn": "ইমেইলের লিংক থেকে খোলা কোনো পেজে কখনো পাসওয়ার্ড, পিন বা কার্ড নম্বর লিখবেন না।",
+        "hi": "ईमेल के लिंक से खुले किसी पेज पर कभी पासवर्ड, पिन या कार्ड नंबर न लिखें।",
+        "vi": "Không bao giờ nhập mật khẩu, mã PIN hay số thẻ trên trang mở từ đường link trong email."
+      },
+      {
+        "en": "If you are unsure, do not use the email's links. Open the official app, or call the number on your card instead.",
+        "bn": "নিশ্চিত না হলে ইমেইলের লিংক ব্যবহার করবেন না। তার বদলে অফিসিয়াল অ্যাপ খুলুন বা কার্ডে লেখা নম্বরে ফোন করুন।",
+        "hi": "पक्का न हो तो ईमेल के लिंक इस्तेमाल न करें। इसके बजाय आधिकारिक ऐप खोलें या कार्ड पर लिखे नंबर पर फोन करें।",
+        "vi": "Nếu không chắc, đừng dùng đường link trong email. Hãy mở ứng dụng chính thức hoặc gọi số in trên thẻ."
+      },
+      {
+        "en": "In Gmail, tap the three dots (⋮) and choose Report phishing (or Report spam) to warn Google and remove the email.",
+        "bn": "জিমেইলে তিন ফোঁটা (⋮) চাপুন এবং Report phishing (বা Report spam) বেছে নিন — গুগলকে সতর্ক করতে ও ইমেইলটি সরাতে।",
+        "hi": "Gmail में तीन बिंदु (⋮) दबाएं और Report phishing (या Report spam) चुनें — Google को सावधान करने और ईमेल हटाने के लिए।",
+        "vi": "Trong Gmail, chạm dấu ba chấm (⋮) và chọn Báo cáo lừa đảo (hoặc Báo cáo thư rác) để cảnh báo Google và loại bỏ thư."
+      }
+    ]
+  },
+  {
+    "slug": "imo-video-call",
+    "applicationSlug": "imo",
+    "domain": "SOCIAL_COMMUNICATION",
+    "category": "messaging",
+    "difficulty": "BEGINNER",
+    "estimatedMinutes": 4,
+    "skillKey": "messaging.video_call",
+    "title": {
+      "en": "Make a video call on imo",
+      "bn": "imo-তে ভিডিও কল করুন",
+      "hi": "imo पर वीडियो कॉल करें",
+      "vi": "Gọi video trên imo"
+    },
+    "description": {
+      "en": "See and talk to family far away — free over the internet.",
+      "bn": "দূরে থাকা পরিবারকে দেখুন ও কথা বলুন — ইন্টারনেটে বিনা খরচে।",
+      "hi": "दूर रहने वाले परिवार को देखें और बात करें — इंटरनेट पर मुफ़्त।",
+      "vi": "Nhìn thấy và trò chuyện với người thân ở xa — miễn phí qua Internet."
+    },
+    "steps": [
+      {
+        "en": "Connect to Wi-Fi if you can. Video calls use a lot of mobile data.",
+        "bn": "সম্ভব হলে ওয়াই-ফাইয়ে যুক্ত হন। ভিডিও কলে অনেক মোবাইল ডেটা খরচ হয়।",
+        "hi": "हो सके तो वाई-फ़ाई से जुड़ें। वीडियो कॉल में बहुत मोबाइल डेटा लगता है।",
+        "vi": "Nếu được, hãy kết nối Wi-Fi. Gọi video tốn nhiều dữ liệu di động."
+      },
+      {
+        "en": "Open imo and tap the Contacts tab. Find the person you want to call.",
+        "bn": "imo খুলুন এবং Contacts ট্যাবে চাপুন। যাঁকে ফোন করতে চান তাঁকে খুঁজুন।",
+        "hi": "imo खोलें और Contacts टैब पर दबाएं। जिसे कॉल करना है उसे ढूंढें।",
+        "vi": "Mở imo và chạm thẻ Danh bạ. Tìm người bạn muốn gọi."
+      },
+      {
+        "en": "Tap their name, then tap the video camera icon.",
+        "bn": "তাঁর নামে চাপুন, তারপর ভিডিও ক্যামেরা আইকনে চাপুন।",
+        "hi": "उनके नाम पर दबाएं, फिर वीडियो कैमरा आइकन पर दबाएं।",
+        "vi": "Chạm vào tên người đó, rồi chạm biểu tượng máy quay."
+      },
+      {
+        "en": "Hold the phone at face height. If they cannot hear you, check that the microphone button is not crossed out.",
+        "bn": "ফোনটি মুখের সমান উঁচুতে ধরুন। তাঁরা শুনতে না পেলে দেখুন মাইক্রোফোন বোতামে দাগ কাটা আছে কি না।",
+        "hi": "फोन चेहरे की ऊंचाई पर पकड़ें। वे आपको न सुन पाएं तो देखें कि माइक्रोफ़ोन बटन पर कटा निशान तो नहीं।",
+        "vi": "Cầm điện thoại ngang mặt. Nếu họ không nghe thấy bạn, kiểm tra nút micro có bị gạch chéo không."
+      },
+      {
+        "en": "To end the call, tap the red phone button.",
+        "bn": "কল শেষ করতে লাল ফোন বোতামে চাপুন।",
+        "hi": "कॉल खत्म करने के लिए लाल फोन बटन दबाएं।",
+        "vi": "Để kết thúc cuộc gọi, chạm nút điện thoại màu đỏ."
+      }
+    ]
+  },
+  {
+    "slug": "imo-voice-message",
+    "applicationSlug": "imo",
+    "domain": "SOCIAL_COMMUNICATION",
+    "category": "messaging",
+    "difficulty": "BEGINNER",
+    "estimatedMinutes": 3,
+    "skillKey": "messaging.voice_message",
+    "title": {
+      "en": "Send a voice message on imo",
+      "bn": "imo-তে ভয়েস মেসেজ পাঠান",
+      "hi": "imo पर वॉइस मैसेज भेजें",
+      "vi": "Gửi tin nhắn thoại trên imo"
+    },
+    "description": {
+      "en": "Talk instead of typing — your family hears your own voice.",
+      "bn": "লেখার বদলে কথা বলুন — পরিবার আপনার নিজের কণ্ঠ শুনবে।",
+      "hi": "लिखने के बजाय बोलें — परिवार आपकी अपनी आवाज़ सुनेगा।",
+      "vi": "Nói thay vì gõ — người thân được nghe chính giọng của bạn."
+    },
+    "steps": [
+      {
+        "en": "Open imo and tap the chat with the person you want to talk to.",
+        "bn": "imo খুলুন এবং যাঁর সঙ্গে কথা বলতে চান তাঁর চ্যাটে চাপুন।",
+        "hi": "imo खोलें और जिससे बात करनी है उसकी चैट पर दबाएं।",
+        "vi": "Mở imo và chạm vào cuộc trò chuyện với người bạn muốn nhắn."
+      },
+      {
+        "en": "Press and hold the microphone button at the bottom right, then speak.",
+        "bn": "নিচে ডানদিকে মাইক্রোফোন বোতাম চেপে ধরে রাখুন, তারপর কথা বলুন।",
+        "hi": "नीचे दाईं ओर माइक्रोफ़ोन बटन दबाकर रखें और बोलें।",
+        "vi": "Nhấn giữ nút micro ở góc dưới bên phải, rồi nói."
+      },
+      {
+        "en": "Let go when you finish. The message is sent straight away.",
+        "bn": "কথা শেষ হলে আঙুল ছেড়ে দিন। মেসেজটি সঙ্গে সঙ্গে চলে যাবে।",
+        "hi": "बात पूरी होने पर उंगली छोड़ दें। मैसेज तुरंत चला जाएगा।",
+        "vi": "Nói xong thì thả tay ra. Tin nhắn được gửi ngay."
+      },
+      {
+        "en": "Changed your mind while recording? Slide your finger to the left to cancel.",
+        "bn": "রেকর্ড করার সময় মত বদলালে আঙুল বাঁদিকে সরিয়ে বাতিল করুন।",
+        "hi": "रिकॉर्ड करते समय मन बदल जाए तो उंगली बाईं ओर खिसकाकर रद्द करें।",
+        "vi": "Đang ghi âm mà đổi ý? Trượt ngón tay sang trái để hủy."
+      }
+    ]
+  },
+  {
+    "slug": "imo-protect-account",
+    "applicationSlug": "imo",
+    "domain": "DIGITAL_SAFETY",
+    "category": "safety",
+    "difficulty": "BEGINNER",
+    "estimatedMinutes": 4,
+    "skillKey": "safety.account_security",
+    "title": {
+      "en": "Keep your imo account safe",
+      "bn": "আপনার imo অ্যাকাউন্ট নিরাপদ রাখুন",
+      "hi": "अपना imo अकाउंट सुरक्षित रखें",
+      "vi": "Giữ an toàn cho tài khoản imo"
+    },
+    "description": {
+      "en": "Scammers try to take over imo accounts to ask your family for money. Here is how to stop them.",
+      "bn": "প্রতারকেরা imo অ্যাকাউন্ট দখল করে আপনার পরিবারের কাছে টাকা চাইতে চায়। কীভাবে আটকাবেন জানুন।",
+      "hi": "धोखेबाज़ imo अकाउंट पर कब्ज़ा करके आपके परिवार से पैसे मांगना चाहते हैं। उन्हें कैसे रोकें, जानें।",
+      "vi": "Kẻ gian tìm cách chiếm tài khoản imo để xin tiền người thân của bạn. Hãy học cách ngăn chặn."
+    },
+    "safetyTips": [
+      {
+        "en": "Your verification code is like the key to your house. Never give it to anyone.",
+        "bn": "যাচাই কোড আপনার ঘরের চাবির মতো। কখনো কাউকে দেবেন না।",
+        "hi": "वेरिफ़िकेशन कोड आपके घर की चाबी जैसा है। इसे कभी किसी को न दें।",
+        "vi": "Mã xác minh giống như chìa khóa nhà bạn. Đừng bao giờ đưa cho ai."
+      }
+    ],
+    "steps": [
+      {
+        "en": "imo sends a verification code by SMS when someone signs in with your number. Never tell this code to anyone — not even someone who says they are from imo.",
+        "bn": "কেউ আপনার নম্বর দিয়ে imo-তে ঢুকতে চাইলে এসএমএসে একটি যাচাই কোড আসে। এই কোড কাউকে বলবেন না — imo-র লোক বললেও না।",
+        "hi": "कोई आपके नंबर से imo में लॉग इन करे तो SMS में एक वेरिफ़िकेशन कोड आता है। यह कोड किसी को न बताएं — imo वाला बताने पर भी नहीं।",
+        "vi": "Khi ai đó đăng nhập bằng số của bạn, imo gửi mã xác minh qua tin nhắn. Không bao giờ nói mã này cho ai — kể cả người tự xưng là nhân viên imo."
+      },
+      {
+        "en": "If a friend messages 'I sent you a code by mistake, please send it to me', it is a trick — their account may already be stolen.",
+        "bn": "কোনো বন্ধু যদি লেখেন 'ভুল করে তোমাকে একটা কোড পাঠিয়েছি, আমাকে দাও', এটা একটা কৌশল — তাঁর অ্যাকাউন্ট হয়তো আগেই চুরি হয়েছে।",
+        "hi": "अगर कोई दोस्त लिखे 'गलती से तुम्हें कोड भेज दिया, मुझे भेज दो', तो यह चाल है — हो सकता है उसका अकाउंट पहले ही चोरी हो चुका हो।",
+        "vi": "Nếu một người bạn nhắn 'Mình gửi nhầm mã cho bạn, gửi lại giúp mình', đó là chiêu lừa — tài khoản của họ có thể đã bị đánh cắp."
+      },
+      {
+        "en": "In imo, tap your profile picture, then open Settings and Privacy. If you see options like an app lock or extra verification, turn them on.",
+        "bn": "imo-তে আপনার প্রোফাইল ছবিতে চাপুন, তারপর Settings ও Privacy খুলুন। অ্যাপ লক বা বাড়তি যাচাইয়ের মতো কিছু দেখলে চালু করুন।",
+        "hi": "imo में अपनी प्रोफ़ाइल फोटो पर दबाएं, फिर Settings और Privacy खोलें। ऐप लॉक या अतिरिक्त सत्यापन जैसा कुछ दिखे तो उसे चालू करें।",
+        "vi": "Trong imo, chạm ảnh đại diện của bạn, rồi mở Cài đặt và Quyền riêng tư. Nếu thấy tùy chọn như khóa ứng dụng hay xác minh thêm, hãy bật lên."
+      },
+      {
+        "en": "If someone asks for money on imo — even a family member — call them on their saved number before you send anything.",
+        "bn": "imo-তে কেউ টাকা চাইলে — পরিবারের কেউ হলেও — কিছু পাঠানোর আগে সেভ করা নম্বরে ফোন করে নিন।",
+        "hi": "imo पर कोई पैसे मांगे — परिवार का सदस्य हो तब भी — कुछ भेजने से पहले सेव नंबर पर फोन कर लें।",
+        "vi": "Nếu có ai xin tiền qua imo — kể cả người thân — hãy gọi vào số đã lưu của họ trước khi gửi bất cứ thứ gì."
+      },
+      {
+        "en": "If your account is taken over, warn your family by phone or another app straight away, so nobody sends money to the scammer.",
+        "bn": "অ্যাকাউন্ট বেহাত হলে সঙ্গে সঙ্গে ফোনে বা অন্য অ্যাপে পরিবারকে সতর্ক করুন, যাতে কেউ প্রতারককে টাকা না পাঠায়।",
+        "hi": "अगर अकाउंट पर किसी और का कब्ज़ा हो जाए, तो तुरंत फोन या दूसरे ऐप से परिवार को सावधान करें, ताकि कोई धोखेबाज़ को पैसे न भेजे।",
+        "vi": "Nếu tài khoản bị chiếm, hãy báo ngay cho gia đình qua điện thoại hoặc ứng dụng khác, để không ai chuyển tiền cho kẻ gian."
+      }
+    ]
+  }
+]

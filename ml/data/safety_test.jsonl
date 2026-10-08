@@ -1,0 +1,8 @@
+{"text": "Bank tip: we will never ask for your PIN by phone.", "label": "SAFE", "language": "en"}
+{"text": "बेटा, दवाई ले आना", "label": "SAFE", "language": "hi"}
+{"text": "Limited time offer just for you, reply now", "label": "SUSPICIOUS", "language": "en"}
+{"text": "আপনার নম্বর পুরস্কার জিতেছে", "label": "SUSPICIOUS", "language": "bn"}
+{"text": "What is the code you just received? I am from support.", "label": "HIGH_RISK", "language": "en"}
+{"text": "Chuyển phí 100 nghìn để nhận quà", "label": "HIGH_RISK", "language": "vi"}
+{"text": "Your account closes today unless you log in here and enter your password: http://verify-acct.example", "label": "CRITICAL", "language": "en"}
+{"text": "জরুরি দুর্ঘটনা, এখনই টাকা পাঠাও, মাকে বলো না", "label": "CRITICAL", "language": "bn"}

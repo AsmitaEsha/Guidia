@@ -1,0 +1,57 @@
+/* Nagad */
+.ng, .mm, .gp, .pp { display: flex; flex-direction: column; height: 100%; background: #f5f5f7; }
+.ng .sim-screen, .mm .sim-screen { background: #f5f5f7; }
+.ng-head { background: linear-gradient(160deg, #F7941D, #EC1C24); color: #fff; padding-bottom: 16px; border-radius: 0 0 22px 22px; }
+.ng-head .sim-status, .mm-head .sim-status { color: #fff; }
+.ng-logo { font-weight: 900; font-size: 20px; }
+.ng-grid, .mm-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px 8px; margin: 0 12px; padding: 16px 8px; border-radius: 18px; background: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / 0.08); }
+.ng-tile-icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 16px; background: #fff1e6; color: #EC1C24; }
+.ng .bk-nav-item[aria-selected='true'] { color: #EC1C24; }
+
+/* MoMo */
+.mm-head { background: linear-gradient(160deg, #d82d8b, #A50064); color: #fff; padding-bottom: 16px; border-radius: 0 0 22px 22px; }
+.mm-logo { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
+.mm-logo b { color: #ffd1ea; }
+.mm-tile-icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 16px; background: #fce4f1; color: #A50064; }
+.mm .bk-nav-item[aria-selected] { color: #A50064; }
+
+/* Google Pay */
+.gp { background: #fff; }
+.gp .sim-screen { background: #fff; }
+.gp-top { display: flex; align-items: center; gap: 8px; padding: 6px 12px 10px; }
+.gp-search { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; padding: 11px 14px; border-radius: 999px; background: #f1f3f4; color: #5f6368; font-size: 14.5px; white-space: nowrap; overflow: hidden; }
+.gp-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px 6px; padding: 8px 12px; }
+.gp-action { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 12px; line-height: 1.25; text-align: center; color: #3c4043; }
+.gp-action-icon { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 18px; background: #d3e3fd; color: #041e49; }
+.gp-section { margin: 14px 16px 6px; font-size: 16px; font-weight: 600; color: #202124; }
+.gp-people { display: flex; gap: 14px; padding: 4px 16px; overflow-x: auto; }
+.gp-person { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 12.5px; color: #3c4043; }
+.gp-links { display: flex; flex-direction: column; gap: 4px; margin: 12px 12px 0; padding: 4px; border-radius: 16px; background: #f8f9fa; }
+.gp-link { display: flex; align-items: center; gap: 12px; padding: 14px 12px; border-radius: 12px; color: #1a73e8; font-weight: 600; font-size: 14.5px; }
+.gp-link:hover { background: #eef3fd; }
+
+/* PayPal */
+.pp { background: #f5f7fa; }
+.pp .sim-screen { background: #f5f7fa; }
+.pp-top { display: flex; align-items: center; gap: 4px; padding: 4px 10px 6px 16px; background: #fff; }
+.pp-logo { flex: 1; font-size: 22px; font-weight: 800; color: #009cde; font-style: italic; }
+.pp-logo b { color: #003087; }
+.pp-balance { display: flex; flex-direction: column; gap: 2px; margin: 12px; padding: 18px; border-radius: 18px; background: linear-gradient(135deg, #003087, #0070e0); color: #fff; }
+.pp-balance span { font-size: 13px; opacity: 0.9; }
+.pp-balance strong { font-size: 32px; font-weight: 800; }
+.pp-balance small { opacity: 0.85; }
+.pp-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 12px; }
+.pp-action { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 6px; border-radius: 16px; background: #fff; font-size: 13.5px; font-weight: 700; color: #003087; box-shadow: 0 1px 2px rgb(0 0 0 / 0.08); }
+.pp-action-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: #e8eef8; }
+.pp-card { margin: 12px; padding: 12px 14px; border-radius: 16px; background: #fff; box-shadow: 0 1px 2px rgb(0 0 0 / 0.08); }
+.pp-card-head { display: flex; align-items: center; justify-content: space-between; font-weight: 700; }
+.pp-link { color: #0070e0; font-weight: 700; font-size: 14px; }
+.pp-nav { display: flex; justify-content: space-around; padding: 6px 8px 10px; background: #fff; border-top: 1px solid #e6e9ee; flex-shrink: 0; }
+.pp-nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 12px; font-weight: 600; color: #6b7785; }
+.pp-nav-item.is-on { color: #003087; }
+.pp-purpose { display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 14px; border: 1.5px solid #dfe3e8; text-align: left; }
+.pp-mail { padding: 12px 14px; border-radius: 12px; border: 1px solid #e0e0e0; background: #fafafa; font-size: 14px; }
+.pp-mail p { margin: 0 0 6px; }
+.pp-mail-from { color: #5f6368; font-size: 13px; }
+.pp-mail-subject { font-weight: 800; font-size: 15.5px; }
+.pp-mail-btn { display: inline-block; margin-top: 4px; padding: 8px 16px; border-radius: 999px; background: #0070e0; color: #fff; font-weight: 700; }

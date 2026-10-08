@@ -1,0 +1,279 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Guidia design tokens — "Quiet confidence"
+
+   Warm paper, deep teal, warm coral, a touch of gold and dark ink.
+   One semantic palette for the whole product (landing, auth, app, admin,
+   showcase). Dark and high-contrast modes redefine the same names, so a
+   component never branches on theme.
+
+   Body text meets WCAG AA on every surface (most pairs exceed AAA).
+   ───────────────────────────────────────────────────────────────────────── */
+
+:root,
+[data-gx-theme='light'] {
+  /* Brand — teal */
+  --brand-900: #063f3c;   /* deep teal */
+  --brand-800: #0a514d;
+  --brand-700: #0d625d;   /* primary teal */
+  --brand-600: #157770;   /* medium teal */
+  --brand-200: #bfe2da;
+  --brand-100: #dcefea;   /* teal tint */
+  --brand-50:  #eef7f4;   /* soft teal */
+
+  /* Brand — coral & gold (warmth, used sparingly) */
+  --coral-700: #b5513b;
+  --coral-600: #d96a52;   /* warm coral */
+  --coral-500: #f2795c;   /* primary coral */
+  --coral-100: #ffe3da;
+  --coral-50:  #fff0eb;   /* soft coral */
+  --gold-700:  #8a5a14;
+  --gold-500:  #d99a43;   /* warm gold */
+  --gold-100:  #fbf0d8;   /* soft gold */
+  --accent-700: var(--gold-700);
+  --accent-100: var(--gold-100);
+
+  /* Neutrals (warm) */
+  --ink-900: #18252c;     /* ink */
+  --ink-700: #34444d;     /* secondary ink */
+  --ink-600: #596a71;     /* muted */
+  --ink-500: #728087;     /* subtle (large text / icons only) */
+  --line: #dfd8cc;        /* warm border */
+  --line-strong: #c9c0b1; /* strong border */
+  --paper: #fbf8f3;       /* warm background */
+  --surface: #ffffff;
+  --surface-2: #f4efe7;   /* soft surface */
+
+  /* Status — always paired with an icon and words, never colour alone */
+  --ok-700: #1f6b45;     --ok-100: #dff1e6;
+  --info-700: #1d5a8a;   --info-100: #e0edf8;
+  --warn-700: #8a4b00;   --warn-100: #fdf0d9;
+  --risk-700: #a33a12;   --risk-100: #fde6db;
+  --danger-700: #a11d2a; --danger-100: #fbe1e3;
+  --unknown-700: #4a5961; --unknown-100: #eceae5;
+
+  /* Semantic roles */
+  --bg: var(--paper);
+  --fg: var(--ink-900);
+  --fg-muted: #4a5961;
+  --fg-subtle: #5f6d74;
+  --card: var(--surface);
+  --card-2: var(--surface-2);
+  --card-raised: var(--surface);
+  --border: var(--line);
+  --border-strong: var(--line-strong);
+  --primary: var(--brand-700);
+  --primary-hover: var(--brand-800);
+  --primary-press: var(--brand-900);
+  --primary-soft: var(--brand-50);
+  --primary-soft-2: var(--brand-100);
+  --on-primary: #ffffff;
+  --warm: var(--coral-600);
+  --warm-soft: var(--coral-50);
+  --focus: #1a5fd0;
+  --focus-ring: 0 0 0 3px var(--bg), 0 0 0 6px var(--focus);
+  --scrim: rgb(12 20 24 / 0.55);
+  --glass: color-mix(in srgb, var(--bg) 86%, transparent);
+
+  /* Brand mark colours (wordmark gradient lives in shell.css) */
+  --logo-text: #1565d8;
+
+  /* Elevation — soft, warm-tinted, physically grounded */
+  --shadow-0: none;
+  --shadow-1: 0 1px 2px rgb(40 30 20 / 0.06), 0 1px 1px rgb(40 30 20 / 0.04);               /* resting */
+  --shadow-2: 0 8px 22px -6px rgb(40 30 20 / 0.12), 0 2px 6px rgb(40 30 20 / 0.05);         /* raised */
+  --shadow-3: 0 18px 44px -12px rgb(40 30 20 / 0.20), 0 4px 10px rgb(40 30 20 / 0.06);      /* floating */
+  --shadow-4: 0 32px 80px -20px rgb(12 20 24 / 0.38);                                       /* modal */
+  --shadow-inset: inset 0 0 0 1px var(--border);
+}
+
+/* ── Type, space, shape, motion (theme-independent) ─────────────────────── */
+:root {
+  --font-sans: 'Noto Sans', 'Noto Sans Bengali', 'Noto Sans Devanagari', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Noto Serif', 'Noto Serif Bengali', 'Noto Sans Bengali', 'Noto Serif Devanagari', 'Noto Sans Devanagari', Georgia, serif;
+  --font-brand: 'Outfit', 'Noto Sans', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Mono', 'SF Mono', Consolas, monospace;
+
+  /* The user's chosen size (18–28px) drives the whole authenticated UI. */
+  --user-font-size: 20px;
+  --fs-xs: 0.75rem;     /* 15px at 20 — metadata minimum (≥14px at 18) */
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: 1.35rem;
+  --fs-xl: 1.7rem;
+  --fs-2xl: clamp(1.9rem, 1.45rem + 1.4vw, 2.3rem);
+  --fs-display: clamp(2.75rem, 1.6rem + 3.6vw, 4.5rem);      /* marketing display 44–72px */
+  --fs-display-2: clamp(2.125rem, 1.5rem + 2.2vw, 3.25rem);  /* marketing heading 34–52px */
+  --lh-tight: 1.2;
+  --lh-snug: 1.35;
+  --lh-body: 1.6;
+
+  /* Space — 4/8 rhythm */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-4-5: 20px;
+  --s-5: 24px; --s-6: 32px; --s-6-5: 40px; --s-7: 48px; --s-8: 64px; --s-9: 80px; --s-10: 96px;
+  --space-xs: var(--s-2);
+  --space-sm: var(--s-3);
+  --space-md: var(--s-4);
+  --space-lg: var(--s-5);
+  --space-xl: var(--s-6);
+  --space-2xl: var(--s-7);
+
+  /* Shape */
+  --r-xs: 10px;
+  --r-sm: 12px;
+  --r-md: 14px;
+  --r-lg: 16px;
+  --r-xl: 20px;
+  --r-2xl: 24px;
+  --r-3xl: 32px;
+  --r-pill: 999px;
+
+  /* Targets */
+  --tap-sm: 46px;
+  --tap: 52px;
+  --tap-lg: 60px;
+  --tap-icon: 48px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --t-fast: 140ms;
+  --t-base: 220ms;
+  --t-slow: 320ms;
+  --t-page: 240ms;
+
+  /* Layout */
+  --shell-sidebar: 272px;
+  --shell-topbar: 72px;
+  --content-max: 1200px;
+  --content-narrow: 780px;
+  --gutter: clamp(16px, 3.2vw, 40px);
+
+  /* Cognitive-mode tokens: calm by default, relaxed when unsure/scared. */
+  --content-width: var(--content-max);
+  --step-gap: var(--s-6);
+  --choice-gap: var(--s-3);
+  --instruction-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.6rem);
+  --reassurance-display: none;
+}
+
+/* "A little more help": more explanation room, a touch slower. */
+:root[data-mode='unsure'] {
+  --lh-body: 1.7;
+  --t-base: 280ms;
+  --t-page: 300ms;
+  --step-gap: var(--s-7);
+  --choice-gap: var(--s-4);
+  --instruction-size: clamp(1.35rem, 1.15rem + 0.8vw, 1.7rem);
+}
+
+/* "Very gentle": maximum clarity, fewer simultaneous choices, slower. */
+:root[data-mode='scared'] {
+  --lh-body: 1.8;
+  --t-base: 340ms;
+  --t-slow: 420ms;
+  --t-page: 360ms;
+  --content-width: 960px;
+  --step-gap: var(--s-8);
+  --choice-gap: var(--s-5);
+  --instruction-size: clamp(1.45rem, 1.25rem + 0.8vw, 1.85rem);
+  --reassurance-display: flex;
+}
+
+/* ── Dark ──────────────────────────────────────────────────────────────── */
+[data-gx-theme='dark'] {
+  color-scheme: dark;
+  --logo-text: #7fb2ff;
+
+  --bg: #10181c;
+  --fg: #eef2f2;
+  --fg-muted: #b8c4c7;
+  --fg-subtle: #9aa8ab;
+  --card: #18242a;
+  --card-2: #1f2d33;
+  --card-raised: #1d2b31;
+  --border: #2d3d44;
+  --border-strong: #3e5058;
+  --surface: #18242a;
+  --surface-2: #1f2d33;
+  --line: #2d3d44;
+  --line-strong: #3e5058;
+  --primary: #4fb8ac;
+  --primary-hover: #6fcbbf;
+  --primary-press: #8ad6cc;
+  --primary-soft: #16302f;
+  --primary-soft-2: #1d3d3b;
+  --on-primary: #06231f;
+  --brand-50: #16302f;
+  --brand-100: #1d3d3b;
+  --warm: #ff9a80;
+  --warm-soft: #3a2420;
+  --coral-50: #3a2420;
+  --coral-100: #4a2b23;
+  --coral-600: #ff9a80;
+  --coral-500: #ff8a6b;
+  --gold-100: #33270f;
+  --gold-500: #f0b878;
+  --gold-700: #f0b878;
+  --accent-700: #f0b878;
+  --accent-100: #33250f;
+  --focus: #8ab4f8;
+  --scrim: rgb(0 0 0 / 0.62);
+
+  --ok-700: #7dd3a3;     --ok-100: #173226;
+  --info-700: #8cc2ef;   --info-100: #172a3a;
+  --warn-700: #f2c27a;   --warn-100: #33270f;
+  --risk-700: #f4a37e;   --risk-100: #3a2116;
+  --danger-700: #f39aa2; --danger-100: #3a191d;
+  --unknown-700: #c3ccce; --unknown-100: #26343a;
+
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-2: 0 8px 22px -6px rgb(0 0 0 / 0.5), 0 2px 6px rgb(0 0 0 / 0.3);
+  --shadow-3: 0 18px 44px -12px rgb(0 0 0 / 0.6);
+  --shadow-4: 0 32px 80px -20px rgb(0 0 0 / 0.75);
+}
+
+/* ── High contrast (light) ─────────────────────────────────────────────── */
+:root[data-contrast='high'] {
+  --fg: #000000;
+  --fg-muted: #1b1b1b;
+  --fg-subtle: #2a2a2a;
+  --border: #1b1b1b;
+  --border-strong: #000000;
+  --line: #1b1b1b;
+  --primary: #00413d;
+  --primary-hover: #002825;
+  --primary-soft: #e3f3ef;
+  --bg: #ffffff;
+  --card: #ffffff;
+  --card-2: #f2f2f2;
+  --focus: #0040c0;
+  --shadow-1: none;
+  --shadow-2: 0 0 0 1px #000;
+  --shadow-3: 0 0 0 2px #000;
+}
+
+/* ── High contrast (dark) ──────────────────────────────────────────────── */
+:root[data-contrast='high'][data-gx-theme='dark'] {
+  --fg: #ffffff;
+  --fg-muted: #f0f0f0;
+  --fg-subtle: #e0e0e0;
+  --border: #e6e6e6;
+  --border-strong: #ffffff;
+  --bg: #000000;
+  --card: #0b0b0b;
+  --card-2: #161616;
+  --primary: #7fe0d3;
+  --primary-hover: #a6ece2;
+  --on-primary: #00201c;
+  --focus: #ffd34d;
+}
+
+/* ── Reduced motion: the user's setting OR the system preference ────────── */
+:root[data-reduced-motion='true'] {
+  --t-fast: 0ms; --t-base: 0ms; --t-slow: 0ms; --t-page: 0ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root { --t-fast: 0ms; --t-base: 0ms; --t-slow: 0ms; --t-page: 0ms; }
+}

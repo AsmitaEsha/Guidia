@@ -1,0 +1,38 @@
+{"text": "can you teach me google maps", "label": "LEARN_APP", "language": "en"}
+{"text": "ইউটিউব চালানো শেখাও", "label": "LEARN_APP", "language": "bn"}
+{"text": "let us begin a lesson", "label": "START_LESSON", "language": "en"}
+{"text": "lesson start koro", "label": "START_LESSON", "language": "bn-Latn"}
+{"text": "pick up where i left off", "label": "CONTINUE_LEARNING", "language": "en"}
+{"text": "tiếp tục bài trước", "label": "CONTINUE_LEARNING", "language": "vi"}
+{"text": "pay my grandson some money", "label": "SEND_MONEY", "language": "en"}
+{"text": "নগদে টাকা পাঠাব", "label": "SEND_MONEY", "language": "bn"}
+{"text": "my pension money where does it come", "label": "RECEIVE_MONEY", "language": "en"}
+{"text": "पैसे मिले या नहीं कैसे देखूं", "label": "RECEIVE_MONEY", "language": "hi"}
+{"text": "make an appointment at the eye clinic", "label": "BOOK_APPOINTMENT", "language": "en"}
+{"text": "daktar dekhabo online", "label": "BOOK_APPOINTMENT", "language": "bn-Latn"}
+{"text": "text my friend that i am home", "label": "SEND_MESSAGE", "language": "en"}
+{"text": "gửi ảnh cho con", "label": "SEND_MESSAGE", "language": "vi"}
+{"text": "read me the latest message", "label": "READ_MESSAGE", "language": "en"}
+{"text": "মেসেজটা পড়ে শোনাও", "label": "READ_MESSAGE", "language": "bn"}
+{"text": "send an email with a photo", "label": "SEND_EMAIL", "language": "en"}
+{"text": "ईमेल लिखना है", "label": "SEND_EMAIL", "language": "hi"}
+{"text": "open gmail and show new mails", "label": "READ_EMAIL", "language": "en"}
+{"text": "inbox dekhbo", "label": "READ_EMAIL", "language": "bn-Latn"}
+{"text": "buy a phone cover online", "label": "SHOP_ONLINE", "language": "en"}
+{"text": "đặt mua thuốc online", "label": "SHOP_ONLINE", "language": "vi"}
+{"text": "where do i tap to continue", "label": "CHECK_SCREEN", "language": "en"}
+{"text": "এগোতে কোথায় চাপব", "label": "CHECK_SCREEN", "language": "bn"}
+{"text": "what does this screen mean", "label": "EXPLAIN_SCREEN", "language": "en"}
+{"text": "इस पेज पर क्या है", "label": "EXPLAIN_SCREEN", "language": "hi"}
+{"text": "is it safe to share my location", "label": "SAFETY_CHECK", "language": "en"}
+{"text": "ei link e dhukbo safe hobe", "label": "SAFETY_CHECK", "language": "bn-Latn"}
+{"text": "my account will be closed says this sms is it fake", "label": "SCAM_CHECK", "language": "en"}
+{"text": "এটা কি ভুয়া কল ছিল", "label": "SCAM_CHECK", "language": "bn"}
+{"text": "let my son know i need help with this", "label": "CONTACT_GUARDIAN", "language": "en"}
+{"text": "gọi cho con gái tôi", "label": "CONTACT_GUARDIAN", "language": "vi"}
+{"text": "help i do not understand", "label": "REQUEST_HELP", "language": "en"}
+{"text": "मैं फंस गया हूँ", "label": "REQUEST_HELP", "language": "hi"}
+{"text": "take me back", "label": "NAVIGATION", "language": "en"}
+{"text": "আগের পাতায় যাও", "label": "NAVIGATION", "language": "bn"}
+{"text": "tell me a joke", "label": "UNKNOWN", "language": "en"}
+{"text": "aaj ki khela ache", "label": "UNKNOWN", "language": "bn-Latn"}

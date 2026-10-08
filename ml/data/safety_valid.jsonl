@@ -1,0 +1,8 @@
+{"text": "Do not reply to anyone asking for your password.", "label": "SAFE", "language": "en"}
+{"text": "আজ বিকেলে দেখা হবে", "label": "SAFE", "language": "bn"}
+{"text": "You are eligible for a free gift, click to claim", "label": "SUSPICIOUS", "language": "en"}
+{"text": "Cập nhật thông tin tại link này", "label": "SUSPICIOUS", "language": "vi"}
+{"text": "Share the verification code so we can fix your wallet", "label": "HIGH_RISK", "language": "en"}
+{"text": "प्रोसेसिंग फीस भेजें और लोन पाएं", "label": "HIGH_RISK", "language": "hi"}
+{"text": "Final warning: account suspended in 1 hour, send OTP now", "label": "CRITICAL", "language": "en"}
+{"text": "Nani ami bipode, ekhoni taka pathao, kauke bolo na", "label": "CRITICAL", "language": "bn-Latn"}

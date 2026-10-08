@@ -1,6 +1,16 @@
-// Guidia database schema.
-// SQLite for development; the datasource URL can be swapped to Postgres in
-// production without changing any model below.
+// Guidia V2 database schema — SQLite via Prisma 6 (a single local file,
+// no database server needed). Lists are stored as Json arrays.
+//
+// Conventions
+// - Persistent product state lives here; the browser only caches it.
+// - Secrets (passwords, refresh/reset/extension tokens) are stored only as
+//   hashes. OTPs, PINs, CVVs and card/account numbers are never stored.
+// - Free text that came from a user (messages, screenshot text, scam checks)
+//   is stored only after security/sensitiveDataGuard redaction.
+// - Rows whose state transitions can race (actions, approvals, tasks,
+//   emergencies) carry a `version` column for optimistic concurrency.
+// - Localised content uses Json objects keyed by language code
+//   ({ "en": "...", "bn": "...", "hi": "...", "vi": "..." }).
 
 generator client {
   provider = "prisma-client-js"
@@ -10,6 +20,8 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+// ─── Enums ──────────────────────────────────────────────────────────────
 
 enum UserRole {
   SENIOR
@@ -27,12 +39,24 @@ enum RiskContentType {
   URL
   SMS
   MESSAGE
+  SCREENSHOT
 }
 
+// Scam/message verdicts. WARNING is the "suspicious" level. UNKNOWN means
+// Guidia could not judge safely — never silently treated as SAFE.
 enum RiskSeverity {
   SAFE
   WARNING
   HIGH_RISK
+  CRITICAL
+  UNKNOWN
+}
+
+// Risk of an action the user is about to take.
+enum RiskLevel {
+  LOW
+  MEDIUM
+  HIGH
   CRITICAL
 }
 
@@ -48,11 +72,28 @@ enum GuardianStatus {
   REVOKED
 }
 
+enum GuardianRole {
+  PRIMARY
+  SECONDARY
+}
+
+enum PermissionScope {
+  EMERGENCY_ALERTS
+  APPROVAL_REQUESTS
+  LEARNING_PROGRESS
+  TASK_ACTIVITY
+  SAFETY_ALERTS
+  MEMORY_BOOK
+  PRIVATE_CONVERSATIONS
+  FINANCIAL_DETAILS
+}
+
 enum ApprovalStatus {
   PENDING
   APPROVED
   REJECTED
   FLAGGED
+  EXPIRED
 }
 
 enum MemoryCategory {
@@ -61,7 +102,205 @@ enum MemoryCategory {
   BANKING
   LEARNING
   SOCIAL
+  PRIVACY
 }
+
+enum AppCategory {
+  MESSAGING
+  SOCIAL
+  EMAIL
+  PAYMENT
+  SHOPPING
+  HEALTHCARE
+  TRAVEL
+  OTHER
+}
+
+enum LearningDomain {
+  DIGITAL_OPERATIONS
+  SOCIAL_COMMUNICATION
+  DIGITAL_SAFETY
+  INFORMATION_LITERACY
+  AI_PRIVACY_LITERACY
+}
+
+enum Difficulty {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+enum ContentStatus {
+  DRAFT
+  IN_REVIEW
+  PUBLISHED
+  ARCHIVED
+}
+
+enum TaskStatus {
+  ACTIVE
+  PAUSED
+  WAITING_FOR_CONFIRMATION
+  WAITING_FOR_GUARDIAN
+  COMPLETED
+  CANCELLED
+  EXPIRED
+}
+
+enum TaskEventType {
+  TASK_STARTED
+  STEP_VIEWED
+  ACTION_ATTEMPTED
+  ACTION_SUCCEEDED
+  ACTION_FAILED
+  HINT_SHOWN
+  VOICE_USED
+  SCREENSHOT_ANALYZED
+  SAFETY_WARNING
+  CONFIRMATION_REQUESTED
+  GUARDIAN_REQUESTED
+  GUARDIAN_APPROVED
+  GUARDIAN_REJECTED
+  TASK_PAUSED
+  TASK_RESUMED
+  TASK_COMPLETED
+  TASK_CANCELLED
+}
+
+enum AttemptOutcome {
+  SUCCESS
+  FAILED
+  ABANDONED
+}
+
+enum MasteryLevel {
+  NEW
+  GUIDED
+  PRACTICING
+  INDEPENDENT
+  RETAINED
+  MASTERED
+}
+
+enum ConversationMode {
+  ASSISTANT
+  SCREEN
+  VOICE
+  TASK
+}
+
+enum ConversationStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+enum MessageRole {
+  USER
+  ASSISTANT
+  SYSTEM
+  TOOL
+}
+
+// Where a piece of knowledge or an answer came from.
+enum KnowledgeSource {
+  VERIFIED_GUIDIA
+  OFFICIAL_SOURCE
+  SIMULATION
+  USER_PROVIDED
+  MODEL_INTERPRETATION
+  UNKNOWN
+}
+
+enum ScreenshotSource {
+  UPLOAD
+  EXTENSION
+}
+
+enum ScreenshotStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  EXPIRED
+}
+
+enum ActionStatus {
+  DRAFT
+  REVIEW
+  USER_CONFIRMED
+  GUARDIAN_PENDING
+  GUARDIAN_APPROVED
+  EXECUTING
+  EXECUTED
+  REJECTED
+  CANCELLED
+  EXPIRED
+  FAILED
+}
+
+enum EmergencyReason {
+  I_AM_CONFUSED
+  I_THINK_THIS_IS_UNSAFE
+  I_MAY_HAVE_MADE_A_MISTAKE
+  PAYMENT_HELP
+  APPOINTMENT_HELP
+  OTHER
+}
+
+enum EmergencyStatus {
+  TRIGGERED
+  SENT
+  ACKNOWLEDGED
+  CONTACTED
+  RESOLVED
+  CANCELLED
+}
+
+enum NotificationSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum OutboxStatus {
+  PENDING
+  PROCESSING
+  SENT
+  FAILED
+  SKIPPED
+  CANCELLED
+}
+
+enum ConsentType {
+  VOICE_PROCESSING
+  SCREENSHOT_PROCESSING
+  GUARDIAN_SHARING
+  EXTENSION_CONNECTION
+  TEMPORARY_SUPPORT
+  ANALYTICS
+}
+
+enum ActorType {
+  USER
+  GUARDIAN
+  ADMIN
+  SYSTEM
+  AI
+}
+
+enum TxDirection {
+  DEBIT
+  CREDIT
+}
+
+enum ModelStatus {
+  TRAINING
+  STAGED
+  ACTIVE
+  RETIRED
+}
+
+// ─── Identity ───────────────────────────────────────────────────────────
 
 model User {
   id                String   @id @default(cuid())
@@ -70,75 +309,103 @@ model User {
   passwordHash      String
   role              UserRole @default(SENIOR)
   preferredLanguage String   @default("en")
+  // Optional and self-reported. Never used as a proxy for ability.
+  age               Int?
+  countryCode       String?
+  // Optional; shown only to the family members a learner has connected, so
+  // they can call straight back when a help request arrives.
+  phone             String?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
-  preference        UserPreference?
-  sessions          Session[]
-  riskAssessments   RiskAssessment[]
-  safetyInterceptions SafetyInterception[]
+  preference                      UserPreference?
+  sessions                        Session[]
+  passwordResetTokens             PasswordResetToken[]
+  riskAssessments                 RiskAssessment[]
+  safetyInterceptions             SafetyInterception[]
   guardianRelationshipsAsSenior   GuardianRelationship[] @relation("SeniorGuardians")
   guardianRelationshipsAsGuardian GuardianRelationship[] @relation("GuardianOfSeniors")
-  memoryEntries     MemoryBookEntry[]
-  passwordResetTokens PasswordResetToken[]
+  memoryEntries                   MemoryBookEntry[]
+  taskSessions                    GuidedTaskSession[]
+  practiceAttempts                PracticeAttempt[]
+  skills                          UserSkill[]
+  conversations                   Conversation[]
+  screenshotAnalyses              ScreenshotAnalysis[]
+  actionProposals                 ActionProposal[]
+  emergencyEvents                 EmergencyEvent[]       @relation("EmergencySenior")
+  acknowledgedEmergencies         EmergencyEvent[]       @relation("EmergencyAcknowledger")
+  notifications                   Notification[]
+  familyLinkCodes                 FamilyLinkCode[]
+  emergencyContacts               EmergencyContact[]
+  consents                        ConsentRecord[]        @relation("ConsentOwner")
+  simulationAccounts              SimulationAccount[]
+  extensionPairings               ExtensionPairing[]
+  extensionTokens                 ExtensionToken[]
+  idempotencyKeys                 IdempotencyKey[]
 
   @@map("users")
 }
 
-// A single-use, time-limited password reset token — same "store the raw
-// token, not a hash" pattern already used for refresh sessions below,
-// since both are short-lived, high-entropy, single-use secrets rather
-// than long-term credentials.
-model PasswordResetToken {
-  id        String    @id @default(cuid())
-  userId    String
-  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  token     String    @unique
-  expiresAt DateTime
-  usedAt    DateTime?
-  createdAt DateTime  @default(now())
-
-  @@map("password_reset_tokens")
-}
-
-// One row per user holding onboarding + Cognitive Load Governor state.
-// Kept separate from User so auth data and adaptive-experience data evolve independently.
+// Onboarding, accessibility and Cognitive Load Governor state.
 model UserPreference {
-  id              String         @id @default(cuid())
-  userId          String         @unique
-  user            User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  cognitiveState  CognitiveState @default(CALM)
-  fontSize        Int            @default(17)
-  darkMode        Boolean        @default(false)
-  reducedMotion   Boolean        @default(false)
-  voiceEnabled    Boolean        @default(true)
-  voiceSpeed      Float          @default(1.0)
-  voiceAutoPlay   Boolean        @default(false)
-  onboardingDone  Boolean        @default(false)
-  updatedAt       DateTime       @updatedAt
+  id                   String         @id @default(cuid())
+  userId               String         @unique
+  user                 User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cognitiveState       CognitiveState @default(CALM)
+  fontSize             Int            @default(20)
+  darkMode             Boolean        @default(false)
+  highContrast         Boolean        @default(false)
+  reducedMotion        Boolean        @default(false)
+  voiceEnabled         Boolean        @default(true)
+  voiceSpeed           Float          @default(1.0)
+  voiceAutoPlay        Boolean        @default(false)
+  preferVoice          Boolean        @default(false)
+  notificationsEnabled Boolean        @default(true)
+  onboardingDone       Boolean        @default(false)
+  updatedAt            DateTime       @updatedAt
 
   @@map("user_preferences")
 }
 
-// Refresh-token sessions, so logout / expiry are real server-side events
-// rather than client-only state.
+// Refresh-token sessions. Tokens rotate on every refresh: the old row is
+// revoked and points at its replacement. Presenting a revoked token whose
+// family is still alive means the token leaked — the whole family is revoked.
 model Session {
-  id           String   @id @default(cuid())
+  id           String    @id @default(cuid())
   userId       String
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  refreshToken String   @unique
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash    String    @unique
+  familyId     String
+  replacedById String?
   userAgent    String?
-  createdAt    DateTime @default(now())
+  createdAt    DateTime  @default(now())
+  lastUsedAt   DateTime  @default(now())
   expiresAt    DateTime
   revokedAt    DateTime?
+  revokeReason String?
 
+  @@index([userId])
+  @@index([familyId])
   @@map("sessions")
 }
 
-// One row per scam/risk check a user submits. `signals` is a JSON-encoded
-// array of the deterministic rule matches that produced the floor severity
-// (see backend/src/safety/rules.js) — kept alongside the final severity so
-// a user's safety history can show *why*, not just the verdict.
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId])
+  @@map("password_reset_tokens")
+}
+
+// ─── Safety ─────────────────────────────────────────────────────────────
+
+// One scam/risk check. `contentExcerpt` is redacted. `decisionTrace`
+// records which rule/model/policy versions produced the verdict.
 model RiskAssessment {
   id             String          @id @default(cuid())
   userId         String
@@ -146,35 +413,71 @@ model RiskAssessment {
   contentType    RiskContentType
   contentExcerpt String
   severity       RiskSeverity
-  signals        String
+  signals        Json
   explanation    String
+  decisionTrace  Json?
   createdAt      DateTime        @default(now())
 
+  @@index([userId, createdAt])
   @@map("risk_assessments")
 }
 
-// A logged moment where the Psychological Safety Net (GuidiaSafetyPanel on
-// the frontend) interrupted a sensitive action — a financial transfer,
-// permission grant, etc. `summary` is JSON-encoded {what, who, amountOrData,
-// consequence}, the same four questions shown to the user before they choose
-// Proceed / Edit / Request Help.
+// A Psychological Safety Net interruption (what/who/amount/consequence)
+// and what the user chose.
 model SafetyInterception {
   id         String                 @id @default(cuid())
   userId     String
   user       User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
   actionType String
-  summary    String
+  summary    Json
   resolution InterceptionResolution
   createdAt  DateTime               @default(now())
 
+  @@index([userId, createdAt])
   @@map("safety_interceptions")
 }
 
-// A senior user's connection to a trusted guardian. Starts PENDING when the
-// senior invites a guardian by email (no account required to exist yet);
-// becomes ACTIVE only once that guardian explicitly accepts — guardian
-// access always requires the guardian's own consent, per the product rule
-// that this relationship can never be silently established.
+// A sensitive action Guidia was asked to carry out (currently always in a
+// simulation). Only backend state-machine code moves it between states;
+// AI may create a DRAFT but never confirm or execute.
+model ActionProposal {
+  id                 String             @id @default(cuid())
+  userId             String
+  user               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  taskSessionId      String?
+  taskSession        GuidedTaskSession? @relation(fields: [taskSessionId], references: [id], onDelete: SetNull)
+  applicationSlug    String
+  actionType         String
+  riskLevel          RiskLevel
+  status             ActionStatus       @default(DRAFT)
+  // Redacted, display-safe details: { recipientLabel, note }.
+  payload            Json
+  amountMinor        Int?
+  currency           String?
+  isSimulation       Boolean            @default(true)
+  confirmationLevel  Int                @default(1)
+  confirmationsGiven Int                @default(0)
+  requiresGuardian   Boolean            @default(false)
+  reasons            Json
+  policyVersion      String
+  version            Int                @default(0)
+  expiresAt          DateTime
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  executedAt         DateTime?
+
+  guardianApproval      GuardianApproval?
+  simulationTransaction SimulationTransaction?
+
+  @@index([userId, status])
+  @@index([expiresAt])
+  @@map("action_proposals")
+}
+
+// ─── Guardians / Trusted Circle ─────────────────────────────────────────
+
+// Starts PENDING when the senior invites by email; ACTIVE only once that
+// guardian accepts. Permissions are separate rows the senior controls.
 model GuardianRelationship {
   id                String         @id @default(cuid())
   seniorUserId      String
@@ -182,38 +485,327 @@ model GuardianRelationship {
   guardianUserId    String?
   guardian          User?          @relation("GuardianOfSeniors", fields: [guardianUserId], references: [id], onDelete: SetNull)
   guardianEmail     String
+  role              GuardianRole   @default(PRIMARY)
+  // Simulated-transfer amount (minor units) above which approval is required.
   approvalThreshold Int            @default(0)
   status            GuardianStatus @default(PENDING)
   createdAt         DateTime       @default(now())
   respondedAt       DateTime?
 
-  approvals         GuardianApproval[]
+  approvals   GuardianApproval[]
+  permissions GuardianPermission[]
 
+  @@index([seniorUserId])
+  @@index([guardianUserId])
+  @@index([guardianEmail, status])
   @@map("guardian_relationships")
 }
 
-// A single sensitive action a senior submitted for guardian sign-off —
-// created when a Safe Practice sim's "Send for Guardian Approval" step
-// fires. `summary` mirrors the same what/who/amount shape used by
-// GuidiaSafetyPanel/SafetyInterception, so a guardian sees the identical
-// breakdown the senior saw.
-model GuardianApproval {
+model GuardianPermission {
   id             String               @id @default(cuid())
   relationshipId String
   relationship   GuardianRelationship @relation(fields: [relationshipId], references: [id], onDelete: Cascade)
-  actionType     String
-  summary        String
-  status         ApprovalStatus       @default(PENDING)
-  createdAt      DateTime             @default(now())
-  resolvedAt     DateTime?
+  scope          PermissionScope
+  grantedAt      DateTime             @default(now())
+  revokedAt      DateTime?
 
+  @@unique([relationshipId, scope])
+  @@map("guardian_permissions")
+}
+
+model GuardianApproval {
+  id               String               @id @default(cuid())
+  relationshipId   String
+  relationship     GuardianRelationship @relation(fields: [relationshipId], references: [id], onDelete: Cascade)
+  actionProposalId String?              @unique
+  actionProposal   ActionProposal?      @relation(fields: [actionProposalId], references: [id], onDelete: SetNull)
+  actionType       String
+  summary          Json
+  status           ApprovalStatus       @default(PENDING)
+  version          Int                  @default(0)
+  createdAt        DateTime             @default(now())
+  resolvedAt       DateTime?
+
+  @@index([relationshipId, status])
   @@map("guardian_approvals")
 }
 
-// A saved learning moment — created automatically when the user completes a
-// lesson, has a safety check worth remembering, or saves a screenshot
-// explanation, rather than being seeded/static content. Lets a user revisit
-// what they learned without repeating an entire tutorial (README: Memory Book).
+model EmergencyEvent {
+  id               String            @id @default(cuid())
+  seniorId         String
+  senior           User              @relation("EmergencySenior", fields: [seniorId], references: [id], onDelete: Cascade)
+  reason           EmergencyReason
+  severity         RiskLevel         @default(HIGH)
+  // Redacted free text from the senior, optional.
+  message          String?
+  status           EmergencyStatus   @default(TRIGGERED)
+  taskSessionId    String?
+  taskSession      GuidedTaskSession? @relation(fields: [taskSessionId], references: [id], onDelete: SetNull)
+  acknowledgedById String?
+  acknowledgedBy   User?             @relation("EmergencyAcknowledger", fields: [acknowledgedById], references: [id], onDelete: SetNull)
+  version          Int               @default(0)
+  createdAt        DateTime          @default(now())
+  sentAt           DateTime?
+  acknowledgedAt   DateTime?
+  contactedAt      DateTime?
+  resolvedAt       DateTime?
+  cancelledAt      DateTime?
+
+  @@index([seniorId, status])
+  @@map("emergency_events")
+}
+
+// ─── Notifications ──────────────────────────────────────────────────────
+
+// In-app notification for one recipient. Never contains secrets.
+model Notification {
+  id        String               @id @default(cuid())
+  userId    String
+  user      User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String
+  severity  NotificationSeverity @default(LOW)
+  title     String
+  body      String
+  data      Json?
+  // Same dedupeKey for the same recipient = one notification, not twelve.
+  dedupeKey String?
+  readAt    DateTime?
+  createdAt DateTime             @default(now())
+
+  outboxEvents OutboxEvent[]
+
+  @@unique([userId, dedupeKey])
+  @@index([userId, readAt])
+  @@index([userId, createdAt])
+  @@map("notifications")
+}
+
+// Delivery work written in the same transaction as the business event and
+// processed by the background worker (email today; SMS/push later).
+model OutboxEvent {
+  id             String        @id @default(cuid())
+  type           String
+  payload        Json
+  status         OutboxStatus  @default(PENDING)
+  attempts       Int           @default(0)
+  nextAttemptAt  DateTime      @default(now())
+  lastAttemptAt  DateTime?
+  lastError      String?
+  idempotencyKey String        @unique
+  notificationId String?
+  notification   Notification? @relation(fields: [notificationId], references: [id], onDelete: SetNull)
+  createdAt      DateTime      @default(now())
+  processedAt    DateTime?
+
+  @@index([status, nextAttemptAt])
+  @@map("outbox_events")
+}
+
+// ─── Learning content ───────────────────────────────────────────────────
+
+// Application registry: every simulated or taught app is a row, so new
+// apps don't need new if/else branches in components.
+model Application {
+  id                 String      @id @default(cuid())
+  slug               String      @unique
+  displayName        String
+  category           AppCategory
+  countryCodes       Json
+  supportedLanguages Json
+  currency           String?
+  riskProfile        RiskLevel   @default(LOW)
+  hasSimulation      Boolean     @default(false)
+  isActive           Boolean     @default(true)
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+
+  lessons      Lesson[]
+  scenarios    Scenario[]
+  taskSessions GuidedTaskSession[]
+
+  @@map("applications")
+}
+
+model Lesson {
+  id               String         @id @default(cuid())
+  slug             String         @unique
+  applicationId    String?
+  application      Application?   @relation(fields: [applicationId], references: [id], onDelete: SetNull)
+  domain           LearningDomain
+  category         String
+  difficulty       Difficulty     @default(BEGINNER)
+  estimatedMinutes Int            @default(5)
+  skillKey         String
+  title            Json
+  description      Json
+  safetyTips       Json?
+  status           ContentStatus  @default(DRAFT)
+  version          Int            @default(1)
+  sortOrder        Int            @default(0)
+  publishedAt      DateTime?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  steps        LessonStep[]
+  scenarios    Scenario[]
+  taskSessions GuidedTaskSession[]
+
+  @@index([status, domain])
+  @@map("lessons")
+}
+
+model LessonStep {
+  id       String @id @default(cuid())
+  lessonId String
+  lesson   Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  order    Int
+  body     Json
+  hint     Json?
+
+  @@unique([lessonId, order])
+  @@map("lesson_steps")
+}
+
+model Scenario {
+  id            String        @id @default(cuid())
+  slug          String        @unique
+  applicationId String
+  application   Application   @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  lessonId      String?
+  lesson        Lesson?       @relation(fields: [lessonId], references: [id], onDelete: SetNull)
+  skillKey      String
+  title         Json
+  difficulty    Difficulty    @default(BEGINNER)
+  status        ContentStatus @default(DRAFT)
+  version       Int           @default(1)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  steps            ScenarioStep[]
+  taskSessions     GuidedTaskSession[]
+  practiceAttempts PracticeAttempt[]
+
+  @@index([applicationId, status])
+  @@map("scenarios")
+}
+
+// One step of a practice scenario. `expectedAction` is the simulator
+// action id that completes the step; a different action gets `recovery`
+// guidance instead of a bare "wrong".
+model ScenarioStep {
+  id             String    @id @default(cuid())
+  scenarioId     String
+  scenario       Scenario  @relation(fields: [scenarioId], references: [id], onDelete: Cascade)
+  order          Int
+  instruction    Json
+  expectedAction String?
+  hint           Json?
+  recovery       Json?
+  riskLevel      RiskLevel @default(LOW)
+
+  @@unique([scenarioId, order])
+  @@map("scenario_steps")
+}
+
+// ─── Tasks, practice, skills ────────────────────────────────────────────
+
+// The user's current digital task — the shared context that chat, voice,
+// screenshots, practice, safety and guardians all attach to.
+model GuidedTaskSession {
+  id               String       @id @default(cuid())
+  userId           String
+  user             User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applicationId    String?
+  application      Application? @relation(fields: [applicationId], references: [id], onDelete: SetNull)
+  lessonId         String?
+  lesson           Lesson?      @relation(fields: [lessonId], references: [id], onDelete: SetNull)
+  scenarioId       String?
+  scenario         Scenario?    @relation(fields: [scenarioId], references: [id], onDelete: SetNull)
+  // Intent label, e.g. SEND_MONEY.
+  goal             String?
+  currentStepOrder Int          @default(0)
+  status           TaskStatus   @default(ACTIVE)
+  // Small redacted context bag (risk, cognitive state, hints used, …).
+  context          Json
+  language         String       @default("en")
+  version          Int          @default(0)
+  startedAt        DateTime     @default(now())
+  pausedAt         DateTime?
+  completedAt      DateTime?
+  expiresAt        DateTime
+  updatedAt        DateTime     @updatedAt
+
+  events             TaskEvent[]
+  practiceAttempts   PracticeAttempt[]
+  actionProposals    ActionProposal[]
+  screenshotAnalyses ScreenshotAnalysis[]
+  conversations      Conversation[]
+  emergencyEvents    EmergencyEvent[]
+
+  @@index([userId, status])
+  @@index([expiresAt])
+  @@map("guided_task_sessions")
+}
+
+model TaskEvent {
+  id            String            @id @default(cuid())
+  taskSessionId String
+  taskSession   GuidedTaskSession @relation(fields: [taskSessionId], references: [id], onDelete: Cascade)
+  sequence      Int
+  type          TaskEventType
+  payload       Json
+  createdAt     DateTime          @default(now())
+
+  @@unique([taskSessionId, sequence])
+  @@map("task_events")
+}
+
+model PracticeAttempt {
+  id              String             @id @default(cuid())
+  userId          String
+  user            User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scenarioId      String?
+  scenario        Scenario?          @relation(fields: [scenarioId], references: [id], onDelete: SetNull)
+  taskSessionId   String?
+  taskSession     GuidedTaskSession? @relation(fields: [taskSessionId], references: [id], onDelete: SetNull)
+  applicationSlug String?
+  skillKey        String
+  outcome         AttemptOutcome
+  independent     Boolean            @default(false)
+  hintCount       Int                @default(0)
+  errorCount      Int                @default(0)
+  durationMs      Int?
+  createdAt       DateTime           @default(now())
+
+  @@index([userId, skillKey])
+  @@map("practice_attempts")
+}
+
+// Measured learning state per skill. Competence (what the user can do) and
+// confidence (how comfortable they feel) are deliberately separate values.
+model UserSkill {
+  id                   String       @id @default(cuid())
+  userId               String
+  user                 User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  skillKey             String
+  attempts             Int          @default(0)
+  successfulAttempts   Int          @default(0)
+  failedAttempts       Int          @default(0)
+  independentSuccesses Int          @default(0)
+  hintsUsed            Int          @default(0)
+  competenceScore      Float        @default(0)
+  confidenceScore      Float        @default(0)
+  retentionScore       Float?
+  masteryLevel         MasteryLevel @default(NEW)
+  lastPracticedAt      DateTime?
+  nextReviewAt         DateTime?
+  updatedAt            DateTime     @updatedAt
+
+  @@unique([userId, skillKey])
+  @@map("user_skills")
+}
+
+// "Things I learned." Separate from conversation history and preferences.
 model MemoryBookEntry {
   id        String         @id @default(cuid())
   userId    String
@@ -221,8 +813,318 @@ model MemoryBookEntry {
   title     String
   category  MemoryCategory
   summary   String
+  skillKey  String?
+  lessonId  String?
   starred   Boolean        @default(false)
   createdAt DateTime       @default(now())
 
+  @@index([userId, createdAt])
   @@map("memory_book_entries")
+}
+
+// ─── Conversations ──────────────────────────────────────────────────────
+
+model Conversation {
+  id            String             @id @default(cuid())
+  userId        String
+  user          User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  taskSessionId String?
+  taskSession   GuidedTaskSession? @relation(fields: [taskSessionId], references: [id], onDelete: SetNull)
+  title         String?
+  language      String             @default("en")
+  mode          ConversationMode   @default(ASSISTANT)
+  status        ConversationStatus @default(ACTIVE)
+  createdAt     DateTime           @default(now())
+  lastMessageAt DateTime           @default(now())
+  archivedAt    DateTime?
+
+  messages ConversationMessage[]
+
+  @@index([userId, lastMessageAt])
+  @@map("conversations")
+}
+
+// `content` is always the redacted text; the raw user input is never stored.
+model ConversationMessage {
+  id               String           @id @default(cuid())
+  conversationId   String
+  conversation     Conversation     @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  role             MessageRole
+  content          String
+  redactions       Int              @default(0)
+  intent           String?
+  intentConfidence Float?
+  riskLevel        String?
+  grounding        KnowledgeSource?
+  provenance       Json?
+  structured       Json?
+  provider         String?
+  model            String?
+  createdAt        DateTime         @default(now())
+
+  @@index([conversationId, createdAt])
+  @@map("conversation_messages")
+}
+
+// ─── Vision ─────────────────────────────────────────────────────────────
+
+// A screenshot analysis bound to its owner. The raw image lives in the
+// StorageProvider under `storageKey` and is deleted at `expiresAt`.
+model ScreenshotAnalysis {
+  id              String             @id @default(cuid())
+  userId          String
+  user            User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  taskSessionId   String?
+  taskSession     GuidedTaskSession? @relation(fields: [taskSessionId], references: [id], onDelete: SetNull)
+  source          ScreenshotSource   @default(UPLOAD)
+  status          ScreenshotStatus   @default(PENDING)
+  storageKey      String?
+  mimeType        String?
+  width           Int?
+  height          Int?
+  // Host only (e.g. "www.example.com") — full URLs can carry secrets.
+  sourceHost      String?
+  language        String             @default("en")
+  question        String?
+  result          Json?
+  riskLevel       RiskSeverity?
+  errorCode       String?
+  createdAt       DateTime           @default(now())
+  expiresAt       DateTime
+
+  @@index([userId, createdAt])
+  @@index([expiresAt])
+  @@map("screenshot_analyses")
+}
+
+// ─── Simulation ─────────────────────────────────────────────────────────
+
+// Practice wallets. Balances are pretend money and are labelled as such
+// everywhere they are shown.
+model SimulationAccount {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applicationSlug String
+  balanceMinor    Int
+  currency        String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  transactions SimulationTransaction[]
+
+  @@unique([userId, applicationSlug])
+  @@map("simulation_accounts")
+}
+
+model SimulationTransaction {
+  id                String            @id @default(cuid())
+  accountId         String
+  account           SimulationAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  actionProposalId  String?           @unique
+  actionProposal    ActionProposal?   @relation(fields: [actionProposalId], references: [id], onDelete: SetNull)
+  direction         TxDirection
+  amountMinor       Int
+  currency          String
+  counterpartyLabel String
+  createdAt         DateTime          @default(now())
+
+  @@index([accountId, createdAt])
+  @@map("simulation_transactions")
+}
+
+// ─── Browser extension ──────────────────────────────────────────────────
+
+model ExtensionPairing {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  codeHash  String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@map("extension_pairings")
+}
+
+// Scoped, short-lived credential for the extension — screenshot capability
+// only, never a full account session.
+model ExtensionToken {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash   String    @unique
+  scopes      Json
+  extensionId String?
+  expiresAt   DateTime
+  revokedAt   DateTime?
+  lastUsedAt  DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@index([userId])
+  @@map("extension_tokens")
+}
+
+// ─── Governance ─────────────────────────────────────────────────────────
+
+model ConsentRecord {
+  id            String      @id @default(cuid())
+  userId        String
+  user          User        @relation("ConsentOwner", fields: [userId], references: [id], onDelete: Cascade)
+  type          ConsentType
+  scope         Json?
+  granteeUserId String?
+  policyVersion String
+  grantedAt     DateTime    @default(now())
+  expiresAt     DateTime?
+  revokedAt     DateTime?
+
+  @@index([userId, type])
+  @@map("consent_records")
+}
+
+// Append-only from application code. Never contains secrets.
+model AuditLog {
+  id          String    @id @default(cuid())
+  actorUserId String?
+  actorType   ActorType
+  action      String
+  targetType  String?
+  targetId    String?
+  requestId   String?
+  metadata    Json
+  createdAt   DateTime  @default(now())
+
+  @@index([actorUserId, createdAt])
+  @@index([targetType, targetId])
+  @@index([action, createdAt])
+  @@map("audit_logs")
+}
+
+// Metadata about each AI call — never prompts or responses.
+model AIRequestLog {
+  id           String   @id @default(cuid())
+  userId       String?
+  requestId    String?
+  feature      String
+  provider     String
+  model        String
+  status       String
+  latencyMs    Int
+  inputTokens  Int?
+  outputTokens Int?
+  degraded     Boolean  @default(false)
+  errorCode    String?
+  createdAt    DateTime @default(now())
+
+  @@index([feature, createdAt])
+  @@map("ai_request_logs")
+}
+
+model IdempotencyKey {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  key            String
+  route          String
+  requestHash    String
+  responseStatus Int
+  responseBody   Json
+  createdAt      DateTime @default(now())
+  expiresAt      DateTime
+
+  @@unique([userId, key, route])
+  @@index([expiresAt])
+  @@map("idempotency_keys")
+}
+
+// ─── Knowledge (RAG) ────────────────────────────────────────────────────
+
+// Only PUBLISHED documents are retrievable in production.
+model KnowledgeDocument {
+  id              String          @id @default(cuid())
+  slug            String
+  applicationSlug String?
+  language        String
+  title           String
+  body            String
+  sourceType      KnowledgeSource @default(VERIFIED_GUIDIA)
+  source          String?
+  status          ContentStatus   @default(DRAFT)
+  version         Int             @default(1)
+  reviewedById    String?
+  reviewedAt      DateTime?
+  publishedAt     DateTime?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  chunks KnowledgeChunk[]
+
+  @@unique([slug, language, version])
+  @@index([status, language])
+  @@map("knowledge_documents")
+}
+
+model KnowledgeChunk {
+  id         String            @id @default(cuid())
+  documentId String
+  document   KnowledgeDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  ordinal    Int
+  content    String
+  createdAt  DateTime          @default(now())
+
+  @@unique([documentId, ordinal])
+  @@map("knowledge_chunks")
+}
+
+// Versioned ML model registry (intent / safety / embedding roles).
+model MlModelVersion {
+  id             String      @id @default(cuid())
+  role           String
+  name           String
+  version        String
+  baseModel      String
+  datasetVersion String
+  gitCommit      String?
+  modelHash      String?
+  metrics        Json
+  status         ModelStatus @default(STAGED)
+  createdAt      DateTime    @default(now())
+
+  @@unique([role, version])
+  @@map("ml_model_versions")
+}
+
+// A short code a learner shares with a son, daughter or carer. Entering it
+// (at sign-up or later) connects their family account straight away —
+// sharing the code is the learner's consent. Expires after 7 days.
+model FamilyLinkCode {
+  id           String   @id @default(cuid())
+  code         String   @unique
+  seniorUserId String
+  senior       User     @relation(fields: [seniorUserId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  expiresAt    DateTime
+
+  @@index([seniorUserId])
+  @@map("family_link_codes")
+}
+
+// People a learner wants to reach when they press "I need help": name,
+// relationship and phone, so the help screen can offer one-tap call buttons
+// even for people who don't use Guidia.
+model EmergencyContact {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name         String
+  relationship String?
+  phone        String?
+  email        String?
+  isPrimary    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([userId])
+  @@map("emergency_contacts")
 }

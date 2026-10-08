@@ -16,6 +16,7 @@ dist-ssr
 backend/.env
 backend/prisma/*.db
 backend/prisma/*.db-journal
+backend/.tts-cache/
 backend/node_modules
 .env
 .env.*
@@ -32,3 +33,14 @@ backend/node_modules
 *.njsproj
 *.sln
 *.sw?
+
+# ML artefacts (trained models are published separately, not committed)
+ml/runs/
+ml-service/models/
+__pycache__/
+.pytest_cache/
+extension/dist/
+
+# Playwright
+test-results/
+playwright-report/

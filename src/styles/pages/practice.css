@@ -1,0 +1,60 @@
+/* ── Practice ─────────────────────────────────────────────────────────── */
+.practice-notice {
+  display: flex; gap: var(--s-4); align-items: center; padding: var(--s-4) var(--s-5);
+  border-radius: var(--r-xl); border: 1.5px dashed color-mix(in srgb, var(--ok-700) 45%, transparent);
+  background: linear-gradient(100deg, var(--ok-100), color-mix(in srgb, var(--ok-100) 30%, var(--card)));
+}
+.practice-notice-icon { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; flex-shrink: 0; background: var(--card); color: var(--ok-700); box-shadow: var(--shadow-1); }
+.practice-notice-icon svg { width: 26px; height: 26px; }
+
+.app-grid { display: grid; gap: var(--s-4); grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); }
+.app-card { flex-direction: column; align-items: stretch; gap: var(--s-4); padding: var(--s-5); border-radius: var(--r-xl); }
+.app-card-action { margin-top: auto; display: flex; align-items: center; justify-content: space-between; font-weight: 750; color: var(--primary); padding-top: var(--s-3); border-top: 1px solid var(--border); }
+
+.practice-app { gap: var(--s-4); padding-top: var(--s-4); }
+.sim-bar {
+  display: flex; align-items: center; gap: var(--s-3); flex-wrap: wrap; padding: var(--s-2) var(--s-3);
+  border-radius: var(--r-xl); background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-1);
+}
+.sim-bar-app { display: flex; align-items: center; gap: var(--s-3); min-width: 0; flex: 1; }
+.sim-bar-progress { width: 180px; }
+
+.practice-layout { display: grid; grid-template-columns: minmax(300px, 400px) minmax(0, 1fr); gap: var(--s-5); align-items: start; }
+@media (max-width: 1100px) { .practice-layout { grid-template-columns: 1fr; } }
+.practice-side { position: sticky; top: calc(var(--shell-topbar) + 16px); display: flex; flex-direction: column; gap: var(--s-4); }
+@media (max-width: 1100px) { .practice-side { position: static; order: 2; } }
+.scenario-item { align-items: center; gap: var(--s-3); padding: var(--s-3) var(--s-4); }
+.scenario-item:disabled { opacity: 0.6; cursor: progress; }
+
+.task-panel { display: flex; flex-direction: column; gap: var(--s-4); }
+.task-instruction { font-size: var(--instruction-size); font-weight: 650; line-height: 1.45; }
+.task-actions { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.task-actions > .btn:first-child { flex: 1; min-width: 180px; }
+.task-help { display: flex; flex-wrap: wrap; gap: var(--s-1); margin-top: calc(var(--s-2) * -1); }
+.task-hint { display: flex; gap: var(--s-3); align-items: flex-start; padding: var(--s-3) var(--s-4); border-radius: var(--r-md); background: var(--gold-100); border: 1px solid color-mix(in srgb, var(--gold-500) 40%, transparent); }
+.task-hint > svg { color: var(--gold-700); width: 22px; height: 22px; flex-shrink: 0; margin-top: 2px; }
+.task-recovery { display: flex; gap: var(--s-3); align-items: flex-start; padding: var(--s-3) var(--s-4); border-radius: var(--r-md); background: var(--info-100); border-left: 5px solid var(--info-700); }
+.task-recovery > svg { color: var(--info-700); width: 22px; height: 22px; flex-shrink: 0; margin-top: 2px; }
+.task-panel .state { padding: var(--s-4) 0; }
+
+/* Device presentation */
+.device-stage {
+  display: flex; flex-direction: column; align-items: center; gap: var(--s-3); padding: var(--s-5);
+  border-radius: var(--r-3xl); border: 1px solid var(--border);
+  background:
+    radial-gradient(600px 300px at 50% 0%, color-mix(in srgb, var(--primary-soft) 90%, transparent), transparent 70%),
+    var(--card-2);
+}
+.device-toolbar { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--s-2); flex-wrap: wrap; }
+.device-frame {
+  width: min(100%, 440px); padding: 12px; border-radius: 44px; background: #1b2429;
+  box-shadow: 0 0 0 2px #34444d, 0 30px 70px -24px rgb(12 20 24 / 0.55), inset 0 0 0 2px #2a363c;
+}
+.device-screen { position: relative; height: clamp(520px, calc(100dvh - 250px), 780px); min-height: 520px; border-radius: 32px; overflow: hidden; background: #fff; color: #18252c; font-size: 16px; line-height: 1.45; }
+.device-screen > * { height: 100%; }
+@media (max-width: 640px) {
+  .device-stage { padding: 0; border: 0; background: transparent; }
+  .device-toolbar { padding: 0 var(--s-1); }
+  .device-frame { width: 100%; padding: 0; border-radius: var(--r-xl); background: transparent; box-shadow: var(--shadow-2), 0 0 0 1px var(--border); }
+  .device-screen { border-radius: var(--r-xl); height: min(78vh, 720px); min-height: 520px; }
+}

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { runRuleEngine, maxSeverity, guidanceFor } from '../rules.js';
 
 // These scenarios mirror the ones manually verified against the live API
-// during development (see GUIDIA_IMPLEMENTATION_PLAN.md Phase 10) — codified
+// during development — codified
 // here so they can't silently regress.
 
 test('maxSeverity never lowers severity', () => {
@@ -60,4 +60,24 @@ test('guidanceFor always returns non-empty whatToDo and whatToAvoid for every se
     assert.ok(g.whatToDo.length > 0, `whatToDo empty for ${severity}`);
     assert.ok(g.whatToAvoid.length > 0, `whatToAvoid empty for ${severity}`);
   }
+});
+
+test('benign safety advice mentioning OTP is SAFE', () => {
+  assert.equal(runRuleEngine('Never share your OTP with anyone. bKash will never ask for your PIN.').severity, 'SAFE');
+  assert.equal(runRuleEngine('আপনার ওটিপি কখনো কাউকে দেবেন না।').severity, 'SAFE');
+});
+
+test('a genuine bank OTP SMS that warns not to share is SAFE', () => {
+  assert.equal(runRuleEngine('Your OTP is 583921. Do not share this code with anyone.').severity, 'SAFE');
+});
+
+test('a credential request with account-closure pressure is CRITICAL', () => {
+  const { severity } = runRuleEngine('Your account will be suspended today. Send your OTP now to keep it open.');
+  assert.equal(severity, 'CRITICAL');
+});
+
+test('Bengali OTP request is at least HIGH_RISK', () => {
+  const { severity } = runRuleEngine('আপনার ওটিপি কোডটি আমাদের পাঠান, তাহলে পুরস্কার পাবেন।');
+  assert.notEqual(severity, 'SAFE');
+  assert.notEqual(severity, 'WARNING');
 });

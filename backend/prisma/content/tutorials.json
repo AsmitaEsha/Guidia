@@ -1,0 +1,223 @@
+{
+  "messaging": [
+    {
+      "id": "tut1",
+      "title": "Send a WhatsApp Message",
+      "duration": "3 min",
+      "level": "Beginner",
+      "completed": true,
+      "steps": {
+        "en": [
+          "Open the green WhatsApp app on your phone.",
+          "Tap the name of the person you want to chat with.",
+          "Tap the text box at the bottom of the screen.",
+          "Type your message.",
+          "Tap the green arrow button to send. Done! "
+        ],
+        "bn": [
+          "আপনার ফোনে সবুজ WhatsApp অ্যাপটি খুলুন।",
+          "যার সাথে কথা বলতে চান তার নামে চাপ দিন।",
+          "স্ক্রিনের নিচে টেক্সট বক্সে চাপ দিন।",
+          "আপনার মেসেজ লিখুন।",
+          "সবুজ তীর বাটনে চাপ দিন। হয়ে গেছে! "
+        ]
+      }
+    },
+    {
+      "id": "tut2",
+      "title": "Send a Photo on WhatsApp",
+      "duration": "4 min",
+      "level": "Beginner",
+      "completed": true,
+      "steps": {
+        "en": [
+          "Open the chat with the person you want to send a photo to.",
+          "Look for the camera or paperclip icon near the text box.",
+          "Tap it and choose \"Photo Library\".",
+          "Select the photo you want to send.",
+          "Tap the send button. Your photo is sent safely! "
+        ],
+        "bn": [
+          "যার কাছে ছবি পাঠাতে চান তার চ্যাট খুলুন।",
+          "টেক্সট বক্সের পাশে ক্যামেরা বা ক্লিপ আইকন দেখুন।",
+          "সেটিতে চাপ দিয়ে \"Photo Library\" বেছে নিন।",
+          "যে ছবি পাঠাতে চান সেটি বেছে নিন।",
+          "পাঠানোর বাটনে চাপ দিন। ছবি পাঠানো হয়ে গেছে! "
+        ]
+      }
+    },
+    {
+      "id": "tut3",
+      "title": "Make a Video Call",
+      "duration": "5 min",
+      "level": "Intermediate",
+      "completed": false,
+      "steps": {
+        "en": [
+          "Open WhatsApp and find the contact you want to call.",
+          "Open the chat with them.",
+          "At the top right, look for the video camera icon.",
+          "Tap it. The call will start ringing.",
+          "When they answer, you can see each other! "
+        ],
+        "bn": [
+          "WhatsApp খুলুন এবং যাকে কল করতে চান তাকে খুঁজুন।",
+          "তার সাথে চ্যাট খুলুন।",
+          "উপরে ডানদিকে ভিডিও ক্যামেরা আইকন খুঁজুন।",
+          "সেটিতে চাপ দিন। কল বাজতে শুরু করবে।",
+          "তারা ধরলে একে অপরকে দেখতে পাবেন! "
+        ]
+      }
+    }
+  ],
+  "banking": [
+    {
+      "id": "tut4",
+      "title": "Send Money on bKash Safely",
+      "duration": "6 min",
+      "level": "Intermediate",
+      "completed": false,
+      "steps": {
+        "en": [
+          "Open the bKash app. Make sure you are on the official pink bKash app.",
+          "Tap \"Send Money\".",
+          "Enter the recipient's phone number VERY carefully. Check it twice.",
+          "Enter the amount.",
+          "Enter your 5-digit PIN. Never share this PIN with anyone.",
+          "Check all details one more time, then tap Confirm."
+        ],
+        "bn": [
+          "bKash অ্যাপ খুলুন। নিশ্চিত করুন এটি আসল গোলাপি bKash অ্যাপ।",
+          "\"Send Money\" তে চাপ দিন।",
+          "প্রাপকের ফোন নম্বর খুব সাবধানে লিখুন। দুইবার দেখুন।",
+          "পরিমাণ লিখুন।",
+          "আপনার ৫ সংখ্যার পিন দিন। এই পিন কাউকে দেবেন না।",
+          "সব তথ্য আরেকবার দেখুন, তারপর Confirm এ চাপ দিন।"
+        ]
+      }
+    },
+    {
+      "id": "tut_gp",
+      "title": "Pay using Google Pay",
+      "duration": "4 min",
+      "level": "Intermediate",
+      "completed": false,
+      "steps": {
+        "en": [
+          "Open Google Pay.",
+          "Look for the \"Scan QR\" icon (a square with a line in it) to pay a shop, or the \"Pay Contacts\" icon (a smartphone with a person) for friends.",
+          "Enter the exact amount.",
+          "Enter your secure UPI PIN. Only enter PIN to send money.",
+          "Wait for the green checkmark to confirm payment."
+        ],
+        "bn": [
+          "Google Pay খুলুন।",
+          "দোকানে পে করতে \"Scan QR\" আইকন (একটি স্কয়ার) খুঁজুন, অথবা বন্ধুদের জন্য \"Pay Contacts\" আইকন (একটি ফোন ও মানুষ)।",
+          "সঠিক পরিমাণ লিখুন।",
+          "আপনার নিরাপদ UPI পিন লিখুন। শুধু টাকা পাঠাতে পিন লাগে।",
+          "পেমেন্ট নিশ্চিত করতে সবুজ চেকমার্কের জন্য অপেক্ষা করুন।"
+        ]
+      }
+    }
+  ],
+  "shopping": [
+    {
+      "id": "tut_amz",
+      "title": "Order Safely on Amazon",
+      "duration": "5 min",
+      "level": "Beginner",
+      "completed": false,
+      "steps": {
+        "en": [
+          "Open the Amazon app.",
+          "Type what you want to buy in the top search bar.",
+          "Look at the Star icons () to check product reviews before buying. Only buy 4-star or higher.",
+          "Tap the \"Add to Cart\" button (shopping cart icon).",
+          "Select your delivery address and pay securely. Always check the final price."
+        ],
+        "bn": [
+          "Amazon অ্যাপ খুলুন।",
+          "উপরের সার্চ বারে যা কিনতে চান তা লিখুন।",
+          "কেনার আগে স্টার আইকন () দেখে পণ্যের রিভিউ চেক করুন।",
+          "\"Add to Cart\" বাটনে (শপিং কার্ট আইকন) চাপ দিন।",
+          "আপনার ডেলিভারি ঠিকানা বেছে নিন এবং নিরাপদে পে করুন। চূড়ান্ত দাম চেক করুন।"
+        ]
+      }
+    }
+  ],
+  "health": [
+    {
+      "id": "tut_prac",
+      "title": "Book a Doctor Online",
+      "duration": "5 min",
+      "level": "Beginner",
+      "completed": false,
+      "steps": {
+        "en": [
+          "Open the Practo app.",
+          "Tap \"Find Doctors\" (User icon) or \"Video Consult\" (Camera icon).",
+          "Choose the doctor's specialty, like \"Heart\" () or \"Eye\" ().",
+          "Select a doctor based on their experience and fee.",
+          "Pick a time slot and confirm your appointment. You can talk via video from home!"
+        ],
+        "bn": [
+          "Practo অ্যাপ খুলুন।",
+          "\"Find Doctors\" (মানুষের আইকন) বা \"Video Consult\" (ক্যামেরা আইকন) এ চাপ দিন।",
+          "ডাক্তারের বিভাগ বেছে নিন, যেমন \"Heart\" () বা \"Eye\" ()।",
+          "অভিজ্ঞতা ও ফি দেখে একজন ডাক্তার বেছে নিন।",
+          "সময় বেছে নিন এবং অ্যাপয়েন্টমেন্ট নিশ্চিত করুন। আপনি বাসা থেকে ভিডিওতে কথা বলতে পারেন!"
+        ]
+      }
+    }
+  ],
+  "travel": [
+    {
+      "id": "tut_book",
+      "title": "Find a Safe Hotel",
+      "duration": "4 min",
+      "level": "Intermediate",
+      "completed": false,
+      "steps": {
+        "en": [
+          "Open Booking.com.",
+          "Enter the city you are traveling to in the search box (magnifying glass icon).",
+          "Select your check-in and check-out dates (calendar icon).",
+          "Choose guests and rooms (people icon), then tap \"Search\".",
+          "Always read guest reviews to ensure the hotel is safe and clean before paying."
+        ],
+        "bn": [
+          "Booking.com খুলুন।",
+          "সার্চ বক্সে (ম্যাগনিফাইং গ্লাস আইকন) আপনি যে শহরে যাচ্ছেন তার নাম লিখুন।",
+          "ক্যালেন্ডার আইকনে চাপ দিয়ে যাওয়ার এবং আসার তারিখ বেছে নিন।",
+          "মানুষের আইকনে চাপ দিয়ে অতিথি ও রুম বেছে নিন, তারপর \"Search\" এ চাপ দিন।",
+          "পেমেন্ট করার আগে হোটেলটি নিরাপদ কিনা তা জানতে গেস্ট রিভিউ পড়ে নিন।"
+        ]
+      }
+    }
+  ],
+  "safety": [
+    {
+      "id": "tut5",
+      "title": "Recognizing Scam Messages",
+      "duration": "5 min",
+      "level": "Beginner",
+      "completed": true,
+      "steps": {
+        "en": [
+          "Scam messages usually create URGENCY — \"Act now!\" or \"Your account is closing today!\"",
+          "They ask for your PIN, OTP, or password. Real banks NEVER do this.",
+          "They contain suspicious links (web addresses). Never tap unknown links.",
+          "They offer prizes you never entered for — \"You won 50,000 taka!\"",
+          "If unsure, always call your guardian or family before doing anything."
+        ],
+        "bn": [
+          "প্রতারণামূলক মেসেজ সাধারণত জরুরি অবস্থা তৈরি করে — \"এখনই করুন!\" বা \"আজই আপনার অ্যাকাউন্ট বন্ধ হবে!\"",
+          "তারা আপনার পিন, ওটিপি বা পাসওয়ার্ড চায়। আসল ব্যাংক কখনো এটা করে না।",
+          "এতে সন্দেহজনক লিংক থাকে। অজানা লিংকে কখনো চাপ দেবেন না।",
+          "তারা এমন পুরস্কার দেওয়ার কথা বলে যার জন্য আপনি কখনো চেষ্টা করেননি।",
+          "সন্দেহ হলে, কিছু করার আগে সবসময় পরিবারকে ডাকুন।"
+        ]
+      }
+    }
+  ]
+}

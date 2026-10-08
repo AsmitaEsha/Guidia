@@ -1,0 +1,65 @@
+/* ── Safety Center ────────────────────────────────────────────────────── */
+.safety-actions { display: grid; gap: var(--s-3); grid-template-columns: 1.3fr 1fr 1fr; }
+@media (max-width: 900px) { .safety-actions { grid-template-columns: 1fr; } }
+.safety-action {
+  display: flex; align-items: center; gap: var(--s-4); padding: var(--s-4) var(--s-5); min-height: 92px;
+  border-radius: var(--r-xl); border: 1.5px solid var(--border); background: var(--card); color: var(--fg);
+  text-align: left; text-decoration: none; box-shadow: var(--shadow-1);
+  transition: transform var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease), border-color var(--t-fast) var(--ease);
+}
+.safety-action:hover { transform: translateY(-2px); box-shadow: var(--shadow-2); border-color: color-mix(in srgb, var(--primary) 50%, var(--border)); text-decoration: none; }
+.safety-action-icon { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; flex-shrink: 0; background: var(--primary-soft); color: var(--primary); }
+.safety-action-icon svg { width: 26px; height: 26px; }
+.safety-action.is-primary { background: linear-gradient(135deg, var(--brand-700), var(--brand-900)); border-color: transparent; color: #fff; }
+.safety-action.is-primary .h-card { color: #fff; }
+.safety-action.is-primary .safety-action-icon { background: rgb(255 255 255 / 0.14); color: #fff; }
+[data-gx-theme='dark'] .safety-action.is-primary { background: linear-gradient(135deg, #1d5f58, #10302d); }
+
+.safety-layout { display: grid; gap: var(--s-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); align-items: start; }
+.checker, .gym { display: flex; flex-direction: column; gap: var(--s-4); border-radius: var(--r-2xl); }
+.checker-input { min-height: 160px; font-size: var(--fs-md); }
+
+.stage-track { list-style: none; margin: 0; padding: 0; display: flex; gap: var(--s-2); flex-wrap: wrap; }
+.stage-track li { display: inline-flex; align-items: center; gap: 6px; font-size: var(--fs-sm); font-weight: 700; color: var(--fg-subtle); padding: 4px 10px 4px 4px; border-radius: var(--r-pill); background: var(--card-2); }
+.stage-num { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--card); border: 2px solid var(--border-strong); font-size: 0.8rem; }
+.stage-track li[data-state='current'] { color: var(--primary); background: var(--primary-soft); }
+.stage-track li[data-state='current'] .stage-num { border-color: var(--primary); }
+.stage-track li[data-state='done'] { color: var(--ok-700); }
+.stage-track li[data-state='done'] .stage-num { background: var(--ok-700); border-color: var(--ok-700); color: #fff; }
+
+.risk-result { --tone-fg: var(--info-700); --tone-bg: var(--info-100); display: flex; flex-direction: column; gap: var(--s-4); padding: var(--s-5); border-radius: var(--r-xl); border: 2px solid color-mix(in srgb, var(--tone-fg) 40%, transparent); background: linear-gradient(180deg, var(--tone-bg), var(--card) 160px); }
+.risk-result.tone-ok { --tone-fg: var(--ok-700); --tone-bg: var(--ok-100); }
+.risk-result.tone-warn { --tone-fg: var(--warn-700); --tone-bg: var(--warn-100); }
+.risk-result.tone-risk { --tone-fg: var(--risk-700); --tone-bg: var(--risk-100); }
+.risk-result.tone-danger { --tone-fg: var(--danger-700); --tone-bg: var(--danger-100); border-width: 3px; }
+.risk-result.tone-unknown { --tone-fg: var(--unknown-700); --tone-bg: var(--unknown-100); }
+.risk-result-head { display: flex; gap: var(--s-4); align-items: flex-start; }
+.risk-result-icon { width: 60px; height: 60px; border-radius: 18px; display: grid; place-items: center; flex-shrink: 0; background: var(--card); color: var(--tone-fg); box-shadow: var(--shadow-1); }
+.risk-result-icon svg { width: 32px; height: 32px; }
+.risk-result-title { font-size: var(--fs-xl); font-weight: 800; color: var(--tone-fg); line-height: 1.2; }
+.risk-result-context { font-size: var(--fs-md); line-height: 1.55; }
+.reason-list { margin: 0; padding-left: 1.3em; display: flex; flex-direction: column; gap: 6px; }
+.respond-grid { display: grid; gap: var(--s-3); grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+.respond-col { padding: var(--s-4); border-radius: var(--r-lg); background: var(--card); border: 1px solid var(--border); display: flex; flex-direction: column; gap: var(--s-2); }
+.respond-col.do .h-card svg { color: var(--ok-700); }
+.respond-col.avoid .h-card svg { color: var(--danger-700); }
+.feedback-row { display: flex; align-items: center; gap: var(--s-2); flex-wrap: wrap; padding-top: var(--s-3); border-top: 1px dashed var(--border); }
+
+/* Scam gym */
+.phone-msg { max-width: 520px; border-radius: var(--r-xl); background: var(--card-2); border: 1px solid var(--border); padding: var(--s-4); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.4); animation: gx-scale-in var(--t-slow) var(--ease-out) both; }
+.phone-msg-head { display: flex; align-items: center; gap: var(--s-3); margin-bottom: var(--s-3); }
+.phone-msg-channel { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: var(--r-pill); background: var(--card); border: 1px solid var(--border); font-size: var(--fs-sm); font-weight: 700; color: var(--fg-muted); }
+.phone-msg-channel svg { width: 16px; height: 16px; }
+.phone-msg-body { padding: var(--s-3) var(--s-4); border-radius: 6px var(--r-lg) var(--r-lg) var(--r-lg); background: var(--card); font-size: var(--fs-md); line-height: 1.55; box-shadow: var(--shadow-1); overflow-wrap: anywhere; }
+.gym-choices { display: grid; gap: var(--s-3); grid-template-columns: 1fr 1fr; }
+@media (max-width: 420px) { .gym-choices { grid-template-columns: 1fr; } }
+.gym-choices .btn { min-height: 72px; font-size: var(--fs-md); }
+.gym-choices .btn:first-child:hover { --btn-border: var(--danger-700); --btn-bg: var(--danger-100); }
+.gym-choices .btn:last-child:hover { --btn-border: var(--ok-700); --btn-bg: var(--ok-100); }
+.clue-chip[aria-pressed='true'] { background: var(--coral-700); border-color: var(--coral-700); color: #fff; }
+.clue-why { padding: var(--s-3) var(--s-4); border-radius: var(--r-md); background: var(--coral-50); border-left: 5px solid var(--coral-600); line-height: 1.55; }
+.gym-done { display: flex; align-items: center; gap: var(--s-4); }
+.gym-done .state-icon { margin: 0; }
+
+.mistake-card { display: flex; gap: var(--s-4); align-items: center; flex-wrap: wrap; border-radius: var(--r-2xl); }
+@media (max-width: 640px) { .mistake-card .icon-chip-lg { display: none; } .mistake-card .btn-group .btn { width: 100%; } }

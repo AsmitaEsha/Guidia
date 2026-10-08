@@ -1,124 +1,107 @@
 import { z } from 'zod';
 import { authService } from '../services/authService.js';
-import { ApiError } from '../middleware/errorHandler.js';
+import { env } from '../config/env.js';
+import { ok, created, parse } from '../lib/http.js';
+import { LANGUAGE_CODES } from '../config/languages.js';
 
 const REFRESH_COOKIE = 'guidia_refresh';
-const isProd = process.env.NODE_ENV === 'production';
+const COOKIE_PATH = '/api';
 
-function setRefreshCookie(res, token, maxAgeMs) {
-  res.cookie(REFRESH_COOKIE, token, {
+function cookieOptions(maxAgeMs) {
+  return {
     httpOnly: true,
-    secure: isProd,
-    sameSite: 'lax',
-    maxAge: maxAgeMs ?? 1000 * 60 * 60 * 24 * 30,
-    path: '/api/auth',
-  });
+    secure: env.isProduction || env.cookieSameSite === 'none',
+    sameSite: env.cookieSameSite,
+    path: COOKIE_PATH,
+    ...(maxAgeMs ? { maxAge: maxAgeMs } : {}),
+  };
 }
 
+function setRefreshCookie(res, token, maxAgeMs) {
+  res.cookie(REFRESH_COOKIE, token, cookieOptions(maxAgeMs));
+}
+
+const languageEnum = z.enum(LANGUAGE_CODES);
+const email = z.string().trim().toLowerCase().email('Please enter a valid email address.');
+
 const registerSchema = z.object({
-  fullName: z.string().trim().min(1, 'Please enter your full name.'),
-  email: z.string().trim().email('Please enter a valid email address.'),
-  password: z.string(),
-  confirmPassword: z.string(),
-  preferredLanguage: z.enum(['en', 'bn', 'hi']).optional(),
+  fullName: z.string().trim().min(1, 'Please enter your full name.').max(120),
+  email,
+  password: z.string().max(200),
+  confirmPassword: z.string().max(200),
+  preferredLanguage: languageEnum.optional(),
+  // LEARNER: learns with Guidia. FAMILY: a son, daughter or carer who
+  // follows a learner's progress and answers their help requests.
+  accountType: z.enum(['LEARNER', 'FAMILY']).optional(),
+  // FAMILY only: the code a learner shared, to connect straight away.
+  familyCode: z.string().trim().toUpperCase().regex(/^[A-Z0-9-]{4,12}$/, 'That family code does not look right.').optional().or(z.literal('')),
 });
 
 const loginSchema = z.object({
-  email: z.string().trim().email('Please enter a valid email address.'),
-  password: z.string().min(1, 'Please enter your password.'),
+  email,
+  password: z.string().min(1, 'Please enter your password.').max(200),
   rememberMe: z.boolean().optional(),
 });
 
-const forgotPasswordSchema = z.object({
-  email: z.string().trim().email('Please enter a valid email address.'),
-});
+const forgotPasswordSchema = z.object({ email });
 
 const resetPasswordSchema = z.object({
-  token: z.string().min(1, 'That reset link is invalid.'),
-  password: z.string(),
-  confirmPassword: z.string(),
+  token: z.string().min(1, 'That reset link is invalid.').max(200),
+  password: z.string().max(200),
+  confirmPassword: z.string().max(200),
 });
 
-function parseBody(schema, body) {
-  const result = schema.safeParse(body);
-  if (!result.success) {
-    throw new ApiError(400, result.error.issues[0]?.message || 'Invalid request.', 'VALIDATION_ERROR');
-  }
-  return result.data;
-}
+const ctx = (req) => ({ userAgent: req.headers['user-agent'], requestId: req.id });
 
 export const authController = {
-  async register(req, res, next) {
-    try {
-      const data = parseBody(registerSchema, req.body);
-      const { user, accessToken, refreshToken, refreshTokenMaxAgeMs } = await authService.register(data, req.headers['user-agent']);
-      setRefreshCookie(res, refreshToken, refreshTokenMaxAgeMs);
-      res.status(201).json({ user, accessToken });
-    } catch (err) {
-      next(err);
-    }
+  async register(req, res) {
+    const data = parse(registerSchema, req.body);
+    const { user, accessToken, refreshToken, refreshTokenMaxAgeMs } = await authService.register(data, ctx(req));
+    setRefreshCookie(res, refreshToken, refreshTokenMaxAgeMs);
+    created(res, { user, accessToken });
   },
 
-  async login(req, res, next) {
-    try {
-      const data = parseBody(loginSchema, req.body);
-      const { user, accessToken, refreshToken, refreshTokenMaxAgeMs } = await authService.login(data, req.headers['user-agent']);
-      setRefreshCookie(res, refreshToken, refreshTokenMaxAgeMs);
-      res.json({ user, accessToken });
-    } catch (err) {
-      next(err);
-    }
+  async login(req, res) {
+    const data = parse(loginSchema, req.body);
+    const { user, accessToken, refreshToken, refreshTokenMaxAgeMs } = await authService.login(data, ctx(req));
+    setRefreshCookie(res, refreshToken, refreshTokenMaxAgeMs);
+    ok(res, { user, accessToken });
   },
 
-  async refresh(req, res, next) {
-    try {
-      const token = req.cookies?.[REFRESH_COOKIE];
-      const { user, accessToken } = await authService.refresh(token);
-      res.json({ user, accessToken });
-    } catch (err) {
-      next(err);
-    }
+  async refresh(req, res) {
+    const { user, accessToken, refreshToken, refreshTokenMaxAgeMs } = await authService.refresh(req.cookies?.[REFRESH_COOKIE], ctx(req));
+    setRefreshCookie(res, refreshToken, refreshTokenMaxAgeMs);
+    ok(res, { user, accessToken });
   },
 
-  async logout(req, res, next) {
-    try {
-      const token = req.cookies?.[REFRESH_COOKIE];
-      await authService.logout(token);
-      res.clearCookie(REFRESH_COOKIE, { path: '/api/auth' });
-      res.status(204).end();
-    } catch (err) {
-      next(err);
-    }
+  async logout(req, res) {
+    await authService.logout(req.cookies?.[REFRESH_COOKIE], ctx(req));
+    res.clearCookie(REFRESH_COOKIE, cookieOptions());
+    res.status(204).end();
   },
 
-  async me(req, res, next) {
-    try {
-      const user = await authService.me(req.user.id);
-      res.json({ user });
-    } catch (err) {
-      next(err);
-    }
+  async me(req, res) {
+    ok(res, { user: await authService.me(req.user.id) });
   },
 
-  // Always returns the same generic response whether or not the email
-  // belongs to an account — never reveals account existence.
-  async forgotPassword(req, res, next) {
-    try {
-      const { email } = parseBody(forgotPasswordSchema, req.body);
-      await authService.requestPasswordReset(email);
-      res.json({ message: "If an account exists for that email, we've started a password reset." });
-    } catch (err) {
-      next(err);
-    }
+  async forgotPassword(req, res) {
+    const { email: address } = parse(forgotPasswordSchema, req.body);
+    await authService.requestPasswordReset(address, ctx(req));
+    ok(res, { message: "If an account exists for that email, we've sent a password reset link." });
   },
 
-  async resetPassword(req, res, next) {
-    try {
-      const data = parseBody(resetPasswordSchema, req.body);
-      await authService.resetPassword(data);
-      res.json({ message: 'Your password has been reset. Please sign in with your new password.' });
-    } catch (err) {
-      next(err);
-    }
+  async resetPassword(req, res) {
+    const data = parse(resetPasswordSchema, req.body);
+    await authService.resetPassword(data, ctx(req));
+    ok(res, { message: 'Your password has been reset. Please sign in with your new password.' });
+  },
+
+  async sessions(req, res) {
+    ok(res, { sessions: await authService.listSessions(req.user.id) });
+  },
+
+  async revokeSession(req, res) {
+    await authService.revokeSession(req.user.id, req.params.id, ctx(req));
+    res.status(204).end();
   },
 };

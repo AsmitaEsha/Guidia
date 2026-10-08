@@ -2,76 +2,81 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
-import morgan from 'morgan';
 import { env } from './config/env.js';
+import { requestContext } from './middleware/requestContext.js';
+import { isAllowedOrigin } from './middleware/originGuard.js';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
+import healthRoutes from './routes/healthRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import assistantRoutes from './routes/assistantRoutes.js';
-import safetyRoutes from './routes/safetyRoutes.js';
-import guardianRoutes from './routes/guardianRoutes.js';
-import memoryRoutes from './routes/memoryRoutes.js';
 import voiceRoutes from './routes/voiceRoutes.js';
+import visionRoutes from './routes/visionRoutes.js';
+import safetyRoutes from './routes/safetyRoutes.js';
+import actionRoutes from './routes/actionRoutes.js';
+import guardianRoutes from './routes/guardianRoutes.js';
+import emergencyRoutes from './routes/emergencyRoutes.js';
+import memoryRoutes from './routes/memoryRoutes.js';
 import progressRoutes from './routes/progressRoutes.js';
+import learningRoutes from './routes/learningRoutes.js';
+import taskRoutes from './routes/taskRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
-import screenshotRoutes from './routes/screenshotRoutes.js';
+import extensionRoutes from './routes/extensionRoutes.js';
+import configRoutes from './routes/configRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+
+function apiRouter() {
+  const api = express.Router();
+  api.use('/health', healthRoutes);
+  api.use('/config', configRoutes);
+  api.use('/auth', authRoutes);
+  api.use('/users', userRoutes);
+  api.use('/assistant', assistantRoutes);
+  api.use('/voice', voiceRoutes);
+  api.use('/vision', visionRoutes);
+  // Back-compat alias for the V1 extension and screenshot pages.
+  api.use('/screenshots', visionRoutes);
+  api.use('/safety', safetyRoutes);
+  api.use('/actions', actionRoutes);
+  api.use('/guardian', guardianRoutes);
+  api.use('/guardians', guardianRoutes);
+  api.use('/emergency', emergencyRoutes);
+  api.use('/memory', memoryRoutes);
+  api.use('/progress', progressRoutes);
+  api.use('/learning', learningRoutes);
+  api.use('/tasks', taskRoutes);
+  api.use('/notifications', notificationRoutes);
+  api.use('/extension', extensionRoutes);
+  api.use('/admin', adminRoutes);
+  return api;
+}
 
 export function createApp() {
   const app = express();
-  const allowedOrigins = new Set([
-    env.corsOrigin,
-    'http://localhost:5173',
-    'http://127.0.0.1:5173',
-  ].filter(Boolean));
+  app.disable('x-powered-by');
+  app.set('trust proxy', env.isProduction ? 1 : false);
 
-  // This is a pure JSON/binary API (no HTML served), so the HTML-oriented
-  // parts of helmet's defaults (CSP, COOP) are switched off; the resource
-  // policy stays cross-origin since the frontend is intentionally on a
-  // different origin/port.
-  app.use(helmet({
-    contentSecurityPolicy: false,
-    crossOriginResourcePolicy: { policy: 'cross-origin' },
-  }));
+  app.use(requestContext);
+  // Pure JSON/binary API: HTML-oriented helmet defaults (CSP, COOP) are off;
+  // resources stay cross-origin because the web app is on another origin.
+  app.use(helmet({ contentSecurityPolicy: false, crossOriginResourcePolicy: { policy: 'cross-origin' } }));
   app.use(cors({
     origin(origin, callback) {
-      if (
-        !origin ||
-        allowedOrigins.has(origin) ||
-        origin.startsWith('chrome-extension://') ||
-        origin.startsWith('edge-extension://')
-      ) {
-        callback(null, true);
-        return;
-      }
-      callback(new Error(`Origin ${origin} is not allowed by CORS`));
+      // No Origin header: same-origin, curl or server-to-server.
+      if (!origin || isAllowedOrigin(origin)) return callback(null, true);
+      return callback(null, false);
     },
     credentials: true,
+    exposedHeaders: ['X-Request-Id', 'Idempotent-Replay'],
   }));
   app.use(express.json({ limit: '1mb' }));
   app.use(cookieParser());
-  if (env.nodeEnv !== 'test') {
-    app.use(morgan(env.nodeEnv === 'development' ? 'dev' : 'combined'));
-  }
 
-  app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok', service: 'guidia-backend' });
-  });
-
-  app.use('/api/auth', authRoutes);
-  app.use('/api/users', userRoutes);
-  app.use('/api/assistant', assistantRoutes);
-  app.use('/api/safety', safetyRoutes);
-  app.use('/api/guardians', guardianRoutes);
-  app.use('/api/memory', memoryRoutes);
-  app.use('/api/voice', voiceRoutes);
-  app.use('/api/progress', progressRoutes);
-  app.use('/api/notifications', notificationRoutes);
-  app.use('/api/screenshots', screenshotRoutes);
-  app.use('/api/admin', adminRoutes);
+  const api = apiRouter();
+  app.use('/api/v1', api);
+  app.use('/api', api);
 
   app.use(notFoundHandler);
   app.use(errorHandler);
-
   return app;
 }

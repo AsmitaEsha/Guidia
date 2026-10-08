@@ -1,0 +1,42 @@
+/* ── Settings ─────────────────────────────────────────────────────────── */
+.settings-layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: var(--s-6); align-items: start; }
+@media (max-width: 1023px) { .settings-layout { grid-template-columns: 1fr; gap: var(--s-4); } }
+.settings-nav { position: sticky; top: calc(var(--shell-topbar) + 16px); display: flex; flex-direction: column; gap: 2px; }
+@media (max-width: 1023px) {
+  .settings-nav { position: sticky; top: 64px; z-index: 5; flex-direction: row; overflow-x: auto; gap: var(--s-2); padding: var(--s-2) var(--gutter); margin-inline: calc(var(--gutter) * -1); background: color-mix(in srgb, var(--bg) 97%, transparent); scrollbar-width: none; border-bottom: 1px solid var(--border); }
+  .settings-nav::-webkit-scrollbar { display: none; }
+}
+.settings-nav-item {
+  display: flex; align-items: center; gap: var(--s-3); min-height: 48px; padding: 0.4em var(--s-3); border: 0; border-radius: var(--r-md);
+  background: transparent; color: var(--fg-muted); font-weight: 650; text-align: left; white-space: nowrap;
+  transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+.settings-nav-item svg { width: 20px; height: 20px; }
+.settings-nav-item:hover { background: var(--card-2); color: var(--fg); }
+.settings-nav-item[aria-current='true'] { background: var(--primary-soft); color: var(--primary); }
+@media (max-width: 1023px) { .settings-nav-item { border: 1.5px solid var(--border); border-radius: var(--r-pill); min-height: 44px; flex-shrink: 0; } }
+
+.settings-section { display: flex; flex-direction: column; gap: var(--s-4); border-radius: var(--r-2xl); scroll-margin-top: calc(var(--shell-topbar) + 24px); outline: none; }
+@media (max-width: 1023px) { .settings-section { scroll-margin-top: 140px; } }
+.settings-section-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s-3); }
+.saved-pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: var(--r-pill); background: var(--ok-100); color: var(--ok-700); font-weight: 750; font-size: var(--fs-sm); white-space: nowrap; }
+.saved-pill svg { width: 16px; height: 16px; }
+
+.setting-row { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); padding: var(--s-4) 0; border-bottom: 1px solid var(--border); }
+.setting-row:last-child { border-bottom: 0; }
+.lang-grid { display: grid; gap: var(--s-3); grid-template-columns: repeat(auto-fill, minmax(min(100%, 180px), 1fr)); }
+.lang-grid .choice { min-height: 84px; }
+.text-preview { padding: var(--s-4); border-radius: var(--r-lg); background: var(--card-2); border: 1px dashed var(--border-strong); display: flex; flex-direction: column; gap: 6px; }
+
+.how-steps { margin: 0; padding-left: 1.3em; display: flex; flex-direction: column; gap: 6px; color: var(--fg-muted); }
+.pairing { display: flex; flex-direction: column; gap: var(--s-3); padding: var(--s-5); border-radius: var(--r-xl); background: var(--primary-soft); border: 1px solid var(--primary-soft-2); }
+.pairing.is-expired { background: var(--card-2); border-color: var(--border); }
+.pairing-code { font-family: var(--font-mono); font-size: clamp(2rem, 1.4rem + 2vw, 2.8rem); font-weight: 800; letter-spacing: 0.18em; color: var(--primary); }
+.pairing.is-expired .pairing-code { color: var(--fg-subtle); text-decoration: line-through; }
+
+.session-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s-2); }
+.session { display: flex; align-items: center; gap: var(--s-3); padding: var(--s-3) var(--s-4); border-radius: var(--r-lg); border: 1px solid var(--border); }
+.session.is-current { border-color: color-mix(in srgb, var(--ok-700) 40%, var(--border)); background: color-mix(in srgb, var(--ok-100) 45%, var(--card)); }
+
+.data-actions { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); flex-wrap: wrap; padding: var(--s-4); border-radius: var(--r-lg); border: 1px solid var(--border); }
+.data-actions.is-danger { border-color: color-mix(in srgb, var(--danger-700) 30%, var(--border)); }

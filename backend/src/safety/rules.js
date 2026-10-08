@@ -17,10 +17,40 @@ const URGENCY_PATTERNS = [
   /\bverify now\b/i, /জরুরি/, /এখনই/, /অবিলম্বে/,
 ];
 
-const CREDENTIAL_REQUEST_PATTERNS = [
-  /\botp\b/i, /\bone[\s-]?time password\b/i, /\bverification code\b/i,
-  /\bpin\b/i, /\bpassword\b/i, /ওটিপি/, /পিন/, /পাসওয়ার্ড/,
+export const RULES_VERSION = 'rules-2026.10.1';
+
+const CREDENTIAL_WORDS = [
+  /\botp\b/i, /\bone[\s-]?time (password|code)\b/i, /\bverification code\b/i, /\bsecurity code\b/i,
+  /\bpin\b/i, /\bpassword\b/i, /\bcvv\b/i, /ওটিপি/, /পিন/, /পাসওয়ার্ড/, /ভেরিফিকেশন কোড/,
+  /ओटीपी/, /पिन/, /पासवर्ड/, /mã otp/i, /mật khẩu/i, /mã pin/i,
 ];
+
+// A credential *request* needs an ask: share/send/tell/enter/confirm…
+const REQUEST_VERBS = [
+  /\b(share|send|tell|give|enter|provide|confirm|verify|reply with|type|read out|forward)\b/i,
+  /\bwhat('s| is) (your|the)\b/i,
+  /দিন|পাঠান|বলুন|জানান|শেয়ার করুন|লিখুন/, /बताएं|बताइए|भेजें|दें|शेयर करें|डालें/, /nhập|gửi|cung cấp|cho (tôi|chúng tôi) biết|đọc/i,
+];
+
+// Advice like "never share your OTP" is the opposite of a scam.
+const ADVICE_PATTERNS = [
+  /\b(never|don'?t|do not|not to)\b[^.!?\n]{0,40}\b(share|send|tell|give|disclose|enter)\b/i,
+  /\b(no one|nobody|we will never|will never ask)\b/i,
+  /কখনো|কাউকে দেবেন না|শেয়ার করবেন না|বলবেন না/, /कभी|किसी को न|शेयर न करें|मत बताएं/, /không bao giờ|đừng|không chia sẻ/i,
+];
+
+function sentences(text) {
+  return text.split(/(?<=[.!?।\n])\s*/).filter(Boolean);
+}
+
+// True when some sentence mentions a credential AND asks for it AND is not
+// itself safety advice.
+export function asksForCredential(content) {
+  return sentences(content).some((s) =>
+    CREDENTIAL_WORDS.some((p) => p.test(s)) &&
+    REQUEST_VERBS.some((p) => p.test(s)) &&
+    !ADVICE_PATTERNS.some((p) => p.test(s)));
+}
 
 const PAYMENT_REQUEST_PATTERNS = [
   /\bprocessing fee\b/i, /\bsend money to claim\b/i, /\bpay to receive\b/i,
@@ -87,7 +117,7 @@ export function runRuleEngine(content) {
   }
 
   const hasUrgency = URGENCY_PATTERNS.some((p) => p.test(content));
-  const hasCredentialRequest = CREDENTIAL_REQUEST_PATTERNS.some((p) => p.test(content));
+  const hasCredentialRequest = asksForCredential(content);
   const hasPaymentRequest = PAYMENT_REQUEST_PATTERNS.some((p) => p.test(content));
   const hasPrizeLanguage = PRIZE_PATTERNS.some((p) => p.test(content));
   const hasImpersonation = IMPERSONATION_PATTERNS.some((p) => p.test(content));
