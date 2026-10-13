@@ -30,7 +30,7 @@ const MODEL_SWITCH_STATUSES = new Set([404, 429, 503]);
 const KEY_SWITCH_STATUSES = new Set([401, 402, 403, 429]);
 const KEY_REST_MS = { 429: 10 * 60_000, 402: 60 * 60_000, 401: 6 * 60 * 60_000, 403: 6 * 60 * 60_000 };
 
-export function createOpenAICompatibleProvider({ name, baseUrl, apiKeys = [], keyless = false, model, visionModel, fallbackModel, timeoutMs, maxRetries = env.ai.maxRetries, isAvailable, headers }) {
+export function createOpenAICompatibleProvider({ name, baseUrl, apiKeys = [], keyless = false, model, visionModel, fallbackModel, timeoutMs, visionTimeoutMs = env.ai.visionTimeoutMs, maxRetries = env.ai.maxRetries, isAvailable, headers }) {
   const clients = new Map();
   const restUntil = new Map(); // key → time it may be used again
   const keys = () => (keyless ? ['not-needed'] : apiKeys().filter(Boolean));
@@ -64,13 +64,14 @@ export function createOpenAICompatibleProvider({ name, baseUrl, apiKeys = [], ke
   // Ask for schema-constrained JSON first; if the endpoint or model rejects
   // json_schema (some do), retry with plain JSON mode plus the schema in
   // the prompt. The gateway validates the result with zod either way.
-  async function completeJson(client, { system, messages, name: schemaName, jsonSchema, model: m }) {
+  async function completeJson(client, { system, messages, name: schemaName, jsonSchema, model: m, timeout }) {
+    const opts = timeout ? { timeout } : undefined;
     try {
       const r = await client.chat.completions.create({
         model: m,
         messages: messagesFor(system, messages),
         response_format: { type: 'json_schema', json_schema: { name: schemaName, schema: jsonSchema, strict: true } },
-      });
+      }, opts);
       return { raw: r.choices[0]?.message?.content ?? '', model: m, ...usage(r) };
     } catch (err) {
       if (err?.status !== 400 && err?.status !== 422) throw err;
@@ -78,7 +79,7 @@ export function createOpenAICompatibleProvider({ name, baseUrl, apiKeys = [], ke
         model: m,
         messages: messagesFor(system + schemaHint(jsonSchema), messages),
         response_format: { type: 'json_object' },
-      });
+      }, opts);
       return { raw: r.choices[0]?.message?.content ?? '', model: m, ...usage(r) };
     }
   }
@@ -123,6 +124,8 @@ export function createOpenAICompatibleProvider({ name, baseUrl, apiKeys = [], ke
     },
 
     vision({ system, prompt, imageBase64, mimeType, name: schemaName, jsonSchema }) {
+      // No model that can read pictures here: step aside at once.
+      if (!visionModel) return Promise.reject(Object.assign(new Error(`${name} has no vision model`), { code: 'NO_VISION_MODEL' }));
       const messages = [{
         role: 'user',
         content: [
@@ -130,7 +133,8 @@ export function createOpenAICompatibleProvider({ name, baseUrl, apiKeys = [], ke
           { type: 'text', text: prompt },
         ],
       }];
-      return withModelFallback(visionModel, (client, m) => completeJson(client, { system, messages, name: schemaName, jsonSchema, model: m }));
+      // Reading a picture takes longer than text, so it gets its own limit.
+      return withModelFallback(visionModel, (client, m) => completeJson(client, { system, messages, name: schemaName, jsonSchema, model: m, timeout: Math.max(timeoutMs, visionTimeoutMs) }));
     },
   };
 }
@@ -177,8 +181,10 @@ export const ollamaProvider = createOpenAICompatibleProvider({
   baseUrl: env.ai.ollama.baseUrl,
   keyless: true,
   model: env.ai.ollama.model,
+  // Only when OLLAMA_VISION_MODEL is set: small local models can't read screenshots in time.
   visionModel: env.ai.ollama.visionModel,
   timeoutMs: env.ai.ollama.timeoutMs,
+  visionTimeoutMs: env.ai.ollama.timeoutMs,
   maxRetries: 0,
   isAvailable: () => env.ai.chain.includes('ollama'),
 });

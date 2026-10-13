@@ -251,7 +251,7 @@ test('mock provider structured output is validated', async () => {
   const { token } = await register();
   mockProvider.setNextStructured({ reply: 'x', steps: 'not-an-array' });
   const res = await request(app).post('/api/v1/assistant/message').set(auth(token)).send({ message: 'How do I send a WhatsApp message?' });
-  assert.equal(res.status, 502);
+  assert.equal(res.status, 503);
   assert.equal(res.body.error.code, 'AI_BAD_OUTPUT');
 });
 

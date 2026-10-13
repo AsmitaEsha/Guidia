@@ -28,9 +28,9 @@ const UNAVAILABLE = () =>
 const VOICE_UNAVAILABLE = () =>
   new ApiError(503, "Guidia's own voice isn't available, so your device's voice will be used.", 'VOICE_UNAVAILABLE');
 const UPSTREAM = () =>
-  new ApiError(502, "Guidia's AI helper is not responding right now. Please try again in a moment.", 'AI_UPSTREAM_ERROR');
+  new ApiError(503, "Guidia's AI helper is not responding right now. Please try again in a moment.", 'AI_UPSTREAM_ERROR');
 const BAD_OUTPUT = () =>
-  new ApiError(502, "Guidia couldn't understand the AI's answer this time. Please try again.", 'AI_BAD_OUTPUT');
+  new ApiError(503, "Guidia couldn't understand the AI's answer this time. Please try again.", 'AI_BAD_OUTPUT');
 
 function logRequest(meta, providerName, startedAt, status, extra = {}) {
   prisma.aIRequestLog

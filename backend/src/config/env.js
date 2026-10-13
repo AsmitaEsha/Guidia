@@ -30,6 +30,8 @@ const schema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   PORT: int(8000),
   CORS_ORIGIN: list(),
+  // Demo mode: also serve the built web app (dist/) from this server.
+  SERVE_WEB: bool(false),
   APP_URL: z.string().default('http://localhost:5173'),
   ALLOWED_EXTENSION_IDS: list(),
   COOKIE_SAMESITE: z.enum(['lax', 'strict', 'none']).default('lax'),
@@ -85,6 +87,7 @@ const schema = z.object({
   XAI_VISION_MODEL: z.string().default(''),
   XAI_TTS_VOICE: z.string().default(''),
   AI_TIMEOUT_MS: int(30000),
+  AI_VISION_TIMEOUT_MS: int(60000),
   AI_MAX_RETRIES: int(0),
 
   ML_SERVICE_URL: z.string().default(''),
@@ -133,6 +136,7 @@ if (e.NODE_ENV === 'production') {
 export const env = {
   nodeEnv: e.NODE_ENV,
   isProduction: e.NODE_ENV === 'production',
+  serveWeb: e.SERVE_WEB,
   isTest: e.NODE_ENV === 'test',
   port: e.PORT,
   corsOrigins: e.CORS_ORIGIN.length ? e.CORS_ORIGIN : ['http://localhost:5173', 'http://127.0.0.1:5173'],
@@ -161,13 +165,14 @@ export const env = {
     gemini: { apiKey: csv(e.GEMINI_API_KEY)[0] || csv(e.GEMINI_API_KEYS)[0] || '', apiKeys: [...new Set([...csv(e.GEMINI_API_KEY), ...csv(e.GEMINI_API_KEYS)])], model: e.GEMINI_MODEL, fallbackModel: e.GEMINI_FALLBACK_MODEL, baseUrl: e.GEMINI_BASE_URL, ttsModel: e.GEMINI_TTS_MODEL, ttsVoice: e.GEMINI_TTS_VOICE },
     groq: { apiKeys: csv(e.GROQ_API_KEYS), model: e.GROQ_MODEL, visionModel: e.GROQ_VISION_MODEL, baseUrl: e.GROQ_BASE_URL },
     openrouter: { apiKeys: csv(e.OPENROUTER_API_KEYS), model: e.OPENROUTER_MODEL, visionModel: e.OPENROUTER_VISION_MODEL, baseUrl: e.OPENROUTER_BASE_URL },
-    ollama: { baseUrl: e.OLLAMA_BASE_URL, model: e.OLLAMA_MODEL, visionModel: e.OLLAMA_VISION_MODEL || e.OLLAMA_MODEL, timeoutMs: e.OLLAMA_TIMEOUT_MS },
+    ollama: { baseUrl: e.OLLAMA_BASE_URL, model: e.OLLAMA_MODEL, visionModel: e.OLLAMA_VISION_MODEL, timeoutMs: e.OLLAMA_TIMEOUT_MS },
     apiKey: e.XAI_API_KEY,
     baseUrl: e.XAI_BASE_URL,
     model: e.XAI_MODEL,
     visionModel: e.XAI_VISION_MODEL || e.XAI_MODEL,
     ttsVoice: e.XAI_TTS_VOICE,
     timeoutMs: e.AI_TIMEOUT_MS,
+    visionTimeoutMs: e.AI_VISION_TIMEOUT_MS,
     maxRetries: e.AI_MAX_RETRIES,
   },
 
