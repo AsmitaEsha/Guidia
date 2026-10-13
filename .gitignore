@@ -44,3 +44,6 @@ extension/dist/
 # Playwright
 test-results/
 playwright-report/
+
+# Demo QR code (made fresh for each tunnel link)
+demo-qr.png

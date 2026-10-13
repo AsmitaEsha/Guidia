@@ -11,7 +11,11 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test:e2e": "playwright test --project=smoke",
-    "test:visual": "playwright test --project=visual"
+    "test:visual": "playwright test --project=visual",
+    "demo:setup": "npm install && npm install --prefix backend && node backend/scripts/demo-setup.mjs",
+    "demo:build": "vite build",
+    "demo:start": "node backend/scripts/demo-start.mjs",
+    "demo:tunnel": "node backend/scripts/demo-tunnel.mjs"
   },
   "dependencies": {
     "dotenv": "^18.0.5",
@@ -33,6 +37,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
+    "qrcode": "^1.5.4",
     "vite": "^8.0.12"
   }
 }

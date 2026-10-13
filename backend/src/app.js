@@ -1,3 +1,6 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -75,6 +78,14 @@ export function createApp() {
   const api = apiRouter();
   app.use('/api/v1', api);
   app.use('/api', api);
+
+  // Demo mode: the built web app and the API share one address, so a single
+  // public link (e.g. a tunnel) serves everything. API 404s stay JSON.
+  const webDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../dist');
+  if (env.serveWeb && fs.existsSync(path.join(webDir, 'index.html'))) {
+    app.use(express.static(webDir, { index: false, maxAge: '1h' }));
+    app.get(/^(?!\/api(?:\/|$)).*/, (req, res) => res.sendFile(path.join(webDir, 'index.html')));
+  }
 
   app.use(notFoundHandler);
   app.use(errorHandler);
